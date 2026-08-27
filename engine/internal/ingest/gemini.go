@@ -92,14 +92,20 @@ func (g *Gemini) scanFile(path string) []model.Turn {
 		if m.Type != "gemini" || m.Tokens == nil || m.Model == "" {
 			continue
 		}
-		// `input` is already exclusive of `cached`: the recorded total is
-		// input + output + thoughts, with cached tracked alongside rather than
-		// folded in. Reasoning ("thoughts") bills as output.
+		// Gemini's input count is the whole effective prompt, including cached
+		// content. Keep the buckets disjoint by subtracting the cached part.
+		// Thinking tokens are separate from the visible response count, but
+		// Google bills both at the output rate.
+		netInput := m.Tokens.Input - m.Tokens.Cached
+		if netInput < 0 {
+			netInput = 0
+		}
 		usage := model.Usage{
-			Input:     m.Tokens.Input,
-			Output:    m.Tokens.Output + m.Tokens.Thoughts,
-			CacheRead: m.Tokens.Cached,
-			Reasoning: m.Tokens.Thoughts,
+			Input:         netInput,
+			Output:        m.Tokens.Output + m.Tokens.Thoughts,
+			CacheRead:     m.Tokens.Cached,
+			Reasoning:     m.Tokens.Thoughts,
+			ContextTokens: m.Tokens.Input,
 		}
 		usage, ok := usage.Sanitize()
 		if !ok || usage.IsZero() {

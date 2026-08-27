@@ -97,6 +97,33 @@ func TestClaudeDedupsReplayedCalls(t *testing.T) {
 	}
 }
 
+// Claude's streaming usage is cumulative. Claude Code may persist an early
+// snapshot and the final snapshot as separate assistant records with the same
+// message and request IDs. The final total must replace the early one rather
+// than being dropped as a duplicate.
+func TestClaudeDedupKeepsLargestCumulativeSnapshot(t *testing.T) {
+	root := t.TempDir()
+	proj := filepath.Join(root, "projects", "-proj")
+	writeFile(t, filepath.Join(proj, "s.jsonl"),
+		claudeLine("msg_1", "req_1", "claude-opus-5", "2026-08-01T10:00:00Z", 3, 2, 22_137, 2_285),
+		claudeLine("msg_1", "req_1", "claude-opus-5", "2026-08-01T10:00:02Z", 3, 1_093, 22_137, 2_285),
+	)
+
+	res, err := Run(context.Background(), []Scanner{newClaudeAt(root)})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got, want := len(res.Turns), 1; got != want {
+		t.Fatalf("kept %d turns, want %d", got, want)
+	}
+	if got, want := res.Turns[0].Usage.Output, int64(1_093); got != want {
+		t.Errorf("output = %d, want final cumulative snapshot %d", got, want)
+	}
+	if got, want := res.Duplicates, 1; got != want {
+		t.Errorf("duplicates = %d, want %d", got, want)
+	}
+}
+
 // A retry of the same logical message is a separate billable call, and Claude
 // Code reuses message.id across retries. Only the pair is unique.
 func TestClaudeKeyUsesBothIDs(t *testing.T) {
@@ -333,6 +360,34 @@ func TestCodexTurnsCarryOwnTimestamps(t *testing.T) {
 	}
 	if turns[0].Timestamp.Equal(turns[1].Timestamp) {
 		t.Error("turns share a timestamp; per-call clocks were lost")
+	}
+}
+
+// --- Gemini ----------------------------------------------------------------
+
+func newGeminiAt(root string) *Gemini { return &Gemini{root: root} }
+
+// Gemini reports prompt input as a gross count which includes cached content,
+// while thoughts are a separate generated-token count billed at the output
+// rate. Normalisation must produce disjoint buckets without dropping thoughts.
+func TestGeminiNetsCachedInputAndBillsThoughtsAsOutput(t *testing.T) {
+	root := t.TempDir()
+	writeFile(t, filepath.Join(root, "tmp", "project", "chats", "session-1.json"),
+		`{"sessionId":"s1","projectHash":"project","messages":[{"type":"gemini","timestamp":"2026-08-01T10:00:00Z","model":"gemini-2.5-pro","tokens":{"input":10000,"output":500,"cached":8000,"thoughts":300,"tool":0,"total":10800}}]}`)
+
+	turns := scan(t, newGeminiAt(root))
+	if got, want := len(turns), 1; got != want {
+		t.Fatalf("got %d turns, want %d", got, want)
+	}
+	u := turns[0].Usage
+	if u.Input != 2_000 || u.CacheRead != 8_000 {
+		t.Errorf("input/cacheRead = %d/%d, want 2000/8000", u.Input, u.CacheRead)
+	}
+	if u.Output != 800 || u.Reasoning != 300 {
+		t.Errorf("output/reasoning = %d/%d, want 800/300", u.Output, u.Reasoning)
+	}
+	if u.ContextTokens != 10_000 {
+		t.Errorf("context = %d, want gross prompt size 10000", u.ContextTokens)
 	}
 }
 

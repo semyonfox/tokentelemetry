@@ -125,18 +125,25 @@ func Run(ctx context.Context, scanners []Scanner) (*Result, error) {
 	}
 
 	res := &Result{}
-	seen := make(map[string]struct{}, 1<<16)
+	seen := make(map[string]int, 1<<16)
 	for _, b := range out {
 		if b.err != nil && !errors.Is(b.err, os.ErrNotExist) {
 			res.Errors = append(res.Errors, b.err)
 		}
 		for _, t := range b.turns {
 			if t.Key != "" {
-				if _, dup := seen[t.Key]; dup {
+				if kept, dup := seen[t.Key]; dup {
 					res.Duplicates++
+					// Claude Code can write several cumulative streaming snapshots
+					// for one request. Keep the largest usage block, but retain the
+					// first record's session, project and subagent attribution. A
+					// copied transcript must not steal ownership of the original call.
+					if moreCompleteUsage(t.Usage, res.Turns[kept].Usage) {
+						res.Turns[kept].Usage = t.Usage
+					}
 					continue
 				}
-				seen[t.Key] = struct{}{}
+				seen[t.Key] = len(res.Turns)
 			}
 			res.Turns = append(res.Turns, t)
 		}
@@ -145,6 +152,23 @@ func Run(ctx context.Context, scanners []Scanner) (*Result, error) {
 		return res.Turns[i].Timestamp.Before(res.Turns[j].Timestamp)
 	})
 	return res, nil
+}
+
+// moreCompleteUsage orders cumulative snapshots without adding their fields.
+// Adding would bill one streamed response several times. Total billable tokens
+// is the primary signal; the remaining fields break ties when a later snapshot
+// supplies detail that does not change that total.
+func moreCompleteUsage(a, b model.Usage) bool {
+	if a.Total() != b.Total() {
+		return a.Total() > b.Total()
+	}
+	if a.CacheWrite1h != b.CacheWrite1h {
+		return a.CacheWrite1h > b.CacheWrite1h
+	}
+	if a.Reasoning != b.Reasoning {
+		return a.Reasoning > b.Reasoning
+	}
+	return a.ContextTokens > b.ContextTokens
 }
 
 // homeDir returns the user's home directory, honouring the overrides the
