@@ -86,13 +86,13 @@ func (o *OpenCode) Scan(ctx context.Context, emit func(model.Turn)) error {
 	}
 	db, err := sql.Open("sqlite", "file:"+o.dbPath+"?mode=ro&_pragma=busy_timeout(3000)")
 	if err != nil {
-		return nil
+		return err
 	}
 	defer db.Close()
 
 	rows, err := db.QueryContext(ctx, openCodeQuery)
 	if err != nil {
-		return nil
+		return err
 	}
 	defer rows.Close()
 
@@ -138,7 +138,7 @@ func (o *OpenCode) Scan(ctx context.Context, emit func(model.Turn)) error {
 			Usage:     usage,
 		})
 	}
-	return nil
+	return rows.Err()
 }
 
 // unixMillis converts JavaScript-style epoch milliseconds to a time.

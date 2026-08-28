@@ -503,14 +503,41 @@ func merge(prev, next *dataset, effective pricing.Date) []change {
 			next.Models[id] = pm
 		}
 	}
+	if next.ByProvider == nil {
+		next.ByProvider = make(map[string]*pricing.Model)
+	}
+	mergeProviderRates(prev.ByProvider, next.ByProvider, effective)
 	return changes
+}
+
+func mergeProviderRates(prev, next map[string]*pricing.Model, effective pricing.Date) {
+	for key, nm := range next {
+		pm, ok := prev[key]
+		if !ok || len(pm.Rates) == 0 || len(nm.Rates) == 0 {
+			continue
+		}
+		latest := pm.Rates[len(pm.Rates)-1]
+		fresh := nm.Rates[0]
+		if sameRate(latest, fresh) {
+			nm.Rates = pm.Rates
+			continue
+		}
+		fresh.From = effective
+		nm.Rates = append(append([]pricing.Rate{}, pm.Rates...), fresh)
+	}
+	for key, pm := range prev {
+		if _, ok := next[key]; !ok {
+			next[key] = pm
+		}
+	}
 }
 
 func sameRate(a, b pricing.Rate) bool {
 	return a.In == b.In && a.Out == b.Out &&
 		a.CacheRead == b.CacheRead && a.CacheWrite == b.CacheWrite &&
 		a.CacheWrite1h == b.CacheWrite1h &&
-		a.TierThreshold == b.TierThreshold && a.TierIn == b.TierIn && a.TierOut == b.TierOut
+		a.TierThreshold == b.TierThreshold && a.TierIn == b.TierIn && a.TierOut == b.TierOut &&
+		a.TierCacheRead == b.TierCacheRead && a.TierCacheWrite == b.TierCacheWrite
 }
 
 func report(changes []change) {

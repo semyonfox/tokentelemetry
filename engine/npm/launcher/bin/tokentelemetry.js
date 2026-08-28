@@ -87,11 +87,19 @@ if (platform === "win32") {
   } else {
     const { spawn } = require("child_process");
     const child = spawn(bin, args, { stdio: "inherit" });
+    const signals = ["SIGINT", "SIGTERM", "SIGHUP"];
+    const handlers = new Map(signals.map((signal) => [signal, () => child.kill(signal)]));
+    for (const [signal, handler] of handlers) process.on(signal, handler);
+    const removeHandlers = () => {
+      for (const [signal, handler] of handlers) process.off(signal, handler);
+    };
     child.on("error", (err) => {
+      removeHandlers();
       console.error(`tokentelemetry: ${err.message}`);
       process.exit(1);
     });
     child.on("exit", (code, signal) => {
+      removeHandlers();
       if (signal) {
         process.kill(process.pid, signal);
         return;

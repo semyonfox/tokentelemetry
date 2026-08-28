@@ -57,6 +57,19 @@ func TestWindowAcrossMonths(t *testing.T) {
 	near(t, Total(c), 120*2/31.0+120*2/31.0)
 }
 
+func TestDaysInMonthIgnoresDST(t *testing.T) {
+	loc, err := time.LoadLocation("Europe/Dublin")
+	if err != nil {
+		t.Fatal(err)
+	}
+	old := time.Local
+	time.Local = loc
+	t.Cleanup(func() { time.Local = old })
+	if got := daysInMonth(day("2026-03-15")); got != 31 {
+		t.Errorf("March has %d days, want 31", got)
+	}
+}
+
 // Filtering to one agent must not bill the other agent's plan.
 func TestAgentFilterRestrictsPlans(t *testing.T) {
 	c := cfg().ChargesFor(day("2026-08-01"), day("2026-08-31"), []string{"claude"})

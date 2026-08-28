@@ -134,6 +134,19 @@ func TestDescribeChange(t *testing.T) {
 	}
 }
 
+func TestRenderPriceHandlesEmptyRateHistory(t *testing.T) {
+	tbl := &pricing.Table{Models: map[string]*pricing.Model{
+		"empty": {ID: "empty"},
+	}}
+	var buf bytes.Buffer
+	if renderPrice(&buf, theme{on: false}, tbl, "empty") {
+		t.Error("empty rate history rendered as priced")
+	}
+	if !strings.Contains(buf.String(), "no rate on file") {
+		t.Errorf("output = %q, want no-rate warning", buf.String())
+	}
+}
+
 func TestMoneyAndTokenFormatting(t *testing.T) {
 	for v, want := range map[float64]string{
 		0: "$0.00", 0.0001: "$0.0001", 12.5: "$12.50", 8496.97: "$8,496.97",

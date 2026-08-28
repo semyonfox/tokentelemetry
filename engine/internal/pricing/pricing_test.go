@@ -117,6 +117,14 @@ func TestAliasResolves(t *testing.T) {
 	}
 }
 
+func TestAliasUsesCanonicalProviderRate(t *testing.T) {
+	tbl := testTable()
+	r, conf, ok := tbl.Lookup("luna-v2", "together", day("2026-08-27"))
+	if !ok || conf != ConfidenceProvider || r.In != 1.40 {
+		t.Errorf("provider alias lookup = %v/%v/%v, want provider@1.40", r.In, conf, ok)
+	}
+}
+
 func TestNormalize(t *testing.T) {
 	for in, want := range map[string]string{
 		"claude-opus-5":                      "claude-opus-5",

@@ -146,8 +146,7 @@ func prorate(monthly float64, from, to time.Time) (float64, int) {
 
 // daysInMonth returns the length of t's month.
 func daysInMonth(t time.Time) int {
-	first := time.Date(t.Year(), t.Month(), 1, 0, 0, 0, 0, time.Local)
-	return int(first.AddDate(0, 1, 0).Sub(first).Hours() / 24)
+	return time.Date(t.Year(), t.Month()+1, 0, 0, 0, 0, 0, time.Local).Day()
 }
 
 // Total sums charges.

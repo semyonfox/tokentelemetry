@@ -175,25 +175,24 @@ func (tbl *Table) Lookup(model, provider string, t time.Time) (Rate, Confidence,
 	if id == "" {
 		return Rate{}, ConfidenceUnpriced, false
 	}
+	lookupID := id
+	confidence := ConfidenceExact
+	if canon, ok := tbl.Aliases[id]; ok {
+		lookupID = canon
+		confidence = ConfidenceAlias
+	}
 	// A recorded provider is authoritative: it tells us who actually billed the
 	// call, markup included.
 	if provider != "" {
-		if m, ok := tbl.ByProvider[providerKey(provider, id)]; ok {
+		if m, ok := tbl.ByProvider[providerKey(provider, lookupID)]; ok {
 			if r, ok := m.rateAt(t); ok {
 				return r, ConfidenceProvider, true
 			}
 		}
 	}
-	if m, ok := tbl.Models[id]; ok {
+	if m, ok := tbl.Models[lookupID]; ok {
 		if r, ok := m.rateAt(t); ok {
-			return r, ConfidenceExact, true
-		}
-	}
-	if canon, ok := tbl.Aliases[id]; ok {
-		if m, ok := tbl.Models[canon]; ok {
-			if r, ok := m.rateAt(t); ok {
-				return r, ConfidenceAlias, true
-			}
+			return r, confidence, true
 		}
 	}
 	return Rate{}, ConfidenceUnpriced, false

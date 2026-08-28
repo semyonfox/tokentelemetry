@@ -61,11 +61,13 @@ func renderPrice(w io.Writer, th theme, tbl *pricing.Table, query string) bool {
 		heading = fmt.Sprintf("%s  →  %s", query, m.ID)
 	}
 	section(w, th, heading)
-
-	src := ""
-	if len(m.Rates) > 0 {
-		src = m.Rates[len(m.Rates)-1].Source
+	if len(m.Rates) == 0 {
+		io.WriteString(w, "    "+th.warn("!")+"  no rate on file\n")
+		io.WriteString(w, "    "+th.dim("·")+"  "+th.dim("usage of this model is reported as unpriced, never estimated")+"\n")
+		return false
 	}
+
+	src := m.Rates[len(m.Rates)-1].Source
 	origin := "reseller"
 	if m.FirstParty {
 		origin = "first-party"

@@ -133,7 +133,10 @@ func TestClaudeKeyUsesBothIDs(t *testing.T) {
 		claudeLine("msg_1", "req_1", "claude-opus-5", "2026-08-01T10:00:00Z", 1, 10, 0, 0),
 		claudeLine("msg_1", "req_2", "claude-opus-5", "2026-08-01T10:00:05Z", 1, 10, 0, 0),
 	)
-	res, _ := Run(context.Background(), []Scanner{newClaudeAt(root)})
+	res, err := Run(context.Background(), []Scanner{newClaudeAt(root)})
+	if err != nil {
+		t.Fatal(err)
+	}
 	if len(res.Turns) != 2 {
 		t.Errorf("kept %d turns, want 2 (a retry is a separate call)", len(res.Turns))
 	}
@@ -244,7 +247,10 @@ func TestCodexSkipsReplayedForkHistory(t *testing.T) {
 	if got, want := totalOut(turns), int64(42); got != want {
 		t.Errorf("output = %d, want %d (inherited history must not be counted)", got, want)
 	}
-	if len(turns) != 1 || !turns[0].Subagent {
+	if len(turns) != 1 {
+		t.Fatalf("got %d turns, want 1", len(turns))
+	}
+	if !turns[0].Subagent {
 		t.Errorf("got %d turns (subagent=%v), want 1 subagent turn", len(turns), turns[0].Subagent)
 	}
 }
@@ -388,6 +394,26 @@ func TestGeminiNetsCachedInputAndBillsThoughtsAsOutput(t *testing.T) {
 	}
 	if u.ContextTokens != 10_000 {
 		t.Errorf("context = %d, want gross prompt size 10000", u.ContextTokens)
+	}
+}
+
+func TestGeminiMissingSessionIDDoesNotDedupAcrossFiles(t *testing.T) {
+	root := t.TempDir()
+	body := `{"messages":[{"type":"gemini","timestamp":"2026-08-01T10:00:00Z","model":"gemini-2.5-pro","tokens":{"input":10,"output":5}}]}`
+	writeFile(t, filepath.Join(root, "tmp", "one", "chats", "session-1.json"), body)
+	writeFile(t, filepath.Join(root, "tmp", "two", "chats", "session-2.json"), body)
+	res, err := Run(context.Background(), []Scanner{newGeminiAt(root)})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := len(res.Turns); got != 2 {
+		t.Errorf("kept %d unkeyed turns, want 2", got)
+	}
+}
+
+func TestDecodePiDirTrimsBoundarySeparators(t *testing.T) {
+	if got, want := decodePiDir("--home-semyon--"), "/home/semyon"; got != want {
+		t.Errorf("decodePiDir = %q, want %q", got, want)
 	}
 }
 

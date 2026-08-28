@@ -3,6 +3,7 @@ package ingest
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"os"
 	"path/filepath"
 	"time"
@@ -59,16 +60,22 @@ func (h *Hermes) Roots() []string {
 }
 
 func (h *Hermes) Scan(ctx context.Context, emit func(model.Turn)) error {
+	var scanErr error
 	for _, db := range h.Roots() {
 		if ctx.Err() != nil {
 			return ctx.Err()
 		}
 		// One unreadable or mid-write database must not lose the others.
-		for _, t := range h.scanDB(ctx, db) {
+		turns, err := h.scanDB(ctx, db)
+		if err != nil {
+			scanErr = errors.Join(scanErr, err)
+			continue
+		}
+		for _, t := range turns {
 			emit(t)
 		}
 	}
-	return nil
+	return scanErr
 }
 
 // hermesQuery reads per-model usage joined to its session for the working
@@ -93,19 +100,19 @@ FROM session_model_usage u
 LEFT JOIN sessions s ON s.id = u.session_id
 `
 
-func (h *Hermes) scanDB(ctx context.Context, path string) []model.Turn {
+func (h *Hermes) scanDB(ctx context.Context, path string) ([]model.Turn, error) {
 	// Read-only, and immutable=false so a live WAL is still read correctly.
 	// A busy timeout keeps a concurrently-writing Hermes from failing the scan.
 	dsn := "file:" + path + "?mode=ro&_pragma=busy_timeout(3000)"
 	db, err := sql.Open("sqlite", dsn)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 	defer db.Close()
 
 	rows, err := db.QueryContext(ctx, hermesQuery)
 	if err != nil {
-		return nil // schema older than session_model_usage, or db unreadable
+		return nil, err
 	}
 	defer rows.Close()
 
@@ -140,7 +147,10 @@ func (h *Hermes) scanDB(ctx context.Context, path string) []model.Turn {
 			Subagent:  parentID != "",
 		})
 	}
-	return turns
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return turns, nil
 }
 
 // unixFloat converts Hermes's fractional unix seconds to a time.

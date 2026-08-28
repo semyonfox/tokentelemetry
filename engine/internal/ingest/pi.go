@@ -109,8 +109,12 @@ func (p *Pi) scanFile(path string) []model.Turn {
 		if !ok || usage.IsZero() || r.Message.Model == "" {
 			continue
 		}
+		key := ""
+		if sessionID != "" && r.ID != "" {
+			key = "pi|" + sessionID + "|" + r.ID
+		}
 		turns = append(turns, model.Turn{
-			Key:       "pi|" + sessionID + "|" + r.ID,
+			Key:       key,
 			SessionID: sessionID,
 			Agent:     model.AgentPi,
 			Timestamp: parseTime(r.Timestamp),
@@ -123,11 +127,13 @@ func (p *Pi) scanFile(path string) []model.Turn {
 	return turns
 }
 
-// decodePiDir turns Pi's escaped directory name back into a path.
-// "--home-semyon--" encodes "/home/semyon/".
+// decodePiDir turns Pi's escaped directory name into a stable project label.
+// Pi uses the same hyphen for path separators and literal hyphens, so the
+// original path cannot be recovered exactly. Trim only the duplicate boundary
+// separators and preserve the existing best-effort internal conversion.
 func decodePiDir(name string) string {
 	if name == "" {
 		return ""
 	}
-	return strings.ReplaceAll(name, "-", "/")
+	return "/" + strings.Trim(strings.ReplaceAll(name, "-", "/"), "/")
 }

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"strconv"
 
 	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
 )
@@ -70,7 +71,7 @@ func (g *Gemini) Scan(ctx context.Context, emit func(model.Turn)) error {
 		if !p.IsDir() {
 			continue
 		}
-		paths = append(paths, globJSON(filepath.Join(roots[0], p.Name(), "chats", "session-*.json"))...)
+		paths = append(paths, globJSONL(filepath.Join(roots[0], p.Name(), "chats", "session-*.json"))...)
 	}
 	for _, t := range mapFiles(ctx, paths, g.scanFile) {
 		emit(t)
@@ -111,8 +112,12 @@ func (g *Gemini) scanFile(path string) []model.Turn {
 		if !ok || usage.IsZero() {
 			continue
 		}
+		key := ""
+		if s.SessionID != "" {
+			key = "gemini|" + s.SessionID + "|" + strconv.Itoa(i)
+		}
 		turns = append(turns, model.Turn{
-			Key:       "gemini|" + s.SessionID + "|" + itoaInt(i),
+			Key:       key,
 			SessionID: s.SessionID,
 			Agent:     model.AgentGemini,
 			Timestamp: parseTime(m.Timestamp),
@@ -122,24 +127,4 @@ func (g *Gemini) scanFile(path string) []model.Turn {
 		})
 	}
 	return turns
-}
-
-func globJSON(pattern string) []string {
-	matches, err := filepath.Glob(pattern)
-	if err != nil {
-		return nil
-	}
-	return matches
-}
-
-func itoaInt(n int) string {
-	if n == 0 {
-		return "0"
-	}
-	var b []byte
-	for n > 0 {
-		b = append([]byte{byte('0' + n%10)}, b...)
-		n /= 10
-	}
-	return string(b)
 }
