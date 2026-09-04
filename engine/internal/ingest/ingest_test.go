@@ -378,8 +378,9 @@ func newGeminiAt(root string) *Gemini { return &Gemini{root: root} }
 // rate. Normalisation must produce disjoint buckets without dropping thoughts.
 func TestGeminiNetsCachedInputAndBillsThoughtsAsOutput(t *testing.T) {
 	root := t.TempDir()
+	writeFile(t, filepath.Join(root, "projects.json"), `{"projects":{"/home/u/proj":"project"}}`)
 	writeFile(t, filepath.Join(root, "tmp", "project", "chats", "session-1.json"),
-		`{"sessionId":"s1","projectHash":"project","messages":[{"type":"gemini","timestamp":"2026-08-01T10:00:00Z","model":"gemini-2.5-pro","tokens":{"input":10000,"output":500,"cached":8000,"thoughts":300,"tool":0,"total":10800}}]}`)
+		`{"sessionId":"s1","projectHash":"project","kind":"main","messages":[{"type":"gemini","timestamp":"2026-08-01T10:00:00Z","model":"gemini-2.5-pro","tokens":{"input":10000,"output":500,"cached":8000,"thoughts":300,"tool":0,"total":10800}}]}`)
 
 	turns := scan(t, newGeminiAt(root))
 	if got, want := len(turns), 1; got != want {
@@ -399,7 +400,8 @@ func TestGeminiNetsCachedInputAndBillsThoughtsAsOutput(t *testing.T) {
 
 func TestGeminiMissingSessionIDDoesNotDedupAcrossFiles(t *testing.T) {
 	root := t.TempDir()
-	body := `{"messages":[{"type":"gemini","timestamp":"2026-08-01T10:00:00Z","model":"gemini-2.5-pro","tokens":{"input":10,"output":5}}]}`
+	writeFile(t, filepath.Join(root, "projects.json"), `{"projects":{"/home/u/one":"one","/home/u/two":"two"}}`)
+	body := `{"kind":"main","messages":[{"type":"gemini","timestamp":"2026-08-01T10:00:00Z","model":"gemini-2.5-pro","tokens":{"input":10,"output":5}}]}`
 	writeFile(t, filepath.Join(root, "tmp", "one", "chats", "session-1.json"), body)
 	writeFile(t, filepath.Join(root, "tmp", "two", "chats", "session-2.json"), body)
 	res, err := Run(context.Background(), []Scanner{newGeminiAt(root)})
@@ -408,6 +410,22 @@ func TestGeminiMissingSessionIDDoesNotDedupAcrossFiles(t *testing.T) {
 	}
 	if got := len(res.Turns); got != 2 {
 		t.Errorf("kept %d unkeyed turns, want 2", got)
+	}
+}
+
+// Antigravity writes main-kind chats into the same ~/.gemini/tmp tree under
+// project hashes projects.json has never heard of; a hash outside that file
+// must be skipped, not double-counted as a Gemini CLI session.
+func TestGeminiSkipsProjectHashesNotInProjectsJSON(t *testing.T) {
+	root := t.TempDir()
+	writeFile(t, filepath.Join(root, "projects.json"), `{"projects":{"/home/u/known":"known-hash"}}`)
+	body := `{"sessionId":"s1","kind":"main","messages":[{"type":"gemini","timestamp":"2026-08-01T10:00:00Z","model":"gemini-2.5-pro","tokens":{"input":10,"output":5}}]}`
+	writeFile(t, filepath.Join(root, "tmp", "known-hash", "chats", "session-1.json"), body)
+	writeFile(t, filepath.Join(root, "tmp", "antigravity-hash", "chats", "session-1.json"), body)
+
+	turns := scan(t, newGeminiAt(root))
+	if got, want := len(turns), 1; got != want {
+		t.Fatalf("got %d turns, want %d (only the known-hash project)", got, want)
 	}
 }
 

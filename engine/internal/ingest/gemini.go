@@ -27,6 +27,42 @@ func NewGemini() *Gemini {
 	return &Gemini{root: envDir("GEMINI_CONFIG_DIR", ".gemini")}
 }
 
+// knownSlugs returns the set of project hashes that ~/.gemini/projects.json
+// maps a real directory to.
+//
+// A session's own kind=="main" field alone does NOT mean Gemini CLI:
+// Antigravity writes main-kind chats into the same tmp/ tree, under hashes
+// projects.json has never heard of. The Python scanner uses exactly this
+// list to decide, and the two runtimes MUST agree — sessions are merged on
+// (agent, id), so one side labelling a session gemini and the other
+// antigravity does not conflict, it produces two rows and counts the usage
+// twice.
+//
+// A missing or unreadable projects.json yields an empty set, which
+// classifies everything as Antigravity. That is the safe direction:
+// Antigravity usage is scanned by Python either way, so the cost of being
+// wrong is a session Go skips, not one it double-counts.
+func (g *Gemini) knownSlugs() map[string]struct{} {
+	slugs := map[string]struct{}{}
+	if g.root == "" {
+		return slugs
+	}
+	raw, err := os.ReadFile(filepath.Join(g.root, "projects.json"))
+	if err != nil {
+		return slugs
+	}
+	var doc struct {
+		Projects map[string]string `json:"projects"`
+	}
+	if err := json.Unmarshal(raw, &doc); err != nil {
+		return slugs
+	}
+	for _, slug := range doc.Projects {
+		slugs[slug] = struct{}{}
+	}
+	return slugs
+}
+
 func (g *Gemini) Agent() model.Agent { return model.AgentGemini }
 
 func (g *Gemini) Roots() []string {
@@ -42,7 +78,11 @@ func (g *Gemini) Roots() []string {
 type geminiSession struct {
 	SessionID   string `json:"sessionId"`
 	ProjectHash string `json:"projectHash"`
-	Messages    []struct {
+	// Gemini CLI marks its own chats as kind="main". The same directory also
+	// holds Antigravity state, which has a different agent and must not be
+	// silently relabelled as Gemini.
+	Kind     string `json:"kind"`
+	Messages []struct {
 		Type      string `json:"type"`
 		Timestamp string `json:"timestamp"`
 		Model     string `json:"model"`
@@ -66,9 +106,15 @@ func (g *Gemini) Scan(ctx context.Context, emit func(model.Turn)) error {
 	if err != nil {
 		return err
 	}
+	known := g.knownSlugs()
 	var paths []string
 	for _, p := range projects {
 		if !p.IsDir() {
+			continue
+		}
+		// Hashes projects.json doesn't know are Antigravity's, not Gemini
+		// CLI's — see knownSlugs.
+		if _, ok := known[p.Name()]; !ok {
 			continue
 		}
 		paths = append(paths, globJSONL(filepath.Join(roots[0], p.Name(), "chats", "session-*.json"))...)
@@ -86,6 +132,9 @@ func (g *Gemini) scanFile(path string) []model.Turn {
 	}
 	var s geminiSession
 	if err := json.Unmarshal(raw, &s); err != nil {
+		return nil
+	}
+	if s.Kind != "main" {
 		return nil
 	}
 	var turns []model.Turn
