@@ -1,6 +1,27 @@
 {
   "releases": [
     {
+      "tag": "2026-09-04",
+      "title": "DeepSeek peak pricing, and an accounting cleanup",
+      "highlights": [
+        {
+          "title": "DeepSeek's peak/off-peak pricing is now applied",
+          "description": "DeepSeek split its rate card into a peak window and a cheaper off-peak one (effective 2026-08-16); usage outside the peak hours is now priced at the discounted rate instead of the flat peak rate all day.",
+          "href": "/analytics"
+        },
+        {
+          "title": "Antigravity chats are no longer double-counted as Gemini",
+          "description": "Antigravity stores its own session state in the same directory tree Gemini CLI uses, and a couple of Antigravity chats were being scanned twice — once correctly and once mislabelled as Gemini CLI. Sessions outside Gemini's own project registry are now skipped.",
+          "href": "/"
+        },
+        {
+          "title": "A streaming call could still undercount its own tokens",
+          "description": "The previous fix for repeated transcript records kept whichever copy of a call showed up first, which for a call still streaming its response is a partial — undercounting output tokens for that call. The largest (finished) copy is now kept instead.",
+          "href": "/"
+        }
+      ]
+    },
+    {
       "tag": "2026-08-27",
       "title": "Faster, more accurate usage engine",
       "highlights": [

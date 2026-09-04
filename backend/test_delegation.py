@@ -344,6 +344,31 @@ def test_claude_scan_dedupes_usage_and_records_unpriced_background_activity(scan
     assert second["untracked_background"] == first["untracked_background"]
 
 
+def test_claude_scan_keeps_finished_streaming_call_not_first_partial(scan_env):
+    """A streaming call is written to the transcript several times as its
+    response grows, all under the same message.id. Keeping whichever copy
+    arrives FIRST (the previous guard here) keeps a partial — this must keep
+    the finished, larger snapshot instead."""
+    sid = "sid-streaming-partial"
+    session_file = make_claude_tree(scan_env / ".claude", sid, with_subagents=False)
+    session_file.write_text(
+        _jl(type="user", cwd="/tmp/proj", message={"role": "user", "content": "hi"})
+        + _assistant_line(model="claude-sonnet-4-6", inp=100, out=8, cache_read=20,
+                          message_id="message-1")
+        + _assistant_line(model="claude-sonnet-4-6", inp=100, out=8, cache_read=20,
+                          message_id="message-1")
+        + _assistant_line(model="claude-sonnet-4-6", inp=100, out=482, cache_read=20,
+                          message_id="message-1"),
+        encoding="utf-8",
+    )
+
+    sess = next(s for s in main._scan_sessions_sync() if s["agent"] == "claude" and s["id"] == sid)
+
+    assert sess["tokens"]["input"] == 100
+    assert sess["tokens"]["output"] == 482
+    assert sess["tokens"]["_cached_sum"] == 20
+
+
 def test_scan_cursor_spawn_count_only(scan_env):
     sid = str(uuid.uuid4())
     trans = scan_env / ".cursor" / "projects" / "tmp-proj" / "agent-transcripts" / sid

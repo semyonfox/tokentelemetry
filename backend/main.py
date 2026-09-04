@@ -5143,6 +5143,58 @@ def _attach_tool_usage(sess: Dict[str, Any], tool_counts: Dict[str, int],
         ]
 
 
+class _ClaudeUsageDelta:
+    """Tracks the largest usage snapshot seen per Claude API call and hands
+    back only the newly-grown portion on each update.
+
+    Claude Code writes one API call to a transcript multiple times: streaming
+    snapshots as the response grows, and full replays when a session is
+    resumed, forked or compacted. Each snapshot is cumulative FOR THAT CALL,
+    so a plain "seen this message.id before? skip it" guard (the previous
+    approach here and in the main transcript scan) keeps whichever copy
+    arrives FIRST — which for a streaming call is a partial, undercounting
+    the finished call. On the audited machine that undercounted subagent
+    output by 200k tokens.
+
+    Returning a DELTA (instead of a recomputed total) lets a caller keep
+    adding into whatever span-scoped accumulator is active right now exactly
+    as before — only the amount added per line changes, from "the whole
+    snapshot" to "how much bigger than the last snapshot of this call".
+
+    Keyed on (message.id, requestId), matching the Go engine's dedup key:
+    message.id alone repeats across a turn's streaming retries, and requestId
+    alone is absent on older records.
+    """
+
+    __slots__ = ("_seen",)
+
+    def __init__(self) -> None:
+        self._seen: Dict[tuple, Dict[str, int]] = {}
+
+    def delta(self, key: tuple, usage: Dict[str, Any]) -> Dict[str, int]:
+        cur = {
+            "input": usage.get("input_tokens", 0) or 0,
+            "output": usage.get("output_tokens", 0) or 0,
+            "cached": usage.get("cache_read_input_tokens", 0) or 0,
+            "cache_creation": usage.get("cache_creation_input_tokens", 0) or 0,
+            "cache_creation_1h": (usage.get("cache_creation", {}) or {}).get(
+                "ephemeral_1h_input_tokens", 0) or 0,
+        }
+        # A record carrying no identity can't be matched to a sibling, so it
+        # counts as its own call rather than being silently merged with
+        # whichever other identity-less record happened to run before it.
+        if key == (None, None):
+            key = ("_anon", len(self._seen))
+        prev = self._seen.get(key)
+        if prev is None:
+            self._seen[key] = cur
+            return dict(cur)
+        if sum(cur.values()) > sum(prev.values()):
+            self._seen[key] = cur
+            return {name: cur[name] - prev[name] for name in cur}
+        return {name: 0 for name in cur}
+
+
 def _rollup_agent_transcript(f: Path, agent_type: Optional[str] = None,
                              description: Optional[str] = None,
                              tool_use_id: Optional[str] = None,
@@ -5163,7 +5215,7 @@ def _rollup_agent_transcript(f: Path, agent_type: Optional[str] = None,
     tokens = {"input": 0, "output": 0, "cached": 0, "_cached_sum": 0, "cache_creation": 0,
               "cache_creation_1h": 0, "total": 0}
     model = None
-    seen_message_ids: set = set()
+    usage_delta = _ClaudeUsageDelta()
     try:
         with open(f, "r", encoding="utf-8", errors="replace") as fh:
             for line in fh:
@@ -5183,20 +5235,14 @@ def _rollup_agent_transcript(f: Path, agent_type: Optional[str] = None,
                 usage = msg.get("usage", {}) if isinstance(msg.get("usage"), dict) else {}
                 if not usage:
                     continue
-                message_id = msg.get("id")
-                if message_id:
-                    if message_id in seen_message_ids:
-                        continue
-                    seen_message_ids.add(message_id)
                 cr = usage.get("cache_read_input_tokens", 0) or 0
-                cc = usage.get("cache_creation_input_tokens", 0) or 0
-                cc_1h = (usage.get("cache_creation", {}) or {}).get("ephemeral_1h_input_tokens", 0) or 0
-                tokens["input"] += usage.get("input_tokens", 0) or 0
-                tokens["output"] += usage.get("output_tokens", 0) or 0
+                d = usage_delta.delta((msg.get("id"), data.get("requestId")), usage)
+                tokens["input"] += d["input"]
+                tokens["output"] += d["output"]
                 tokens["cached"] = max(tokens["cached"], cr)
-                tokens["_cached_sum"] += cr
-                tokens["cache_creation"] += cc
-                tokens["cache_creation_1h"] += cc_1h
+                tokens["_cached_sum"] += d["cached"]
+                tokens["cache_creation"] += d["cache_creation"]
+                tokens["cache_creation_1h"] += d["cache_creation_1h"]
     except Exception:
         return None
     tokens["total"] = tokens["input"] + tokens["output"] + tokens["cached"]
@@ -5852,6 +5898,7 @@ def _scan_sessions_sync():
                     goal_span_arm: Optional[int] = None      # arm index owning the current post-block span
                     goal_usage_by_arm: Dict[int, Dict[str, int]] = {}  # arm idx -> attributed footprint
                     seen_assistant_message_ids: set = set()
+                    usage_delta = _ClaudeUsageDelta()
                     untracked_background = {"recaps": 0, "titles": 0, "compactions": 0}
                     try:
                         with open(session_file, "r", encoding="utf-8", errors="replace") as f:
@@ -5874,30 +5921,32 @@ def _scan_sessions_sync():
                                     if m and m != "<synthetic>" and not sess.get("model"):
                                         sess["model"] = m
                                     usage = msg.get("usage", {})
+                                    message_id = msg.get("id")
                                     if usage:
-                                        message_id = msg.get("id")
-                                        if message_id:
-                                            if message_id in seen_assistant_message_ids:
-                                                continue
-                                            seen_assistant_message_ids.add(message_id)
+                                        # Claude's usage block is cumulative PER CALL, and one call
+                                        # is written to the transcript repeatedly (streaming updates
+                                        # and replayed history). A plain "seen this message.id
+                                        # before? skip it" guard keeps whichever copy showed up
+                                        # first, which for a streaming call is a partial — see
+                                        # _ClaudeUsageDelta. Feeding every line through it and adding
+                                        # only the DELTA keeps this span bookkeeping unchanged below.
                                         cr = usage.get("cache_read_input_tokens", 0) or 0
-                                        cc = usage.get("cache_creation_input_tokens", 0) or 0
-                                        cc_1h = (usage.get("cache_creation", {}) or {}).get("ephemeral_1h_input_tokens", 0) or 0
-                                        sess["tokens"]["input"]  += usage.get("input_tokens", 0) or 0
-                                        sess["tokens"]["output"] += usage.get("output_tokens", 0) or 0
+                                        d = usage_delta.delta((message_id, data.get("requestId")), usage)
+                                        sess["tokens"]["input"]  += d["input"]
+                                        sess["tokens"]["output"] += d["output"]
                                         sess["tokens"]["cached"] = max(sess["tokens"]["cached"], cr)
-                                        sess["tokens"]["_cached_sum"] = sess["tokens"].get("_cached_sum", 0) + cr
-                                        sess["tokens"]["cache_creation"] = sess["tokens"].get("cache_creation", 0) + cc
-                                        sess["tokens"]["cache_creation_1h"] = sess["tokens"].get("cache_creation_1h", 0) + cc_1h
+                                        sess["tokens"]["_cached_sum"] = sess["tokens"].get("_cached_sum", 0) + d["cached"]
+                                        sess["tokens"]["cache_creation"] = sess["tokens"].get("cache_creation", 0) + d["cache_creation"]
+                                        sess["tokens"]["cache_creation_1h"] = sess["tokens"].get("cache_creation_1h", 0) + d["cache_creation_1h"]
                                         if in_loop_span:
                                             # This assistant turn is answering a loop fire, so its
                                             # usage is the loop's OWN footprint (not the whole session).
-                                            loop_usage["input"] += usage.get("input_tokens", 0) or 0
-                                            loop_usage["output"] += usage.get("output_tokens", 0) or 0
+                                            loop_usage["input"] += d["input"]
+                                            loop_usage["output"] += d["output"]
                                             loop_usage["cached"] = max(loop_usage["cached"], cr)
-                                            loop_usage["_cached_sum"] += cr
-                                            loop_usage["cache_creation"] += cc
-                                            loop_usage["cache_creation_1h"] += cc_1h
+                                            loop_usage["_cached_sum"] += d["cached"]
+                                            loop_usage["cache_creation"] += d["cache_creation"]
+                                            loop_usage["cache_creation_1h"] += d["cache_creation_1h"]
                                         if goal_span_arm is not None:
                                             # This turn exists only because a stop was BLOCKED, so
                                             # it is the goal's incremental cost. Same span technique
@@ -5905,14 +5954,22 @@ def _scan_sessions_sync():
                                             gu = goal_usage_by_arm.setdefault(goal_span_arm, {
                                                 "input": 0, "output": 0, "cached": 0, "_cached_sum": 0,
                                                 "cache_creation": 0, "cache_creation_1h": 0})
-                                            gu["input"] += usage.get("input_tokens", 0) or 0
-                                            gu["output"] += usage.get("output_tokens", 0) or 0
+                                            gu["input"] += d["input"]
+                                            gu["output"] += d["output"]
                                             gu["cached"] = max(gu["cached"], cr)
-                                            gu["_cached_sum"] += cr
-                                            gu["cache_creation"] += cc
-                                            gu["cache_creation_1h"] += cc_1h
+                                            gu["_cached_sum"] += d["cached"]
+                                            gu["cache_creation"] += d["cache_creation"]
+                                            gu["cache_creation_1h"] += d["cache_creation_1h"]
                                     sess["tokens"]["total"] = sess["tokens"]["input"] + sess["tokens"]["output"] + sess["tokens"]["cached"]
                                     sess["cost"] = calculate_cost(sess.get("model"), sess["tokens"]["input"], sess["tokens"]["output"], sess["tokens"].get("_cached_sum", sess["tokens"]["cached"]), cache_creation_tokens=sess["tokens"].get("cache_creation", 0), cache_creation_1h_tokens=sess["tokens"].get("cache_creation_1h", 0))
+                                    # Content (tool_use/skill/artifact) is only ever processed once
+                                    # per message.id — a duplicate line's usage still fed the token
+                                    # math above via delta, but its tool calls were already counted
+                                    # off the first copy and must not be counted again.
+                                    if message_id:
+                                        if message_id in seen_assistant_message_ids:
+                                            continue
+                                        seen_assistant_message_ids.add(message_id)
                                     for item in msg.get("content", []):
                                         if item.get("type") == "tool_use":
                                             tool = item.get("name")

@@ -78,6 +78,107 @@ type Rate struct {
 	// Source is the provider this rate was taken from, kept so a surprising
 	// number can be traced back to whoever published it.
 	Source string `json:"source,omitempty"`
+
+	// Schedule names an entry in Table.Schedules. When set, the rate fields
+	// above are the PEAK prices and OffPeak carries the cheaper ones that
+	// apply outside the schedule's windows. DeepSeek is the only provider
+	// doing this today (peak is 35 of every 168 hours), and dropping it is a
+	// flat 2x overcharge on every call made outside those hours.
+	Schedule string `json:"schedule,omitempty"`
+	// OffPeak holds the rates in force outside Schedule's windows.
+	OffPeak *OffPeakRate `json:"off_peak,omitempty"`
+}
+
+// OffPeakRate is the discounted side of a Rate that carries a Schedule.
+//
+// The JSON key for cache reads is "cached_read" here but "cache_read" on Rate;
+// that asymmetry is in the published dataset, not a typo.
+type OffPeakRate struct {
+	In         float64 `json:"in"`
+	Out        float64 `json:"out"`
+	CacheRead  float64 `json:"cached_read"`
+	CacheWrite float64 `json:"cache_write,omitempty"`
+}
+
+// Schedule is a set of recurring weekly windows during which peak rates apply.
+type Schedule struct {
+	// Days are time.Weekday-compatible indices, Monday=0, matching Python's
+	// datetime.weekday() which produced the dataset.
+	Days []int `json:"days"`
+	// Windows are [start, end) pairs of "HH:MM" strings, in UTC.
+	Windows [][]string `json:"windows"`
+}
+
+// covers reports whether t falls inside one of the schedule's windows.
+//
+// A zero time reports false (off-peak). That matches the Python
+// implementation, which cannot resolve an hour from a bare date and so takes
+// the cheaper and far more common side of the split.
+func (s Schedule) covers(t time.Time) bool {
+	if t.IsZero() {
+		return false
+	}
+	u := t.UTC()
+	// Python's weekday() is Monday=0; Go's is Sunday=0.
+	weekday := (int(u.Weekday()) + 6) % 7
+	found := false
+	for _, d := range s.Days {
+		if d == weekday {
+			found = true
+			break
+		}
+	}
+	if !found {
+		return false
+	}
+	minutes := u.Hour()*60 + u.Minute()
+	for _, w := range s.Windows {
+		if len(w) < 2 {
+			continue
+		}
+		start, err1 := parseHHMM(w[0])
+		end, err2 := parseHHMM(w[1])
+		if err1 != nil || err2 != nil {
+			continue
+		}
+		if start <= minutes && minutes < end {
+			return true
+		}
+	}
+	return false
+}
+
+func parseHHMM(s string) (int, error) {
+	var h, m int
+	if _, err := fmt.Sscanf(strings.TrimSpace(s), "%d:%d", &h, &m); err != nil {
+		return 0, err
+	}
+	return h*60 + m, nil
+}
+
+// atTime returns the rate with off-peak prices substituted when a schedule
+// applies and t falls outside it. Rates without a schedule are returned as-is.
+func (r Rate) atTime(t time.Time, schedules map[string]Schedule) Rate {
+	if r.Schedule == "" || r.OffPeak == nil {
+		return r
+	}
+	sched, ok := schedules[r.Schedule]
+	if !ok || sched.covers(t) {
+		return r
+	}
+	off := *r.OffPeak
+	r.In = off.In
+	r.Out = off.Out
+	r.CacheRead = off.CacheRead
+	if off.CacheWrite != 0 {
+		r.CacheWrite = off.CacheWrite
+	}
+	// Off-peak prices are a flat discount on the whole rate card; the
+	// long-context tier multipliers do not survive the substitution, so drop
+	// them rather than mixing peak tier prices into an off-peak rate.
+	r.TierThreshold = 0
+	r.TierIn, r.TierOut, r.TierCacheRead, r.TierCacheWrite = 0, 0, 0, 0
+	return r
 }
 
 // ForContext returns the rate components to use for a prompt of the given size,
@@ -134,6 +235,8 @@ type Table struct {
 	// This replaces the old substring scan, which matched "auto" inside
 	// "codex-auto-review" and billed it at Claude Sonnet rates.
 	Aliases map[string]string
+	// Schedules are the named peak-hour windows referenced by Rate.Schedule.
+	Schedules map[string]Schedule
 }
 
 const providerSep = "\x00"
@@ -186,13 +289,13 @@ func (tbl *Table) Lookup(model, provider string, t time.Time) (Rate, Confidence,
 	if provider != "" {
 		if m, ok := tbl.ByProvider[providerKey(provider, lookupID)]; ok {
 			if r, ok := m.rateAt(t); ok {
-				return r, ConfidenceProvider, true
+				return r.atTime(t, tbl.Schedules), ConfidenceProvider, true
 			}
 		}
 	}
 	if m, ok := tbl.Models[lookupID]; ok {
 		if r, ok := m.rateAt(t); ok {
-			return r, confidence, true
+			return r.atTime(t, tbl.Schedules), confidence, true
 		}
 	}
 	return Rate{}, ConfidenceUnpriced, false

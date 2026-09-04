@@ -23,12 +23,13 @@ var dataJSON []byte
 const SchemaVersion = 2
 
 type fileFormat struct {
-	Schema     int               `json:"schema"`
-	Updated    Date              `json:"updated"`
-	Sources    []string          `json:"sources,omitempty"`
-	Models     map[string]*Model `json:"models"`
-	ByProvider map[string]*Model `json:"by_provider,omitempty"`
-	Aliases    map[string]string `json:"aliases,omitempty"`
+	Schema     int                 `json:"schema"`
+	Updated    Date                `json:"updated"`
+	Sources    []string            `json:"sources,omitempty"`
+	Models     map[string]*Model   `json:"models"`
+	ByProvider map[string]*Model   `json:"by_provider,omitempty"`
+	Aliases    map[string]string   `json:"aliases,omitempty"`
+	Schedules  map[string]Schedule `json:"schedules,omitempty"`
 }
 
 var (
@@ -68,6 +69,7 @@ func load() (*Table, error) {
 		Models:     f.Models,
 		ByProvider: f.ByProvider,
 		Aliases:    f.Aliases,
+		Schedules:  f.Schedules,
 	}
 	if tbl.Models == nil {
 		tbl.Models = map[string]*Model{}
@@ -77,6 +79,9 @@ func load() (*Table, error) {
 	}
 	if tbl.Aliases == nil {
 		tbl.Aliases = map[string]string{}
+	}
+	if tbl.Schedules == nil {
+		tbl.Schedules = map[string]Schedule{}
 	}
 	for id, m := range tbl.Models {
 		m.ID = id

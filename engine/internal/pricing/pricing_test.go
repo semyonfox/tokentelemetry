@@ -188,3 +188,58 @@ func TestUserOverrideBeatsProviderKeyedRate(t *testing.T) {
 		t.Errorf("output rate = %v (ok=%v), want 99 from the override, not the provider table", r.Out, ok)
 	}
 }
+
+// A rate carrying a Schedule prices at the peak figures inside the schedule's
+// windows and the OffPeak figures outside them — this is DeepSeek's
+// peak/off-peak split, effective 2026-08-16, where off-peak is half of peak.
+func TestScheduleSubstitutesOffPeakRatesOutsideWindows(t *testing.T) {
+	tbl := &Table{
+		Models: map[string]*Model{
+			"deepseek-v4-flash": {
+				ID: "deepseek-v4-flash",
+				Rates: []Rate{{
+					From: MustParseDate("2026-08-16"),
+					In:   0.44, Out: 1.32, CacheRead: 0.014, CacheWrite: 0.44,
+					Schedule: "deepseek_peak",
+					OffPeak:  &OffPeakRate{In: 0.22, Out: 0.66, CacheRead: 0.007, CacheWrite: 0.22},
+				}},
+			},
+		},
+		ByProvider: map[string]*Model{},
+		Aliases:    map[string]string{},
+		Schedules: map[string]Schedule{
+			"deepseek_peak": {
+				Days:    []int{0, 1, 2, 3, 4}, // Monday-Friday
+				Windows: [][]string{{"01:00", "04:00"}, {"06:00", "10:00"}},
+			},
+		},
+	}
+
+	// Tuesday 02:00 UTC — inside the first peak window.
+	peak := time.Date(2026, 8, 18, 2, 0, 0, 0, time.UTC)
+	r, _, ok := tbl.Lookup("deepseek-v4-flash", "", peak)
+	if !ok || r.Out != 1.32 {
+		t.Errorf("peak output = %v (ok=%v), want 1.32", r.Out, ok)
+	}
+
+	// Tuesday 05:00 UTC — the gap between the two peak windows.
+	offPeak := time.Date(2026, 8, 18, 5, 0, 0, 0, time.UTC)
+	r, _, ok = tbl.Lookup("deepseek-v4-flash", "", offPeak)
+	if !ok || r.Out != 0.66 || r.CacheRead != 0.007 {
+		t.Errorf("off-peak output/cacheRead = %v/%v (ok=%v), want 0.66/0.007", r.Out, r.CacheRead, ok)
+	}
+
+	// Saturday — not a scheduled day at all, so every hour is off-peak.
+	weekend := time.Date(2026, 8, 22, 2, 0, 0, 0, time.UTC)
+	r, _, ok = tbl.Lookup("deepseek-v4-flash", "", weekend)
+	if !ok || r.Out != 0.66 {
+		t.Errorf("weekend output = %v (ok=%v), want 0.66 (off-peak all day)", r.Out, ok)
+	}
+
+	// A zero time (unknown timestamp) takes the safer, cheaper off-peak side
+	// rather than guessing peak.
+	r, _, ok = tbl.Lookup("deepseek-v4-flash", "", time.Time{})
+	if !ok || r.Out != 0.66 {
+		t.Errorf("zero-time output = %v (ok=%v), want 0.66 (off-peak default)", r.Out, ok)
+	}
+}

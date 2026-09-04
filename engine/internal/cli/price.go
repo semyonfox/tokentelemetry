@@ -136,6 +136,15 @@ func renderPrice(w io.Writer, th theme, tbl *pricing.Table, query string) bool {
 			rateAt(last.TierCacheRead, neededDecimals(last.TierCacheRead))))+"\n")
 	}
 
+	if last.Schedule != "" && last.OffPeak != nil {
+		off := last.OffPeak
+		io.WriteString(w, "    "+th.dim(fmt.Sprintf(
+			"peak rates shown; off-peak input %s · output %s · cache read %s",
+			rateAt(off.In, neededDecimals(off.In)),
+			rateAt(off.Out, neededDecimals(off.Out)),
+			rateAt(off.CacheRead, neededDecimals(off.CacheRead))))+"\n")
+	}
+
 	if len(m.Rates) == 1 {
 		io.WriteString(w, "\n    "+th.dim("·")+"  "+th.dim(
 			"only one observation on file — earlier usage is priced at this rate and flagged in reports")+"\n")

@@ -4750,6 +4750,21 @@
           "cache_read": 0.0028,
           "cache_write": 0.14,
           "source": "deepseek"
+        },
+        {
+          "from": "2026-08-16",
+          "in": 0.44,
+          "out": 1.32,
+          "cache_read": 0.014,
+          "cache_write": 0.44,
+          "schedule": "deepseek_peak",
+          "off_peak": {
+            "in": 0.22,
+            "out": 0.66,
+            "cached_read": 0.007,
+            "cache_write": 0.22
+          },
+          "source": "deepseek"
         }
       ],
       "first_party": true
@@ -4882,6 +4897,21 @@
           "out": 0.87,
           "cache_read": 0.003625,
           "cache_write": 0.435,
+          "source": "deepseek"
+        },
+        {
+          "from": "2026-08-16",
+          "in": 1.32,
+          "out": 3.96,
+          "cache_read": 0.044,
+          "cache_write": 1.32,
+          "schedule": "deepseek_peak",
+          "off_peak": {
+            "in": 0.66,
+            "out": 1.98,
+            "cached_read": 0.022,
+            "cache_write": 0.66
+          },
           "source": "deepseek"
         }
       ],
@@ -116140,5 +116170,28 @@
     "zaipglm-4p7-flash@us": "zai.glm-4.7-flash@us",
     "zaipglm-5": "zai.glm-5",
     "zdev-latest": "zdev"
+  },
+  "schedules": {
+    "deepseek_peak": {
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "windows": [
+        [
+          "01:00",
+          "04:00"
+        ],
+        [
+          "06:00",
+          "10:00"
+        ]
+      ],
+      "tz": "UTC",
+      "note": "DeepSeek moved to peak/off-peak pricing effective 2026-08-16 16:00 UTC; off-peak is exactly half of peak."
+    }
   }
 }
