@@ -1,35 +1,12 @@
 {
-  "name": "tokentelemetry",
-  "version": "1.0.0",
-  "description": "Local token + cost monitoring dashboard for Claude, Codex, Gemini, and other coding agents.",
-  "main": "index.js",
-  "bin": {
-    "tokentelemetry": "./bin/cli.js"
-  },
-  "scripts": {
-    "start": "node bin/cli.js"
-  },
-  "keywords": [
-    "observability",
-    "ai",
-    "agents",
-    "claude",
-    "codex",
-    "gemini",
-    "monitoring"
-  ],
-  "author": "Hemanth Vasi <hemanth.vasi1716@gmail.com>",
+  "name": "tokentelemetry-workspace",
+  "private": true,
+  "description": "Development commands for the TokenTelemetry Go CLI",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/VasiHemanth/tokentelemetry.git"
-  },
-  "homepage": "https://tokentelemetry.com",
-  "bugs": {
-    "url": "https://github.com/VasiHemanth/tokentelemetry/issues"
-  },
-  "dependencies": {},
-  "engines": {
-    "node": ">=20.9.0"
+  "scripts": {
+    "start": "go -C engine run ./cmd/tokentelemetry",
+    "build": "go -C engine build -trimpath -o ../dist/tokentelemetry ./cmd/tokentelemetry",
+    "test": "go -C engine test ./...",
+    "packages": "node engine/scripts/build-npm.mjs"
   }
 }

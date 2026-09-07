@@ -17,7 +17,7 @@
 // fields, so a user downloads a single ~8MB binary, not all six.
 
 import { execFileSync } from "node:child_process";
-import { cpSync, mkdirSync, rmSync, writeFileSync, readFileSync, chmodSync } from "node:fs";
+import { cpSync, mkdirSync, rmSync, writeFileSync, chmodSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -44,7 +44,6 @@ const common = {
     type: "git",
     url: "git+https://github.com/VasiHemanth/tokentelemetry.git",
   },
-  homepage: "https://tokentelemetry.com",
 };
 
 function build() {
@@ -108,6 +107,7 @@ function build() {
         2
       ) + "\n"
     );
+    cpSync(join(engineDir, "..", "LICENSE"), join(pkgDir, "LICENSE"));
     optionalDependencies[pkgName] = VERSION;
   }
 
@@ -137,6 +137,7 @@ function build() {
     ) + "\n"
   );
 
+  cpSync(join(engineDir, "..", "LICENSE"), join(launcherDir, "LICENSE"));
   const readme = join(engineDir, "README.md");
   try {
     cpSync(readme, join(launcherDir, "README.md"));

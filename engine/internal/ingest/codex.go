@@ -13,46 +13,12 @@ import (
 	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
 )
 
-// replayGap separates inherited history from a thread's own work.
-//
-// When Codex forks a thread it rewrites the parent's entire token_count history
-// into the child file in a single burst. The burst is NOT one timestamp — on
-// the audited machine a 3,071-event replay spanned 125 distinct milliseconds —
-// so the events cannot be matched by equality. What distinguishes them is
-// density: 3,051 of those events landed within two seconds of the fork, then a
-// five-minute pause preceded the child's first real call.
-//
-// A genuine API call cannot complete in under a second, so a sub-second gap
-// between consecutive completions means the records were written from a log,
-// not earned from the network. One second is comfortably below the fastest real
-// round trip and comfortably above the replay's inter-record spacing.
+// Legacy rollouts lack durable response identities. Keep their historical
+// replay fallback separate from structured records and disclose its use.
 const replayGap = time.Second
 
-// Codex scans OpenAI Codex CLI rollout files.
-//
-// Layout is ~/.codex/sessions/YYYY/MM/DD/rollout-<ts>-<uuid>.jsonl. Usage
-// arrives as event_msg/token_count records carrying both a running
-// total_token_usage and the per-call last_token_usage.
-//
-// Two traps here, both of which the previous implementation fell into or
-// ccusage misses:
-//
-//  1. Forked and subagent threads REPLAY the parent's entire history into the
-//     child file, re-emitting every one of the parent's token_count events with
-//     the fork's wall-clock timestamp. Taking the running total's maximum
-//     therefore attributes the whole parent conversation to each child. On the
-//     audited machine one thread's 45 children each inherited 382M input
-//     tokens, turning a $117 day into $3,790. Detected and skipped below.
-//
-//  2. Subagent threads are real, separately-billed conversations and MUST be
-//     counted. ccusage appears to skip them: it reported 53.8M output tokens
-//     against 131M actually present, because 92.7M of that sat in 810 subagent
-//     rollouts. Those are counted here.
-//
-// Summing last_token_usage per event, rather than tracking the running total,
-// also gives every call its own timestamp — which is what lets a session
-// spanning midnight split correctly across days.
-
+// Codex reads rollout history, preferring persisted token_usage_record entries
+// when available. Older turns retain a separately labelled token_count fallback.
 type Codex struct {
 	root string
 }
@@ -86,7 +52,11 @@ type codexRecord struct {
 	Timestamp string `json:"timestamp"`
 	Type      string `json:"type"`
 	Payload   struct {
-		Type string `json:"type"`
+		Type       string      `json:"type"`
+		ThreadID   string      `json:"thread_id"`
+		TurnID     string      `json:"turn_id"`
+		ResponseID string      `json:"response_id"`
+		Usage      *codexUsage `json:"usage"`
 
 		// session_meta
 		ID             string `json:"id"`
@@ -144,7 +114,28 @@ func (c *Codex) scanFile(path string) []model.Turn {
 		return nil
 	}
 	defer f.Close()
+	var records []codexRecord
+	for line := range jsonLines(f) {
+		var r codexRecord
+		if json.Unmarshal(line, &r) != nil {
+			continue
+		}
+		switch r.Type {
+		case "session_meta", "turn_context", "token_usage_record":
+			records = append(records, r)
+		case "event_msg":
+			switch r.Payload.Type {
+			case "token_count", "task_started", "turn_started":
+				records = append(records, r)
+			}
+		}
+	}
+	legacy, exact := codexStructured(records)
+	turns := scanCodexLegacy(legacy)
+	return append(turns, exact...)
+}
 
+func scanCodexLegacy(records []codexRecord) []model.Turn {
 	var (
 		sessionID string
 		project   string
@@ -175,12 +166,7 @@ func (c *Codex) scanFile(path string) []model.Turn {
 		pending = nil
 	}
 
-	for line := range jsonLines(f) {
-		var r codexRecord
-		if err := json.Unmarshal(line, &r); err != nil {
-			continue
-		}
-
+	for _, r := range records {
 		if r.Type == "session_meta" {
 			// The first session_meta is this file's own thread. Forked files
 			// then write the parent's meta immediately after, which must not
@@ -214,10 +200,10 @@ func (c *Codex) scanFile(path string) []model.Turn {
 			continue
 		}
 		lu := *r.Payload.Info.Last
-		// input_tokens is GROSS here: it already includes cached_input_tokens.
+		// input_tokens is GROSS here: it includes cache reads and writes.
 		// Netting is required or cache reads get billed twice, once at the
 		// input rate and once at the cache-read rate.
-		net := lu.Input - lu.Cached
+		net := lu.Input - lu.Cached - lu.CacheWrite
 		if net < 0 {
 			net = 0
 		}
@@ -237,14 +223,15 @@ func (c *Codex) scanFile(path string) []model.Turn {
 		}
 
 		turn := model.Turn{
-			SessionID: sessionID,
-			Agent:     model.AgentCodex,
-			Timestamp: parseTime(r.Timestamp),
-			Model:     modelID,
-			Provider:  provider,
-			Project:   project,
-			Usage:     usage,
-			Subagent:  subagent,
+			SessionID:       sessionID,
+			Agent:           model.AgentCodex,
+			Timestamp:       parseTime(r.Timestamp),
+			Model:           modelID,
+			Provider:        provider,
+			Project:         project,
+			Usage:           usage,
+			Subagent:        subagent,
+			ReplayHeuristic: forked,
 		}
 
 		if !forked || burstResolved {
@@ -295,10 +282,7 @@ func backfillModels(turns []model.Turn) {
 	}
 }
 
-// codexKey identifies a call within a rollout. Codex gives no stable per-call
-// id that survives a replay, so identity is positional within the session —
-// which is sound because replayed history is dropped before it reaches here,
-// and a given session is only ever read from its own single rollout file.
+// codexKey identifies a legacy event within a session after replay filtering.
 func codexKey(sessionID string, seq int) string {
 	if sessionID == "" {
 		return ""

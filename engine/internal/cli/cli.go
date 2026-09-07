@@ -22,9 +22,10 @@ var Version = "dev"
 const usage = `tokentelemetry — local cost and token telemetry for AI coding agents
 
 USAGE
-  tokentelemetry <command> [flags]
+  tokentelemetry [command] [flags]
 
 COMMANDS
+  summary    overview with terminal charts (default: last 30 days)
   daily      usage per day
   weekly     usage per ISO week
   monthly    usage per month
@@ -44,13 +45,14 @@ FILTERS (every report command)
   --subagents MODE       include (default) | only | exclude
 
 OUTPUT
+  --plain                summary without bars
   --json                 machine-readable output
   --group-by DIMS        nest rows by dimensions (default: model)
                          day, week, month, agent, model, provider, project,
                          session, or "none" for a flat table
                          e.g. --group-by agent,model
   --compact              abbreviate counts (1.2M) instead of full digits
-  --limit N              show at most N rows (0 = all)
+  --limit N              show at most N rows (0 = all; summary defaults to 7)
   --verbose              add scan diagnostics (dedup counts, turns scanned)
   --no-color             disable colour (also honours NO_COLOR)
 
@@ -65,8 +67,7 @@ EXAMPLES
 // Main runs the CLI and returns a process exit code.
 func Main(args []string) int {
 	if len(args) < 2 {
-		fmt.Fprint(os.Stderr, usage)
-		return 2
+		args = []string{"tokentelemetry", "summary"}
 	}
 	cmd := args[1]
 	rest := args[2:]
@@ -82,7 +83,7 @@ func Main(args []string) int {
 		return cmdPrice(rest)
 	case "agents":
 		return cmdAgents(rest)
-	case "daily", "weekly", "monthly", "session", "model", "project":
+	case "summary", "daily", "weekly", "monthly", "session", "model", "project":
 		return cmdReport(cmd, rest)
 	default:
 		fmt.Fprintf(os.Stderr, "tokentelemetry: unknown command %q\n\n", cmd)
@@ -115,6 +116,7 @@ func cmdReport(cmd string, args []string) int {
 	until := fs.String("until", "", "")
 	to := fs.String("to", "", "")
 	subagents := fs.String("subagents", "include", "")
+	plainOutput := fs.Bool("plain", false, "")
 	asJSON := fs.Bool("json", false, "")
 	breakdown := fs.Bool("breakdown", false, "")
 	limit := fs.Int("limit", 0, "")
@@ -128,10 +130,18 @@ func cmdReport(cmd string, args []string) int {
 	fs.Var(&projects, "project", "")
 
 	if err := fs.Parse(args); err != nil {
+		if err == flag.ErrHelp {
+			fmt.Print(usage)
+			return 0
+		}
 		fmt.Fprintf(os.Stderr, "tokentelemetry: %v\n\n%s", err, usage)
 		return 2
 	}
 
+	if fs.NArg() > 0 || *limit < 0 {
+		fmt.Fprintln(os.Stderr, "tokentelemetry: unexpected arguments or negative --limit")
+		return 2
+	}
 	f := report.Filter{
 		From:      firstNonEmpty(*since, *from),
 		To:        firstNonEmpty(*until, *to),
@@ -139,6 +149,15 @@ func cmdReport(cmd string, args []string) int {
 		Models:    models,
 		Projects:  projects,
 		Subagents: *subagents,
+	}
+	if cmd == "summary" && f.From == "" && f.To == "" {
+		now := time.Now()
+		f.From = now.AddDate(0, 0, -29).Format("2006-01-02")
+		f.To = now.Format("2006-01-02")
+	}
+	if f.From != "" && f.To != "" && f.From > f.To {
+		fmt.Fprintln(os.Stderr, "tokentelemetry: --since must not be after --until")
+		return 2
 	}
 	for _, d := range []string{f.From, f.To} {
 		if d == "" {
@@ -171,7 +190,7 @@ func cmdReport(cmd string, args []string) int {
 	// no extra screen — the name list already occupied one line each — and
 	// every number becomes attributable. `--group-by none` restores the flat
 	// table.
-	if firstNonEmpty(*groupBy, *by) == "" && !*breakdown && cmd != "model" {
+	if firstNonEmpty(*groupBy, *by) == "" && !*breakdown && cmd != "model" && cmd != "summary" {
 		dims = []report.Dimension{report.DimModel}
 	}
 
@@ -215,6 +234,10 @@ func cmdReport(cmd string, args []string) int {
 		}
 		return 0
 	}
+	if cmd == "summary" {
+		renderOverview(os.Stdout, rep, *limit, colorEnabled(*noColor), *verbose, !*plainOutput, agents)
+		return 0
+	}
 	render(os.Stdout, cmd, rep, *limit, colorEnabled(*noColor), *verbose, *compact, agents)
 	return 0
 }
@@ -222,6 +245,9 @@ func cmdReport(cmd string, args []string) int {
 // view narrows the report to the rows the chosen command is about, so `--json`
 // output does not carry four aggregates the caller did not ask for.
 func view(cmd string, rep *report.Report) any {
+	if cmd == "summary" {
+		return rep
+	}
 	type out struct {
 		Command string          `json:"command"`
 		Rows    []report.Bucket `json:"rows"`

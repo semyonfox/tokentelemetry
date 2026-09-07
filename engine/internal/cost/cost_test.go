@@ -153,3 +153,13 @@ func TestProviderDecidesBillingForMixedAgents(t *testing.T) {
 		}
 	}
 }
+
+func TestAggregateDoesNotInventLongContextTier(t *testing.T) {
+	tbl := table()
+	tbl.Models["m1"].Rates[0].TierThreshold = 200_000
+	tbl.Models["m1"].Rates[0].TierIn = 20
+	turn := model.Turn{Model: "m1", Timestamp: at("2026-06-01"), Usage: model.Usage{Input: 1_000_000}, Aggregate: true}
+	near(t, Of(turn, tbl).USD, 10)
+	turn.Aggregate = false
+	near(t, Of(turn, tbl).USD, 20)
+}

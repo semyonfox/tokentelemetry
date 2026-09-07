@@ -248,3 +248,31 @@ func TestParseDimensionsNoneMeansFlat(t *testing.T) {
 		}
 	}
 }
+
+func TestSessionIdentityIncludesAgent(t *testing.T) {
+	a := turn("a", "cheap", "/p", local(2026, 8, 1, 12, 0), 1_000_000)
+	b := turn("b", "cheap", "/p", local(2026, 8, 1, 13, 0), 2_000_000)
+	b.Agent = model.AgentCodex
+	rep := Build([]model.Turn{a, b}, tbl(), Filter{}, Daily, 0, nil)
+	if rep.Totals.Sessions != 2 || rep.Series[0].Sessions != 2 || len(rep.Sessions) != 2 {
+		t.Fatalf("different agents' sessions merged: totals=%d day=%d rows=%d", rep.Totals.Sessions, rep.Series[0].Sessions, len(rep.Sessions))
+	}
+	if rep.Totals.Cost != 3 || rep.Totals.Usage.Total() != 3_000_000 {
+		t.Fatalf("want $3 and 3000000 tokens, got %+v", rep.Totals)
+	}
+}
+
+func TestAccountingQualificationsFollowFiltersAndBuckets(t *testing.T) {
+	a := turn("a", "cheap", "/p", local(2026, 9, 1, 12, 0), 1_000_000)
+	a.Aggregate = true
+	b := turn("b", "dear", "/p", local(2026, 9, 2, 12, 0), 2_000_000)
+	b.ReplayHeuristic = true
+	rep := Build([]model.Turn{a, b}, tbl(), Filter{}, Daily, 0, nil)
+	if rep.Totals.AggregateRecords != 1 || rep.Totals.AggregateTokens != 1_000_000 || rep.Totals.HeuristicRecords != 1 || rep.Series[0].AggregateRecords != 1 || rep.Series[1].HeuristicRecords != 1 {
+		t.Fatalf("missing qualifications: %+v", rep)
+	}
+	filtered := Build([]model.Turn{a, b}, tbl(), Filter{From: "2026-09-02"}, Daily, 0, nil)
+	if filtered.Totals.AggregateRecords != 0 || filtered.Totals.HeuristicRecords != 1 {
+		t.Fatalf("qualifications ignored filters: %+v", filtered.Totals)
+	}
+}

@@ -1,32 +1,18 @@
 ---
-name: Bug Report
-about: Something not working? Let us know.
+name: Bug report
+about: Report a CLI or accounting problem
 title: '[BUG] '
 labels: bug
-assignees: VasiHemanth
 ---
 
-## Describe the bug
-A clear and concise description of what the bug is.
+## Problem
 
-## To Reproduce
-Steps to reproduce the behavior:
-1. Run `./start.sh`
-2. Navigate to '...'
-3. See error
+Describe the expected and actual behaviour.
 
-## Expected behavior
-What you expected to happen.
+## Reproduction
 
-## Environment
-- **OS**: (e.g. macOS 14, Ubuntu 22.04, Windows 11)
-- **Node.js version**: (run `node -v`)
-- **Python version**: (run `python3 --version`)
-- **Agent(s) in use**: (e.g. Claude Code, Gemini CLI)
-- **TokenTelemetry version**: (check package.json or latest commit)
+Include the command, operating system, TokenTelemetry version and agent version.
+For source builds, include `go version`.
 
-## Logs / Screenshots
-Paste any relevant terminal output or screenshots here.
-
-## Additional context
-Anything else that might help diagnose the issue.
+Use a small synthetic example for accounting issues. Do not attach personal
+transcripts, credentials or identifying paths.

@@ -2,10 +2,15 @@ package ingest
 
 import (
 	"context"
+	"crypto/sha256"
 	"database/sql"
 	"errors"
+	"fmt"
+	"math"
+	"net/url"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	_ "modernc.org/sqlite" // pure-Go driver: keeps CGO_ENABLED=0 cross-compiles working
@@ -13,19 +18,9 @@ import (
 	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
 )
 
-// Hermes scans the Nous Research Hermes agent's SQLite state.
-//
-// Unlike the file-based agents, Hermes keeps its own accounting in
-// ~/.hermes/state.db (plus one per profile under profiles/<name>/state.db).
-// The table that matters is session_model_usage: one row per (session, model)
-// carrying token counts, the billing route, and first/last timestamps. That
-// pre-aggregation is why this scanner emits a turn per row rather than per API
-// call — the per-call detail is not recorded anywhere.
-//
-// The consequence is bucketing granularity: a row is attributed to the local
-// day of its last_seen. A Hermes session that ran across midnight lands wholly
-// on the day it finished, where a Claude or Codex session would split. Totals
-// and per-model attribution are exact; only the day boundary is approximate.
+// Hermes reads per-route/task aggregates and replaces them with timestamped
+// log calls only when their complete usage reconciles. Aggregates remain
+// explicitly approximate when logs are missing, rotated or ambiguous.
 type Hermes struct {
 	root string
 }
@@ -95,7 +90,10 @@ SELECT
   CAST(COALESCE(u.reasoning_tokens, 0) AS INTEGER)      AS reasoning,
   CAST(COALESCE(u.last_seen, u.first_seen, 0) AS REAL)  AS seen_at,
   COALESCE(s.cwd, '')                                   AS cwd,
-  COALESCE(s.parent_session_id, '')                     AS parent_id
+  COALESCE(s.parent_session_id, '')                     AS parent_id,
+  %s AS billing_mode,
+  %s AS task,
+  %s AS api_call_count
 FROM session_model_usage u
 LEFT JOIN sessions s ON s.id = u.session_id
 `
@@ -103,40 +101,56 @@ LEFT JOIN sessions s ON s.id = u.session_id
 func (h *Hermes) scanDB(ctx context.Context, path string) ([]model.Turn, error) {
 	// Read-only, and immutable=false so a live WAL is still read correctly.
 	// A busy timeout keeps a concurrently-writing Hermes from failing the scan.
-	dsn := "file:" + path + "?mode=ro&_pragma=busy_timeout(3000)"
+	uriPath := filepath.ToSlash(path)
+	if filepath.VolumeName(path) != "" && !strings.HasPrefix(uriPath, "/") {
+		uriPath = "/" + uriPath
+	}
+	dsn := (&url.URL{Scheme: "file", Path: uriPath, RawQuery: "mode=ro&_pragma=busy_timeout(3000)"}).String()
 	db, err := sql.Open("sqlite", dsn)
 	if err != nil {
 		return nil, err
 	}
 	defer db.Close()
 
-	rows, err := db.QueryContext(ctx, hermesQuery)
+	cols, err := hermesColumns(ctx, db)
+	if err != nil {
+		return nil, err
+	}
+	optional := func(name, fallback string) string {
+		if cols[name] {
+			return "COALESCE(u." + name + ", " + fallback + ")"
+		}
+		return fallback
+	}
+	query := fmt.Sprintf(hermesQuery, optional("billing_mode", "''"), optional("task", "''"), optional("api_call_count", "0"))
+	rows, err := db.QueryContext(ctx, query)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var turns []model.Turn
+	scope := sha256.Sum256([]byte(filepath.Clean(path)))
+	var aggregates []hermesAggregate
 	for rows.Next() {
 		var (
-			sessionID, modelID, provider, endpoint, cwd, parentID string
-			in, out, cr, cw, reasoning                            int64
-			seenAt                                                float64
+			sessionID, modelID, provider, endpoint, cwd, parentID, billingMode, task string
+			in, out, cr, cw, reasoning, calls                                        int64
+			seenAt                                                                   float64
 		)
 		if err := rows.Scan(&sessionID, &modelID, &provider, &endpoint,
-			&in, &out, &cr, &cw, &reasoning, &seenAt, &cwd, &parentID); err != nil {
-			continue
+			&in, &out, &cr, &cw, &reasoning, &seenAt, &cwd, &parentID, &billingMode, &task, &calls); err != nil {
+			return nil, err
 		}
 		usage := model.Usage{
 			Input: in, Output: out, CacheRead: cr, CacheWrite: cw, Reasoning: reasoning,
 		}
-		usage, ok := usage.Sanitize()
-		if !ok || usage.IsZero() || modelID == "" {
+		usage, ok := sanitizeHermesAggregate(usage)
+		if !ok || usage.IsZero() {
 			continue
 		}
-		turns = append(turns, model.Turn{
-			Key:       "hermes|" + path + "|" + sessionID + "|" + modelID,
-			SessionID: sessionID,
+		aggregates = append(aggregates, hermesAggregate{session: sessionID, task: task, calls: calls, turn: model.Turn{
+			Key:       identityKey("hermes-aggregate", path, sessionID, modelID, provider, endpoint, billingMode, task),
+			SessionID: fmt.Sprintf("%s@%x", sessionID, scope),
 			Agent:     model.AgentHermes,
 			Timestamp: unixFloat(seenAt),
 			Model:     modelID,
@@ -145,12 +159,13 @@ func (h *Hermes) scanDB(ctx context.Context, path string) ([]model.Turn, error) 
 			Project:   cwd,
 			Usage:     usage,
 			Subagent:  parentID != "",
-		})
+			Aggregate: true,
+		}})
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
 	}
-	return turns, nil
+	return reconcileHermesLogs(ctx, path, aggregates)
 }
 
 // unixFloat converts Hermes's fractional unix seconds to a time.
@@ -165,4 +180,38 @@ func unixFloat(v float64) time.Time {
 func fileExists(p string) bool {
 	fi, err := os.Stat(p)
 	return err == nil && !fi.IsDir()
+}
+
+// Optional columns support older five-part keys and pre-call-count schemas.
+func hermesColumns(ctx context.Context, db *sql.DB) (map[string]bool, error) {
+	rows, err := db.QueryContext(ctx, "PRAGMA table_info(session_model_usage)")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	cols := map[string]bool{}
+	for rows.Next() {
+		var cid, notnull, pk int
+		var name, typ string
+		var def sql.NullString
+		if err := rows.Scan(&cid, &name, &typ, &notnull, &def, &pk); err != nil {
+			return nil, err
+		}
+		cols[strings.ToLower(name)] = true
+	}
+	return cols, rows.Err()
+}
+
+// Session aggregates can legitimately exceed any per-call token limit. Keep
+// negative values clamped as for other readers, but reject arithmetic overflow.
+func sanitizeHermesAggregate(u model.Usage) (model.Usage, bool) {
+	for _, p := range []*int64{&u.Input, &u.Output, &u.CacheRead, &u.CacheWrite, &u.Reasoning} {
+		if *p < 0 {
+			*p = 0
+		}
+		if *p > math.MaxInt64/8 {
+			return u, false
+		}
+	}
+	return u, true
 }

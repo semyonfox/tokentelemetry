@@ -88,6 +88,11 @@ func Of(t model.Turn, tbl *pricing.Table) Cost {
 	if ctx == 0 {
 		ctx = u.Input + u.CacheRead + u.CacheWrite
 	}
+	if t.Aggregate {
+		// A session total is not a prompt size. Use base rates for this
+		// explicitly approximate value rather than inventing a context tier.
+		ctx = 0
+	}
 	in, out, cacheRead, cacheWrite := rate.ForContext(ctx)
 
 	write1h := min64(u.CacheWrite1h, u.CacheWrite)

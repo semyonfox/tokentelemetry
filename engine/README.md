@@ -1,180 +1,127 @@
-# tokentelemetry engine
+# TokenTelemetry CLI reference
 
-Local token and cost telemetry for AI coding agents. A single static binary that
-reads logs already on your disk and makes **no network calls**.
-
-```bash
-npx tokentelemetry daily
-bunx tokentelemetry monthly --model claude-opus-5 --breakdown
-```
-
-## Why this exists
-
-This is a Go rewrite of the Python scanner and pricing table. An audit of the
-Python implementation against real data (9,044 sessions, 317 Claude transcripts,
-2,113 Codex rollouts) found the cost figures were wrong in five independent
-ways. On that machine the reported total fell from **$19,204 to $8,497** once
-they were fixed — and the new figure agrees with `ccusage` to within 2% per day
-rather than diverging by up to 27x.
-
-| Defect in the old implementation | Fix |
-|---|---|
-| Pricing picked the **alphabetically first** provider, so resellers beat vendors. `gpt-5.6-luna` billed at $1.00/$6.00 instead of OpenAI's $0.20/$1.20 — a 5x overcharge hiding an 80% price cut. 18% of models with a known first-party price were wrong, from 0.05x to 267x. | Providers are **ranked**; the vendor that makes the model always wins. |
-| One flat price per model, no time dimension — a price cut silently repriced your entire backlog. | Rates are **effective-dated**. A call is priced at the rate in force when it happened. |
-| Unknown models silently fell back to `$2/$10`, billing 965 sessions of a *free* model $380. | Unknown models are **unpriced** and reported as such. Never estimated. |
-| A session was one model and one timestamp, so mid-thread model switches were mispriced and 25% of Codex cost landed on the wrong day. | The **turn** (one API call) is the atom. Per-call model, per-call clock. |
-| Replayed history in resumed/forked transcripts was counted again — half of all Claude assistant messages were duplicates. | Global **dedup** on call identity, plus density-based replay detection for Codex forks. |
-
-Also new: long-context tier pricing, per-provider cache-write rates, and the
-batch service tier's 50% discount — all of which the old table dropped.
-
-## Install
-
-```bash
-npx tokentelemetry <command>      # or bunx, or npm i -g tokentelemetry
-go install github.com/VasiHemanth/tokentelemetry/engine/cmd/tokentelemetry@latest
-```
-
-The npm package is a launcher shim; the real binary ships as a per-platform
-optional dependency, so you download one ~5MB binary, not six.
+The Go engine is the primary application. For installation, project origins and
+accuracy limits, see the [project README](../README.md).
 
 ## Commands
 
 ```
-daily | weekly | monthly     usage over time
+summary                      overview with terminal charts; default command
+ daily | weekly | monthly    usage over time
 session | model | project    usage by dimension
 price <model>                a model's rate history
-agents                       detected agents and their log paths
+agents                       detected agents and log paths
+version                      build version
 ```
 
-### Filters
+`summary` defaults to the last 30 local calendar days, including today. An explicit
+`--since` or `--until` replaces that default. Other report commands default to all
+available history. All reporting reads local files without making network calls.
 
-Every report command accepts these. `ccusage` offers only `--since`/`--until`.
-
-```
---since / --until DATE   local-day bounds, inclusive
---agent NAME             repeatable
---model NAME             repeatable
---project NAME           full path or just the folder name
---subagents MODE         include (default) | only | exclude
---group-by DIMS          nest rows (default: model). day, week, month, agent,
-                         model, provider, project, session, or "none" for flat.
-                         e.g. --group-by agent,model
---compact                abbreviate counts (1.2M) instead of full digits
---verbose                add scan diagnostics
---json                   machine-readable
---limit N
-```
-
-Rows break down per model and print full counts by default. Listing model names
-beside a row's combined figures would say which models were involved but not how
-much each one cost — a row per model costs no extra screen and makes every
-number attributable.
+## Filters and output
 
 ```
-  DATE         MODEL                 INPUT    OUTPUT     CACHE W       CACHE R         TOTAL     COST
-  ───────────────────────────────────────────────────────────────────────────────────────────────────
-  2026-08-26   All                 334,030   149,403     508,408    16,988,615    17,980,456   $17.77
-               - claude-opus-5         210   121,660     508,408    14,080,711    14,710,989   $15.17
-               - gpt-5.6-sol       211,219    18,211           —     2,268,160     2,497,590    $2.12
-               - gpt-5.6-terra     122,601     9,532           —       639,744       771,877    $0.49
+--since / --until DATE   inclusive local-day bounds, YYYY-MM-DD
+--agent NAME            repeatable, or comma-separated
+--model NAME            repeatable, or comma-separated
+--project NAME          full path or trailing folder name; repeatable
+--subagents MODE        include (default) | only | exclude
+--group-by DIMS         nested detailed reports: day, week, month, agent,
+                        model, provider, project, session; "none" for flat
+--compact               abbreviated counts in detailed tables
+--verbose               scan and deduplication diagnostics
+--json                  machine-readable output
+--limit N               detailed report row limit; 0 means all
+--no-color              disable colour; also honours NO_COLOR
+--plain                 omit summary bars
 ```
 
-Nest further with `--group-by agent,model`, or drop back to one row per day with
-`--group-by none`.
+Summary charts show seven rows by default, including with `--limit 0`; a positive
+limit changes that cap. The daily chart selects the latest recorded days; models
+and agents are ranked by list cost. Chart limits never reduce the totals or JSON
+output. Summary JSON includes the daily series and all dimension aggregates.
+`--group-by` adds nested data to JSON and detailed tables; summary charts stay flat.
 
-```bash
-tokentelemetry daily --since 2026-08-01 --agent claude
-tokentelemetry daily --group-by agent,model
-tokentelemetry monthly --group-by provider
-tokentelemetry session --limit 10 --json
+```sh
+./dist/tokentelemetry summary --agent claude,codex
+./dist/tokentelemetry summary --since 2026-08-01 --until 2026-08-31 --json
+./dist/tokentelemetry daily --group-by agent,model
+./dist/tokentelemetry session --project tokentelemetry --limit 10
 ```
 
-## What you actually pay
+## Plan costs
 
-List price is the comparable unit, but it is not a bill. Tell the tool what your
-flat plans cost in `~/.tokentelemetry/plans.json` and it shows real spend beside
-it, prorated per calendar day over exactly the window on screen:
+Optionally configure `~/.tokentelemetry/plans.json`:
 
 ```json
 {
   "subscriptions": [
-    { "agent": "codex",  "name": "ChatGPT",    "monthly_usd": 100 },
-    { "agent": "claude", "name": "Claude Pro", "monthly_usd": 20 }
+    { "agent": "codex", "name": "My coding plan", "monthly_usd": 100 }
   ]
 }
 ```
 
-```
-    Total cost                $1,959.15   at API list rates
-      of which subscription   $1,959.15   covered by a flat plan
-    You actually paid           $104.52   ChatGPT $87.10 + Claude Pro $17.42 · 27 days
-      Leverage                      19x   list value per dollar paid
-```
+Configured plan costs are prorated over the matched activity window, including
+its first and last local days. They are separate from API list value and are not
+an invoice total. Model/project filters do not allocate a subscription's cost to
+that subset of usage. Without a plans file, the CLI does not invent a plan cost.
 
-Without the file, no real-spend line is shown — never a guess.
+## Pricing
 
-## What the cost number means
+Rates in `internal/pricing/data/pricing.json` are embedded in the executable.
+Unknown prices remain explicit, and usage predating the available price history
+uses the earliest rate with a disclosure in the report.
 
-**Every turn is priced at API list rates, always** — including traffic a flat
-subscription already covered and models running on local hardware. One unit,
-comparable across every agent.
+Maintainer commands, from `engine/`:
 
-The old implementation returned `0.0` for subscription-backed endpoints, which
-made the headline meaningless: Hermes reported $0 while Codex reported $18,558
-for traffic on the same ChatGPT subscription. Here the total is always list
-price and the footer splits it by how it was actually paid:
-
-```
-    Total cost                $8,511.69   at API list rates
-    Turns                       129,155   across 2,145 sessions
-    Tokens                       13.84B   cache read 95% · input 4% · output <1%
-      of which subscription   $8,511.69   covered by a flat plan
-
-    !  230 turns unpriced and excluded — codex-auto-review
-    ·  rates 2026-08-27 · 97% of cost predates our price history
+```sh
+go run ./cmd/pricing-sync -dry-run
+go run ./cmd/pricing-sync
 ```
 
-A `!` means money is missing from the total and cannot be inferred from anything
-else on screen. Nothing else earns one — diagnostics like dedup counts live
-behind `--verbose`, because a caveat that fires on every run is one nobody reads.
+Pricing sync fetches current data over the network. Normal reports do not.
+Override rates using `~/.tokentelemetry/pricing.json` in the same schema, or set
+`TT_PRICING_FILE` to an override file.
 
-That last line is the honest part. Price history is real but shallow: the
-committed snapshots can date a rate backwards only where they agree with the
-current first-party price, and they are rejected outright where they record the
-reseller figure the old alphabetical sync mistakenly picked. So a backlog older
-than the history is priced at the earliest rate on file **and told how much of
-the total that covers**. Every sync appends a dated rate, so the caveat shrinks.
+## Development and packaging
 
-## Pricing data
+From the repository root, run `make test`, `make check`, and `make build`.
+`make packages` additionally requires Node.js and cross-compiles six native
+packages plus the npm launcher into `engine/dist/npm`. Publishing is separate;
+use the local binary to test this checkout. Distributed packages include the MIT
+licence notice.
 
-`internal/pricing/data/pricing.json` is generated, committed, and embedded in
-the binary. Regenerate it (maintainer/CI only — this is the only code in the
-repo that touches the network):
+Readers currently cover Claude Code, Codex CLI, Gemini CLI, OpenCode, Hermes and Pi.
+The scanner interface and registration live in `internal/ingest/ingest.go`.
 
-```bash
-go run ./cmd/pricing-sync              # append today's rates, reporting changes
-go run ./cmd/pricing-sync -dry-run     # show what would change
+## Source accuracy and reconciliation
 
-# Date existing rates backwards from an old schema-1 snapshot. Only ever moves a
-# date, never introduces a rate — a snapshot that records a reseller's price is
-# rejected rather than written into history.
-go run ./cmd/pricing-sync -backfill old/pricing_data.json -as-of 2026-07-14
-```
+Codex `token_usage_record` entries carry response and originating thread IDs.
+The reader uses them instead of overlapping `token_count` snapshots in the same
+turn, keeping older turns when a session was upgraded mid-history. Copied parent
+records are not charged to the child. Their original rollout supplies the original
+timestamp. Legacy forks without structured records still use the timing fallback;
+reports disclose retained records processed that way. Input counts exclude both
+cache reads and cache writes after normalization.
 
-Override a rate locally without waiting for a release by writing
-`~/.tokentelemetry/pricing.json` in the same schema, or point `TT_PRICING_FILE`
-at one.
+Hermes database rows remain distinct across profile, session, model, billing route,
+billing mode and task. Session aggregates are not subject to the per-call token cap.
+The reader checks `logs/agent.log` and numeric rotations beside each profile's
+`state.db`. It replaces a main-loop aggregate only when all four billable token
+buckets and the recorded call count, when available, reconcile with the logs and
+the billing route is unambiguous. Partial or conflicting logs never add extra
+usage. Auxiliary task rows remain separate aggregates.
 
-## Development
+Reasoning tokens are already included in output. When logs lack their per-call
+split, that metadata remains in a separate aggregate record without adding to the
+billable token total. Aggregate records use the database's last-seen timestamp and
+base context rates; they are explicitly approximate, not individual API calls.
+Local log timestamps cannot recover a timezone that was changed or not recorded.
 
-```bash
-go test ./...
-go run ./cmd/tokentelemetry daily
-node scripts/build-npm.mjs             # cross-compile all 6 targets + npm layout
-```
+JSON totals and buckets expose `aggregate_records` and `heuristic_records` when
+present; totals also expose `aggregate_tokens`. The terminal shows the same caveats.
 
-Supported today: Claude Code, Codex CLI. The remaining agents from the Python
-implementation (OpenCode, Hermes, Antigravity, Copilot, Cursor, Gemini, Qwen,
-Grok, Cline, Pi) still need porting; `internal/ingest` is the only package that
-has to grow — implement `Scanner` and add it to `All()`.
+The source contracts were checked against Codex `4110342321bb19b0053190750a0a8b76427b13ad`
+and Hermes `869228cab4a8276d3b4c78da9d9939670c47bd0f`. Synthetic regression tests
+cover response replay, upgrades, cache normalization, task/route separation,
+rotated and incomplete logs, and independently calculated daily costs.

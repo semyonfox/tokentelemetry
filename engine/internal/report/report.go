@@ -79,10 +79,13 @@ func (f Filter) match(t model.Turn, resolvedModel string) bool {
 
 // Totals is the headline summary.
 type Totals struct {
-	Usage    model.Usage `json:"usage"`
-	Cost     float64     `json:"cost"`
-	Turns    int         `json:"turns"`
-	Sessions int         `json:"sessions"`
+	AggregateRecords int         `json:"aggregate_records,omitempty"`
+	AggregateTokens  int64       `json:"aggregate_tokens,omitempty"`
+	HeuristicRecords int         `json:"heuristic_records,omitempty"`
+	Usage            model.Usage `json:"usage"`
+	Cost             float64     `json:"cost"`
+	Turns            int         `json:"turns"`
+	Sessions         int         `json:"sessions"`
 
 	// UnpricedTurns counts calls we hold no rate for. Their cost is excluded
 	// from Cost entirely rather than being invented — the old $2/$10 fallback
@@ -103,12 +106,14 @@ type Totals struct {
 
 // Bucket is one row of an aggregate.
 type Bucket struct {
-	Key      string      `json:"key"`
-	Usage    model.Usage `json:"usage"`
-	Cost     float64     `json:"cost"`
-	Turns    int         `json:"turns"`
-	Sessions int         `json:"sessions"`
-	Unpriced int         `json:"unpriced,omitempty"`
+	AggregateRecords int         `json:"aggregate_records,omitempty"`
+	HeuristicRecords int         `json:"heuristic_records,omitempty"`
+	Key              string      `json:"key"`
+	Usage            model.Usage `json:"usage"`
+	Cost             float64     `json:"cost"`
+	Turns            int         `json:"turns"`
+	Sessions         int         `json:"sessions"`
+	Unpriced         int         `json:"unpriced,omitempty"`
 	// Models lists the distinct models in this bucket, busiest first.
 	Models []string `json:"models,omitempty"`
 	// Breakdown splits the bucket by model, most expensive first. Populated for
@@ -143,12 +148,14 @@ type Report struct {
 }
 
 type acc struct {
-	usage    model.Usage
-	cost     float64
-	turns    int
-	unpriced int
-	sessions map[string]struct{}
-	models   map[string]int64
+	usage      model.Usage
+	cost       float64
+	turns      int
+	unpriced   int
+	aggregates int
+	heuristic  int
+	sessions   map[string]struct{}
+	models     map[string]int64
 	// sub holds this bucket's split by the next grouping dimension, and dims
 	// holds the dimensions still to apply beneath it. An empty dims stops the
 	// recursion, so the nesting depth is exactly what the caller asked for.
@@ -167,13 +174,19 @@ func newAcc(dims []Dimension) *acc {
 func (a *acc) add(t model.Turn, c cost.Cost) {
 	a.usage.Add(t.Usage)
 	a.turns++
+	if t.Aggregate {
+		a.aggregates++
+	}
+	if t.ReplayHeuristic {
+		a.heuristic++
+	}
 	if c.Priced() {
 		a.cost += c.USD
 	} else {
 		a.unpriced++
 	}
 	if t.SessionID != "" {
-		a.sessions[t.SessionID] = struct{}{}
+		a.sessions[string(t.Agent)+":"+t.SessionID] = struct{}{}
 	}
 	name := c.Model
 	if name == "" {
@@ -209,6 +222,7 @@ func (a *acc) bucket(key string) Bucket {
 	})
 	b := Bucket{
 		Key: key, Usage: a.usage, Cost: a.cost, Turns: a.turns,
+		AggregateRecords: a.aggregates, HeuristicRecords: a.heuristic,
 		Sessions: len(a.sessions), Unpriced: a.unpriced, Models: models,
 	}
 	for k, s := range a.sub {
@@ -251,6 +265,13 @@ func Build(turns []model.Turn, tbl *pricing.Table, f Filter, g Granularity, dupl
 			continue
 		}
 		rep.MatchedTurns++
+		if t.Aggregate {
+			rep.Totals.AggregateRecords++
+			rep.Totals.AggregateTokens += t.Usage.Total()
+		}
+		if t.ReplayHeuristic {
+			rep.Totals.HeuristicRecords++
+		}
 		if d := dayKey(t.Timestamp); d != "" {
 			if rep.WindowFrom == "" || d < rep.WindowFrom {
 				rep.WindowFrom = d

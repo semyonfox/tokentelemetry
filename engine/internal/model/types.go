@@ -157,6 +157,12 @@ type Turn struct {
 	// spend and are always counted; the flag exists so reports can break
 	// delegation out, and because ccusage misses them entirely on Codex.
 	Subagent bool `json:"subagent,omitempty"`
+
+	// Aggregate marks usage that cannot be resolved into individual calls.
+	// Its timestamp is an attribution estimate and its context size is unknown.
+	Aggregate bool `json:"aggregate,omitempty"`
+	// ReplayHeuristic marks legacy Codex history processed using timing.
+	ReplayHeuristic bool `json:"replay_heuristic,omitempty"`
 }
 
 // Session is the turn-level rollup of one agent conversation. It is derived

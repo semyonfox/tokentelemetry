@@ -238,9 +238,13 @@ func summary(w io.Writer, th theme, rep *report.Report, truncated int, verbose b
 	t := rep.Totals
 
 	section(w, th, "Summary")
+	turnLabel := "Turns"
+	if t.AggregateRecords > 0 {
+		turnLabel = "Usage records"
+	}
 	rows := []fieldRow{
 		{label: "Total cost", value: th.strong(th.money(money(t.Cost))), note: "at API list rates"},
-		{label: "Turns", value: humanInt(t.Turns), note: fmt.Sprintf("across %s sessions", humanInt(t.Sessions))},
+		{label: turnLabel, value: humanInt(t.Turns), note: fmt.Sprintf("across %s sessions", humanInt(t.Sessions))},
 		{label: "Tokens", value: tokens(t.Usage.Total()), note: tokenMix(t)},
 	}
 	// How the list price was actually paid for. The figure never changes; this
@@ -258,11 +262,11 @@ func summary(w io.Writer, th theme, rep *report.Report, truncated int, verbose b
 	if charges := planCharges(rep, agents); len(charges) > 0 {
 		paid := plans.Total(charges)
 		rows = append(rows,
-			fieldRow{label: "You actually paid", value: th.strong(th.money(money(paid))), note: chargeNote(charges)})
+			fieldRow{label: "Configured plan cost", value: th.strong(th.money(money(paid))), note: chargeNote(charges)})
 		if paid > 0 && t.Cost > 0 {
 			rows = append(rows, fieldRow{
-				label: "Leverage", value: fmt.Sprintf("%.0fx", t.Cost/paid),
-				note: "list value per dollar paid", sub: true,
+				label: "List value / plan cost", value: fmt.Sprintf("%.0fx", t.Cost/paid),
+				note: "comparison, not measured savings", sub: true,
 			})
 		}
 	}
@@ -284,8 +288,18 @@ func summary(w io.Writer, th theme, rep *report.Report, truncated int, verbose b
 	// A warning means money is missing from the total and cannot be inferred
 	// from anything else on screen. Nothing else earns a `!`.
 	if t.UnpricedTurns > 0 {
-		note(th.warn, "!", fmt.Sprintf("%s turns unpriced and excluded — %s",
-			humanInt(t.UnpricedTurns), strings.Join(truncateList(t.UnpricedModels, 3), ", ")))
+		noun := "turn"
+		if t.AggregateRecords > 0 {
+			noun = "record"
+		}
+		note(th.warn, "!", fmt.Sprintf("%s unpriced; cost excluded — %s",
+			plural(t.UnpricedTurns, noun), strings.Join(truncateList(t.UnpricedModels, 3), ", ")))
+	}
+	if t.AggregateRecords > 0 {
+		note(th.warn, "!", fmt.Sprintf("%s aggregate records (%s tokens): dates and costs approximate; per-call logs incomplete or ambiguous", humanInt(t.AggregateRecords), tokens(t.AggregateTokens)))
+	}
+	if t.HeuristicRecords > 0 {
+		note(th.warn, "!", fmt.Sprintf("%s legacy records use timing-based replay detection", humanInt(t.HeuristicRecords)))
 	}
 	if truncated > 0 {
 		note(th.dim, "·", th.dim(fmt.Sprintf("%s more rows — raise --limit", humanInt(truncated))))
@@ -357,8 +371,8 @@ func tokenMix(t report.Totals) string {
 		}
 		return fmt.Sprintf("%.0f%%", p)
 	}
-	return fmt.Sprintf("cache read %s · input %s · output %s",
-		pct(t.Usage.CacheRead), pct(t.Usage.Input), pct(t.Usage.Output))
+	return fmt.Sprintf("cache read %s · cache write %s · input %s · output %s",
+		pct(t.Usage.CacheRead), pct(t.Usage.CacheWrite), pct(t.Usage.Input), pct(t.Usage.Output))
 }
 
 // rowLabel shortens keys that would otherwise dominate the table.

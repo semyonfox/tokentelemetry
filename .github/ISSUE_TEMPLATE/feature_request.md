@@ -3,7 +3,7 @@ name: Feature Request
 about: Suggest a new feature or improvement.
 title: '[FEAT] '
 labels: enhancement
-assignees: VasiHemanth
+assignees: ""
 ---
 
 ## Is your feature request related to a problem?
