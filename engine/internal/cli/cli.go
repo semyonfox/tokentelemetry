@@ -45,7 +45,7 @@ FILTERS (every report command)
   --subagents MODE       include (default) | only | exclude
 
 OUTPUT
-  --plain                summary without bars
+  --plain                summary without bars or startup spinner
   --json                 machine-readable output
   --group-by DIMS        nest rows by dimensions (default: model)
                          day, week, month, agent, model, provider, project,
@@ -194,26 +194,31 @@ func cmdReport(cmd string, args []string) int {
 		dims = []report.Dimension{report.DimModel}
 	}
 
+	progress := startProgress(os.Stderr, progressEnabled(*asJSON || *plainOutput), "Checking for updated prices...")
+	defer progress.Stop()
+	pricing.Refresh()
 	tbl, err := pricing.Load()
 	if err != nil {
+		progress.Stop()
 		fmt.Fprintf(os.Stderr, "tokentelemetry: %v\n", err)
 		return 1
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
+	progress.Update("Finding agent logs...")
 	scanners := ingest.Available()
 	if len(scanners) == 0 {
+		progress.Stop()
 		fmt.Fprintln(os.Stderr, "tokentelemetry: no agent logs found on this machine (try `tokentelemetry agents`)")
 		return 1
 	}
+	progress.Update(fmt.Sprintf("Scanning logs from %d agents...", len(scanners)))
 	res, err := ingest.Run(ctx, scanners)
 	if err != nil {
+		progress.Stop()
 		fmt.Fprintf(os.Stderr, "tokentelemetry: %v\n", err)
 		return 1
-	}
-	for _, e := range res.Errors {
-		fmt.Fprintf(os.Stderr, "tokentelemetry: warning: %v\n", e)
 	}
 
 	g := report.Daily
@@ -223,7 +228,12 @@ func cmdReport(cmd string, args []string) int {
 	case "monthly":
 		g = report.Monthly
 	}
+	progress.Update("Calculating usage and costs...")
 	rep := report.Build(res.Turns, tbl, f, g, res.Duplicates, dims)
+	progress.Stop()
+	for _, e := range res.Errors {
+		fmt.Fprintf(os.Stderr, "tokentelemetry: warning: %v\n", e)
+	}
 
 	if *asJSON {
 		enc := json.NewEncoder(os.Stdout)

@@ -143,12 +143,13 @@ type mdProvider struct {
 // --- output format ----------------------------------------------------------
 
 type dataset struct {
-	Schema     int                       `json:"schema"`
-	Updated    pricing.Date              `json:"updated"`
-	Sources    []string                  `json:"sources,omitempty"`
-	Models     map[string]*pricing.Model `json:"models"`
-	ByProvider map[string]*pricing.Model `json:"by_provider,omitempty"`
-	Aliases    map[string]string         `json:"aliases,omitempty"`
+	Schedules  map[string]pricing.Schedule `json:"schedules,omitempty"`
+	Schema     int                         `json:"schema"`
+	Updated    pricing.Date                `json:"updated"`
+	Sources    []string                    `json:"sources,omitempty"`
+	Models     map[string]*pricing.Model   `json:"models"`
+	ByProvider map[string]*pricing.Model   `json:"by_provider,omitempty"`
+	Aliases    map[string]string           `json:"aliases,omitempty"`
 }
 
 // Sanity bounds in USD per 1M tokens. Anything outside is a units bug upstream
@@ -333,7 +334,7 @@ func build(providers map[string]mdProvider, effective pricing.Date) *dataset {
 func toRate(c mdCost, modelID, provID string, effective pricing.Date) (pricing.Rate, bool) {
 	in, okIn := sane(c.Input)
 	out, okOut := sane(c.Output)
-	if !okIn && !okOut {
+	if !okIn || !okOut {
 		return pricing.Rate{}, false
 	}
 	r := pricing.Rate{From: effective, In: in, Out: out, Source: provID}
@@ -474,6 +475,15 @@ func merge(prev, next *dataset, effective pricing.Date) []change {
 		}
 		return changes
 	}
+	next.Schedules = prev.Schedules
+	for alias, target := range prev.Aliases {
+		if _, ok := next.Aliases[alias]; !ok {
+			if next.Aliases == nil {
+				next.Aliases = map[string]string{}
+			}
+			next.Aliases[alias] = target
+		}
+	}
 	for id, nm := range next.Models {
 		pm, ok := prev.Models[id]
 		if !ok || len(pm.Rates) == 0 {
@@ -482,6 +492,12 @@ func merge(prev, next *dataset, effective pricing.Date) []change {
 		}
 		latest := pm.Rates[len(pm.Rates)-1]
 		fresh := nm.Rates[0]
+		// A newly free route needs review before replacing a paid rate.
+		if (latest.In > 0 || latest.Out > 0) && fresh.In == 0 && fresh.Out == 0 {
+			fmt.Fprintf(os.Stderr, "Retaining paid rates for %s: upstream now reports zero; review required\n", nm.ID)
+			nm.Rates = pm.Rates
+			continue
+		}
 		if sameRate(latest, fresh) {
 			// Unchanged: keep the original history untouched, including the
 			// date the rate first took effect.
@@ -518,6 +534,12 @@ func mergeProviderRates(prev, next map[string]*pricing.Model, effective pricing.
 		}
 		latest := pm.Rates[len(pm.Rates)-1]
 		fresh := nm.Rates[0]
+		// A newly free route needs review before replacing a paid rate.
+		if (latest.In > 0 || latest.Out > 0) && fresh.In == 0 && fresh.Out == 0 {
+			fmt.Fprintf(os.Stderr, "Retaining paid rates for %s: upstream now reports zero; review required\n", nm.ID)
+			nm.Rates = pm.Rates
+			continue
+		}
 		if sameRate(latest, fresh) {
 			nm.Rates = pm.Rates
 			continue

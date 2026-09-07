@@ -25,3 +25,29 @@ func TestMergePreservesProviderHistory(t *testing.T) {
 		t.Error("vanished provider history was discarded")
 	}
 }
+
+func TestMissingOutputIsNotFree(t *testing.T) {
+	input := 1.0
+	if _, ok := toRate(mdCost{Input: &input}, "test", "test", pricing.MustParseDate("2026-09-07")); ok {
+		t.Fatal("missing output rate accepted")
+	}
+}
+
+func TestPaidToZeroRequiresReview(t *testing.T) {
+	date := pricing.MustParseDate("2026-09-07")
+	previous := &dataset{Models: map[string]*pricing.Model{"test": {ID: "test", Rates: []pricing.Rate{{From: date, In: 1, Out: 2}}}}}
+	next := &dataset{Models: map[string]*pricing.Model{"test": {ID: "test", Rates: []pricing.Rate{{From: date}}}}}
+	merge(previous, next, date)
+	if next.Models["test"].Rates[0].In != 1 {
+		t.Fatal("paid price silently replaced with zero")
+	}
+}
+
+func TestSyncPreservesSchedules(t *testing.T) {
+	old := &dataset{Schedules: map[string]pricing.Schedule{"peak": {Days: []int{1}}}, Aliases: map[string]string{"old-name": "model"}}
+	next := &dataset{}
+	merge(old, next, pricing.MustParseDate("2026-09-07"))
+	if len(next.Schedules["peak"].Days) != 1 || next.Aliases["old-name"] != "model" {
+		t.Fatal("lost historical pricing metadata")
+	}
+}

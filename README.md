@@ -1,8 +1,8 @@
 # TokenTelemetry
 
 Local token and cost reports for AI coding agents, built around a Go accounting
-engine. Reads existing logs and SQLite databases. Reporting makes no network
-calls and needs no Python runtime, web server or browser.
+engine. Reads existing logs and SQLite databases. Reports need no Python runtime,
+web server or browser. Usage logs stay local.
 
 Supported readers: Claude Code, Codex CLI, Gemini CLI, OpenCode, Hermes and Pi.
 
@@ -25,7 +25,11 @@ number without changing the headline totals. Daily bars show the latest recorded
 days; missing days are not presented as verified zero usage. Each chart scales
 its bars independently.
 
-Use `--plain` to omit bars, or `--json` for the complete report without display
+Interactive reports show a startup spinner while checking prices, scanning
+logs and calculating totals. It clears before the report appears and stays off
+for redirected output.
+
+Use `--plain` to omit bars and the spinner, or `--json` for the complete report without display
 limits. Bars also disappear when `COLUMNS` is set below 72. `--no-color` and
 `NO_COLOR` disable colours. Reports print once and exit; there is no interactive
 terminal UI to manage.
@@ -89,3 +93,9 @@ its attribution. The original MIT notice remains in [LICENSE](LICENSE).
 No existing user logs, configuration, databases or running services are migrated
 or removed by this source-code change. The CLI reads original agent logs; it
 does not import the old dashboard's retained history database.
+
+Prices refresh through daily CI. Reports check the published dataset at most once
+per day, with a three-second timeout and a cached or bundled fallback. Set
+`TT_OFFLINE=1` to skip network checks. Your pricing overrides still take priority.
+Updates preserve recorded rate history; newly observed changes take effect on
+the sync date. Paid-to-zero changes are retained at their previous rates for review.

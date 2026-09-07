@@ -1,20 +1,38 @@
 name: Pricing sync
 on:
+  schedule:
+    - cron: "17 6 * * *"
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: pricing-sync
+  cancel-in-progress: false
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-go@v5
         with:
           go-version-file: engine/go.mod
           cache-dependency-path: engine/go.sum
-      - name: Generate rates for review
+      - name: Refresh rates
         working-directory: engine
         run: go run ./cmd/pricing-sync
+      - name: Validate pricing and accounting
+        run: make test && make check
+      - name: Commit refreshed dataset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add engine/internal/pricing/data/pricing.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: refresh model pricing"
+            git push origin HEAD:main
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: pricing

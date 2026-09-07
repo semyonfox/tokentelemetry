@@ -16,7 +16,7 @@ version                      build version
 
 `summary` defaults to the last 30 local calendar days, including today. An explicit
 `--since` or `--until` replaces that default. Other report commands default to all
-available history. All reporting reads local files without making network calls.
+available history. Usage logs stay local.
 
 ## Filters and output
 
@@ -79,7 +79,7 @@ go run ./cmd/pricing-sync -dry-run
 go run ./cmd/pricing-sync
 ```
 
-Pricing sync fetches current data over the network. Normal reports do not.
+Pricing sync fetches current data over the network.
 Override rates using `~/.tokentelemetry/pricing.json` in the same schema, or set
 `TT_PRICING_FILE` to an override file.
 
@@ -125,3 +125,9 @@ The source contracts were checked against Codex `4110342321bb19b0053190750a0a8b7
 and Hermes `869228cab4a8276d3b4c78da9d9939670c47bd0f`. Synthetic regression tests
 cover response replay, upgrades, cache normalization, task/route separation,
 rotated and incomplete logs, and independently calculated daily costs.
+
+Prices refresh through daily CI. Reports check the published dataset at most once
+per day, with a three-second timeout and a cached or bundled fallback. Set
+`TT_OFFLINE=1` to skip network checks. Your pricing overrides still take priority.
+Updates preserve recorded rate history; newly observed changes take effect on
+the sync date. Paid-to-zero changes are retained at their previous rates for review.
