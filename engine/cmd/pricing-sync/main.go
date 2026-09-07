@@ -421,7 +421,12 @@ func buildAliases(ds *dataset) {
 		}
 		ds.Aliases[from] = to
 	}
+	ids := make([]string, 0, len(ds.Models))
 	for id := range ds.Models {
+		ids = append(ids, id)
+	}
+	sort.Strings(ids)
+	for _, id := range ids {
 		// Version separator variants: agents emit claude-haiku-4.5 where the
 		// canonical id is claude-haiku-4-5, and Fireworks writes kimi-k2p6 for
 		// kimi-k2.6.

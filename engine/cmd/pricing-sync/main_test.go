@@ -51,3 +51,13 @@ func TestSyncPreservesSchedules(t *testing.T) {
 		t.Fatal("lost historical pricing metadata")
 	}
 }
+
+func TestAliasGenerationDeterministic(t *testing.T) {
+	for range 100 {
+		ds := &dataset{Models: map[string]*pricing.Model{"openai.gpt-5.4": {}, "openai-gpt-5.4": {}}, Aliases: map[string]string{}}
+		buildAliases(ds)
+		if ds.Aliases["openai-gpt-5-4"] != "openai-gpt-5.4" {
+			t.Fatal("unstable alias target")
+		}
+	}
+}
