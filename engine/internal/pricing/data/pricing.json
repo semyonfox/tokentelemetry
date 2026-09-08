@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-09-07",
+  "updated": "2026-09-08",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -4587,6 +4587,14 @@
           "cache_read": 0,
           "cache_write": 0.25,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.29,
+          "out": 1.14,
+          "cache_read": 0.11,
+          "cache_write": 0.29,
+          "source": "kilo"
         }
       ]
     },
@@ -5210,6 +5218,14 @@
           "cache_read": 0.07,
           "cache_write": 0.14,
           "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.28,
+          "out": 0.56,
+          "cache_read": 0.07,
+          "cache_write": 0.28,
+          "source": "requesty"
         }
       ]
     },
@@ -5426,6 +5442,19 @@
           "cache_read": 0.44,
           "cache_write": 1.75,
           "source": "requesty"
+        }
+      ]
+    },
+    "deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-08",
+          "in": 0.1562,
+          "out": 0.3124,
+          "cache_read": 0.03124,
+          "cache_write": 0.1562,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -10479,6 +10508,14 @@
           "cache_read": 0.014,
           "cache_write": 0.07,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.25,
+          "out": 1,
+          "cache_read": 0.125,
+          "cache_write": 0.25,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -10489,6 +10526,14 @@
           "from": "2026-09-07",
           "in": 0.2,
           "out": 0.5,
+          "cache_read": 0.07,
+          "cache_write": 0.2,
+          "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.2,
+          "out": 0.6,
           "cache_read": 0.07,
           "cache_write": 0.2,
           "source": "requesty"
@@ -15711,6 +15756,14 @@
           "out": 11.25,
           "cache_read": 0.225,
           "cache_write": 2.25,
+          "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.45,
+          "cache_write": 3,
           "source": "requesty"
         }
       ]
@@ -27041,6 +27094,14 @@
           "cache_read": 0.26,
           "cache_write": 0.4,
           "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.4,
+          "out": 2.6,
+          "cache_read": 0.05,
+          "cache_write": 0.4,
+          "source": "requesty"
         }
       ]
     },
@@ -27060,6 +27121,14 @@
           "in": 0.4,
           "out": 3,
           "cache_read": 0.26,
+          "cache_write": 0.4,
+          "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.4,
+          "out": 2.6,
+          "cache_read": 0.05,
           "cache_write": 0.4,
           "source": "requesty"
         }
@@ -58527,6 +58596,14 @@
           "cache_read": 0,
           "cache_write": 0.053,
           "source": "hyper"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.11,
+          "out": 0.408,
+          "cache_read": 0,
+          "cache_write": 0.055,
+          "source": "hyper"
         }
       ]
     },
@@ -58568,6 +58645,14 @@
           "out": 4.132,
           "cache_read": 0,
           "cache_write": 0.631,
+          "source": "hyper"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 1.332,
+          "out": 4.312,
+          "cache_read": 0,
+          "cache_write": 0.666,
           "source": "hyper"
         }
       ]
@@ -58676,6 +58761,14 @@
           "cache_read": 0,
           "cache_write": 0.2572,
           "source": "hyper"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.5584,
+          "out": 2.935,
+          "cache_read": 0,
+          "cache_write": 0.2792,
+          "source": "hyper"
         }
       ]
     },
@@ -58769,6 +58862,14 @@
           "out": 1.852,
           "cache_read": 0,
           "cache_write": 0.242,
+          "source": "hyper"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.47,
+          "out": 1.76,
+          "cache_read": 0,
+          "cache_write": 0.235,
           "source": "hyper"
         }
       ]
@@ -63114,6 +63215,14 @@
           "cache_read": 0,
           "cache_write": 0.25,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.29,
+          "out": 1.14,
+          "cache_read": 0.11,
+          "cache_write": 0.29,
+          "source": "kilo"
         }
       ]
     },
@@ -63284,6 +63393,14 @@
           "in": 1.32,
           "out": 3.96,
           "cache_read": 0.132,
+          "cache_write": 1.32,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 1.32,
+          "out": 3.96,
+          "cache_read": 0.044,
           "cache_write": 1.32,
           "source": "kilo"
         }
@@ -63944,6 +64061,14 @@
           "cache_read": 0.08,
           "cache_write": 0.43,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.55,
+          "out": 2.2,
+          "cache_read": 0.11,
+          "cache_write": 0.55,
+          "source": "kilo"
         }
       ]
     },
@@ -63982,6 +64107,14 @@
           "out": 0.4,
           "cache_read": 0.01,
           "cache_write": 0.06,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.0605,
+          "out": 0.4,
+          "cache_read": 0,
+          "cache_write": 0.0605,
           "source": "kilo"
         }
       ]
@@ -65072,6 +65205,14 @@
           "out": 0.33,
           "cache_read": 0.020625,
           "cache_write": 0.0825,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.132,
+          "out": 0.528,
+          "cache_read": 0.033,
+          "cache_write": 0.132,
           "source": "kilo"
         }
       ]
@@ -79205,6 +79346,19 @@
         }
       ]
     },
+    "nano-gpt\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-08",
+          "in": 0.1562,
+          "out": 0.3124,
+          "cache_read": 0.03124,
+          "cache_write": 0.1562,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000devstral-2-123b-instruct-2512": {
       "id": "devstral-2-123b-instruct-2512",
       "rates": [
@@ -80955,6 +81109,14 @@
           "out": 0.21,
           "cache_read": 0.014,
           "cache_write": 0.07,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.25,
+          "out": 1,
+          "cache_read": 0.125,
+          "cache_write": 0.25,
           "source": "nano-gpt"
         }
       ]
@@ -94634,6 +94796,14 @@
           "cache_read": 0,
           "cache_write": 0.25,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.29,
+          "out": 1.14,
+          "cache_read": 0.11,
+          "cache_write": 0.29,
+          "source": "openrouter"
         }
       ]
     },
@@ -94646,6 +94816,14 @@
           "out": 1.65,
           "cache_read": 0.55,
           "cache_write": 0.55,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.25,
+          "out": 0.95,
+          "cache_read": 0.13,
+          "cache_write": 0.25,
           "source": "openrouter"
         }
       ]
@@ -94775,6 +94953,14 @@
           "cache_read": 0.028,
           "cache_write": 0.14,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.065,
+          "out": 0.18,
+          "cache_read": 0.016,
+          "cache_write": 0.065,
+          "source": "openrouter"
         }
       ]
     },
@@ -94829,6 +95015,14 @@
           "out": 1.98,
           "cache_read": 0.022,
           "cache_write": 0.66,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 1.0494,
+          "out": 3.1482,
+          "cache_read": 0.03498,
+          "cache_write": 1.0494,
           "source": "openrouter"
         }
       ]
@@ -95425,6 +95619,14 @@
           "cache_read": 0.08,
           "cache_write": 0.43,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.55,
+          "out": 2.2,
+          "cache_read": 0.11,
+          "cache_write": 0.55,
+          "source": "openrouter"
         }
       ]
     },
@@ -95463,6 +95665,14 @@
           "out": 0.4,
           "cache_read": 0.01,
           "cache_write": 0.06,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.0605,
+          "out": 0.4,
+          "cache_read": 0,
+          "cache_write": 0.0605,
           "source": "openrouter"
         }
       ]
@@ -96631,6 +96841,14 @@
           "cache_read": 0.020625,
           "cache_write": 0.0825,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.132,
+          "out": 0.528,
+          "cache_read": 0.033,
+          "cache_write": 0.132,
+          "source": "openrouter"
         }
       ]
     },
@@ -96782,6 +97000,14 @@
           "cache_read": 0.15,
           "cache_write": 0.6,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.6,
+          "out": 2.5,
+          "cache_read": 0,
+          "cache_write": 0.6,
+          "source": "openrouter"
         }
       ]
     },
@@ -96836,6 +97062,14 @@
           "out": 3.4,
           "cache_read": 0.18,
           "cache_write": 0.66,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.71,
+          "out": 3.5,
+          "cache_read": 0.15,
+          "cache_write": 0.71,
           "source": "openrouter"
         }
       ]
@@ -97232,6 +97466,14 @@
           "out": 2.2,
           "cache_read": 0,
           "cache_write": 0.55,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.4,
+          "out": 2.2,
+          "cache_read": 0,
+          "cache_write": 0.4,
           "source": "openrouter"
         }
       ]
@@ -98118,6 +98360,14 @@
           "out": 0.24,
           "cache_read": 0,
           "cache_write": 0.12,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.2275,
+          "out": 0.91,
+          "cache_read": 0,
+          "cache_write": 0.2275,
           "source": "openrouter"
         }
       ]
@@ -104868,6 +105118,32 @@
         }
       ]
     },
+    "privatemode-ai\u0000glm": {
+      "id": "glm",
+      "rates": [
+        {
+          "from": "2026-09-08",
+          "in": 1.791,
+          "out": 8.9436,
+          "cache_read": 0.1733,
+          "cache_write": 1.791,
+          "source": "privatemode-ai"
+        }
+      ]
+    },
+    "privatemode-ai\u0000glm-5.3": {
+      "id": "glm-5.3",
+      "rates": [
+        {
+          "from": "2026-09-08",
+          "in": 1.791,
+          "out": 8.9436,
+          "cache_read": 0.1733,
+          "cache_write": 1.791,
+          "source": "privatemode-ai"
+        }
+      ]
+    },
     "privatemode-ai\u0000gpt-oss-120b": {
       "id": "gpt-oss-120b",
       "rates": [
@@ -106033,6 +106309,14 @@
           "cache_read": 0.07,
           "cache_write": 0.14,
           "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.28,
+          "out": 0.56,
+          "cache_read": 0.07,
+          "cache_write": 0.28,
+          "source": "requesty"
         }
       ]
     },
@@ -106054,6 +106338,14 @@
           "cache_read": 0.07,
           "cache_write": 0.14,
           "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.28,
+          "out": 0.56,
+          "cache_read": 0.07,
+          "cache_write": 0.28,
+          "source": "requesty"
         }
       ]
     },
@@ -106074,6 +106366,14 @@
           "out": 0.28,
           "cache_read": 0.07,
           "cache_write": 0.14,
+          "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.28,
+          "out": 0.56,
+          "cache_read": 0.07,
+          "cache_write": 0.28,
           "source": "requesty"
         }
       ]
@@ -106756,6 +107056,14 @@
           "cache_read": 0.07,
           "cache_write": 0.2,
           "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.2,
+          "out": 0.6,
+          "cache_read": 0.07,
+          "cache_write": 0.2,
+          "source": "requesty"
         }
       ]
     },
@@ -106766,6 +107074,14 @@
           "from": "2026-09-07",
           "in": 0.2,
           "out": 0.5,
+          "cache_read": 0.07,
+          "cache_write": 0.2,
+          "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.2,
+          "out": 0.6,
           "cache_read": 0.07,
           "cache_write": 0.2,
           "source": "requesty"
@@ -107662,6 +107978,14 @@
           "cache_read": 0.225,
           "cache_write": 2.25,
           "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.45,
+          "cache_write": 3,
+          "source": "requesty"
         }
       ]
     },
@@ -107682,6 +108006,14 @@
           "out": 11.25,
           "cache_read": 0.225,
           "cache_write": 2.25,
+          "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.45,
+          "cache_write": 3,
           "source": "requesty"
         }
       ]
@@ -108634,6 +108966,14 @@
           "cache_read": 0.26,
           "cache_write": 0.4,
           "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.4,
+          "out": 2.6,
+          "cache_read": 0.05,
+          "cache_write": 0.4,
+          "source": "requesty"
         }
       ]
     },
@@ -108653,6 +108993,14 @@
           "in": 0.4,
           "out": 3,
           "cache_read": 0.26,
+          "cache_write": 0.4,
+          "source": "requesty"
+        },
+        {
+          "from": "2026-09-08",
+          "in": 0.4,
+          "out": 2.6,
+          "cache_read": 0.05,
           "cache_write": 0.4,
           "source": "requesty"
         }
@@ -123881,6 +124229,7 @@
     "deepseek-v3p2-speciale": "deepseek-v3.2-speciale",
     "deepseek-v3p2-tee": "deepseek-v3.2-tee",
     "deepseek-v3p2-thinking": "deepseek-v3.2-thinking",
+    "deepseek-v4-1-flash": "deepseek-v4.1-flash",
     "deepseek-v4-flash-0731-284b-latest": "deepseek-v4-flash-0731-284b",
     "deepseek-v4-flash-0731-fast-latest": "deepseek-v4-flash-0731-fast",
     "deepseek-v4-flash-0731-latest": "deepseek-v4-flash-0731",
@@ -123900,6 +124249,8 @@
     "deepseek-v4-pro-ga-260813-latest": "deepseek-v4-pro-ga-260813",
     "deepseek-v4-pro-latest": "deepseek-v4-pro",
     "deepseek-v4-pro@eu-latest": "deepseek-v4-pro@eu",
+    "deepseek-v4.1-flash-latest": "deepseek-v4.1-flash",
+    "deepseek-v4p1-flash": "deepseek-v4.1-flash",
     "deepseek.r1-v1-latest": "deepseek.r1-v1",
     "deepseek.v3-v1-latest": "deepseek.v3-v1",
     "deepseek.v3.2-latest": "deepseek.v3.2",
