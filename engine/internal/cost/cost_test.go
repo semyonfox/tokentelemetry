@@ -115,6 +115,23 @@ func TestUnpricedTurnIsFlagged(t *testing.T) {
 	near(t, c.USD, 0)
 }
 
+func TestAliasReportsItsCanonicalModel(t *testing.T) {
+	tbl := table()
+	tbl.Aliases["masked-model"] = "m1"
+	c := Of(model.Turn{
+		Model:     "masked-model",
+		Timestamp: at("2026-06-01"),
+		Usage:     model.Usage{Output: 1_000_000},
+	}, tbl)
+	if c.Model != "m1" {
+		t.Errorf("reported model = %q, want canonical m1", c.Model)
+	}
+	if c.Confidence != pricing.ConfidenceAlias {
+		t.Errorf("confidence = %v, want alias", c.Confidence)
+	}
+	near(t, c.USD, 100)
+}
+
 // Pricing a call with a rate that post-dates it is allowed but must be
 // reported, so a backlog repriced by a later cut is visible.
 func TestRateNewerThanCallIsFlagged(t *testing.T) {
