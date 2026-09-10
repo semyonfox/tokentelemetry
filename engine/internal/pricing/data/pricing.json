@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-09-09",
+  "updated": "2026-09-10",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -154,6 +154,19 @@
           "cache_read": 0.0038,
           "cache_write": 0.45,
           "source": "agnes"
+        }
+      ]
+    },
+    "agnes-3.0-flash": {
+      "id": "agnes-3.0-flash",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.05,
+          "out": 0.15,
+          "cache_read": 0.005,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -4729,6 +4742,19 @@
         }
       ]
     },
+    "deepseek-flash": {
+      "id": "deepseek-flash",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
+          "source": "opencode-go"
+        }
+      ]
+    },
     "deepseek-ocr": {
       "id": "deepseek-ocr",
       "rates": [
@@ -5581,6 +5607,14 @@
           "cache_read": 0.03124,
           "cache_write": 0.1562,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.27,
+          "out": 1.08,
+          "cache_read": 0.0054,
+          "cache_write": 0.27,
+          "source": "crossmodel"
         }
       ]
     },
@@ -8073,6 +8107,19 @@
           "cache_read": 0,
           "cache_write": 1.25,
           "source": "nearai"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 2,
+          "out": 12,
+          "cache_read": 0.2,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 4,
+          "tier_out": 18,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 4,
+          "source": "opencode"
         }
       ]
     },
@@ -8922,6 +8969,32 @@
         }
       ]
     },
+    "gemma-4-12b-it-semancer": {
+      "id": "gemma-4-12b-it-semancer",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.05,
+          "out": 0.25,
+          "cache_read": 0.025,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "gemma-4-12b-it-station-keeper": {
+      "id": "gemma-4-12b-it-station-keeper",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.05,
+          "out": 0.25,
+          "cache_read": 0.025,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "gemma-4-26b-a4b": {
       "id": "gemma-4-26b-a4b",
       "rates": [
@@ -9558,6 +9631,14 @@
           "out": 3.498,
           "cache_read": 0.2067,
           "cache_write": 1.113,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 1.085,
+          "out": 3.41,
+          "cache_read": 0.2015,
+          "cache_write": 1.085,
           "source": "kilo"
         }
       ]
@@ -15226,6 +15307,19 @@
         }
       ]
     },
+    "k2-horizon-7b": {
+      "id": "k2-horizon-7b",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.05,
+          "out": 0.2,
+          "cache_read": 0.04,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "k2-think": {
       "id": "k2-think",
       "rates": [
@@ -16675,6 +16769,19 @@
           "cache_read": 0,
           "cache_write": 0,
           "source": "vercel"
+        }
+      ]
+    },
+    "ling-3.0-flash-vl": {
+      "id": "ling-3.0-flash-vl",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.06,
+          "out": 0.18,
+          "cache_read": 0.012,
+          "cache_write": 0.06,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -23286,6 +23393,19 @@
         }
       ]
     },
+    "qwen-3-8-flash": {
+      "id": "qwen-3-8-flash",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.14,
+          "out": 0.49,
+          "cache_read": 0.014,
+          "cache_write": 0.14,
+          "source": "venice"
+        }
+      ]
+    },
     "qwen-3-8-max": {
       "id": "qwen-3-8-max",
       "rates": [
@@ -26182,6 +26302,19 @@
         },
         {
           "from": "2026-09-07",
+          "in": 0.25,
+          "out": 1.5,
+          "cache_read": 0.125,
+          "cache_write": 0.25,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "qwen3.8-27b-queen": {
+      "id": "qwen3.8-27b-queen",
+      "rates": [
+        {
+          "from": "2026-09-10",
           "in": 0.25,
           "out": 1.5,
           "cache_read": 0.125,
@@ -46145,6 +46278,14 @@
           "cache_read": 0.0135,
           "cache_write": 0.405,
           "source": "crossmodel"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.27,
+          "out": 1.08,
+          "cache_read": 0.0054,
+          "cache_write": 0.27,
+          "source": "crossmodel"
         }
       ]
     },
@@ -46158,6 +46299,14 @@
           "cache_read": 0.0135,
           "cache_write": 0.405,
           "source": "crossmodel"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.27,
+          "out": 1.08,
+          "cache_read": 0.0054,
+          "cache_write": 0.27,
+          "source": "crossmodel"
         }
       ]
     },
@@ -46170,6 +46319,19 @@
           "out": 3.645,
           "cache_read": 0.0405,
           "cache_write": 1.215,
+          "source": "crossmodel"
+        }
+      ]
+    },
+    "crossmodel\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.27,
+          "out": 1.08,
+          "cache_read": 0.0054,
+          "cache_write": 0.27,
           "source": "crossmodel"
         }
       ]
@@ -46429,6 +46591,14 @@
           "out": 0.25,
           "cache_read": 0.015,
           "cache_write": 0.075,
+          "source": "crossmodel"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0.03,
+          "cache_write": 0.15,
           "source": "crossmodel"
         }
       ]
@@ -47749,6 +47919,14 @@
           "in": 0.44,
           "out": 1.32,
           "cache_read": 0.14,
+          "cache_write": 0.44,
+          "source": "deepinfra"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.44,
+          "out": 1.32,
+          "cache_read": 0.014,
           "cache_write": 0.44,
           "source": "deepinfra"
         }
@@ -49082,6 +49260,14 @@
           "out": 14.25,
           "cache_read": 0.285,
           "cache_write": 2.85,
+          "source": "digitalocean"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 2.55,
+          "out": 12.95,
+          "cache_read": 0.285,
+          "cache_write": 2.55,
           "source": "digitalocean"
         }
       ]
@@ -51879,6 +52065,14 @@
           "out": 1.04526,
           "cache_read": 0,
           "cache_write": 1.04526,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 1.04868,
+          "out": 1.04868,
+          "cache_read": 0,
+          "cache_write": 1.04868,
           "source": "edenai"
         }
       ]
@@ -57634,6 +57828,32 @@
         }
       ]
     },
+    "greenpt\u0000glm-5.3": {
+      "id": "glm-5.3",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 1.27754,
+          "out": 5.11016,
+          "cache_read": 0.319385,
+          "cache_write": 1.27754,
+          "source": "greenpt"
+        }
+      ]
+    },
+    "greenpt\u0000glm-5.3-flash": {
+      "id": "glm-5.3-flash",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.127754,
+          "out": 0.511016,
+          "cache_read": 0.0255508,
+          "cache_write": 0.127754,
+          "source": "greenpt"
+        }
+      ]
+    },
     "greenpt\u0000gpt-oss-120b": {
       "id": "gpt-oss-120b",
       "rates": [
@@ -60475,6 +60695,14 @@
           "cache_read": 0,
           "cache_write": 0.679,
           "source": "hyper"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 1.386,
+          "out": 4.356,
+          "cache_read": 0,
+          "cache_write": 0.693,
+          "source": "hyper"
         }
       ]
     },
@@ -60542,6 +60770,14 @@
           "out": 0.68,
           "cache_read": 0,
           "cache_write": 0.089,
+          "source": "hyper"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.18,
+          "out": 0.61,
+          "cache_read": 0,
+          "cache_write": 0.09,
           "source": "hyper"
         }
       ]
@@ -65031,6 +65267,14 @@
           "cache_read": 0,
           "cache_write": 0.32,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.2574,
+          "out": 1.0287,
+          "cache_read": 0,
+          "cache_write": 0.2574,
+          "source": "kilo"
         }
       ]
     },
@@ -65239,6 +65483,19 @@
           "out": 3.96,
           "cache_read": 0.044,
           "cache_write": 1.32,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
           "source": "kilo"
         }
       ]
@@ -65845,6 +66102,14 @@
           "out": 3.498,
           "cache_read": 0.2067,
           "cache_write": 1.113,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 1.085,
+          "out": 3.41,
+          "cache_read": 0.2015,
+          "cache_write": 1.085,
           "source": "kilo"
         }
       ]
@@ -70212,6 +70477,19 @@
         }
       ]
     },
+    "llmgateway\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
+          "source": "llmgateway"
+        }
+      ]
+    },
     "llmgateway\u0000devstral-2512": {
       "id": "devstral-2512",
       "rates": [
@@ -70648,6 +70926,14 @@
           "cache_read": 0.111,
           "cache_write": 0,
           "source": "llmgateway"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.8,
+          "out": 2.55,
+          "cache_read": 0.16,
+          "cache_write": 0,
+          "source": "llmgateway"
         }
       ]
     },
@@ -70660,6 +70946,14 @@
           "out": 6.16,
           "cache_read": 0.4,
           "cache_write": 1.99,
+          "source": "llmgateway"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 2.2,
+          "out": 6.5,
+          "cache_read": 0.45,
+          "cache_write": 2.2,
           "source": "llmgateway"
         }
       ]
@@ -70702,6 +70996,14 @@
           "out": 0.25,
           "cache_read": 0.02,
           "cache_write": 0.1,
+          "source": "llmgateway"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.088,
+          "out": 0.25,
+          "cache_read": 0.025,
+          "cache_write": 0.088,
           "source": "llmgateway"
         }
       ]
@@ -71442,6 +71744,14 @@
           "cache_read": 0.18,
           "cache_write": 0.89,
           "source": "llmgateway"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.95,
+          "out": 4,
+          "cache_read": 0.19,
+          "cache_write": 0.95,
+          "source": "llmgateway"
         }
       ]
     },
@@ -71475,6 +71785,14 @@
           "out": 14.13,
           "cache_read": 0.28,
           "cache_write": 2.83,
+          "source": "llmgateway"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3,
           "source": "llmgateway"
         }
       ]
@@ -72503,6 +72821,14 @@
           "cache_read": 0.21,
           "cache_write": 2.5,
           "source": "llmgateway"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.25,
+          "cache_write": 2.5,
+          "source": "llmgateway"
         }
       ]
     },
@@ -72880,6 +73206,19 @@
           "out": 3.96,
           "cache_read": 0.13,
           "cache_write": 1.32,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
+    "llmgateway-providers\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
           "source": "llmgateway-providers"
         }
       ]
@@ -73332,6 +73671,14 @@
           "out": 6.16,
           "cache_read": 0.4,
           "cache_write": 1.99,
+          "source": "llmgateway-providers"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 2.2,
+          "out": 6.5,
+          "cache_read": 0.45,
+          "cache_write": 2.2,
           "source": "llmgateway-providers"
         }
       ]
@@ -74089,6 +74436,14 @@
           "out": 3.71,
           "cache_read": 0.18,
           "cache_write": 0.89,
+          "source": "llmgateway-providers"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.95,
+          "out": 4,
+          "cache_read": 0.19,
+          "cache_write": 0.95,
           "source": "llmgateway-providers"
         }
       ]
@@ -75125,6 +75480,14 @@
           "in": 1.815,
           "out": 5.4461,
           "cache_read": 0.21,
+          "cache_write": 2.5,
+          "source": "llmgateway-providers"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.25,
           "cache_write": 2.5,
           "source": "llmgateway-providers"
         }
@@ -80122,6 +80485,19 @@
         }
       ]
     },
+    "nano-gpt\u0000agnes-3.0-flash": {
+      "id": "agnes-3.0-flash",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.05,
+          "out": 0.15,
+          "cache_read": 0.005,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000aion-2.0": {
       "id": "aion-2.0",
       "rates": [
@@ -82207,6 +82583,32 @@
         }
       ]
     },
+    "nano-gpt\u0000gemma-4-12b-it-semancer": {
+      "id": "gemma-4-12b-it-semancer",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.05,
+          "out": 0.25,
+          "cache_read": 0.025,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000gemma-4-12b-it-station-keeper": {
+      "id": "gemma-4-12b-it-station-keeper",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.05,
+          "out": 0.25,
+          "cache_read": 0.025,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000gemma-4-26b-a4b-it": {
       "id": "gemma-4-26b-a4b-it",
       "rates": [
@@ -84186,6 +84588,19 @@
         }
       ]
     },
+    "nano-gpt\u0000k2-horizon-7b": {
+      "id": "k2-horizon-7b",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.05,
+          "out": 0.2,
+          "cache_read": 0.04,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000k2-think": {
       "id": "k2-think",
       "rates": [
@@ -84601,6 +85016,19 @@
           "out": 0.22,
           "cache_read": 0.015,
           "cache_write": 0.075,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000ling-3.0-flash-vl": {
+      "id": "ling-3.0-flash-vl",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.06,
+          "out": 0.18,
+          "cache_read": 0.012,
+          "cache_write": 0.06,
           "source": "nano-gpt"
         }
       ]
@@ -86594,6 +87022,14 @@
           "cache_read": 0.075,
           "cache_write": 0.15,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.3,
+          "out": 1.5,
+          "cache_read": 0.15,
+          "cache_write": 0.3,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -86722,6 +87158,19 @@
         },
         {
           "from": "2026-09-07",
+          "in": 0.25,
+          "out": 1.5,
+          "cache_read": 0.125,
+          "cache_write": 0.25,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000qwen3.8-27b-queen": {
+      "id": "qwen3.8-27b-queen",
+      "rates": [
+        {
+          "from": "2026-09-10",
           "in": 0.25,
           "out": 1.5,
           "cache_read": 0.125,
@@ -87280,6 +87729,15 @@
           "cache_write": 3.75,
           "cache_write_1h": 6,
           "source": "nearai"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3.75,
+          "cache_write_1h": 6,
+          "source": "nearai"
         }
       ]
     },
@@ -87416,6 +87874,14 @@
           "cache_read": 0,
           "cache_write": 0.85,
           "source": "nearai"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0,
+          "cache_write": 1.4,
+          "source": "nearai"
         }
       ]
     },
@@ -87519,6 +87985,14 @@
           "out": 15.5,
           "cache_read": 0.18,
           "cache_write": 1.8,
+          "source": "nearai"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 1.75,
+          "out": 14,
+          "cache_read": 0.175,
+          "cache_write": 1.75,
           "source": "nearai"
         }
       ]
@@ -87660,6 +88134,14 @@
           "cache_read": 0,
           "cache_write": 0.01,
           "source": "nearai"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.01,
+          "out": 0.01,
+          "cache_read": 0,
+          "cache_write": 0.01,
+          "source": "nearai"
         }
       ]
     },
@@ -87722,6 +88204,14 @@
           "from": "2026-08-27",
           "in": 0.01,
           "out": 0,
+          "cache_read": 0,
+          "cache_write": 0.01,
+          "source": "nearai"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.01,
+          "out": 0.01,
           "cache_read": 0,
           "cache_write": 0.01,
           "source": "nearai"
@@ -92823,6 +93313,14 @@
           "cache_read": 0.182,
           "cache_write": 0.98,
           "source": "ofox"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.26,
+          "cache_write": 1.4,
+          "source": "ofox"
         }
       ]
     },
@@ -92836,6 +93334,14 @@
           "cache_read": 0.234,
           "cache_write": 1.26,
           "source": "ofox"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.26,
+          "cache_write": 1.4,
+          "source": "ofox"
         }
       ]
     },
@@ -92848,6 +93354,14 @@
           "out": 0.25,
           "cache_read": 0.015,
           "cache_write": 0.075,
+          "source": "ofox"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0.03,
+          "cache_write": 0.15,
           "source": "ofox"
         }
       ]
@@ -95725,6 +96239,19 @@
         }
       ]
     },
+    "opencode-go\u0000deepseek-flash": {
+      "id": "deepseek-flash",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
+          "source": "opencode-go"
+        }
+      ]
+    },
     "opencode-go\u0000deepseek-v4-flash": {
       "id": "deepseek-v4-flash",
       "rates": [
@@ -95734,6 +96261,14 @@
           "out": 0.66,
           "cache_read": 0.007,
           "cache_write": 0.22,
+          "source": "opencode-go"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
           "source": "opencode-go"
         }
       ]
@@ -95747,6 +96282,14 @@
           "out": 0.66,
           "cache_read": 0.007,
           "cache_write": 0.22,
+          "source": "opencode-go"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
           "source": "opencode-go"
         }
       ]
@@ -95825,6 +96368,14 @@
           "out": 0.25,
           "cache_read": 0.015,
           "cache_write": 0.075,
+          "source": "opencode-go"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0.03,
+          "cache_write": 0.15,
           "source": "opencode-go"
         }
       ]
@@ -96752,6 +97303,14 @@
           "cache_read": 0,
           "cache_write": 0.32,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.2574,
+          "out": 1.0287,
+          "cache_read": 0,
+          "cache_write": 0.2574,
+          "source": "openrouter"
         }
       ]
     },
@@ -96992,6 +97551,19 @@
           "out": 3.1482,
           "cache_read": 0.03498,
           "cache_write": 1.0494,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
           "source": "openrouter"
         }
       ]
@@ -97536,6 +98108,14 @@
           "cache_read": 0.2067,
           "cache_write": 1.113,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 1.085,
+          "out": 3.41,
+          "cache_read": 0.2015,
+          "cache_write": 1.085,
+          "source": "openrouter"
         }
       ]
     },
@@ -97752,6 +98332,14 @@
           "out": 0.25,
           "cache_read": 0.015,
           "cache_write": 0.075,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0.03,
+          "cache_write": 0.15,
           "source": "openrouter"
         }
       ]
@@ -99017,6 +99605,14 @@
           "cache_read": 0,
           "cache_write": 0.6,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.6,
+          "out": 2.5,
+          "cache_read": 0.15,
+          "cache_write": 0.6,
+          "source": "openrouter"
         }
       ]
     },
@@ -99556,6 +100152,14 @@
           "out": 1.08,
           "cache_read": 0.027,
           "cache_write": 0.27,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.03,
+          "cache_write": 0.3,
           "source": "openrouter"
         }
       ]
@@ -100498,6 +101102,14 @@
           "cache_read": 0,
           "cache_write": 0.04815,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.09,
+          "out": 0.3,
+          "cache_read": 0,
+          "cache_write": 0.09,
+          "source": "openrouter"
         }
       ]
     },
@@ -100800,6 +101412,14 @@
           "out": 2.4,
           "cache_read": 0,
           "cache_write": 0.29,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-10",
+          "in": 0.26,
+          "out": 2.08,
+          "cache_read": 0,
+          "cache_write": 0.26,
           "source": "openrouter"
         }
       ]
@@ -117495,6 +118115,19 @@
         }
       ]
     },
+    "venice\u0000qwen-3-8-flash": {
+      "id": "qwen-3-8-flash",
+      "rates": [
+        {
+          "from": "2026-09-10",
+          "in": 0.14,
+          "out": 0.49,
+          "cache_read": 0.014,
+          "cache_write": 0.14,
+          "source": "venice"
+        }
+      ]
+    },
     "venice\u0000qwen-3-8-max": {
       "id": "qwen-3-8-max",
       "rates": [
@@ -125894,6 +126527,9 @@
     "agnes-2p0-flash": "agnes-2.0-flash",
     "agnes-2p5-flash": "agnes-2.5-flash",
     "agnes-2p5-pro-alpha": "agnes-2.5-pro-alpha",
+    "agnes-3-0-flash": "agnes-3.0-flash",
+    "agnes-3.0-flash-latest": "agnes-3.0-flash",
+    "agnes-3p0-flash": "agnes-3.0-flash",
     "aion-2-0": "aion-2.0",
     "aion-2.0-latest": "aion-2.0",
     "aion-2p0": "aion-2.0",
@@ -126372,6 +127008,7 @@
     "deepseek-chat-v3-1": "deepseek-chat-v3.1",
     "deepseek-chat-v3.1-latest": "deepseek-chat-v3.1",
     "deepseek-chat-v3p1": "deepseek-chat-v3.1",
+    "deepseek-flash-latest": "deepseek-flash",
     "deepseek-latest": "deepseek",
     "deepseek-ocr-2-latest": "deepseek-ocr-2",
     "deepseek-ocr-latest": "deepseek-ocr",
@@ -126906,6 +127543,8 @@
     "gemma-3n-e2b-it-latest": "gemma-3n-e2b-it",
     "gemma-3n-e4b-it-latest": "gemma-3n-e4b-it",
     "gemma-4-12b-it-latest": "gemma-4-12b-it",
+    "gemma-4-12b-it-semancer-latest": "gemma-4-12b-it-semancer",
+    "gemma-4-12b-it-station-keeper-latest": "gemma-4-12b-it-station-keeper",
     "gemma-4-26b-a4b-it-chimerax-latest": "gemma-4-26b-a4b-it-chimerax",
     "gemma-4-26b-a4b-it-darksoul-latest": "gemma-4-26b-a4b-it-darksoul",
     "gemma-4-26b-a4b-it-latest": "gemma-4-26b-a4b-it",
@@ -127696,6 +128335,7 @@
     "jppanthropicpclaude-sonnet-4-5-20250929-v1": "jp.anthropic.claude-sonnet-4-5-20250929-v1",
     "jppanthropicpclaude-sonnet-4-6": "jp.anthropic.claude-sonnet-4-6",
     "jppanthropicpclaude-sonnet-5": "jp.anthropic.claude-sonnet-5",
+    "k2-horizon-7b-latest": "k2-horizon-7b",
     "k2-think-latest": "k2-think",
     "k3-256k-latest": "k3-256k",
     "k3-latest": "k3",
@@ -127865,6 +128505,7 @@
     "ling-3-0-flash-free": "ling-3.0-flash-free",
     "ling-3-0-flash-sante": "ling-3.0-flash-sante",
     "ling-3-0-flash-sante-free": "ling-3.0-flash-sante-free",
+    "ling-3-0-flash-vl": "ling-3.0-flash-vl",
     "ling-3-0-tiny": "ling-3.0-tiny",
     "ling-3-0-tiny-free": "ling-3.0-tiny-free",
     "ling-3.0-flash-fin-free-latest": "ling-3.0-flash-fin-free",
@@ -127873,6 +128514,7 @@
     "ling-3.0-flash-latest": "ling-3.0-flash",
     "ling-3.0-flash-sante-free-latest": "ling-3.0-flash-sante-free",
     "ling-3.0-flash-sante-latest": "ling-3.0-flash-sante",
+    "ling-3.0-flash-vl-latest": "ling-3.0-flash-vl",
     "ling-3.0-tiny-free-latest": "ling-3.0-tiny-free",
     "ling-3.0-tiny-latest": "ling-3.0-tiny",
     "ling-3p0-flash": "ling-3.0-flash",
@@ -127881,6 +128523,7 @@
     "ling-3p0-flash-free": "ling-3.0-flash-free",
     "ling-3p0-flash-sante": "ling-3.0-flash-sante",
     "ling-3p0-flash-sante-free": "ling-3.0-flash-sante-free",
+    "ling-3p0-flash-vl": "ling-3.0-flash-vl",
     "ling-3p0-tiny": "ling-3.0-tiny",
     "ling-3p0-tiny-free": "ling-3.0-tiny-free",
     "ling-flash-2-0": "ling-flash-2.0",
@@ -128652,6 +129295,7 @@
     "qwen-3-7-plus-latest": "qwen-3-7-plus",
     "qwen-3-8-2-4t-a95b-latest": "qwen-3-8-2-4t-a95b",
     "qwen-3-8-27b-latest": "qwen-3-8-27b",
+    "qwen-3-8-flash-latest": "qwen-3-8-flash",
     "qwen-3-8-max-latest": "qwen-3-8-max",
     "qwen-3.6-max-preview-latest": "qwen-3.6-max-preview",
     "qwen-3.6-plus-latest": "qwen-3.6-plus",
@@ -128814,6 +129458,7 @@
     "qwen3-8-27b-latest": "qwen3-8-27b",
     "qwen3-8-27b-nvfp4": "qwen3.8-27b-nvfp4",
     "qwen3-8-27b-obliterated": "qwen3.8-27b-obliterated",
+    "qwen3-8-27b-queen": "qwen3.8-27b-queen",
     "qwen3-8-27b-tee": "qwen3.8-27b-tee",
     "qwen3-8-27b-uncensored": "qwen3.8-27b-uncensored",
     "qwen3-8-flash-latest": "qwen3-8-flash",
@@ -128930,6 +129575,7 @@
     "qwen3.8-27b-latest": "qwen3.8-27b",
     "qwen3.8-27b-nvfp4-latest": "qwen3.8-27b-nvfp4",
     "qwen3.8-27b-obliterated-latest": "qwen3.8-27b-obliterated",
+    "qwen3.8-27b-queen-latest": "qwen3.8-27b-queen",
     "qwen3.8-27b-tee-latest": "qwen3.8-27b-tee",
     "qwen3.8-27b-uncensored-latest": "qwen3.8-27b-uncensored",
     "qwen3.8-flash-latest": "qwen3.8-flash",
@@ -128994,6 +129640,7 @@
     "qwen3p8-27b-free": "qwen3.8-27b-free",
     "qwen3p8-27b-nvfp4": "qwen3.8-27b-nvfp4",
     "qwen3p8-27b-obliterated": "qwen3.8-27b-obliterated",
+    "qwen3p8-27b-queen": "qwen3.8-27b-queen",
     "qwen3p8-27b-tee": "qwen3.8-27b-tee",
     "qwen3p8-27b-uncensored": "qwen3.8-27b-uncensored",
     "qwen3p8-2p4t-a95b-latest": "qwen3p8-2p4t-a95b",
