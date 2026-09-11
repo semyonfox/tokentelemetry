@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-09-10",
+  "updated": "2026-09-11",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -386,6 +386,14 @@
           "in": 0.33,
           "out": 2.75,
           "cache_read": 0,
+          "cache_write": 0.33,
+          "source": "amazon-bedrock"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.33,
+          "out": 2.75,
+          "cache_read": 0.0825,
           "cache_write": 0.33,
           "source": "amazon-bedrock"
         }
@@ -4726,6 +4734,14 @@
           "cache_read": 0.11,
           "cache_write": 0.29,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.25,
+          "out": 1,
+          "cache_read": 0,
+          "cache_write": 0.25,
+          "source": "kilo"
         }
       ]
     },
@@ -4753,7 +4769,8 @@
           "cache_write": 0.15,
           "source": "opencode-go"
         }
-      ]
+      ],
+      "first_party": true
     },
     "deepseek-ocr": {
       "id": "deepseek-ocr",
@@ -5254,6 +5271,19 @@
         }
       ]
     },
+    "deepseek-v4-1-flash": {
+      "id": "deepseek-v4-1-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.375,
+          "out": 1.5,
+          "cache_read": 0.0075,
+          "cache_write": 0.375,
+          "source": "venice"
+        }
+      ]
+    },
     "deepseek-v4-flash": {
       "id": "deepseek-v4-flash",
       "rates": [
@@ -5287,9 +5317,30 @@
           "cache_read": 0.0028,
           "cache_write": 0.14,
           "source": "deepseek"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
+          "source": "deepseek"
         }
       ],
       "first_party": true
+    },
+    "deepseek-v4-flash-0423": {
+      "id": "deepseek-v4-flash-0423",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.139,
+          "out": 0.278,
+          "cache_read": 0,
+          "cache_write": 0.139,
+          "source": "merge-gateway"
+        }
+      ]
     },
     "deepseek-v4-flash-0731": {
       "id": "deepseek-v4-flash-0731",
@@ -5442,6 +5493,14 @@
           "out": 0.28,
           "cache_read": 0.0028,
           "cache_write": 0.14,
+          "source": "deepseek"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
           "source": "deepseek"
         }
       ],
@@ -5615,6 +5674,14 @@
           "cache_read": 0.0054,
           "cache_write": 0.27,
           "source": "crossmodel"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.2,
+          "out": 0.6,
+          "cache_read": 0.006,
+          "cache_write": 0.2,
+          "source": "deepinfra"
         }
       ]
     },
@@ -5628,6 +5695,19 @@
           "cache_read": 0.007,
           "cache_write": 0.22,
           "source": "vercel"
+        }
+      ]
+    },
+    "deepseek-v4p1-flash": {
+      "id": "deepseek-v4p1-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.22,
+          "out": 0.66,
+          "cache_read": 0.007,
+          "cache_write": 0.22,
+          "source": "fireworks-ai"
         }
       ]
     },
@@ -7408,6 +7488,19 @@
         }
       ]
     },
+    "fugu-max": {
+      "id": "fugu-max",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.25,
+          "cache_write": 2,
+          "source": "kilo"
+        }
+      ]
+    },
     "fugu-ultra": {
       "id": "fugu-ultra",
       "rates": [
@@ -7485,6 +7578,27 @@
           "cache_read": 0.525,
           "cache_write": 5.25,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 5,
+          "out": 30,
+          "cache_read": 0.5,
+          "cache_write": 5,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "fugu-ultra-v2": {
+      "id": "fugu-ultra-v2",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 5,
+          "out": 30,
+          "cache_read": 0.5,
+          "cache_write": 5,
+          "source": "kilo"
         }
       ]
     },
@@ -8877,6 +8991,14 @@
           "cache_read": 0,
           "cache_write": 0.099,
           "source": "cortecs"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.08,
+          "out": 0.16,
+          "cache_read": 0,
+          "cache_write": 0.08,
+          "source": "deepinfra"
         }
       ]
     },
@@ -9639,6 +9761,14 @@
           "out": 3.41,
           "cache_read": 0.2015,
           "cache_write": 1.085,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.97,
+          "out": 3.3077,
+          "cache_read": 0.194,
+          "cache_write": 0.97,
           "source": "kilo"
         }
       ]
@@ -11451,6 +11581,14 @@
           "cache_read": 0,
           "cache_write": 0.049999999999999996,
           "source": "amazon-bedrock"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.09,
+          "out": 0.29,
+          "cache_read": 0,
+          "cache_write": 0.09,
+          "source": "amazon-bedrock"
         }
       ]
     },
@@ -11464,6 +11602,14 @@
           "cache_read": 0,
           "cache_write": 0.12,
           "source": "amazon-bedrock"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.23,
+          "out": 0.38,
+          "cache_read": 0,
+          "cache_write": 0.23,
+          "source": "amazon-bedrock"
         }
       ]
     },
@@ -11472,6 +11618,45 @@
       "rates": [
         {
           "from": "2026-07-14",
+          "in": 0.04,
+          "out": 0.08,
+          "cache_read": 0,
+          "cache_write": 0.04,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "google.gemma-4-26b-a4b": {
+      "id": "google.gemma-4-26b-a4b",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.13,
+          "out": 0.4,
+          "cache_read": 0,
+          "cache_write": 0.13,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "google.gemma-4-31b": {
+      "id": "google.gemma-4-31b",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.14,
+          "out": 0.4,
+          "cache_read": 0,
+          "cache_write": 0.14,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "google.gemma-4-e2b": {
+      "id": "google.gemma-4-e2b",
+      "rates": [
+        {
+          "from": "2026-09-11",
           "in": 0.04,
           "out": 0.08,
           "cache_read": 0,
@@ -14163,7 +14348,8 @@
           "cache_write": 0.2,
           "source": "vercel"
         }
-      ]
+      ],
+      "first_party": true
     },
     "grok-4.1-fast-reasoning": {
       "id": "grok-4.1-fast-reasoning",
@@ -14176,7 +14362,8 @@
           "cache_write": 0.2,
           "source": "vercel"
         }
-      ]
+      ],
+      "first_party": true
     },
     "grok-4.2-beta": {
       "id": "grok-4.2-beta",
@@ -14380,8 +14567,22 @@
           "cache_read": 0.2,
           "cache_write": 1.25,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200000,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
+          "source": "google-vertex"
         }
-      ]
+      ],
+      "first_party": true
     },
     "grok-4.20-non-reasoning-beta": {
       "id": "grok-4.20-non-reasoning-beta",
@@ -14406,8 +14607,22 @@
           "cache_read": 0.2,
           "cache_write": 1.25,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200000,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
+          "source": "google-vertex"
         }
-      ]
+      ],
+      "first_party": true
     },
     "grok-4.20-reasoning-beta": {
       "id": "grok-4.20-reasoning-beta",
@@ -15012,6 +15227,42 @@
         }
       ]
     },
+    "in.openai.gpt-5.6-luna": {
+      "id": "in.openai.gpt-5.6-luna",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.22,
+          "out": 1.32,
+          "cache_read": 0.022,
+          "cache_write": 0.275,
+          "tier_threshold": 272000,
+          "tier_in": 0.44,
+          "tier_out": 1.98,
+          "tier_cache_read": 0.044,
+          "tier_cache_write": 0.55,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "in.openai.gpt-5.6-terra": {
+      "id": "in.openai.gpt-5.6-terra",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 2.2,
+          "out": 13.2,
+          "cache_read": 0.22,
+          "cache_write": 2.75,
+          "tier_threshold": 272000,
+          "tier_in": 4.4,
+          "tier_out": 19.8,
+          "tier_cache_read": 0.44,
+          "tier_cache_write": 5.5,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
     "inflection-3-pi": {
       "id": "inflection-3-pi",
       "rates": [
@@ -15462,6 +15713,14 @@
           "out": 12,
           "cache_read": 0.24,
           "cache_write": 2.4,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 2.34,
+          "out": 11.7,
+          "cache_read": 0.261,
+          "cache_write": 2.34,
           "source": "kilo"
         }
       ]
@@ -16639,6 +16898,19 @@
           "cache_read": 0.03,
           "cache_write": 0.03,
           "source": "pioneer"
+        }
+      ]
+    },
+    "lightonocr-2-1b": {
+      "id": "lightonocr-2-1b",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.1785,
+          "out": 0.3465,
+          "cache_read": 0,
+          "cache_write": 0.1785,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -18075,7 +18347,8 @@
           "cache_write": 0.04,
           "source": "vercel"
         }
-      ]
+      ],
+      "first_party": true
     },
     "mercury-2.5-preview": {
       "id": "mercury-2.5-preview",
@@ -24989,6 +25262,14 @@
           "cache_read": 0,
           "cache_write": 0.2225,
           "source": "hyper"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.445,
+          "out": 2.145,
+          "cache_read": 0.2225,
+          "cache_write": 0.445,
+          "source": "hyper"
         }
       ]
     },
@@ -27980,6 +28261,32 @@
         }
       ]
     },
+    "us-gov.openai.gpt-oss-120b-1": {
+      "id": "us-gov.openai.gpt-oss-120b-1",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.18,
+          "out": 0.72,
+          "cache_read": 0,
+          "cache_write": 0.18,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "us-gov.openai.gpt-oss-20b-1": {
+      "id": "us-gov.openai.gpt-oss-20b-1",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.084,
+          "out": 0.36,
+          "cache_read": 0,
+          "cache_write": 0.084,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
     "us.amazon.nova-2-lite-v1": {
       "id": "us.amazon.nova-2-lite-v1",
       "rates": [
@@ -28015,6 +28322,19 @@
           "out": 0.14,
           "cache_read": 0.00875,
           "cache_write": 0.035,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "us.amazon.nova-premier-v1": {
+      "id": "us.amazon.nova-premier-v1",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 2.5,
+          "out": 12.5,
+          "cache_read": 0.625,
+          "cache_write": 2.5,
           "source": "amazon-bedrock"
         }
       ]
@@ -37054,6 +37374,14 @@
           "cache_read": 0,
           "cache_write": 0.33,
           "source": "amazon-bedrock"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.33,
+          "out": 2.75,
+          "cache_read": 0.0825,
+          "cache_write": 0.33,
+          "source": "amazon-bedrock"
         }
       ]
     },
@@ -37893,6 +38221,14 @@
           "cache_read": 0,
           "cache_write": 0.049999999999999996,
           "source": "amazon-bedrock"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.09,
+          "out": 0.29,
+          "cache_read": 0,
+          "cache_write": 0.09,
+          "source": "amazon-bedrock"
         }
       ]
     },
@@ -37906,6 +38242,14 @@
           "cache_read": 0,
           "cache_write": 0.12,
           "source": "amazon-bedrock"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.23,
+          "out": 0.38,
+          "cache_read": 0,
+          "cache_write": 0.23,
+          "source": "amazon-bedrock"
         }
       ]
     },
@@ -37918,6 +38262,81 @@
           "out": 0.08,
           "cache_read": 0,
           "cache_write": 0.04,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000google.gemma-4-26b-a4b": {
+      "id": "google.gemma-4-26b-a4b",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.13,
+          "out": 0.4,
+          "cache_read": 0,
+          "cache_write": 0.13,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000google.gemma-4-31b": {
+      "id": "google.gemma-4-31b",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.14,
+          "out": 0.4,
+          "cache_read": 0,
+          "cache_write": 0.14,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000google.gemma-4-e2b": {
+      "id": "google.gemma-4-e2b",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.04,
+          "out": 0.08,
+          "cache_read": 0,
+          "cache_write": 0.04,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000in.openai.gpt-5.6-luna": {
+      "id": "in.openai.gpt-5.6-luna",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.22,
+          "out": 1.32,
+          "cache_read": 0.022,
+          "cache_write": 0.275,
+          "tier_threshold": 272000,
+          "tier_in": 0.44,
+          "tier_out": 1.98,
+          "tier_cache_read": 0.044,
+          "tier_cache_write": 0.55,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000in.openai.gpt-5.6-terra": {
+      "id": "in.openai.gpt-5.6-terra",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 2.2,
+          "out": 13.2,
+          "cache_read": 0.22,
+          "cache_write": 2.75,
+          "tier_threshold": 272000,
+          "tier_in": 4.4,
+          "tier_out": 19.8,
+          "tier_cache_read": 0.44,
+          "tier_cache_write": 5.5,
           "source": "amazon-bedrock"
         }
       ]
@@ -38592,6 +39011,32 @@
         }
       ]
     },
+    "amazon-bedrock\u0000us-gov.openai.gpt-oss-120b-1": {
+      "id": "us-gov.openai.gpt-oss-120b-1",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.18,
+          "out": 0.72,
+          "cache_read": 0,
+          "cache_write": 0.18,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000us-gov.openai.gpt-oss-20b-1": {
+      "id": "us-gov.openai.gpt-oss-20b-1",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.084,
+          "out": 0.36,
+          "cache_read": 0,
+          "cache_write": 0.084,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
     "amazon-bedrock\u0000us.amazon.nova-2-lite-v1": {
       "id": "us.amazon.nova-2-lite-v1",
       "rates": [
@@ -38627,6 +39072,19 @@
           "out": 0.14,
           "cache_read": 0.00875,
           "cache_write": 0.035,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000us.amazon.nova-premier-v1": {
+      "id": "us.amazon.nova-premier-v1",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 2.5,
+          "out": 12.5,
+          "cache_read": 0.625,
+          "cache_write": 2.5,
           "source": "amazon-bedrock"
         }
       ]
@@ -42502,6 +42960,32 @@
         }
       ]
     },
+    "bothub\u0000deepseek-v4-flash-0731": {
+      "id": "deepseek-v4-flash-0731",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.1,
+          "out": 0.28,
+          "cache_read": 0,
+          "cache_write": 0.1,
+          "source": "bothub"
+        }
+      ]
+    },
+    "bothub\u0000deepseek-v4-pro-0813": {
+      "id": "deepseek-v4-pro-0813",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 1.61,
+          "out": 4.84,
+          "cache_read": 0,
+          "cache_write": 1.61,
+          "source": "bothub"
+        }
+      ]
+    },
     "bothub\u0000gemma-4-31b-it": {
       "id": "gemma-4-31b-it",
       "rates": [
@@ -42511,6 +42995,45 @@
           "out": 0,
           "cache_read": 0,
           "cache_write": 0,
+          "source": "bothub"
+        }
+      ]
+    },
+    "bothub\u0000glm-5.3": {
+      "id": "glm-5.3",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 1.72,
+          "out": 5.41,
+          "cache_read": 0,
+          "cache_write": 1.72,
+          "source": "bothub"
+        }
+      ]
+    },
+    "bothub\u0000glm-5.3-flash": {
+      "id": "glm-5.3-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.12,
+          "out": 0.44,
+          "cache_read": 0,
+          "cache_write": 0.12,
+          "source": "bothub"
+        }
+      ]
+    },
+    "bothub\u0000gpt-5.6-luna": {
+      "id": "gpt-5.6-luna",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.06,
+          "out": 0.37,
+          "cache_read": 0,
+          "cache_write": 0.06,
           "source": "bothub"
         }
       ]
@@ -47958,6 +48481,58 @@
         }
       ]
     },
+    "deepinfra\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.2,
+          "out": 0.6,
+          "cache_read": 0.006,
+          "cache_write": 0.2,
+          "source": "deepinfra"
+        }
+      ]
+    },
+    "deepinfra\u0000gemma-3-12b-it": {
+      "id": "gemma-3-12b-it",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.05,
+          "out": 0.15,
+          "cache_read": 0,
+          "cache_write": 0.05,
+          "source": "deepinfra"
+        }
+      ]
+    },
+    "deepinfra\u0000gemma-3-27b-it": {
+      "id": "gemma-3-27b-it",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.08,
+          "out": 0.16,
+          "cache_read": 0,
+          "cache_write": 0.08,
+          "source": "deepinfra"
+        }
+      ]
+    },
+    "deepinfra\u0000gemma-3-4b-it": {
+      "id": "gemma-3-4b-it",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.05,
+          "out": 0.1,
+          "cache_read": 0,
+          "cache_write": 0.05,
+          "source": "deepinfra"
+        }
+      ]
+    },
     "deepinfra\u0000gemma-4-26b-a4b-it": {
       "id": "gemma-4-26b-a4b-it",
       "rates": [
@@ -48279,6 +48854,14 @@
           "out": 2,
           "cache_read": 0.08,
           "cache_write": 0.4,
+          "source": "deepinfra"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0.14,
           "source": "deepinfra"
         }
       ]
@@ -48672,6 +49255,19 @@
         }
       ]
     },
+    "deepseek\u0000deepseek-flash": {
+      "id": "deepseek-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
+          "source": "deepseek"
+        }
+      ]
+    },
     "deepseek\u0000deepseek-v4-flash": {
       "id": "deepseek-v4-flash",
       "rates": [
@@ -48681,6 +49277,14 @@
           "out": 0.28,
           "cache_read": 0.0028,
           "cache_write": 0.14,
+          "source": "deepseek"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
           "source": "deepseek"
         }
       ]
@@ -48694,6 +49298,14 @@
           "out": 0.28,
           "cache_read": 0.0028,
           "cache_write": 0.14,
+          "source": "deepseek"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
           "source": "deepseek"
         }
       ]
@@ -50613,6 +51225,19 @@
         }
       ]
     },
+    "edenai\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.006,
+          "cache_write": 0.3,
+          "source": "edenai"
+        }
+      ]
+    },
     "edenai\u0000devstral-2512": {
       "id": "devstral-2512",
       "rates": [
@@ -52074,6 +52699,14 @@
           "cache_read": 0,
           "cache_write": 1.04868,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 1.045439,
+          "out": 1.045439,
+          "cache_read": 0,
+          "cache_write": 1.045439,
+          "source": "edenai"
         }
       ]
     },
@@ -53028,6 +53661,19 @@
           "tier_out": 45,
           "tier_cache_read": 1,
           "tier_cache_write": 10,
+          "source": "empiriolabs"
+        }
+      ]
+    },
+    "empiriolabs\u0000gemma-3-27b": {
+      "id": "gemma-3-27b",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
           "source": "empiriolabs"
         }
       ]
@@ -54555,6 +55201,19 @@
           "out": 3.96,
           "cache_read": 0.044,
           "cache_write": 1.32,
+          "source": "fireworks-ai"
+        }
+      ]
+    },
+    "fireworks\u0000deepseek-v4p1-flash": {
+      "id": "deepseek-v4p1-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.22,
+          "out": 0.66,
+          "cache_read": 0.007,
+          "cache_write": 0.22,
           "source": "fireworks-ai"
         }
       ]
@@ -57581,6 +58240,104 @@
         }
       ]
     },
+    "google-vertex\u0000grok-4.1-fast-non-reasoning": {
+      "id": "grok-4.1-fast-non-reasoning",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.2,
+          "out": 0.5,
+          "cache_read": 0.05,
+          "cache_write": 0.2,
+          "source": "google-vertex"
+        }
+      ]
+    },
+    "google-vertex\u0000grok-4.1-fast-reasoning": {
+      "id": "grok-4.1-fast-reasoning",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.2,
+          "out": 0.5,
+          "cache_read": 0.05,
+          "cache_write": 0.2,
+          "source": "google-vertex"
+        }
+      ]
+    },
+    "google-vertex\u0000grok-4.20-non-reasoning": {
+      "id": "grok-4.20-non-reasoning",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200000,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
+          "source": "google-vertex"
+        }
+      ]
+    },
+    "google-vertex\u0000grok-4.20-reasoning": {
+      "id": "grok-4.20-reasoning",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200000,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
+          "source": "google-vertex"
+        }
+      ]
+    },
+    "google-vertex\u0000grok-4.3": {
+      "id": "grok-4.3",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200000,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
+          "source": "google-vertex"
+        }
+      ]
+    },
+    "google-vertex\u0000grok-4.6": {
+      "id": "grok-4.6",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 1,
+          "tier_cache_write": 4,
+          "source": "google-vertex"
+        }
+      ]
+    },
     "google-vertex\u0000kimi-k2-thinking-maas": {
       "id": "kimi-k2-thinking-maas",
       "rates": [
@@ -59745,6 +60502,58 @@
         }
       ]
     },
+    "huggingface\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0,
+          "cache_write": 0.3,
+          "source": "huggingface"
+        }
+      ]
+    },
+    "huggingface\u0000gemma-3-12b-it": {
+      "id": "gemma-3-12b-it",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.05,
+          "out": 0.15,
+          "cache_read": 0,
+          "cache_write": 0.05,
+          "source": "huggingface"
+        }
+      ]
+    },
+    "huggingface\u0000gemma-3-27b-it": {
+      "id": "gemma-3-27b-it",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.08,
+          "out": 0.16,
+          "cache_read": 0,
+          "cache_write": 0.08,
+          "source": "huggingface"
+        }
+      ]
+    },
+    "huggingface\u0000gemma-3-4b-it": {
+      "id": "gemma-3-4b-it",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.05,
+          "out": 0.1,
+          "cache_read": 0,
+          "cache_write": 0.05,
+          "source": "huggingface"
+        }
+      ]
+    },
     "huggingface\u0000gemma-4-26b-a4b-it": {
       "id": "gemma-4-26b-a4b-it",
       "rates": [
@@ -60603,6 +61412,19 @@
         }
       ]
     },
+    "hyper\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.03,
+          "cache_write": 0.3,
+          "source": "hyper"
+        }
+      ]
+    },
     "hyper\u0000gemma-4-26b-a4b-it": {
       "id": "gemma-4-26b-a4b-it",
       "rates": [
@@ -60637,6 +61459,14 @@
           "cache_read": 0,
           "cache_write": 0.053,
           "source": "hyper"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.122,
+          "out": 0.42,
+          "cache_read": 0.061,
+          "cache_write": 0.122,
+          "source": "hyper"
         }
       ]
     },
@@ -60657,6 +61487,14 @@
           "out": 2.784,
           "cache_read": 0,
           "cache_write": 0.43,
+          "source": "hyper"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.86,
+          "out": 2.784,
+          "cache_read": 0.43,
+          "cache_write": 0.86,
           "source": "hyper"
         }
       ]
@@ -60702,6 +61540,14 @@
           "out": 4.356,
           "cache_read": 0,
           "cache_write": 0.693,
+          "source": "hyper"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 1.326,
+          "out": 4.22,
+          "cache_read": 0.663,
+          "cache_write": 1.326,
           "source": "hyper"
         }
       ]
@@ -60779,6 +61625,14 @@
           "cache_read": 0,
           "cache_write": 0.09,
           "source": "hyper"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.178,
+          "out": 0.68,
+          "cache_read": 0.089,
+          "cache_write": 0.178,
+          "source": "hyper"
         }
       ]
     },
@@ -60804,6 +61658,14 @@
           "out": 2.5,
           "cache_read": 0,
           "cache_write": 0.3,
+          "source": "hyper"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.6,
+          "out": 2.5,
+          "cache_read": 0.3,
+          "cache_write": 0.6,
           "source": "hyper"
         }
       ]
@@ -60833,6 +61695,14 @@
           "out": 2.935,
           "cache_read": 0,
           "cache_write": 0.2792,
+          "source": "hyper"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.5584,
+          "out": 2.935,
+          "cache_read": 0.2792,
+          "cache_write": 0.5584,
           "source": "hyper"
         }
       ]
@@ -60894,6 +61764,14 @@
           "cache_read": 0,
           "cache_write": 0.3033,
           "source": "hyper"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.6066,
+          "out": 1.0386,
+          "cache_read": 0.3033,
+          "cache_write": 0.6066,
+          "source": "hyper"
         }
       ]
     },
@@ -60906,6 +61784,14 @@
           "out": 0.8992,
           "cache_read": 0,
           "cache_write": 0.137,
+          "source": "hyper"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.274,
+          "out": 0.8992,
+          "cache_read": 0.137,
+          "cache_write": 0.274,
           "source": "hyper"
         }
       ]
@@ -60944,6 +61830,14 @@
           "cache_read": 0,
           "cache_write": 0.229,
           "source": "hyper"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.404,
+          "out": 1.496,
+          "cache_read": 0.202,
+          "cache_write": 0.404,
+          "source": "hyper"
         }
       ]
     },
@@ -60970,6 +61864,14 @@
           "cache_read": 0,
           "cache_write": 0.2225,
           "source": "hyper"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.445,
+          "out": 2.145,
+          "cache_read": 0.2225,
+          "cache_write": 0.445,
+          "source": "hyper"
         }
       ]
     },
@@ -60982,6 +61884,14 @@
           "out": 1.136,
           "cache_read": 0,
           "cache_write": 0.05875,
+          "source": "hyper"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.1175,
+          "out": 1.136,
+          "cache_read": 0.05875,
+          "cache_write": 0.1175,
           "source": "hyper"
         }
       ]
@@ -62315,6 +63225,19 @@
           "out": 0.75,
           "cache_read": 0.025,
           "cache_write": 0.25,
+          "source": "inception"
+        }
+      ]
+    },
+    "inception\u0000mercury-2.5": {
+      "id": "mercury-2.5",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.04,
+          "out": 0.15,
+          "cache_read": 0.004,
+          "cache_write": 0.04,
           "source": "inception"
         }
       ]
@@ -65304,6 +66227,14 @@
           "cache_read": 0.11,
           "cache_write": 0.29,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.25,
+          "out": 1,
+          "cache_read": 0,
+          "cache_write": 0.25,
+          "source": "kilo"
         }
       ]
     },
@@ -65497,6 +66428,14 @@
           "cache_read": 0.003,
           "cache_write": 0.15,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.006,
+          "cache_write": 0.3,
+          "source": "kilo"
         }
       ]
     },
@@ -65599,11 +66538,37 @@
         }
       ]
     },
+    "kilo\u0000fugu-max": {
+      "id": "fugu-max",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.25,
+          "cache_write": 2,
+          "source": "kilo"
+        }
+      ]
+    },
     "kilo\u0000fugu-ultra": {
       "id": "fugu-ultra",
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 5,
+          "out": 30,
+          "cache_read": 0.5,
+          "cache_write": 5,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000fugu-ultra-v2": {
+      "id": "fugu-ultra-v2",
+      "rates": [
+        {
+          "from": "2026-09-11",
           "in": 5,
           "out": 30,
           "cache_read": 0.5,
@@ -66110,6 +67075,14 @@
           "out": 3.41,
           "cache_read": 0.2015,
           "cache_write": 1.085,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.97,
+          "out": 3.3077,
+          "cache_read": 0.194,
+          "cache_write": 0.97,
           "source": "kilo"
         }
       ]
@@ -67340,6 +68313,14 @@
           "cache_read": 0.033,
           "cache_write": 0.132,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.14,
+          "out": 0.58,
+          "cache_read": 0.035,
+          "cache_write": 0.14,
+          "source": "kilo"
         }
       ]
     },
@@ -67459,6 +68440,14 @@
           "out": 12,
           "cache_read": 0.24,
           "cache_write": 2.4,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 2.34,
+          "out": 11.7,
+          "cache_read": 0.261,
+          "cache_write": 2.34,
           "source": "kilo"
         }
       ]
@@ -67663,6 +68652,19 @@
       "rates": [
         {
           "from": "2026-09-07",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000ling-3.0-flash-vl": {
+      "id": "ling-3.0-flash-vl",
+      "rates": [
+        {
+          "from": "2026-09-11",
           "in": 0,
           "out": 0,
           "cache_read": 0,
@@ -70730,6 +71732,14 @@
           "out": 0.297,
           "cache_read": 0.012,
           "cache_write": 0.102,
+          "source": "llmgateway"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.1,
+          "out": 0.25,
+          "cache_read": 0.01,
+          "cache_write": 0.1,
           "source": "llmgateway"
         }
       ]
@@ -76736,6 +77746,27 @@
           "cache_read": 0.007,
           "cache_write": 0.22,
           "source": "merge-gateway"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.035,
+          "out": 0.07,
+          "cache_read": 0.007,
+          "cache_write": 0.035,
+          "source": "merge-gateway"
+        }
+      ]
+    },
+    "merge-gateway\u0000deepseek-v4-flash-0423": {
+      "id": "deepseek-v4-flash-0423",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.139,
+          "out": 0.278,
+          "cache_read": 0,
+          "cache_write": 0.139,
+          "source": "merge-gateway"
         }
       ]
     },
@@ -76800,6 +77831,19 @@
           "out": 1.98,
           "cache_read": 0.022,
           "cache_write": 0.66,
+          "source": "merge-gateway"
+        }
+      ]
+    },
+    "merge-gateway\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
           "source": "merge-gateway"
         }
       ]
@@ -77223,6 +78267,45 @@
           "out": 1.5,
           "cache_read": 0.025,
           "cache_write": 0.25,
+          "source": "merge-gateway"
+        }
+      ]
+    },
+    "merge-gateway\u0000gemma-3-12b-it": {
+      "id": "gemma-3-12b-it",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.09,
+          "out": 0.29,
+          "cache_read": 0,
+          "cache_write": 0.09,
+          "source": "merge-gateway"
+        }
+      ]
+    },
+    "merge-gateway\u0000gemma-3-27b-it": {
+      "id": "gemma-3-27b-it",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.08,
+          "out": 0.45,
+          "cache_read": 0.04,
+          "cache_write": 0.08,
+          "source": "merge-gateway"
+        }
+      ]
+    },
+    "merge-gateway\u0000gemma-3-4b-it": {
+      "id": "gemma-3-4b-it",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.04,
+          "out": 0.08,
+          "cache_read": 0,
+          "cache_write": 0.04,
           "source": "merge-gateway"
         }
       ]
@@ -77855,6 +78938,19 @@
           "out": 0.6,
           "cache_read": 0,
           "cache_write": 0.15,
+          "source": "merge-gateway"
+        }
+      ]
+    },
+    "merge-gateway\u0000gpt-oss-safeguard-20b": {
+      "id": "gpt-oss-safeguard-20b",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.07,
+          "out": 0.2,
+          "cache_read": 0,
+          "cache_write": 0,
           "source": "merge-gateway"
         }
       ]
@@ -81604,6 +82700,14 @@
           "cache_read": 0.014,
           "cache_write": 0.14,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.05,
+          "out": 0.16,
+          "cache_read": 0.013,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -81668,6 +82772,14 @@
           "out": 0.3124,
           "cache_read": 0.03124,
           "cache_write": 0.1562,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
           "source": "nano-gpt"
         }
       ]
@@ -82010,6 +83122,19 @@
         }
       ]
     },
+    "nano-gpt\u0000fugu-max": {
+      "id": "fugu-max",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.25,
+          "cache_write": 2,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000fugu-ultra": {
       "id": "fugu-ultra",
       "rates": [
@@ -82019,6 +83144,14 @@
           "out": 31.5,
           "cache_read": 0.525,
           "cache_write": 5.25,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 5,
+          "out": 30,
+          "cache_read": 0.5,
+          "cache_write": 5,
           "source": "nano-gpt"
         }
       ]
@@ -82032,6 +83165,14 @@
           "out": 31.5,
           "cache_read": 0.525,
           "cache_write": 5.25,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 5,
+          "out": 30,
+          "cache_read": 0.5,
+          "cache_write": 5,
           "source": "nano-gpt"
         }
       ]
@@ -85007,6 +86148,19 @@
         }
       ]
     },
+    "nano-gpt\u0000lightonocr-2-1b": {
+      "id": "lightonocr-2-1b",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.1785,
+          "out": 0.3465,
+          "cache_read": 0,
+          "cache_write": 0.1785,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000ling-3.0-flash": {
       "id": "ling-3.0-flash",
       "rates": [
@@ -85055,6 +86209,19 @@
           "out": 0.493,
           "cache_read": 0.2465,
           "cache_write": 0.493,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000llama-3.1-405b-instruct": {
+      "id": "llama-3.1-405b-instruct",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 2.0265,
+          "out": 2.0265,
+          "cache_read": 0,
+          "cache_write": 2.0265,
           "source": "nano-gpt"
         }
       ]
@@ -85705,6 +86872,19 @@
           "out": 0.595,
           "cache_read": 0.09945,
           "cache_write": 0.1989,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000mistral-small-24b-instruct-2501": {
+      "id": "mistral-small-24b-instruct-2501",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.1155,
+          "out": 0.3465,
+          "cache_read": 0,
+          "cache_write": 0.1155,
           "source": "nano-gpt"
         }
       ]
@@ -87207,6 +88387,14 @@
           "from": "2026-08-27",
           "in": 0.16,
           "out": 0.47,
+          "cache_read": 0.016,
+          "cache_write": 0.2,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.14,
+          "out": 0.42,
           "cache_read": 0.016,
           "cache_write": 0.2,
           "source": "nano-gpt"
@@ -92874,6 +94062,19 @@
         }
       ]
     },
+    "ofox\u0000deepseek-v4-flash-0423": {
+      "id": "deepseek-v4-flash-0423",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.19,
+          "out": 0.51,
+          "cache_read": 0.028,
+          "cache_write": 0.19,
+          "source": "ofox"
+        }
+      ]
+    },
     "ofox\u0000deepseek-v4-flash-0731": {
       "id": "deepseek-v4-flash-0731",
       "rates": [
@@ -92923,6 +94124,14 @@
           "cache_read": 0.044,
           "cache_write": 1.32,
           "source": "ofox"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 1.32,
+          "out": 3.96,
+          "cache_read": 0.15,
+          "cache_write": 1.32,
+          "source": "ofox"
         }
       ]
     },
@@ -92935,6 +94144,19 @@
           "out": 3.96,
           "cache_read": 0.044,
           "cache_write": 1.32,
+          "source": "ofox"
+        }
+      ]
+    },
+    "ofox\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.006,
+          "cache_write": 0.3,
           "source": "ofox"
         }
       ]
@@ -93118,6 +94340,14 @@
           "cache_read": 0.025,
           "cache_write": 1,
           "source": "ofox"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.1,
+          "out": 0.4,
+          "cache_read": 0.01,
+          "cache_write": 1,
+          "source": "ofox"
         }
       ]
     },
@@ -93225,6 +94455,19 @@
         }
       ]
     },
+    "ofox\u0000gemini-3.8-flash": {
+      "id": "gemini-3.8-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.75,
+          "out": 3.75,
+          "cache_read": 0.075,
+          "cache_write": 0.0415,
+          "source": "ofox"
+        }
+      ]
+    },
     "ofox\u0000glm-4.6": {
       "id": "glm-4.6",
       "rates": [
@@ -93234,6 +94477,14 @@
           "out": 1.9,
           "cache_read": 0.11,
           "cache_write": 0.4,
+          "source": "ofox"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.6,
+          "out": 2.2,
+          "cache_read": 0.11,
+          "cache_write": 0.6,
           "source": "ofox"
         }
       ]
@@ -93248,6 +94499,14 @@
           "cache_read": 0.08,
           "cache_write": 0.4,
           "source": "ofox"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.4,
+          "out": 2.2,
+          "cache_read": 0.11,
+          "cache_write": 0.4,
+          "source": "ofox"
         }
       ]
     },
@@ -93259,6 +94518,14 @@
           "in": 0.072,
           "out": 0.43,
           "cache_read": 0.015,
+          "cache_write": 0.072,
+          "source": "ofox"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.072,
+          "out": 0.4,
+          "cache_read": 0.01,
           "cache_write": 0.072,
           "source": "ofox"
         }
@@ -93961,6 +95228,14 @@
           "cache_read": 0.0086,
           "cache_write": 0.05,
           "source": "ofox"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.043,
+          "out": 0.09,
+          "cache_read": 0.0086,
+          "cache_write": 0.043,
+          "source": "ofox"
         }
       ]
     },
@@ -93972,6 +95247,14 @@
           "in": 0.23,
           "out": 0.58,
           "cache_read": 0.046,
+          "cache_write": 0.23,
+          "source": "ofox"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.23,
+          "out": 0.58,
+          "cache_read": 0.023,
           "cache_write": 0.23,
           "source": "ofox"
         }
@@ -94117,6 +95400,14 @@
           "cache_read": 0,
           "cache_write": 0.6,
           "source": "ofox"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.43,
+          "out": 2.57,
+          "cache_read": 0,
+          "cache_write": 0.43,
+          "source": "ofox"
         }
       ]
     },
@@ -94169,6 +95460,14 @@
           "cache_read": 0.5,
           "cache_write": 3.125,
           "source": "ofox"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 1.71,
+          "out": 5.14,
+          "cache_read": 0.17,
+          "cache_write": 2.14,
+          "source": "ofox"
         }
       ]
     },
@@ -94195,6 +95494,27 @@
           "cache_read": 0.05,
           "cache_write": 0.5625,
           "source": "ofox"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.5,
+          "out": 1.71,
+          "cache_read": 0.043,
+          "cache_write": 0.63,
+          "source": "ofox"
+        }
+      ]
+    },
+    "ofox\u0000qwen3.8-flash": {
+      "id": "qwen3.8-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.11,
+          "out": 0.39,
+          "cache_read": 0.011,
+          "cache_write": 0.14,
+          "source": "ofox"
         }
       ]
     },
@@ -94208,6 +95528,14 @@
           "cache_read": 0.25,
           "cache_write": 2.5,
           "source": "ofox"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 1.71,
+          "out": 5.14,
+          "cache_read": 0.17,
+          "cache_write": 2.14,
+          "source": "ofox"
         }
       ]
     },
@@ -94220,6 +95548,14 @@
           "out": 6,
           "cache_read": 0.25,
           "cache_write": 2.5,
+          "source": "ofox"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 1.71,
+          "out": 5.14,
+          "cache_read": 0.17,
+          "cache_write": 2.14,
           "source": "ofox"
         }
       ]
@@ -96307,6 +97643,19 @@
         }
       ]
     },
+    "opencode-go\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
+          "source": "opencode-go"
+        }
+      ]
+    },
     "opencode-go\u0000glm-5": {
       "id": "glm-5",
       "rates": [
@@ -97332,6 +98681,14 @@
           "cache_read": 0.11,
           "cache_write": 0.29,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.25,
+          "out": 1,
+          "cache_read": 0,
+          "cache_write": 0.25,
+          "source": "openrouter"
         }
       ]
     },
@@ -97552,6 +98909,14 @@
           "cache_read": 0.03498,
           "cache_write": 1.0494,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.66,
+          "out": 1.98,
+          "cache_read": 0.066,
+          "cache_write": 0.66,
+          "source": "openrouter"
         }
       ]
     },
@@ -97641,11 +99006,42 @@
         }
       ]
     },
+    "openrouter\u0000fugu-max": {
+      "id": "fugu-max",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.25,
+          "cache_write": 2,
+          "source": "openrouter"
+        }
+      ]
+    },
     "openrouter\u0000fugu-ultra": {
       "id": "fugu-ultra",
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 5,
+          "out": 30,
+          "cache_read": 0.5,
+          "cache_write": 5,
+          "tier_threshold": 272000,
+          "tier_in": 10,
+          "tier_out": 45,
+          "tier_cache_read": 1,
+          "tier_cache_write": 10,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000fugu-ultra-v2": {
+      "id": "fugu-ultra-v2",
+      "rates": [
+        {
+          "from": "2026-09-11",
           "in": 5,
           "out": 30,
           "cache_read": 0.5,
@@ -98115,6 +99511,14 @@
           "out": 3.41,
           "cache_read": 0.2015,
           "cache_write": 1.085,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.97,
+          "out": 3.3077,
+          "cache_read": 0.194,
+          "cache_write": 0.97,
           "source": "openrouter"
         }
       ]
@@ -99558,6 +100962,14 @@
           "cache_read": 0.24,
           "cache_write": 2.4,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 2.34,
+          "out": 11.7,
+          "cache_read": 0.261,
+          "cache_write": 2.34,
+          "source": "openrouter"
         }
       ]
     },
@@ -99689,6 +101101,14 @@
           "cache_read": 0.3,
           "cache_write": 3,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 2.34,
+          "out": 11.7,
+          "cache_read": 0.261,
+          "cache_write": 2.34,
+          "source": "openrouter"
         }
       ]
     },
@@ -99801,6 +101221,19 @@
       "rates": [
         {
           "from": "2026-09-07",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000ling-3.0-flash-vl": {
+      "id": "ling-3.0-flash-vl",
+      "rates": [
+        {
+          "from": "2026-09-11",
           "in": 0,
           "out": 0,
           "cache_read": 0,
@@ -101994,6 +103427,14 @@
           "out": 0.12,
           "cache_read": 0.006,
           "cache_write": 0.03,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.09,
+          "out": 0.36,
+          "cache_read": 0.018,
+          "cache_write": 0.09,
           "source": "openrouter"
         }
       ]
@@ -105736,6 +107177,19 @@
         }
       ]
     },
+    "pioneer\u0000glm-5.2-fast": {
+      "id": "glm-5.2-fast",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 2.1,
+          "out": 6.6,
+          "cache_read": 0.21,
+          "cache_write": 2.1,
+          "source": "pioneer"
+        }
+      ]
+    },
     "pioneer\u0000gpt-4.1": {
       "id": "gpt-4.1",
       "rates": [
@@ -106226,6 +107680,19 @@
           "out": 1.5,
           "cache_read": 0.5,
           "cache_write": 0.5,
+          "source": "pioneer"
+        }
+      ]
+    },
+    "pioneer\u0000mistral-medium": {
+      "id": "mistral-medium",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.4,
+          "out": 2,
+          "cache_read": 0.4,
+          "cache_write": 0.4,
           "source": "pioneer"
         }
       ]
@@ -109163,6 +110630,19 @@
           "out": 3.5,
           "cache_read": 0.44,
           "cache_write": 1.75,
+          "source": "requesty"
+        }
+      ]
+    },
+    "requesty\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.22,
+          "out": 0.66,
+          "cache_read": 0.007,
+          "cache_write": 0.22,
           "source": "requesty"
         }
       ]
@@ -117113,6 +118593,19 @@
         }
       ]
     },
+    "venice\u0000deepseek-v4-1-flash": {
+      "id": "deepseek-v4-1-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.375,
+          "out": 1.5,
+          "cache_read": 0.0075,
+          "cache_write": 0.375,
+          "source": "venice"
+        }
+      ]
+    },
     "venice\u0000deepseek-v4-flash": {
       "id": "deepseek-v4-flash",
       "rates": [
@@ -118778,6 +120271,14 @@
           "cache_read": 0.028,
           "cache_write": 0.28,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-11",
+          "in": 0.62,
+          "out": 1.85,
+          "cache_read": 0,
+          "cache_write": 0.62,
+          "source": "vercel"
         }
       ]
     },
@@ -118863,6 +120364,19 @@
           "out": 1.98,
           "cache_read": 0.066,
           "cache_write": 0.66,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-11",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.006,
+          "cache_write": 0.3,
           "source": "vercel"
         }
       ]
@@ -127069,6 +128583,8 @@
     "deepseek-v3p2-thinking": "deepseek-v3.2-thinking",
     "deepseek-v4-1-flash": "deepseek-v4.1-flash",
     "deepseek-v4-1-flash-beta": "deepseek-v4.1-flash-beta",
+    "deepseek-v4-1-flash-latest": "deepseek-v4-1-flash",
+    "deepseek-v4-flash-0423-latest": "deepseek-v4-flash-0423",
     "deepseek-v4-flash-0731-284b-latest": "deepseek-v4-flash-0731-284b",
     "deepseek-v4-flash-0731-fast-latest": "deepseek-v4-flash-0731-fast",
     "deepseek-v4-flash-0731-latest": "deepseek-v4-flash-0731",
@@ -127092,6 +128608,7 @@
     "deepseek-v4.1-flash-latest": "deepseek-v4.1-flash",
     "deepseek-v4p1-flash": "deepseek-v4.1-flash",
     "deepseek-v4p1-flash-beta": "deepseek-v4.1-flash-beta",
+    "deepseek-v4p1-flash-latest": "deepseek-v4p1-flash",
     "deepseek.r1-v1-latest": "deepseek.r1-v1",
     "deepseek.v3-v1-latest": "deepseek.v3-v1",
     "deepseek.v3.2-latest": "deepseek.v3.2",
@@ -127318,12 +128835,14 @@
     "fluxp2-klein-4b": "flux.2-klein-4b",
     "free-latest": "free",
     "frontier-latest": "frontier",
+    "fugu-max-latest": "fugu-max",
     "fugu-ultra-20260615-latest": "fugu-ultra-20260615",
     "fugu-ultra-latest": "fugu-ultra",
     "fugu-ultra-v1-0-latest": "fugu-ultra-v1-0",
     "fugu-ultra-v1-1-latest": "fugu-ultra-v1-1",
     "fugu-ultra-v1.1-latest": "fugu-ultra-v1.1",
     "fugu-ultra-v1p1": "fugu-ultra-v1.1",
+    "fugu-ultra-v2-latest": "fugu-ultra-v2",
     "gemini-2-0-flash": "gemini-2.0-flash",
     "gemini-2-0-flash-lite": "gemini-2.0-flash-lite",
     "gemini-2-0-pro-exp-02-05": "gemini-2.0-pro-exp-02-05",
@@ -127537,6 +129056,7 @@
     "gemma-3-12b-it-latest": "gemma-3-12b-it",
     "gemma-3-12b-latest": "gemma-3-12b",
     "gemma-3-27b-it-latest": "gemma-3-27b-it",
+    "gemma-3-27b-latest": "gemma-3-27b",
     "gemma-3-4b-it-latest": "gemma-3-4b-it",
     "gemma-3-4b-pt-latest": "gemma-3-4b-pt",
     "gemma-3-latest": "gemma-3",
@@ -127867,15 +129387,24 @@
     "google-gemma-3-12b-it": "google.gemma-3-12b-it",
     "google-gemma-3-27b-it-latest": "google-gemma-3-27b-it",
     "google-gemma-3-4b-it": "google.gemma-3-4b-it",
+    "google-gemma-4-26b-a4b": "google.gemma-4-26b-a4b",
     "google-gemma-4-26b-a4b-it-latest": "google-gemma-4-26b-a4b-it",
+    "google-gemma-4-31b": "google.gemma-4-31b",
     "google-gemma-4-31b-it-latest": "google-gemma-4-31b-it",
+    "google-gemma-4-e2b": "google.gemma-4-e2b",
     "google-paligemma-latest": "google-paligemma",
     "google.gemma-3-12b-it-latest": "google.gemma-3-12b-it",
     "google.gemma-3-27b-it-latest": "google.gemma-3-27b-it",
     "google.gemma-3-4b-it-latest": "google.gemma-3-4b-it",
+    "google.gemma-4-26b-a4b-latest": "google.gemma-4-26b-a4b",
+    "google.gemma-4-31b-latest": "google.gemma-4-31b",
+    "google.gemma-4-e2b-latest": "google.gemma-4-e2b",
     "googlepgemma-3-12b-it": "google.gemma-3-12b-it",
     "googlepgemma-3-27b-it": "google.gemma-3-27b-it",
     "googlepgemma-3-4b-it": "google.gemma-3-4b-it",
+    "googlepgemma-4-26b-a4b": "google.gemma-4-26b-a4b",
+    "googlepgemma-4-31b": "google.gemma-4-31b",
+    "googlepgemma-4-e2b": "google.gemma-4-e2b",
     "gpt-3-5-turbo": "gpt-3.5-turbo",
     "gpt-3-5-turbo-0125": "gpt-3.5-turbo-0125",
     "gpt-3-5-turbo-0613": "gpt-3.5-turbo-0613",
@@ -128306,10 +129835,16 @@
     "hy3-preview-free-latest": "hy3-preview-free",
     "hy3-preview-latest": "hy3-preview",
     "hy4-preview-latest": "hy4-preview",
+    "in-openai-gpt-5-6-luna": "in.openai.gpt-5.6-luna",
+    "in-openai-gpt-5-6-terra": "in.openai.gpt-5.6-terra",
+    "in.openai.gpt-5.6-luna-latest": "in.openai.gpt-5.6-luna",
+    "in.openai.gpt-5.6-terra-latest": "in.openai.gpt-5.6-terra",
     "inkling-256k-latest": "inkling-256k",
     "inkling-latest": "inkling",
     "inkling-nvfp4-latest": "inkling-nvfp4",
     "inkling-small-latest": "inkling-small",
+    "inpopenaipgpt-5p6-luna": "in.openai.gpt-5.6-luna",
+    "inpopenaipgpt-5p6-terra": "in.openai.gpt-5.6-terra",
     "interfaze-beta-latest": "interfaze-beta",
     "jp-amazon-nova-2-lite-v1": "jp.amazon.nova-2-lite-v1",
     "jp-anthropic-claude-haiku-4-5-20251001-v1": "jp.anthropic.claude-haiku-4-5-20251001-v1",
@@ -128489,6 +130024,7 @@
     "lfm-2.5-2.6b-latest": "lfm-2.5-2.6b",
     "lfm-2p5-2p6b": "lfm-2.5-2.6b",
     "lfm2-24b-a2b-latest": "lfm2-24b-a2b",
+    "lightonocr-2-1b-latest": "lightonocr-2-1b",
     "ling-1t-latest": "ling-1t",
     "ling-2-6-1t": "ling-2.6-1t",
     "ling-2-6-flash": "ling-2.6-flash",
@@ -129811,6 +131347,7 @@
     "us-amazon-nova-2-lite-v1": "us.amazon.nova-2-lite-v1",
     "us-amazon-nova-lite-v1": "us.amazon.nova-lite-v1",
     "us-amazon-nova-micro-v1": "us.amazon.nova-micro-v1",
+    "us-amazon-nova-premier-v1": "us.amazon.nova-premier-v1",
     "us-amazon-nova-pro-v1": "us.amazon.nova-pro-v1",
     "us-anthropic-claude-fable-5": "us.anthropic.claude-fable-5",
     "us-anthropic-claude-fable-5-1": "us.anthropic.claude-fable-5-1",
@@ -129825,6 +131362,12 @@
     "us-anthropic-claude-sonnet-4-6": "us.anthropic.claude-sonnet-4-6",
     "us-anthropic-claude-sonnet-5": "us.anthropic.claude-sonnet-5",
     "us-deepseek-r1-v1": "us.deepseek.r1-v1",
+    "us-gov-openai-gpt-oss-120b-1": "us-gov.openai.gpt-oss-120b-1",
+    "us-gov-openai-gpt-oss-20b-1": "us-gov.openai.gpt-oss-20b-1",
+    "us-gov.openai.gpt-oss-120b-1-latest": "us-gov.openai.gpt-oss-120b-1",
+    "us-gov.openai.gpt-oss-20b-1-latest": "us-gov.openai.gpt-oss-20b-1",
+    "us-govpopenaipgpt-oss-120b-1": "us-gov.openai.gpt-oss-120b-1",
+    "us-govpopenaipgpt-oss-20b-1": "us-gov.openai.gpt-oss-20b-1",
     "us-meta-llama3-1-70b-instruct-v1": "us.meta.llama3-1-70b-instruct-v1",
     "us-meta-llama3-1-8b-instruct-v1": "us.meta.llama3-1-8b-instruct-v1",
     "us-meta-llama3-3-70b-instruct-v1": "us.meta.llama3-3-70b-instruct-v1",
@@ -129841,6 +131384,7 @@
     "us.amazon.nova-2-lite-v1-latest": "us.amazon.nova-2-lite-v1",
     "us.amazon.nova-lite-v1-latest": "us.amazon.nova-lite-v1",
     "us.amazon.nova-micro-v1-latest": "us.amazon.nova-micro-v1",
+    "us.amazon.nova-premier-v1-latest": "us.amazon.nova-premier-v1",
     "us.amazon.nova-pro-v1-latest": "us.amazon.nova-pro-v1",
     "us.anthropic.claude-fable-5-1-latest": "us.anthropic.claude-fable-5-1",
     "us.anthropic.claude-fable-5-latest": "us.anthropic.claude-fable-5",
@@ -129873,6 +131417,7 @@
     "uspamazonpnova-2-lite-v1": "us.amazon.nova-2-lite-v1",
     "uspamazonpnova-lite-v1": "us.amazon.nova-lite-v1",
     "uspamazonpnova-micro-v1": "us.amazon.nova-micro-v1",
+    "uspamazonpnova-premier-v1": "us.amazon.nova-premier-v1",
     "uspamazonpnova-pro-v1": "us.amazon.nova-pro-v1",
     "uspanthropicpclaude-fable-5": "us.anthropic.claude-fable-5",
     "uspanthropicpclaude-fable-5-1": "us.anthropic.claude-fable-5-1",
