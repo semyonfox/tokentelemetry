@@ -272,16 +272,25 @@ func Normalize(model string) string {
 	return m
 }
 
+// Canonical returns the normalized model id and, when configured, the explicit
+// alias target used for pricing. It deliberately follows the same one-hop alias
+// rule as Lookup: aliases are exact equivalences, not a rewrite language.
+func (tbl *Table) Canonical(model string) (string, bool) {
+	id := Normalize(model)
+	if canon, ok := tbl.Aliases[id]; ok {
+		return canon, true
+	}
+	return id, false
+}
+
 // Lookup resolves a model (and optional provider) to the rate in force at t.
 func (tbl *Table) Lookup(model, provider string, t time.Time) (Rate, Confidence, bool) {
-	id := Normalize(model)
-	if id == "" {
+	lookupID, aliased := tbl.Canonical(model)
+	if lookupID == "" {
 		return Rate{}, ConfidenceUnpriced, false
 	}
-	lookupID := id
 	confidence := ConfidenceExact
-	if canon, ok := tbl.Aliases[id]; ok {
-		lookupID = canon
+	if aliased {
 		confidence = ConfidenceAlias
 	}
 	// A recorded provider is authoritative: it tells us who actually billed the
@@ -308,26 +317,20 @@ func (tbl *Table) Find(query string) (*Model, string, bool) {
 	if id == "" {
 		return nil, "", false
 	}
-	if m, ok := tbl.Models[id]; ok {
-		return m, id, true
-	}
 	if canon, ok := tbl.Aliases[id]; ok {
 		if m, ok := tbl.Models[canon]; ok {
 			return m, id, true
 		}
+	}
+	if m, ok := tbl.Models[id]; ok {
+		return m, id, true
 	}
 	return nil, id, false
 }
 
 // Describe renders a model's price history, for `tokentelemetry price`.
 func (tbl *Table) Describe(model string) (string, bool) {
-	id := Normalize(model)
-	m, ok := tbl.Models[id]
-	if !ok {
-		if canon, aliased := tbl.Aliases[id]; aliased {
-			m, ok = tbl.Models[canon]
-		}
-	}
+	m, _, ok := tbl.Find(model)
 	if !ok {
 		return "", false
 	}

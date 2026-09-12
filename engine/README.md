@@ -41,6 +41,14 @@ limit changes that cap. The daily chart selects the latest recorded days; models
 and agents are ranked by list cost. Chart limits never reduce the totals or JSON
 output. Summary JSON includes the daily series and all dimension aggregates.
 `--group-by` adds nested data to JSON and detailed tables; summary charts stay flat.
+Detailed timeline and session views default to a model breakdown. `project` stays
+flat by default, ranked by list cost, so it remains a useful overview; add
+`--group-by model` or `--breakdown` when the per-model detail is needed.
+
+Project grouping normalizes path separators and, for a checkout that still
+exists, groups nested CWDs and linked Git worktrees under the main checkout.
+Deleted or non-Git paths stay separate rather than being guessed together. JSON
+project rows retain their recorded CWDs in `project_paths`.
 
 ```sh
 ./dist/tokentelemetry summary --agent claude,codex
@@ -82,6 +90,22 @@ go run ./cmd/pricing-sync
 Pricing sync fetches current data over the network.
 Override rates using `~/.tokentelemetry/pricing.json` in the same schema, or set
 `TT_PRICING_FILE` to an override file.
+
+The same file can map an agent's opaque model id to a released model for both
+display and list-rate accounting. For example, Z.ai revealed Ox Alpha as
+GLM-5.3-Flash, while OpenCode recorded it under `x-preview-f-free`:
+
+```json
+{
+  "schema": 2,
+  "aliases": {
+    "x-preview-f-free": "glm-5.3-flash"
+  }
+}
+```
+
+Aliases are exact after normalization. The original id remains in raw ingested
+turn data, while reports group it under the canonical model.
 
 ## Development and packaging
 

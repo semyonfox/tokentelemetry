@@ -77,6 +77,11 @@ func Of(t model.Turn, tbl *pricing.Table) Cost {
 	if !ok {
 		return c
 	}
+	// Reports group aliases under the model whose rate actually priced the
+	// turn. The raw model id remains on Turn for JSON ingestion and filtering.
+	if canonical, aliased := tbl.Canonical(t.Model); aliased {
+		c.Model = canonical
+	}
 	if !t.Timestamp.IsZero() && rate.From.After(pricing.DateOf(t.Timestamp)) {
 		c.RateNewerThanCall = true
 	}

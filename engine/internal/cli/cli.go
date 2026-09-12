@@ -47,7 +47,7 @@ FILTERS (every report command)
 OUTPUT
   --plain                summary without bars or startup spinner
   --json                 machine-readable output
-  --group-by DIMS        nest rows by dimensions (default: model)
+  --group-by DIMS        nest rows by dimensions (default: model; project is flat)
                          day, week, month, agent, model, provider, project,
                          session, or "none" for a flat table
                          e.g. --group-by agent,model
@@ -104,6 +104,16 @@ func (s *stringList) Set(v string) error {
 		}
 	}
 	return nil
+}
+
+func defaultDimensions(cmd, spec string, breakdown bool, dims []report.Dimension) []report.Dimension {
+	if len(dims) == 0 && breakdown {
+		return []report.Dimension{report.DimModel}
+	}
+	if spec == "" && !breakdown && cmd != "model" && cmd != "summary" && cmd != "project" {
+		return []report.Dimension{report.DimModel}
+	}
+	return dims
 }
 
 func cmdReport(cmd string, args []string) int {
@@ -180,19 +190,10 @@ func cmdReport(cmd string, args []string) int {
 		fmt.Fprintf(os.Stderr, "tokentelemetry: %v\n", err)
 		return 2
 	}
-	// --breakdown is the common case spelled short.
-	if len(dims) == 0 && *breakdown {
-		dims = []report.Dimension{report.DimModel}
-	}
-	// Default to a row per model. Listing model names beside a row's combined
-	// figures says which models were involved but not how much each one cost,
-	// which is the question people are actually asking. A row per model costs
-	// no extra screen — the name list already occupied one line each — and
-	// every number becomes attributable. `--group-by none` restores the flat
-	// table.
-	if firstNonEmpty(*groupBy, *by) == "" && !*breakdown && cmd != "model" && cmd != "summary" {
-		dims = []report.Dimension{report.DimModel}
-	}
+	// Detailed timeline/session views default to model attribution. Projects are
+	// already the answer, so their default stays one compact row per project;
+	// --group-by model and --breakdown opt into the per-model detail.
+	dims = defaultDimensions(cmd, firstNonEmpty(*groupBy, *by), *breakdown, dims)
 
 	progress := startProgress(os.Stderr, progressEnabled(*asJSON || *plainOutput), "Checking for updated prices...")
 	defer progress.Stop()
