@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-09-14",
+  "updated": "2026-09-15",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -1209,6 +1209,19 @@
           "cache_read": 0.5,
           "cache_write": 1,
           "source": "nano-gpt"
+        }
+      ]
+    },
+    "atria-dawn-preview": {
+      "id": "atria-dawn-preview",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "llmgateway"
         }
       ]
     },
@@ -3569,6 +3582,14 @@
           "cache_read": 0.033,
           "cache_write": 0.334,
           "source": "cortecs"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.368,
+          "out": 1.103,
+          "cache_read": 0.037,
+          "cache_write": 0.368,
+          "source": "cortecs"
         }
       ]
     },
@@ -4692,6 +4713,14 @@
           "cache_read": 0.028,
           "cache_write": 0.28,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
+          "source": "edenai"
         }
       ]
     },
@@ -4795,6 +4824,19 @@
           "cache_read": 0,
           "cache_write": 0.03,
           "source": "novita-ai"
+        }
+      ]
+    },
+    "deepseek-pro": {
+      "id": "deepseek-pro",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.66,
+          "out": 1.98,
+          "cache_read": 0.022,
+          "cache_write": 0.66,
+          "source": "kilo"
         }
       ]
     },
@@ -5281,6 +5323,14 @@
           "cache_read": 0.0075,
           "cache_write": 0.375,
           "source": "venice"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.3,
+          "cache_write": 0.3,
+          "source": "empiriolabs"
         }
       ]
     },
@@ -8031,6 +8081,14 @@
           "cache_read": 0.125,
           "cache_write": 0.375,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 2.5,
+          "out": 10,
+          "cache_read": 0.25,
+          "cache_write": 2.5,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -9838,6 +9896,14 @@
           "cache_read": 0.184,
           "cache_write": 0.92,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.8775,
+          "out": 2.97,
+          "cache_read": 0.1755,
+          "cache_write": 0.8775,
+          "source": "kilo"
         }
       ]
     },
@@ -11013,6 +11079,19 @@
       ],
       "first_party": true
     },
+    "glm-5.3-flash-fp4": {
+      "id": "glm-5.3-flash-fp4",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0,
+          "cache_write": 0.15,
+          "source": "coralbricks"
+        }
+      ]
+    },
     "glm-5.3-flash-free": {
       "id": "glm-5.3-flash-free",
       "rates": [
@@ -11051,6 +11130,14 @@
           "out": 1.4,
           "cache_read": 0.175,
           "cache_write": 0.35,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.2,
+          "out": 0.8,
+          "cache_read": 0.1,
+          "cache_write": 0.2,
           "source": "nano-gpt"
         }
       ]
@@ -11342,6 +11429,19 @@
           "cache_read": 0,
           "cache_write": 0,
           "source": "nan"
+        }
+      ]
+    },
+    "glm5.3-754b": {
+      "id": "glm5.3-754b",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1,
+          "out": 3.5,
+          "cache_read": 0.25,
+          "cache_write": 1,
+          "source": "aki-io"
         }
       ]
     },
@@ -13795,6 +13895,14 @@
           "cache_read": 0,
           "cache_write": 0,
           "source": "pendra"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.014,
+          "cache_write": 0.15,
+          "source": "ollama-cloud"
         }
       ]
     },
@@ -17192,6 +17300,14 @@
           "cache_read": 0.012,
           "cache_write": 0.06,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.021,
+          "out": 0.063,
+          "cache_read": 0.0042,
+          "cache_write": 0.021,
+          "source": "vercel"
         }
       ]
     },
@@ -17270,6 +17386,19 @@
           "cache_read": 0.012,
           "cache_write": 0.06,
           "source": "nano-gpt"
+        }
+      ]
+    },
+    "ling-3.0-flash-vl-free": {
+      "id": "ling-3.0-flash-vl-free",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "vercel"
         }
       ]
     },
@@ -19088,6 +19217,19 @@
         }
       ]
     },
+    "minicpm5-2b": {
+      "id": "minicpm5-2b",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.124,
+          "out": 0.7425,
+          "cache_read": 0.124,
+          "cache_write": 0.124,
+          "source": "amd"
+        }
+      ]
+    },
     "minimax": {
       "id": "minimax",
       "rates": [
@@ -19595,6 +19737,14 @@
           "cache_read": 0,
           "cache_write": 0.34776,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.34653,
+          "out": 0.46204,
+          "cache_read": 0,
+          "cache_write": 0.34653,
+          "source": "edenai"
         }
       ]
     },
@@ -19648,6 +19798,14 @@
           "cache_read": 0.011,
           "cache_write": 0.111,
           "source": "cortecs"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.123,
+          "out": 0.123,
+          "cache_read": 0.012,
+          "cache_write": 0.123,
+          "source": "cortecs"
         }
       ]
     },
@@ -19674,6 +19832,14 @@
           "out": 0.167,
           "cache_read": 0.017,
           "cache_write": 0.167,
+          "source": "cortecs"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.179,
+          "out": 0.179,
+          "cache_read": 0.017,
+          "cache_write": 0.179,
           "source": "cortecs"
         }
       ]
@@ -20733,6 +20899,14 @@
           "cache_read": 0,
           "cache_write": 0.5,
           "source": "aiand"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.5,
+          "out": 2,
+          "cache_read": 0.2,
+          "cache_write": 0.5,
+          "source": "aiand"
         }
       ]
     },
@@ -21068,6 +21242,19 @@
       ],
       "first_party": true
     },
+    "nemotron-3-nano": {
+      "id": "nemotron-3-nano",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.06,
+          "out": 0.24,
+          "cache_read": 0,
+          "cache_write": 0.06,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
     "nemotron-3-nano-30b": {
       "id": "nemotron-3-nano-30b",
       "rates": [
@@ -21182,6 +21369,19 @@
         }
       ]
     },
+    "nemotron-3-super": {
+      "id": "nemotron-3-super",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.015,
+          "out": 0.6,
+          "cache_read": 0.015,
+          "cache_write": 0.015,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
     "nemotron-3-super-120b": {
       "id": "nemotron-3-super-120b",
       "rates": [
@@ -21232,6 +21432,14 @@
           "cache_read": 0,
           "cache_write": 0.1,
           "source": "routing-run"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.1,
+          "out": 3,
+          "cache_read": 0.1,
+          "cache_write": 0.1,
+          "source": "ollama-cloud"
         }
       ]
     },
@@ -21283,6 +21491,14 @@
           "in": 0.6,
           "out": 2.4,
           "cache_read": 0.119,
+          "cache_write": 0.6,
+          "source": "fireworks-ai"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.6,
+          "out": 2.4,
+          "cache_read": 0.12,
           "cache_write": 0.6,
           "source": "fireworks-ai"
         }
@@ -22008,6 +22224,14 @@
           "out": 0.25,
           "cache_read": 0.05,
           "cache_write": 0.1,
+          "source": "wandb"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.07,
+          "out": 0.2,
+          "cache_read": 0.04,
+          "cache_write": 0.07,
           "source": "wandb"
         }
       ]
@@ -23971,6 +24195,14 @@
           "in": 1.3,
           "out": 7.8,
           "cache_read": 0.26,
+          "cache_write": 1.625,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 1.3,
+          "out": 7.8,
+          "cache_read": 0.13,
           "cache_write": 1.625,
           "source": "vercel"
         }
@@ -26159,6 +26391,19 @@
         }
       ]
     },
+    "qwen3.5": {
+      "id": "qwen3.5",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.6,
+          "out": 3.6,
+          "cache_read": 0,
+          "cache_write": 0.6,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
     "qwen3.5-0.8b": {
       "id": "qwen3.5-0.8b",
       "rates": [
@@ -26392,6 +26637,14 @@
           "in": 0.1,
           "out": 0.4,
           "cache_read": 0.001,
+          "cache_write": 0.125,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.1,
+          "out": 0.4,
+          "cache_read": 0.01,
           "cache_write": 0.125,
           "source": "vercel"
         }
@@ -26891,6 +27144,14 @@
           "cache_read": 0.125,
           "cache_write": 0.25,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.25,
+          "out": 1.5,
+          "cache_read": 0.2,
+          "cache_write": 0.25,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -26981,6 +27242,14 @@
           "cache_read": 0.01,
           "cache_write": 0.12,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.47,
+          "cache_read": 0.016,
+          "cache_write": 0.15,
+          "source": "amd"
         }
       ]
     },
@@ -27760,6 +28029,19 @@
           "tier_cache_read": 0.2,
           "tier_cache_write": 1,
           "source": "deepinfra"
+        }
+      ]
+    },
+    "seed-2.1-turbo": {
+      "id": "seed-2.1-turbo",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.5,
+          "out": 2.5,
+          "cache_read": 0.1,
+          "cache_write": 0.5,
+          "source": "vercel"
         }
       ]
     },
@@ -29187,6 +29469,45 @@
         }
       ]
     },
+    "vision-large": {
+      "id": "vision-large",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 7.37,
+          "out": 22.11,
+          "cache_read": 0,
+          "cache_write": 7.37,
+          "source": "vispark"
+        }
+      ]
+    },
+    "vision-medium": {
+      "id": "vision-medium",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 4.21,
+          "out": 12.63,
+          "cache_read": 0,
+          "cache_write": 4.21,
+          "source": "vispark"
+        }
+      ]
+    },
+    "vision-small": {
+      "id": "vision-small",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1.05,
+          "out": 3.16,
+          "cache_read": 0,
+          "cache_write": 1.05,
+          "source": "vispark"
+        }
+      ]
+    },
     "voxtral-mini-3b": {
       "id": "voxtral-mini-3b",
       "rates": [
@@ -29236,6 +29557,14 @@
           "out": 0.334,
           "cache_read": 0.011,
           "cache_write": 0.111,
+          "source": "cortecs"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.123,
+          "out": 0.368,
+          "cache_read": 0.012,
+          "cache_write": 0.123,
           "source": "cortecs"
         }
       ]
@@ -30194,6 +30523,19 @@
           "out": 0.43,
           "cache_read": 0,
           "cache_write": 0.29,
+          "source": "302ai"
+        }
+      ]
+    },
+    "302ai\u0000deepseek-flash": {
+      "id": "deepseek-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
           "source": "302ai"
         }
       ]
@@ -33431,6 +33773,14 @@
           "cache_read": 0,
           "cache_write": 0.15,
           "source": "aiand"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.25,
+          "cache_read": 0.08,
+          "cache_write": 0.15,
+          "source": "aiand"
         }
       ]
     },
@@ -33442,6 +33792,14 @@
           "in": 1,
           "out": 2.5,
           "cache_read": 0,
+          "cache_write": 1,
+          "source": "aiand"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 1,
+          "out": 2.5,
+          "cache_read": 0.25,
           "cache_write": 1,
           "source": "aiand"
         }
@@ -33457,6 +33815,14 @@
           "cache_read": 0,
           "cache_write": 0.2,
           "source": "aiand"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.2,
+          "out": 0.5,
+          "cache_read": 0.05,
+          "cache_write": 0.2,
+          "source": "aiand"
         }
       ]
     },
@@ -33468,6 +33834,14 @@
           "in": 1,
           "out": 4,
           "cache_read": 0,
+          "cache_write": 1,
+          "source": "aiand"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 1,
+          "out": 4,
+          "cache_read": 0.3,
           "cache_write": 1,
           "source": "aiand"
         }
@@ -33496,6 +33870,14 @@
           "cache_read": 0,
           "cache_write": 0.15,
           "source": "aiand"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.08,
+          "cache_write": 0.15,
+          "source": "aiand"
         }
       ]
     },
@@ -33507,6 +33889,14 @@
           "in": 0.75,
           "out": 3.5,
           "cache_read": 0,
+          "cache_write": 0.75,
+          "source": "aiand"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.75,
+          "out": 3.5,
+          "cache_read": 0.2,
           "cache_write": 0.75,
           "source": "aiand"
         }
@@ -33535,6 +33925,14 @@
           "cache_read": 0,
           "cache_write": 0.5,
           "source": "aiand"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.5,
+          "out": 2,
+          "cache_read": 0.2,
+          "cache_write": 0.5,
+          "source": "aiand"
         }
       ]
     },
@@ -33546,6 +33944,14 @@
           "in": 0.32,
           "out": 3.2,
           "cache_read": 0,
+          "cache_write": 0.32,
+          "source": "aiand"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.32,
+          "out": 3.2,
+          "cache_read": 0.2,
           "cache_write": 0.32,
           "source": "aiand"
         }
@@ -34744,6 +35150,19 @@
           "out": 0.5,
           "cache_read": 0,
           "cache_write": 0.1,
+          "source": "aki-io"
+        }
+      ]
+    },
+    "aki-io\u0000glm5.3-754b": {
+      "id": "glm5.3-754b",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1,
+          "out": 3.5,
+          "cache_read": 0.25,
+          "cache_write": 1,
           "source": "aki-io"
         }
       ]
@@ -37457,6 +37876,19 @@
         }
       ]
     },
+    "alibaba-token-plan-cn\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "alibaba-token-plan-cn"
+        }
+      ]
+    },
     "alibaba-token-plan-cn\u0000glm-5": {
       "id": "glm-5",
       "rates": [
@@ -40113,6 +40545,19 @@
         }
       ]
     },
+    "amd\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0.14,
+          "source": "amd"
+        }
+      ]
+    },
     "amd\u0000minicpm5-1b": {
       "id": "minicpm5-1b",
       "rates": [
@@ -40122,6 +40567,32 @@
           "out": 0.7425,
           "cache_read": 0.124,
           "cache_write": 0.124,
+          "source": "amd"
+        }
+      ]
+    },
+    "amd\u0000minicpm5-2b": {
+      "id": "minicpm5-2b",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.124,
+          "out": 0.7425,
+          "cache_read": 0.124,
+          "cache_write": 0.124,
+          "source": "amd"
+        }
+      ]
+    },
+    "amd\u0000qwen3.8-27b": {
+      "id": "qwen3.8-27b",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
           "source": "amd"
         }
       ]
@@ -45236,6 +45707,19 @@
         }
       ]
     },
+    "coralbricks\u0000glm-5.3-flash-fp4": {
+      "id": "glm-5.3-flash-fp4",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0,
+          "cache_write": 0.15,
+          "source": "coralbricks"
+        }
+      ]
+    },
     "coralbricks\u0000glm-5.3-fp4": {
       "id": "glm-5.3-fp4",
       "rates": [
@@ -45438,6 +45922,14 @@
           "cache_read": 0.033,
           "cache_write": 0.334,
           "source": "cortecs"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.368,
+          "out": 1.103,
+          "cache_read": 0.037,
+          "cache_write": 0.368,
+          "source": "cortecs"
         }
       ]
     },
@@ -45523,6 +46015,19 @@
           "out": 3.999,
           "cache_read": 0.5,
           "cache_write": 2,
+          "source": "cortecs"
+        }
+      ]
+    },
+    "cortecs\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.5,
+          "out": 1.499,
+          "cache_read": 0.13,
+          "cache_write": 0.5,
           "source": "cortecs"
         }
       ]
@@ -46242,6 +46747,14 @@
           "cache_read": 0.022,
           "cache_write": 0.223,
           "source": "cortecs"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.24,
+          "out": 0.24,
+          "cache_read": 0.022,
+          "cache_write": 0.24,
+          "source": "cortecs"
         }
       ]
     },
@@ -46255,6 +46768,14 @@
           "cache_read": 0.011,
           "cache_write": 0.111,
           "source": "cortecs"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.123,
+          "out": 0.123,
+          "cache_read": 0.012,
+          "cache_write": 0.123,
+          "source": "cortecs"
         }
       ]
     },
@@ -46267,6 +46788,14 @@
           "out": 0.167,
           "cache_read": 0.017,
           "cache_write": 0.167,
+          "source": "cortecs"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.179,
+          "out": 0.179,
+          "cache_read": 0.017,
+          "cache_write": 0.179,
           "source": "cortecs"
         }
       ]
@@ -46320,6 +46849,14 @@
           "cache_read": 0.056,
           "cache_write": 0.557,
           "source": "cortecs"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.613,
+          "out": 1.838,
+          "cache_read": 0.061,
+          "cache_write": 0.613,
+          "source": "cortecs"
         }
       ]
     },
@@ -46345,6 +46882,14 @@
           "out": 7.13,
           "cache_read": 0.139,
           "cache_write": 1.393,
+          "source": "cortecs"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 1.532,
+          "out": 7.843,
+          "cache_read": 0.154,
+          "cache_write": 1.532,
           "source": "cortecs"
         }
       ]
@@ -46384,6 +46929,14 @@
           "out": 0.568,
           "cache_read": 0.014,
           "cache_write": 0.143,
+          "source": "cortecs"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.156,
+          "out": 0.625,
+          "cache_read": 0.016,
+          "cache_write": 0.156,
           "source": "cortecs"
         }
       ]
@@ -46798,6 +47351,14 @@
           "out": 0.334,
           "cache_read": 0.011,
           "cache_write": 0.111,
+          "source": "cortecs"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.123,
+          "out": 0.368,
+          "cache_read": 0.012,
+          "cache_write": 0.123,
           "source": "cortecs"
         }
       ]
@@ -49129,6 +49690,14 @@
           "cache_read": 0.12,
           "cache_write": 1.2,
           "source": "deepinfra"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 1.2,
+          "out": 4,
+          "cache_read": 0.2,
+          "cache_write": 1.2,
+          "source": "deepinfra"
         }
       ]
     },
@@ -49640,6 +50209,14 @@
           "out": 3,
           "cache_read": 0.04,
           "cache_write": 0.4,
+          "source": "deepinfra"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.2,
+          "out": 2.5,
+          "cache_read": 0.05,
+          "cache_write": 0.2,
           "source": "deepinfra"
         }
       ]
@@ -50211,6 +50788,19 @@
           "out": 3.96,
           "cache_read": 0.044,
           "cache_write": 1.32,
+          "source": "digitalocean"
+        }
+      ]
+    },
+    "digitalocean\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.006,
+          "cache_write": 0.3,
           "source": "digitalocean"
         }
       ]
@@ -51608,6 +52198,14 @@
           "cache_read": 0.028,
           "cache_write": 0.28,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
+          "source": "edenai"
         }
       ]
     },
@@ -51660,6 +52258,14 @@
           "cache_read": 0.014,
           "cache_write": 0.44,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
+          "source": "edenai"
         }
       ]
     },
@@ -51686,6 +52292,14 @@
           "cache_read": 0.007,
           "cache_write": 0.22,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
+          "source": "edenai"
         }
       ]
     },
@@ -51698,6 +52312,14 @@
           "out": 3.96,
           "cache_read": 0.044,
           "cache_write": 1.32,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.66,
+          "out": 1.98,
+          "cache_read": 0.022,
+          "cache_write": 0.66,
           "source": "edenai"
         }
       ]
@@ -53387,6 +54009,14 @@
           "cache_read": 0,
           "cache_write": 1.04328,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 1.03959,
+          "out": 1.03959,
+          "cache_read": 0,
+          "cache_write": 1.03959,
+          "source": "edenai"
         }
       ]
     },
@@ -53511,6 +54141,14 @@
           "out": 0.46368,
           "cache_read": 0,
           "cache_write": 0.34776,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.34653,
+          "out": 0.46204,
+          "cache_read": 0,
+          "cache_write": 0.34653,
           "source": "edenai"
         }
       ]
@@ -54344,6 +54982,19 @@
           "out": 1.71,
           "cache_read": 0.57,
           "cache_write": 0.57,
+          "source": "empiriolabs"
+        }
+      ]
+    },
+    "empiriolabs\u0000deepseek-v4-1-flash": {
+      "id": "deepseek-v4-1-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.3,
+          "cache_write": 0.3,
           "source": "empiriolabs"
         }
       ]
@@ -56251,6 +56902,14 @@
           "cache_read": 0.119,
           "cache_write": 0.6,
           "source": "fireworks-ai"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.6,
+          "out": 2.4,
+          "cache_read": 0.12,
+          "cache_write": 0.6,
+          "source": "fireworks-ai"
         }
       ]
     },
@@ -56503,6 +57162,27 @@
           "out": 4.4,
           "cache_read": 0.26,
           "cache_write": 1.4,
+          "source": "friendli"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 1.26,
+          "out": 3.96,
+          "cache_read": 0.234,
+          "cache_write": 1.26,
+          "source": "friendli"
+        }
+      ]
+    },
+    "friendli\u0000glm-5.3-flash": {
+      "id": "glm-5.3-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0.03,
+          "cache_write": 0.15,
           "source": "friendli"
         }
       ]
@@ -62224,6 +62904,14 @@
           "cache_read": 0.03,
           "cache_write": 0.3,
           "source": "hyper"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.32664,
+          "out": 1.30656,
+          "cache_read": 0.032664,
+          "cache_write": 0.32664,
+          "source": "hyper"
         }
       ]
     },
@@ -62277,6 +62965,14 @@
           "cache_read": 0.051,
           "cache_write": 0.102,
           "source": "hyper"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.1,
+          "out": 0.374,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "hyper"
         }
       ]
     },
@@ -62313,6 +63009,14 @@
           "out": 2.752,
           "cache_read": 0.43,
           "cache_write": 0.86,
+          "source": "hyper"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.94,
+          "out": 3.008,
+          "cache_read": 0.47,
+          "cache_write": 0.94,
           "source": "hyper"
         }
       ]
@@ -62372,6 +63076,14 @@
           "from": "2026-09-12",
           "in": 1.318,
           "out": 4.308,
+          "cache_read": 0.659,
+          "cache_write": 1.318,
+          "source": "hyper"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 1.318,
+          "out": 4.268,
           "cache_read": 0.659,
           "cache_write": 1.318,
           "source": "hyper"
@@ -62467,6 +63179,14 @@
           "cache_read": 0.084,
           "cache_write": 0.168,
           "source": "hyper"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.178,
+          "out": 0.68,
+          "cache_read": 0.089,
+          "cache_write": 0.178,
+          "source": "hyper"
         }
       ]
     },
@@ -62537,6 +63257,14 @@
           "out": 2.935,
           "cache_read": 0.2792,
           "cache_write": 0.5584,
+          "source": "hyper"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.5344,
+          "out": 2.815,
+          "cache_read": 0.2672,
+          "cache_write": 0.5344,
           "source": "hyper"
         }
       ]
@@ -62687,6 +63415,14 @@
           "out": 1.464,
           "cache_read": 0.198,
           "cache_write": 0.396,
+          "source": "hyper"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.462,
+          "out": 1.728,
+          "cache_read": 0.231,
+          "cache_write": 0.462,
           "source": "hyper"
         }
       ]
@@ -64178,6 +64914,32 @@
           "cache_read": 0.18,
           "cache_write": 0,
           "source": "inceptron"
+        }
+      ]
+    },
+    "infer\u0000gpt-5.6-sol": {
+      "id": "gpt-5.6-sol",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 2.5,
+          "out": 12.5,
+          "cache_read": 0.25,
+          "cache_write": 3.125,
+          "source": "infer"
+        }
+      ]
+    },
+    "infer\u0000gpt-6-astra": {
+      "id": "gpt-6-astra",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 12.5,
+          "out": 62.5,
+          "cache_read": 1.25,
+          "cache_write": 15.625,
+          "source": "infer"
         }
       ]
     },
@@ -67101,6 +67863,32 @@
         }
       ]
     },
+    "kilo\u0000deepseek-flash": {
+      "id": "deepseek-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.015,
+          "cache_write": 0.15,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000deepseek-pro": {
+      "id": "deepseek-pro",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.66,
+          "out": 1.98,
+          "cache_read": 0.022,
+          "cache_write": 0.66,
+          "source": "kilo"
+        }
+      ]
+    },
     "kilo\u0000deepseek-r1": {
       "id": "deepseek-r1",
       "rates": [
@@ -67981,6 +68769,14 @@
           "out": 3.1372,
           "cache_read": 0.184,
           "cache_write": 0.92,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.8775,
+          "out": 2.97,
+          "cache_read": 0.1755,
+          "cache_write": 0.8775,
           "source": "kilo"
         }
       ]
@@ -69729,6 +70525,14 @@
           "out": 0.696,
           "cache_read": 0,
           "cache_write": 0.2,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.1875,
+          "out": 0.6525,
+          "cache_read": 0,
+          "cache_write": 0.1875,
           "source": "kilo"
         }
       ]
@@ -72192,6 +72996,19 @@
           "cache_read": 0,
           "cache_write": 0,
           "source": "llama"
+        }
+      ]
+    },
+    "llmgateway\u0000atria-dawn-preview": {
+      "id": "atria-dawn-preview",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "llmgateway"
         }
       ]
     },
@@ -75056,6 +75873,19 @@
         }
       ]
     },
+    "llmgateway-providers\u0000atria-dawn-preview": {
+      "id": "atria-dawn-preview",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
     "llmgateway-providers\u0000claude-fable-5": {
       "id": "claude-fable-5",
       "rates": [
@@ -75617,6 +76447,14 @@
           "out": 0.97,
           "cache_read": 0,
           "cache_write": 0.39,
+          "source": "llmgateway-providers"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.3,
+          "out": 0.91,
+          "cache_read": 0,
+          "cache_write": 0.3,
           "source": "llmgateway-providers"
         }
       ]
@@ -76323,6 +77161,14 @@
           "out": 0.2,
           "cache_read": 0,
           "cache_write": 0.05,
+          "source": "llmgateway-providers"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0,
+          "cache_write": 0.1,
           "source": "llmgateway-providers"
         }
       ]
@@ -78620,6 +79466,201 @@
         }
       ]
     },
+    "melious\u0000deepseek-r1-0528": {
+      "id": "deepseek-r1-0528",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.69552,
+          "out": 2.78208,
+          "cache_read": 0.185472,
+          "cache_write": 0.69552,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000deepseek-v3.2": {
+      "id": "deepseek-v3.2",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.34776,
+          "out": 0.5796,
+          "cache_read": 0.092736,
+          "cache_write": 0.34776,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000deepseek-v4-flash-0731": {
+      "id": "deepseek-v4-flash-0731",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.11592,
+          "out": 0.2898,
+          "cache_read": 0.023184,
+          "cache_write": 0.11592,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000deepseek-v4-pro": {
+      "id": "deepseek-v4-pro",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1.85472,
+          "out": 3.70944,
+          "cache_read": 0.46368,
+          "cache_write": 1.85472,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000deepseek-v4-pro-0813": {
+      "id": "deepseek-v4-pro-0813",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1.1592,
+          "out": 3.4776,
+          "cache_read": 0.11592,
+          "cache_write": 1.1592,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.23184,
+          "out": 1.1592,
+          "cache_read": 0.011592,
+          "cache_write": 0.23184,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000glm-5": {
+      "id": "glm-5",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1.10124,
+          "out": 3.36168,
+          "cache_read": 0.266616,
+          "cache_write": 1.10124,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000glm-5.1": {
+      "id": "glm-5.1",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1.50696,
+          "out": 4.6368,
+          "cache_read": 0.370944,
+          "cache_write": 1.50696,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000glm-5.2": {
+      "id": "glm-5.2",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1.1592,
+          "out": 4.6368,
+          "cache_read": 0.2898,
+          "cache_write": 1.1592,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000glm-5.3": {
+      "id": "glm-5.3",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1.1592,
+          "out": 3.4776,
+          "cache_read": 0.23184,
+          "cache_write": 1.1592,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000glm-5.3-flash": {
+      "id": "glm-5.3-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.11592,
+          "out": 0.46368,
+          "cache_read": 0.023184,
+          "cache_write": 0.11592,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000kimi-k2.5": {
+      "id": "kimi-k2.5",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.5796,
+          "out": 2.95596,
+          "cache_read": 0.139104,
+          "cache_write": 0.5796,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000kimi-k2.6": {
+      "id": "kimi-k2.6",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.81144,
+          "out": 4.0572,
+          "cache_read": 0.266616,
+          "cache_write": 0.81144,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000kimi-k2.7-code": {
+      "id": "kimi-k2.7-code",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.81144,
+          "out": 3.4776,
+          "cache_read": 0.220248,
+          "cache_write": 0.81144,
+          "source": "melious"
+        }
+      ]
+    },
+    "melious\u0000kimi-k3": {
+      "id": "kimi-k3",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 3.1878,
+          "out": 15.939,
+          "cache_read": 0.788256,
+          "cache_write": 3.1878,
+          "source": "melious"
+        }
+      ]
+    },
     "merge-gateway\u0000claude-3-7-sonnet-20250219": {
       "id": "claude-3-7-sonnet-20250219",
       "rates": [
@@ -79034,6 +80075,14 @@
           "cache_read": 0.022,
           "cache_write": 0.66,
           "source": "merge-gateway"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 1.74,
+          "out": 3.48,
+          "cache_read": 0.145,
+          "cache_write": 1.74,
+          "source": "merge-gateway"
         }
       ]
     },
@@ -79059,6 +80108,14 @@
           "out": 1.98,
           "cache_read": 0.022,
           "cache_write": 0.66,
+          "source": "merge-gateway"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 1.74,
+          "out": 3.48,
+          "cache_read": 0.003625,
+          "cache_write": 1.74,
           "source": "merge-gateway"
         }
       ]
@@ -83253,6 +84310,20 @@
         }
       ]
     },
+    "nano-gpt\u0000claude-haiku-4.5": {
+      "id": "claude-haiku-4.5",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1,
+          "out": 5,
+          "cache_read": 0.1,
+          "cache_write": 1.25,
+          "cache_write_1h": 2,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000claude-opus": {
       "id": "claude-opus",
       "rates": [
@@ -83263,6 +84334,20 @@
           "cache_read": 0.5,
           "cache_write": 6.25,
           "cache_write_1h": 10,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000claude-opus-4": {
+      "id": "claude-opus-4",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 15,
+          "out": 75,
+          "cache_read": 1.5,
+          "cache_write": 18.75,
+          "cache_write_1h": 30,
           "source": "nano-gpt"
         }
       ]
@@ -83337,6 +84422,34 @@
         }
       ]
     },
+    "nano-gpt\u0000claude-opus-4.1": {
+      "id": "claude-opus-4.1",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 15,
+          "out": 75,
+          "cache_read": 1.5,
+          "cache_write": 18.75,
+          "cache_write_1h": 30,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000claude-opus-4.5": {
+      "id": "claude-opus-4.5",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 5,
+          "out": 25,
+          "cache_read": 0.5,
+          "cache_write": 6.25,
+          "cache_write_1h": 10,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000claude-opus-4.6": {
       "id": "claude-opus-4.6",
       "rates": [
@@ -83407,6 +84520,20 @@
         }
       ]
     },
+    "nano-gpt\u0000claude-sonnet-4": {
+      "id": "claude-sonnet-4",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3.75,
+          "cache_write_1h": 6,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000claude-sonnet-4-20250514": {
       "id": "claude-sonnet-4-20250514",
       "rates": [
@@ -83454,6 +84581,20 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3.75,
+          "cache_write_1h": 6,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000claude-sonnet-4.5": {
+      "id": "claude-sonnet-4.5",
+      "rates": [
+        {
+          "from": "2026-09-15",
           "in": 3,
           "out": 15,
           "cache_read": 0.3,
@@ -84021,6 +85162,14 @@
           "out": 0.6,
           "cache_read": 0.003,
           "cache_write": 0.15,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.1,
+          "out": 0.4,
+          "cache_read": 0.003,
+          "cache_write": 0.1,
           "source": "nano-gpt"
         }
       ]
@@ -84875,6 +86024,14 @@
           "out": 3.75,
           "cache_read": 0.075,
           "cache_write": 0.075,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.75,
+          "out": 3.75,
+          "cache_read": 0.075,
+          "cache_write": 0.041667,
           "source": "nano-gpt"
         }
       ]
@@ -85862,6 +87019,14 @@
           "out": 1.4,
           "cache_read": 0.175,
           "cache_write": 0.35,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.2,
+          "out": 0.8,
+          "cache_read": 0.1,
+          "cache_write": 0.2,
           "source": "nano-gpt"
         }
       ]
@@ -88182,6 +89347,32 @@
         }
       ]
     },
+    "nano-gpt\u0000mistral-small-3.1-24b-instruct": {
+      "id": "mistral-small-3.1-24b-instruct",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.1,
+          "out": 0.3,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000mistral-small-3.2-24b-instruct": {
+      "id": "mistral-small-3.2-24b-instruct",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.2,
+          "out": 0.4,
+          "cache_read": 0.1,
+          "cache_write": 0.2,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000mistral-small-3.2-24b-instruct-2506": {
       "id": "mistral-small-3.2-24b-instruct-2506",
       "rates": [
@@ -89532,6 +90723,19 @@
         }
       ]
     },
+    "nano-gpt\u0000qwen3.6-plus": {
+      "id": "qwen3.6-plus",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.325,
+          "out": 1.95,
+          "cache_read": 0.0325,
+          "cache_write": 0.40625,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000qwen3.7-flash": {
       "id": "qwen3.7-flash",
       "rates": [
@@ -89634,6 +90838,14 @@
           "in": 0.25,
           "out": 1.5,
           "cache_read": 0.125,
+          "cache_write": 0.25,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.25,
+          "out": 1.5,
+          "cache_read": 0.2,
           "cache_write": 0.25,
           "source": "nano-gpt"
         }
@@ -89802,6 +91014,32 @@
           "out": 0.111,
           "cache_read": 0.017,
           "cache_write": 0.028,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000schematron-v2-small": {
+      "id": "schematron-v2-small",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.05,
+          "out": 0.23,
+          "cache_read": 0.025,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000schematron-v2-turbo": {
+      "id": "schematron-v2-turbo",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.03,
+          "out": 0.15,
+          "cache_read": 0.015,
+          "cache_write": 0.03,
           "source": "nano-gpt"
         }
       ]
@@ -96866,6 +98104,253 @@
         }
       ]
     },
+    "ollama-cloud\u0000deepseek-v4-flash": {
+      "id": "deepseek-v4-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.22,
+          "out": 0.66,
+          "cache_read": 0.007,
+          "cache_write": 0.22,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000deepseek-v4-pro": {
+      "id": "deepseek-v4-pro",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.66,
+          "out": 1.98,
+          "cache_read": 0.022,
+          "cache_write": 0.66,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000gemma4": {
+      "id": "gemma4",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.14,
+          "out": 0.4,
+          "cache_read": 0.05,
+          "cache_write": 0.14,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000glm-5.1": {
+      "id": "glm-5.1",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1,
+          "out": 3.2,
+          "cache_read": 0.2,
+          "cache_write": 1,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000glm-5.2": {
+      "id": "glm-5.2",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.26,
+          "cache_write": 1.4,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000glm-5.3": {
+      "id": "glm-5.3",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.26,
+          "cache_write": 1.4,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000glm-5.3-flash": {
+      "id": "glm-5.3-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0.03,
+          "cache_write": 0.15,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000gpt-oss": {
+      "id": "gpt-oss",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.07,
+          "out": 0.3,
+          "cache_read": 0.035,
+          "cache_write": 0.07,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000kimi-k2.6": {
+      "id": "kimi-k2.6",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.95,
+          "out": 4,
+          "cache_read": 0.16,
+          "cache_write": 0.95,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000kimi-k2.7-code": {
+      "id": "kimi-k2.7-code",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.95,
+          "out": 4,
+          "cache_read": 0.19,
+          "cache_write": 0.95,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000kimi-k3": {
+      "id": "kimi-k3",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000minimax-m2.7": {
+      "id": "minimax-m2.7",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.06,
+          "cache_write": 0.3,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000minimax-m3": {
+      "id": "minimax-m3",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.6,
+          "out": 2.4,
+          "cache_read": 0.12,
+          "cache_write": 0.6,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000mistral-large-3": {
+      "id": "mistral-large-3",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.5,
+          "out": 1.5,
+          "cache_read": 0,
+          "cache_write": 0.5,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000nemotron-3-nano": {
+      "id": "nemotron-3-nano",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.06,
+          "out": 0.24,
+          "cache_read": 0,
+          "cache_write": 0.06,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000nemotron-3-super": {
+      "id": "nemotron-3-super",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.015,
+          "out": 0.6,
+          "cache_read": 0.015,
+          "cache_write": 0.015,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000nemotron-3-ultra": {
+      "id": "nemotron-3-ultra",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.1,
+          "out": 3,
+          "cache_read": 0.1,
+          "cache_write": 0.1,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000qwen3.5": {
+      "id": "qwen3.5",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.6,
+          "out": 3.6,
+          "cache_read": 0,
+          "cache_write": 0.6,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
     "openai\u0000gpt-3.5-turbo": {
       "id": "gpt-3.5-turbo",
       "rates": [
@@ -100019,6 +101504,32 @@
         }
       ]
     },
+    "openrouter\u0000deepseek-flash": {
+      "id": "deepseek-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.015,
+          "cache_write": 0.15,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000deepseek-pro": {
+      "id": "deepseek-pro",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.66,
+          "out": 1.98,
+          "cache_read": 0.022,
+          "cache_write": 0.66,
+          "source": "openrouter"
+        }
+      ]
+    },
     "openrouter\u0000deepseek-r1": {
       "id": "deepseek-r1",
       "rates": [
@@ -100922,6 +102433,14 @@
           "cache_read": 0.184,
           "cache_write": 0.92,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.8775,
+          "out": 2.97,
+          "cache_read": 0.1755,
+          "cache_write": 0.8775,
+          "source": "openrouter"
         }
       ]
     },
@@ -101128,6 +102647,14 @@
           "out": 2.1472,
           "cache_read": 0.12688,
           "cache_write": 0.6832,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.14,
+          "cache_write": 1.4,
           "source": "openrouter"
         }
       ]
@@ -102927,6 +104454,14 @@
           "cache_read": 0,
           "cache_write": 0.2,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.1875,
+          "out": 0.6525,
+          "cache_read": 0,
+          "cache_write": 0.1875,
+          "source": "openrouter"
         }
       ]
     },
@@ -104521,6 +106056,14 @@
           "out": 1.25,
           "cache_read": 0.15625,
           "cache_write": 0.3125,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.1625,
+          "out": 1.3,
+          "cache_read": 0,
+          "cache_write": 0.1625,
           "source": "openrouter"
         }
       ]
@@ -118762,6 +120305,19 @@
         }
       ]
     },
+    "tinfoil\u0000deepseek-v4-1-flash": {
+      "id": "deepseek-v4-1-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.65,
+          "out": 1.45,
+          "cache_read": 0.13,
+          "cache_write": 0.65,
+          "source": "tinfoil"
+        }
+      ]
+    },
     "tinfoil\u0000deepseek-v4-flash": {
       "id": "deepseek-v4-flash",
       "rates": [
@@ -120065,6 +121621,19 @@
         }
       ]
     },
+    "vancine\u0000deepseek-flash": {
+      "id": "deepseek-flash",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.24,
+          "out": 0.96,
+          "cache_read": 0.0048,
+          "cache_write": 0.24,
+          "source": "vancine"
+        }
+      ]
+    },
     "vancine\u0000deepseek-v4-flash": {
       "id": "deepseek-v4-flash",
       "rates": [
@@ -120126,6 +121695,14 @@
           "out": 0.2,
           "cache_read": 0.012,
           "cache_write": 0.06,
+          "source": "vancine"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.12,
+          "out": 0.4,
+          "cache_read": 0.024,
+          "cache_write": 0.12,
           "source": "vancine"
         }
       ]
@@ -122196,6 +123773,14 @@
           "cache_read": 0.006,
           "cache_write": 0.3,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.015,
+          "cache_write": 0.15,
+          "source": "vercel"
         }
       ]
     },
@@ -122238,11 +123823,37 @@
         }
       ]
     },
+    "vercel\u0000fugu-max": {
+      "id": "fugu-max",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.25,
+          "cache_write": 2,
+          "source": "vercel"
+        }
+      ]
+    },
     "vercel\u0000fugu-ultra": {
       "id": "fugu-ultra",
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 5,
+          "out": 30,
+          "cache_read": 0.5,
+          "cache_write": 5,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000fugu-ultra-v2": {
+      "id": "fugu-ultra-v2",
+      "rates": [
+        {
+          "from": "2026-09-15",
           "in": 5,
           "out": 30,
           "cache_read": 0.5,
@@ -124074,6 +125685,14 @@
           "cache_read": 0.012,
           "cache_write": 0.06,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.021,
+          "out": 0.063,
+          "cache_read": 0.0042,
+          "cache_write": 0.021,
+          "source": "vercel"
         }
       ]
     },
@@ -124121,6 +125740,32 @@
       "rates": [
         {
           "from": "2026-09-07",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000ling-3.0-flash-vl": {
+      "id": "ling-3.0-flash-vl",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000ling-3.0-flash-vl-free": {
+      "id": "ling-3.0-flash-vl-free",
+      "rates": [
+        {
+          "from": "2026-09-15",
           "in": 0,
           "out": 0,
           "cache_read": 0,
@@ -124633,6 +126278,14 @@
           "cache_read": 0,
           "cache_write": 0.05,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.05,
+          "out": 0.2,
+          "cache_read": 0.025,
+          "cache_write": 0.05,
+          "source": "vercel"
         }
       ]
     },
@@ -124927,6 +126580,14 @@
           "cache_read": 0.26,
           "cache_write": 1.625,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 1.3,
+          "out": 7.8,
+          "cache_read": 0.13,
+          "cache_write": 1.625,
+          "source": "vercel"
         }
       ]
     },
@@ -125109,6 +126770,14 @@
           "cache_read": 0.001,
           "cache_write": 0.125,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.1,
+          "out": 0.4,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "source": "vercel"
         }
       ]
     },
@@ -125119,6 +126788,14 @@
           "from": "2026-08-27",
           "in": 0.4,
           "out": 2.4,
+          "cache_read": 0.04,
+          "cache_write": 0.5,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.4,
+          "out": 2.5,
           "cache_read": 0.04,
           "cache_write": 0.5,
           "source": "vercel"
@@ -125146,6 +126823,14 @@
           "in": 0.5,
           "out": 3,
           "cache_read": 0.1,
+          "cache_write": 0.625,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.5,
+          "out": 3,
+          "cache_read": 0.05,
           "cache_write": 0.625,
           "source": "vercel"
         }
@@ -125242,6 +126927,14 @@
           "cache_read": 0.016,
           "cache_write": 0.2,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.15,
+          "out": 0.47,
+          "cache_read": 0.016,
+          "cache_write": 0.2,
+          "source": "vercel"
         }
       ]
     },
@@ -125306,6 +126999,19 @@
           "out": 2,
           "cache_read": 0.05,
           "cache_write": 0.25,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000seed-2.1-turbo": {
+      "id": "seed-2.1-turbo",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 0.5,
+          "out": 2.5,
+          "cache_read": 0.1,
+          "cache_write": 0.5,
           "source": "vercel"
         }
       ]
@@ -125562,6 +127268,45 @@
           "cache_write": 2.5,
           "cache_write_1h": 4,
           "source": "google-vertex-anthropic"
+        }
+      ]
+    },
+    "vispark\u0000vision-large": {
+      "id": "vision-large",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 7.37,
+          "out": 22.11,
+          "cache_read": 0,
+          "cache_write": 7.37,
+          "source": "vispark"
+        }
+      ]
+    },
+    "vispark\u0000vision-medium": {
+      "id": "vision-medium",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 4.21,
+          "out": 12.63,
+          "cache_read": 0,
+          "cache_write": 4.21,
+          "source": "vispark"
+        }
+      ]
+    },
+    "vispark\u0000vision-small": {
+      "id": "vision-small",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 1.05,
+          "out": 3.16,
+          "cache_read": 0,
+          "cache_write": 1.05,
+          "source": "vispark"
         }
       ]
     },
@@ -126502,6 +128247,19 @@
         }
       ]
     },
+    "wallaby\u0000kimi-k3": {
+      "id": "kimi-k3",
+      "rates": [
+        {
+          "from": "2026-09-15",
+          "in": 2.7,
+          "out": 13.5,
+          "cache_read": 0.27,
+          "cache_write": 2.7,
+          "source": "wallaby"
+        }
+      ]
+    },
     "wandb\u0000deepseek-v3.1": {
       "id": "deepseek-v3.1",
       "rates": [
@@ -126772,6 +128530,14 @@
           "cache_read": 0.15,
           "cache_write": 0.75,
           "source": "wandb"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.5,
+          "out": 2.15,
+          "cache_read": 0.1,
+          "cache_write": 0.5,
+          "source": "wandb"
         }
       ]
     },
@@ -126784,6 +128550,14 @@
           "out": 0.25,
           "cache_read": 0.05,
           "cache_write": 0.1,
+          "source": "wandb"
+        },
+        {
+          "from": "2026-09-15",
+          "in": 0.07,
+          "out": 0.2,
+          "cache_read": 0.04,
+          "cache_write": 0.07,
           "source": "wandb"
         }
       ]
@@ -130059,6 +131833,7 @@
     "artemis-v1.1-latest": "artemis-v1.1",
     "artemis-v1p1": "artemis-v1.1",
     "asi1-mini-latest": "asi1-mini",
+    "atria-dawn-preview-latest": "atria-dawn-preview",
     "au-anthropic-claude-haiku-4-5-20251001-v1": "au.anthropic.claude-haiku-4-5-20251001-v1",
     "au-anthropic-claude-opus-4-6-v1": "au.anthropic.claude-opus-4-6-v1",
     "au-anthropic-claude-opus-4-7": "au.anthropic.claude-opus-4-7",
@@ -130370,6 +132145,7 @@
     "deepseek-latest": "deepseek",
     "deepseek-ocr-2-latest": "deepseek-ocr-2",
     "deepseek-ocr-latest": "deepseek-ocr",
+    "deepseek-pro-latest": "deepseek-pro",
     "deepseek-prover-v2-671b-latest": "deepseek-prover-v2-671b",
     "deepseek-r1-0528-latest": "deepseek-r1-0528",
     "deepseek-r1-0528-qwen3-8b-latest": "deepseek-r1-0528-qwen3-8b",
@@ -131076,6 +132852,7 @@
     "glm-5-2-tee": "glm-5.2-tee",
     "glm-5-2@eu": "glm-5.2@eu",
     "glm-5-3-fast": "glm-5.3-fast",
+    "glm-5-3-flash-fp4": "glm-5.3-flash-fp4",
     "glm-5-3-flash-free": "glm-5.3-flash-free",
     "glm-5-3-flash-latest": "glm-5-3-flash",
     "glm-5-3-flash-uncensored": "glm-5.3-flash-uncensored",
@@ -131120,6 +132897,7 @@
     "glm-5.2-tee-latest": "glm-5.2-tee",
     "glm-5.2@eu-latest": "glm-5.2@eu",
     "glm-5.3-fast-latest": "glm-5.3-fast",
+    "glm-5.3-flash-fp4-latest": "glm-5.3-flash-fp4",
     "glm-5.3-flash-free-latest": "glm-5.3-flash-free",
     "glm-5.3-flash-latest": "glm-5.3-flash",
     "glm-5.3-flash-uncensored-latest": "glm-5.3-flash-uncensored",
@@ -131158,6 +132936,7 @@
     "glm-5p2-tee": "glm-5.2-tee",
     "glm-5p2@eu": "glm-5.2@eu",
     "glm-5p3-fast-latest": "glm-5p3-fast",
+    "glm-5p3-flash-fp4": "glm-5.3-flash-fp4",
     "glm-5p3-flash-free": "glm-5.3-flash-free",
     "glm-5p3-flash-latest": "glm-5p3-flash",
     "glm-5p3-flash-uncensored": "glm-5.3-flash-uncensored",
@@ -131177,14 +132956,17 @@
     "glm5-2": "glm5.2",
     "glm5-2-fast": "glm5.2-fast",
     "glm5-3": "glm5.3",
+    "glm5-3-754b": "glm5.3-754b",
     "glm5-3-flash": "glm5.3-flash",
     "glm5.2-fast-latest": "glm5.2-fast",
     "glm5.2-latest": "glm5.2",
+    "glm5.3-754b-latest": "glm5.3-754b",
     "glm5.3-flash-latest": "glm5.3-flash",
     "glm5.3-latest": "glm5.3",
     "glm5p2": "glm5.2",
     "glm5p2-fast": "glm5.2-fast",
     "glm5p3": "glm5.3",
+    "glm5p3-754b": "glm5.3-754b",
     "glm5p3-flash": "glm5.3-flash",
     "global-amazon-nova-2-lite-v1": "global.amazon.nova-2-lite-v1",
     "global-anthropic-claude-fable-5": "global.anthropic.claude-fable-5",
@@ -131908,6 +133690,7 @@
     "ling-3-0-flash-sante": "ling-3.0-flash-sante",
     "ling-3-0-flash-sante-free": "ling-3.0-flash-sante-free",
     "ling-3-0-flash-vl": "ling-3.0-flash-vl",
+    "ling-3-0-flash-vl-free": "ling-3.0-flash-vl-free",
     "ling-3-0-tiny": "ling-3.0-tiny",
     "ling-3-0-tiny-free": "ling-3.0-tiny-free",
     "ling-3.0-flash-fin-free-latest": "ling-3.0-flash-fin-free",
@@ -131916,6 +133699,7 @@
     "ling-3.0-flash-latest": "ling-3.0-flash",
     "ling-3.0-flash-sante-free-latest": "ling-3.0-flash-sante-free",
     "ling-3.0-flash-sante-latest": "ling-3.0-flash-sante",
+    "ling-3.0-flash-vl-free-latest": "ling-3.0-flash-vl-free",
     "ling-3.0-flash-vl-latest": "ling-3.0-flash-vl",
     "ling-3.0-tiny-free-latest": "ling-3.0-tiny-free",
     "ling-3.0-tiny-latest": "ling-3.0-tiny",
@@ -131926,6 +133710,7 @@
     "ling-3p0-flash-sante": "ling-3.0-flash-sante",
     "ling-3p0-flash-sante-free": "ling-3.0-flash-sante-free",
     "ling-3p0-flash-vl": "ling-3.0-flash-vl",
+    "ling-3p0-flash-vl-free": "ling-3.0-flash-vl-free",
     "ling-3p0-tiny": "ling-3.0-tiny",
     "ling-3p0-tiny-free": "ling-3.0-tiny-free",
     "ling-flash-2-0": "ling-flash-2.0",
@@ -132189,6 +133974,7 @@
     "minicpm-v-4.5-latest": "minicpm-v-4.5",
     "minicpm-v-4p5": "minicpm-v-4.5",
     "minicpm5-1b-latest": "minicpm5-1b",
+    "minicpm5-2b-latest": "minicpm5-2b",
     "minimax-01-latest": "minimax-01",
     "minimax-latest": "minimax",
     "minimax-m1-80k-latest": "minimax-m1-80k",
@@ -132417,6 +134203,7 @@
     "nemotron-3-5-lightning-free": "nemotron-3.5-lightning-free",
     "nemotron-3-content-safety-latest": "nemotron-3-content-safety",
     "nemotron-3-nano-30b-a3b-latest": "nemotron-3-nano-30b-a3b",
+    "nemotron-3-nano-latest": "nemotron-3-nano",
     "nemotron-3-nano-omni-30b-a3b-reasoning-bf16-latest": "nemotron-3-nano-omni-30b-a3b-reasoning-bf16",
     "nemotron-3-nano-omni-30b-a3b-reasoning-latest": "nemotron-3-nano-omni-30b-a3b-reasoning",
     "nemotron-3-nano-omni-30b-tee-latest": "nemotron-3-nano-omni-30b-tee",
@@ -132425,6 +134212,7 @@
     "nemotron-3-nano-omni@eu-latest": "nemotron-3-nano-omni@eu",
     "nemotron-3-super-120b-a12b-latest": "nemotron-3-super-120b-a12b",
     "nemotron-3-super-free-latest": "nemotron-3-super-free",
+    "nemotron-3-super-latest": "nemotron-3-super",
     "nemotron-3-ultra-550b-a55b-latest": "nemotron-3-ultra-550b-a55b",
     "nemotron-3-ultra-550b-latest": "nemotron-3-ultra-550b",
     "nemotron-3-ultra-free-latest": "nemotron-3-ultra-free",
@@ -132818,6 +134606,7 @@
     "qwen3-4b-base-latest": "qwen3-4b-base",
     "qwen3-4b-fp8-latest": "qwen3-4b-fp8",
     "qwen3-4b-instruct-2507-latest": "qwen3-4b-instruct-2507",
+    "qwen3-5": "qwen3.5",
     "qwen3-5-0-8b": "qwen3.5-0.8b",
     "qwen3-5-122b": "qwen3.5-122b",
     "qwen3-5-122b-a10b-fp8": "qwen3.5-122b-a10b-fp8",
@@ -132952,6 +134741,7 @@
     "qwen3.5-9b-latest": "qwen3.5-9b",
     "qwen3.5-flash-02-23-latest": "qwen3.5-flash-02-23",
     "qwen3.5-flash-latest": "qwen3.5-flash",
+    "qwen3.5-latest": "qwen3.5",
     "qwen3.5-omni-flash-latest": "qwen3.5-omni-flash",
     "qwen3.5-omni-plus-latest": "qwen3.5-omni-plus",
     "qwen3.5-plus-02-15-latest": "qwen3.5-plus-02-15",
@@ -133003,6 +134793,7 @@
     "qwen3guard-gen-0.6b-latest": "qwen3guard-gen-0.6b",
     "qwen3guard-gen-0p6b": "qwen3guard-gen-0.6b",
     "qwen3guard-gen-8b-latest": "qwen3guard-gen-8b",
+    "qwen3p5": "qwen3.5",
     "qwen3p5-0p8b": "qwen3.5-0.8b",
     "qwen3p5-122b": "qwen3.5-122b",
     "qwen3p5-122b-a10b": "qwen3.5-122b-a10b",
@@ -133124,10 +134915,12 @@
     "seed-2.0-lite-latest": "seed-2.0-lite",
     "seed-2.0-mini-latest": "seed-2.0-mini",
     "seed-2.0-pro-latest": "seed-2.0-pro",
+    "seed-2.1-turbo-latest": "seed-2.1-turbo",
     "seed-2p0-code": "seed-2.0-code",
     "seed-2p0-lite": "seed-2.0-lite",
     "seed-2p0-mini": "seed-2.0-mini",
     "seed-2p0-pro": "seed-2.0-pro",
+    "seed-2p1-turbo": "seed-2.1-turbo",
     "seed-oss-36b-instruct-latest": "seed-oss-36b-instruct",
     "sensenova-6-8-flash-lite": "sensenova-6.8-flash-lite",
     "sensenova-6.8-flash-lite-latest": "sensenova-6.8-flash-lite",
@@ -133335,6 +135128,9 @@
     "venice-uncensored-1-2-latest": "venice-uncensored-1-2",
     "venice-uncensored-latest": "venice-uncensored",
     "venice-uncensored-role-play-latest": "venice-uncensored-role-play",
+    "vision-large-latest": "vision-large",
+    "vision-medium-latest": "vision-medium",
+    "vision-small-latest": "vision-small",
     "voxtral-mini-3b-latest": "voxtral-mini-3b",
     "voxtral-small-24b-2507-latest": "voxtral-small-24b-2507",
     "voxtral-small-2507-latest": "voxtral-small-2507",
