@@ -125,6 +125,25 @@ func TestAliasUsesCanonicalProviderRate(t *testing.T) {
 	}
 }
 
+func TestAliasOverridesAnExistingRecordedModelID(t *testing.T) {
+	tbl := &Table{
+		Models: map[string]*Model{
+			"masked": {ID: "masked", Rates: []Rate{{From: MustParseDate("2026-01-01"), Out: 1}}},
+			"actual": {ID: "actual", Rates: []Rate{{From: MustParseDate("2026-01-01"), Out: 9}}},
+		},
+		ByProvider: map[string]*Model{},
+		Aliases:    map[string]string{"masked": "actual"},
+	}
+	r, confidence, ok := tbl.Lookup("masked", "", day("2026-08-27"))
+	if !ok || confidence != ConfidenceAlias || r.Out != 9 {
+		t.Errorf("alias lookup = %v/%v/%v, want actual@9", r.Out, confidence, ok)
+	}
+	m, resolved, ok := tbl.Find("masked")
+	if !ok || resolved != "masked" || m.ID != "actual" {
+		t.Errorf("Find(masked) = %v/%q/%v, want actual/masked/true", m, resolved, ok)
+	}
+}
+
 func TestNormalize(t *testing.T) {
 	for in, want := range map[string]string{
 		"claude-opus-5":                      "claude-opus-5",

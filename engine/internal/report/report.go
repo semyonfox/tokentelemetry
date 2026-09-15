@@ -45,7 +45,7 @@ type Filter struct {
 	Subagents string
 }
 
-func (f Filter) match(t model.Turn, resolvedModel string) bool {
+func (f Filter) match(t model.Turn, resolvedModel string, project projectRef) bool {
 	if len(f.Agents) > 0 && !containsFold(f.Agents, string(t.Agent)) {
 		return false
 	}
@@ -55,7 +55,7 @@ func (f Filter) match(t model.Turn, resolvedModel string) bool {
 	if len(f.Models) > 0 && !containsFold(f.Models, t.Model) && !containsFold(f.Models, resolvedModel) {
 		return false
 	}
-	if len(f.Projects) > 0 && !matchProject(f.Projects, t.Project) {
+	if len(f.Projects) > 0 && !matchProject(f.Projects, t.Project, project.key) {
 		return false
 	}
 	switch f.Subagents {
@@ -106,14 +106,20 @@ type Totals struct {
 
 // Bucket is one row of an aggregate.
 type Bucket struct {
-	AggregateRecords int         `json:"aggregate_records,omitempty"`
-	HeuristicRecords int         `json:"heuristic_records,omitempty"`
-	Key              string      `json:"key"`
-	Usage            model.Usage `json:"usage"`
-	Cost             float64     `json:"cost"`
-	Turns            int         `json:"turns"`
-	Sessions         int         `json:"sessions"`
-	Unpriced         int         `json:"unpriced,omitempty"`
+	AggregateRecords int    `json:"aggregate_records,omitempty"`
+	HeuristicRecords int    `json:"heuristic_records,omitempty"`
+	Key              string `json:"key"`
+	// Label is the collision-safe terminal name for a project bucket. Key stays
+	// the stable machine-facing group identity.
+	Label string `json:"label,omitempty"`
+	// ProjectPaths retains every recorded CWD that contributed to a project
+	// bucket, including nested CWDs and linked worktrees folded into its key.
+	ProjectPaths []string    `json:"project_paths,omitempty"`
+	Usage        model.Usage `json:"usage"`
+	Cost         float64     `json:"cost"`
+	Turns        int         `json:"turns"`
+	Sessions     int         `json:"sessions"`
+	Unpriced     int         `json:"unpriced,omitempty"`
 	// Models lists the distinct models in this bucket, busiest first.
 	Models []string `json:"models,omitempty"`
 	// Breakdown splits the bucket by model, most expensive first. Populated for
@@ -159,19 +165,23 @@ type acc struct {
 	// sub holds this bucket's split by the next grouping dimension, and dims
 	// holds the dimensions still to apply beneath it. An empty dims stops the
 	// recursion, so the nesting depth is exactly what the caller asked for.
-	sub  map[string]*acc
-	dims []Dimension
+	sub          map[string]*acc
+	dims         []Dimension
+	projectPaths map[string]struct{}
 }
 
-func newAcc(dims []Dimension) *acc {
+func newAcc(dims []Dimension, projectBucket bool) *acc {
 	a := &acc{sessions: map[string]struct{}{}, models: map[string]int64{}, dims: dims}
+	if projectBucket {
+		a.projectPaths = map[string]struct{}{}
+	}
 	if len(dims) > 0 {
 		a.sub = map[string]*acc{}
 	}
 	return a
 }
 
-func (a *acc) add(t model.Turn, c cost.Cost) {
+func (a *acc) add(t model.Turn, c cost.Cost, rawProject string) {
 	a.usage.Add(t.Usage)
 	a.turns++
 	if t.Aggregate {
@@ -195,6 +205,9 @@ func (a *acc) add(t model.Turn, c cost.Cost) {
 	if name != "" {
 		a.models[name] += t.Usage.Total()
 	}
+	if a.projectPaths != nil && rawProject != "" {
+		a.projectPaths[rawProject] = struct{}{}
+	}
 	if len(a.dims) > 0 {
 		key := a.dims[0].keyOf(t, c, Daily)
 		if key == "" {
@@ -202,10 +215,10 @@ func (a *acc) add(t model.Turn, c cost.Cost) {
 		}
 		s, ok := a.sub[key]
 		if !ok {
-			s = newAcc(a.dims[1:])
+			s = newAcc(a.dims[1:], a.dims[0] == DimProject)
 			a.sub[key] = s
 		}
-		s.add(t, c)
+		s.add(t, c, rawProject)
 	}
 }
 
@@ -225,12 +238,19 @@ func (a *acc) bucket(key string) Bucket {
 		AggregateRecords: a.aggregates, HeuristicRecords: a.heuristic,
 		Sessions: len(a.sessions), Unpriced: a.unpriced, Models: models,
 	}
+	for p := range a.projectPaths {
+		b.ProjectPaths = append(b.ProjectPaths, p)
+	}
+	sort.Strings(b.ProjectPaths)
 	for k, s := range a.sub {
 		b.Breakdown = append(b.Breakdown, s.bucket(k))
 	}
 	sort.Slice(b.Breakdown, func(i, j int) bool {
 		if b.Breakdown[i].Cost != b.Breakdown[j].Cost {
 			return b.Breakdown[i].Cost > b.Breakdown[j].Cost
+		}
+		if b.Breakdown[i].Usage.Total() != b.Breakdown[j].Usage.Total() {
+			return b.Breakdown[i].Usage.Total() > b.Breakdown[j].Usage.Total()
 		}
 		return b.Breakdown[i].Key < b.Breakdown[j].Key
 	})
@@ -256,14 +276,20 @@ func Build(turns []model.Turn, tbl *pricing.Table, f Filter, g Granularity, dupl
 	byProject := map[string]*acc{}
 	bySession := map[string]*acc{}
 	unpricedModels := map[string]struct{}{}
-	totals := newAcc(nil)
+	totals := newAcc(nil, false)
 	billing := map[string]float64{}
+	projects := newProjectCatalog(turns)
 
 	for _, t := range turns {
 		c := cost.Of(t, tbl)
-		if !f.match(t, c.Model) {
+		project := projects.ref(t.Project)
+		if !f.match(t, c.Model, project) {
 			continue
 		}
+		rawProject := t.Project
+		// Keep the original CWD for JSON audit trails while every aggregation
+		// path uses the same canonical project-family key.
+		t.Project = project.key
 		rep.MatchedTurns++
 		if t.Aggregate {
 			rep.Totals.AggregateRecords++
@@ -281,7 +307,7 @@ func Build(turns []model.Turn, tbl *pricing.Table, f Filter, g Granularity, dupl
 			}
 		}
 
-		totals.add(t, c)
+		totals.add(t, c, rawProject)
 		if !c.Priced() {
 			name := t.Model
 			if name == "" {
@@ -296,12 +322,12 @@ func Build(turns []model.Turn, tbl *pricing.Table, f Filter, g Granularity, dupl
 			}
 		}
 
-		addTo(series, bucketKey(t.Timestamp, g), t, c, groupBy)
-		addTo(byAgent, string(t.Agent), t, c, groupBy)
-		addTo(byModel, displayModel(t, c), t, c, groupBy)
-		addTo(byProject, displayProject(t.Project), t, c, groupBy)
+		addTo(series, bucketKey(t.Timestamp, g), t, c, groupBy, rawProject, false)
+		addTo(byAgent, string(t.Agent), t, c, groupBy, rawProject, false)
+		addTo(byModel, displayModel(t, c), t, c, groupBy, rawProject, false)
+		addTo(byProject, t.Project, t, c, groupBy, rawProject, true)
 		if t.SessionID != "" {
-			addTo(bySession, string(t.Agent)+":"+t.SessionID, t, c, groupBy)
+			addTo(bySession, string(t.Agent)+":"+t.SessionID, t, c, groupBy, rawProject, false)
 		}
 	}
 
@@ -321,19 +347,25 @@ func Build(turns []model.Turn, tbl *pricing.Table, f Filter, g Granularity, dupl
 	rep.ByModel = sortedByCost(byModel)
 	rep.ByProject = sortedByCost(byProject)
 	rep.Sessions = sortedByCost(bySession)
+	projects.decorate(rep.Series, false, groupBy)
+	projects.decorate(rep.ByAgent, false, groupBy)
+	projects.decorate(rep.ByModel, false, groupBy)
+	projects.decorate(rep.ByProject, true, groupBy)
+	projects.decorate(rep.Sessions, false, groupBy)
+	sortProjectBuckets(rep.ByProject)
 	return rep
 }
 
-func addTo(m map[string]*acc, key string, t model.Turn, c cost.Cost, dims []Dimension) {
+func addTo(m map[string]*acc, key string, t model.Turn, c cost.Cost, dims []Dimension, rawProject string, projectBucket bool) {
 	if key == "" {
 		return
 	}
 	a, ok := m[key]
 	if !ok {
-		a = newAcc(dims)
+		a = newAcc(dims, projectBucket)
 		m[key] = a
 	}
-	a.add(t, c)
+	a.add(t, c, rawProject)
 }
 
 func sortedByKey(m map[string]*acc) []Bucket {
@@ -372,13 +404,6 @@ func displayModel(t model.Turn, c cost.Cost) string {
 	return string(t.Agent) + " (unknown model)"
 }
 
-func displayProject(p string) string {
-	if p == "" {
-		return "(unknown)"
-	}
-	return p
-}
-
 // bucketKey renders a turn's LOCAL day/week/month key.
 func bucketKey(ts time.Time, g Granularity) string {
 	if ts.IsZero() {
@@ -413,20 +438,56 @@ func containsFold(list []string, v string) bool {
 	return false
 }
 
-// matchProject accepts an exact path or a trailing path segment, so
-// `--project tokentelemetry` matches /home/user/code/tokentelemetry.
-func matchProject(list []string, p string) bool {
-	if p == "" {
+// matchProject accepts an exact recorded path, its normalized spelling, a
+// canonical Git family root, or either trailing folder name. Thus a family
+// query includes nested CWDs while an exact child CWD remains selectable.
+func matchProject(list []string, raw, key string) bool {
+	if raw == "" {
 		return false
 	}
-	base := p
-	if i := strings.LastIndexAny(p, `/\`); i >= 0 {
-		base = p[i+1:]
-	}
+	normalized := normalizeProjectPath(raw)
+	base := projectBaseLabel(normalized, "")
+	familyBase := projectBaseLabel(key, "")
 	for _, x := range list {
-		if strings.EqualFold(x, p) || strings.EqualFold(x, base) {
+		query := normalizeProjectPath(x)
+		if strings.EqualFold(x, raw) ||
+			strings.EqualFold(query, normalized) ||
+			strings.EqualFold(query, key) ||
+			strings.EqualFold(x, base) ||
+			strings.EqualFold(x, familyBase) {
 			return true
 		}
 	}
 	return false
+}
+
+func (c *projectCatalog) decorate(rows []Bucket, topLevelProject bool, dims []Dimension) {
+	for i := range rows {
+		c.decorateBucket(&rows[i], topLevelProject, dims, 0)
+	}
+}
+
+func (c *projectCatalog) decorateBucket(b *Bucket, topLevelProject bool, dims []Dimension, depth int) {
+	if topLevelProject || (depth > 0 && depth <= len(dims) && dims[depth-1] == DimProject) {
+		b.Label = c.label(b.Key)
+	}
+	for i := range b.Breakdown {
+		c.decorateBucket(&b.Breakdown[i], false, dims, depth+1)
+	}
+}
+
+func sortProjectBuckets(rows []Bucket) {
+	sort.Slice(rows, func(i, j int) bool {
+		if rows[i].Cost != rows[j].Cost {
+			return rows[i].Cost > rows[j].Cost
+		}
+		if rows[i].Usage.Total() != rows[j].Usage.Total() {
+			return rows[i].Usage.Total() > rows[j].Usage.Total()
+		}
+		left, right := strings.ToLower(rows[i].Label), strings.ToLower(rows[j].Label)
+		if left != right {
+			return left < right
+		}
+		return rows[i].Key < rows[j].Key
+	})
 }

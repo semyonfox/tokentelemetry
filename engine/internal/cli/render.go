@@ -3,7 +3,7 @@ package cli
 import (
 	"fmt"
 	"io"
-	"path/filepath"
+	"path"
 	"strings"
 	"time"
 
@@ -59,7 +59,10 @@ func render(w io.Writer, cmd string, rep *report.Report, limit int, color, verbo
 	case "model":
 		rows, label, colMax = rep.ByModel, "MODEL", 32
 	case "project":
-		rows, label, colMax, truncLeft = rep.ByProject, "PROJECT", 34, true
+		// Project labels are already the shortest unique suffixes. Do not cap
+		// them here: left truncation could erase the segment that distinguished
+		// two otherwise identical project names.
+		rows, label = rep.ByProject, "PROJECT"
 	}
 	if len(rows) == 0 {
 		io.WriteString(w, "\n  "+th.dim("No usage matched those filters.")+"\n\n")
@@ -79,13 +82,22 @@ func render(w io.Writer, cmd string, rep *report.Report, limit int, color, verbo
 	// which is not possible when the only cue is how far a label is inset.
 	cols := []column{{title: label, align: alignLeft, max: colMax, truncLeft: truncLeft}}
 	for _, d := range rep.GroupBy {
-		cols = append(cols, column{title: d.Title(), align: alignLeft, max: 28})
+		col := column{title: d.Title(), align: alignLeft, max: 28}
+		if d == report.DimProject {
+			// As above, a rendered project label must remain distinguishable.
+			col.max = 0
+		}
+		cols = append(cols, col)
 	}
 	// Which models produced a row is the first thing anyone asks of a usage
 	// table, so it is shown by default rather than hidden behind a flag. It is
 	// dropped only where it would duplicate a column already present: when
 	// models are themselves a grouping level, or when the rows ARE models.
-	showModels := !hasDim(rep.GroupBy, report.DimModel) && cmd != "model"
+	nDims := len(rep.GroupBy)
+	// A flat project table is a ranked overview. Listing every model as a
+	// multi-line cell turns it back into the wall of detail the view avoids;
+	// --group-by model or --breakdown provides that attribution on demand.
+	showModels := !hasDim(rep.GroupBy, report.DimModel) && cmd != "model" && !(cmd == "project" && nDims == 0)
 	if showModels {
 		cols = append(cols, column{title: "MODELS", align: alignLeft, max: 30})
 	}
@@ -99,12 +111,11 @@ func render(w io.Writer, cmd string, rep *report.Report, limit int, color, verbo
 	)
 	t := newTable(th, cols...)
 
-	nDims := len(rep.GroupBy)
 	for i, r := range rows {
 		// Blank line between groups, but only when a group spans several lines;
 		// separating single-line rows would just double the report's length.
 		spaced := i > 0 && nDims > 0 && len(r.Breakdown) > 0
-		emitGroup(t, th, r, rowLabel(cmd, r.Key), 0, nDims, showModels, fmtNum, spaced)
+		emitGroup(t, th, r, rowLabel(cmd, r), 0, nDims, showModels, fmtNum, spaced)
 	}
 	// A closing total, so a truncated or filtered view still shows what the rows
 	// on screen add up to.
@@ -148,7 +159,11 @@ func emitGroup(t *table, th theme, b report.Bucket, topLabel string, depth, nDim
 			// The top row summarises every group beneath it.
 			cells = append(cells, styled("All", th.dim))
 		case i == depth-1:
-			cells = append(cells, styled("- "+b.Key, th.label))
+			key := b.Key
+			if b.Label != "" {
+				key = b.Label
+			}
+			cells = append(cells, styled("- "+key, th.label))
 		default:
 			cells = append(cells, plain(""))
 		}
@@ -376,7 +391,8 @@ func tokenMix(t report.Totals) string {
 }
 
 // rowLabel shortens keys that would otherwise dominate the table.
-func rowLabel(cmd, key string) string {
+func rowLabel(cmd string, b report.Bucket) string {
+	key := b.Key
 	switch cmd {
 	case "session":
 		// "agent:uuid" -> "agent  uuid-prefix"
@@ -388,10 +404,13 @@ func rowLabel(cmd, key string) string {
 			return fmt.Sprintf("%-9s %s", agent, id)
 		}
 	case "project":
+		if b.Label != "" {
+			return b.Label
+		}
 		if key == "(unknown)" {
 			return key
 		}
-		return filepath.Base(key)
+		return path.Base(strings.ReplaceAll(key, `\`, "/"))
 	}
 	return key
 }

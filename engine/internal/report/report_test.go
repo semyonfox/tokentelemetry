@@ -89,6 +89,20 @@ func TestPerTurnModelAttribution(t *testing.T) {
 	}
 }
 
+func TestAliasGroupsUsageUnderCanonicalModel(t *testing.T) {
+	table := tbl()
+	table.Aliases["masked-model"] = "cheap"
+	rep := Build([]model.Turn{
+		turn("a", "masked-model", "/p", local(2026, 8, 1, 10, 0), 1_000_000),
+	}, table, Filter{Models: []string{"cheap"}}, Daily, 0, nil)
+	if len(rep.ByModel) != 1 || rep.ByModel[0].Key != "cheap" {
+		t.Fatalf("model rows = %+v, want canonical cheap", rep.ByModel)
+	}
+	if rep.MatchedTurns != 1 || rep.ByModel[0].Cost != 1 {
+		t.Errorf("alias report = %+v, want one $1 turn", rep)
+	}
+}
+
 // Model filtering is the capability ccusage does not offer at all.
 func TestModelFilter(t *testing.T) {
 	turns := []model.Turn{

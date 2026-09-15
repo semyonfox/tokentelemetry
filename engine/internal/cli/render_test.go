@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/VasiHemanth/tokentelemetry/engine/internal/pricing"
+	"github.com/VasiHemanth/tokentelemetry/engine/internal/report"
 )
 
 // Every line of a table must be the same width and every column must start at
@@ -107,6 +108,64 @@ func TestTruncate(t *testing.T) {
 	}
 	if got := truncate("short", 10, false); got != "short" {
 		t.Errorf("truncate widened a short string to %q", got)
+	}
+}
+
+func TestProjectRowLabelUsesCollisionSafeReportLabel(t *testing.T) {
+	b := report.Bucket{Key: "/missing/personal/api", Label: "personal/api"}
+	if got := rowLabel("project", b); got != "personal/api" {
+		t.Errorf("project row label = %q, want collision-safe label", got)
+	}
+	if got := rowLabel("project", report.Bucket{Key: `C:\Users\u\repo`}); got != "repo" {
+		t.Errorf("windows fallback label = %q, want repo", got)
+	}
+}
+
+func TestProjectRenderStaysFlatUntilDetailIsRequested(t *testing.T) {
+	flat := &report.Report{
+		ByProject: []report.Bucket{{Key: "/missing/personal/api", Label: "personal/api", Models: []string{"model-a"}}},
+	}
+	var out bytes.Buffer
+	render(&out, "project", flat, 0, false, false, true, nil)
+	if strings.Contains(out.String(), "MODELS") || strings.Contains(out.String(), "model-a") {
+		t.Errorf("flat project output included model detail:\n%s", out.String())
+	}
+
+	detailed := &report.Report{
+		ByProject: []report.Bucket{{
+			Key: "/missing/personal/api", Label: "personal/api",
+			Breakdown: []report.Bucket{{Key: "/missing/work/api", Label: "work/api"}},
+		}},
+		GroupBy: []report.Dimension{report.DimProject},
+	}
+	out.Reset()
+	render(&out, "project", detailed, 0, false, false, true, nil)
+	if !strings.Contains(out.String(), "- work/api") {
+		t.Errorf("nested project output omitted collision-safe label:\n%s", out.String())
+	}
+}
+
+func TestProjectRenderDoesNotTruncateLongCollisionSafeLabels(t *testing.T) {
+	left := "a/this-is-a-very-long-common-parent-directory/api"
+	right := "b/this-is-a-very-long-common-parent-directory/api"
+	flat := &report.Report{ByProject: []report.Bucket{{Key: "/" + left, Label: left}, {Key: "/" + right, Label: right}}}
+	var out bytes.Buffer
+	render(&out, "project", flat, 0, false, false, true, nil)
+	if !strings.Contains(out.String(), left) || !strings.Contains(out.String(), right) {
+		t.Errorf("top-level project labels were truncated:\n%s", out.String())
+	}
+
+	detailed := &report.Report{
+		ByProject: []report.Bucket{{
+			Key: "/parent", Label: "parent",
+			Breakdown: []report.Bucket{{Key: "/" + left, Label: left}, {Key: "/" + right, Label: right}},
+		}},
+		GroupBy: []report.Dimension{report.DimProject},
+	}
+	out.Reset()
+	render(&out, "project", detailed, 0, false, false, true, nil)
+	if !strings.Contains(out.String(), "- "+left) || !strings.Contains(out.String(), "- "+right) {
+		t.Errorf("nested project labels were truncated:\n%s", out.String())
 	}
 }
 
