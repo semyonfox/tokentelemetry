@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/report"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/report"
 )
 
 func TestOverviewLimitsDoNotHideTotalsOrUnpricedUsage(t *testing.T) {

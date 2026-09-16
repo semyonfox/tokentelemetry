@@ -3,8 +3,8 @@ package report
 import (
 	"strings"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/cost"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/cost"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 )
 
 // Dimension is something usage can be grouped by. Grouping is composable:

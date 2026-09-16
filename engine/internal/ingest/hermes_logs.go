@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 )
 
 type hermesAggregate struct {

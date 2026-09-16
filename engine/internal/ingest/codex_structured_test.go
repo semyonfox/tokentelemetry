@@ -3,7 +3,7 @@ package ingest
 import (
 	"context"
 	"encoding/json"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 	"path/filepath"
 	"strings"
 	"testing"

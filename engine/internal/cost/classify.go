@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 )
 
 // subscriptionHosts are endpoints that bill a flat monthly fee rather than

@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 )
 
 func writeFile(t *testing.T, path string, lines ...string) {

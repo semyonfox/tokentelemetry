@@ -42,7 +42,7 @@ const common = {
   license: "MIT",
   repository: {
     type: "git",
-    url: "git+https://github.com/VasiHemanth/tokentelemetry.git",
+    url: "git+https://github.com/semyonfox/tokentelemetry.git",
   },
 };
 
@@ -71,7 +71,7 @@ function build() {
         // anyone debugs from a published artifact, and it roughly halves the
         // download every user pays for.
         "-ldflags",
-        `-s -w -X github.com/VasiHemanth/tokentelemetry/engine/internal/cli.Version=${VERSION}`,
+        `-s -w -X github.com/semyonfox/tokentelemetry/engine/internal/cli.Version=${VERSION}`,
         "-o",
         outPath,
         "./cmd/tokentelemetry",

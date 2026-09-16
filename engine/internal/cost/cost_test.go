@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/pricing"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/pricing"
 )
 
 func at(s string) time.Time {

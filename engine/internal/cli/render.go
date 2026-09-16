@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/plans"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/report"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/plans"
+	"github.com/semyonfox/tokentelemetry/engine/internal/report"
 )
 
 // planCharges prorates the configured subscriptions over the window actually on

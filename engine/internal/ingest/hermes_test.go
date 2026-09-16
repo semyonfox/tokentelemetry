@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/pricing"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/report"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/pricing"
+	"github.com/semyonfox/tokentelemetry/engine/internal/report"
 )
 
 func hermesFixture(t *testing.T, root string, modern bool) *sql.DB {

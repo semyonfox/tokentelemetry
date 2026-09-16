@@ -14,8 +14,8 @@
 package cost
 
 import (
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/pricing"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/pricing"
 )
 
 // Billing describes how a turn was actually paid for. It annotates the cost,

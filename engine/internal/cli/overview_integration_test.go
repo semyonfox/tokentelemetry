@@ -8,9 +8,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/ingest"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/pricing"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/report"
+	"github.com/semyonfox/tokentelemetry/engine/internal/ingest"
+	"github.com/semyonfox/tokentelemetry/engine/internal/pricing"
+	"github.com/semyonfox/tokentelemetry/engine/internal/report"
 )
 
 func TestSummaryFromSyntheticTranscripts(t *testing.T) {

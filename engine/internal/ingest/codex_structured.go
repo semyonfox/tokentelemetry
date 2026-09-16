@@ -3,7 +3,7 @@ package ingest
 import (
 	"encoding/json"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 )
 
 // identityKey encodes components without delimiter collisions.
