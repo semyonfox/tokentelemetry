@@ -11,10 +11,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/ingest"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/pricing"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/projectmeta"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/report"
+	"github.com/semyonfox/tokentelemetry/engine/internal/ingest"
+	"github.com/semyonfox/tokentelemetry/engine/internal/pricing"
+	"github.com/semyonfox/tokentelemetry/engine/internal/projectmeta"
+	"github.com/semyonfox/tokentelemetry/engine/internal/report"
 )
 
 // Version is stamped at build time with -ldflags.

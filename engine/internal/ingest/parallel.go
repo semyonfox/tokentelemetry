@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 )
 
 // mapFiles applies fn to every path concurrently and returns the concatenated

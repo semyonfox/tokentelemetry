@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 )
 
 // Legacy rollouts lack durable response identities. Keep their historical

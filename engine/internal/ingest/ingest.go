@@ -22,7 +22,7 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 )
 
 // Scanner reads one agent's logs.

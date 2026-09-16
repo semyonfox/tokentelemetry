@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 )
 
 func makeGitFamily(t *testing.T) (main, nested, worktree string) {

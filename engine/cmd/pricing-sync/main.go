@@ -34,7 +34,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/pricing"
+	"github.com/semyonfox/tokentelemetry/engine/internal/pricing"
 )
 
 const modelsDevURL = "https://models.dev/api.json"

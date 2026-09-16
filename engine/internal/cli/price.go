@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/pricing"
+	"github.com/semyonfox/tokentelemetry/engine/internal/pricing"
 )
 
 func cmdPrice(args []string) int {

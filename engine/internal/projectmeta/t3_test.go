@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 )
 
 type t3TestPaths struct {

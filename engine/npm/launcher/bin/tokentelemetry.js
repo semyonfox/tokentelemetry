@@ -31,7 +31,7 @@ function binaryPath() {
     throw new Error(
       `tokentelemetry does not ship a prebuilt binary for ${key}.\n` +
         `Build from source instead:\n` +
-        `  go install github.com/VasiHemanth/tokentelemetry/engine/cmd/tokentelemetry@latest`
+        `  go install github.com/semyonfox/tokentelemetry/engine/cmd/tokentelemetry@latest`
     );
   }
   const exe = platform === "win32" ? "tokentelemetry.exe" : "tokentelemetry";

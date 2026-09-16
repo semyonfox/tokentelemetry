@@ -3,7 +3,7 @@ package cli
 import (
 	"testing"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/report"
+	"github.com/semyonfox/tokentelemetry/engine/internal/report"
 )
 
 func TestDefaultDimensions(t *testing.T) {

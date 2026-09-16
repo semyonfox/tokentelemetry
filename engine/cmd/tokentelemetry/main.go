@@ -5,7 +5,7 @@ package main
 import (
 	"os"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/cli"
+	"github.com/semyonfox/tokentelemetry/engine/internal/cli"
 )
 
 func main() { os.Exit(cli.Main(os.Args)) }

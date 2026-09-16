@@ -9,7 +9,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/report"
+	"github.com/semyonfox/tokentelemetry/engine/internal/report"
 )
 
 // renderOverview uses the same aggregates as detailed reports. Limits affect

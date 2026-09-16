@@ -8,7 +8,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 )
 
 const maxGitMetadataBytes = 4096

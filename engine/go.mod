@@ -1,4 +1,4 @@
-module github.com/VasiHemanth/tokentelemetry/engine
+module github.com/semyonfox/tokentelemetry/engine
 
 go 1.26
 

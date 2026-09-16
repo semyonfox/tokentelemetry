@@ -15,9 +15,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/cost"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/pricing"
+	"github.com/semyonfox/tokentelemetry/engine/internal/cost"
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
+	"github.com/semyonfox/tokentelemetry/engine/internal/pricing"
 )
 
 // Granularity is the bucket width for time series.

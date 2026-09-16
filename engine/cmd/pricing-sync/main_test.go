@@ -3,7 +3,7 @@ package main
 import (
 	"testing"
 
-	"github.com/VasiHemanth/tokentelemetry/engine/internal/pricing"
+	"github.com/semyonfox/tokentelemetry/engine/internal/pricing"
 )
 
 func TestMergePreservesProviderHistory(t *testing.T) {
