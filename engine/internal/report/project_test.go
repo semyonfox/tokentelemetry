@@ -34,10 +34,10 @@ func makeGitFamily(t *testing.T) (main, nested, worktree string) {
 func TestProjectCatalogNormalizesPathsAndUsesGitFamilies(t *testing.T) {
 	main, nested, worktree := makeGitFamily(t)
 	turns := []model.Turn{{Project: main}, {Project: nested}, {Project: worktree}}
-	catalog := newProjectCatalog(turns)
+	catalog := newProjectCatalog(turns, model.ProjectLineage{})
 	want := normalizeProjectPath(main)
 	for _, raw := range []string{main, nested, worktree} {
-		if got := catalog.ref(raw).key; got != want {
+		if got := catalog.ref(model.Turn{Project: raw}).key; got != want {
 			t.Errorf("project key for %q = %q, want %q", raw, got, want)
 		}
 	}
@@ -63,8 +63,8 @@ func TestProjectCatalogDoesNotTrustMalformedGitPointer(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	catalog := newProjectCatalog([]model.Turn{{Project: nested}})
-	if got, want := catalog.ref(nested).key, normalizeProjectPath(nested); got != want {
+	catalog := newProjectCatalog([]model.Turn{{Project: nested}}, model.ProjectLineage{})
+	if got, want := catalog.ref(model.Turn{Project: nested}).key, normalizeProjectPath(nested); got != want {
 		t.Errorf("malformed .git grouped %q, want raw path %q", got, want)
 	}
 }
@@ -76,9 +76,9 @@ func TestProjectCatalogKeepsSameBasenameFamiliesSeparateAndLabelsThem(t *testing
 		{Project: "/a/products/swim"},
 		{Project: "/b/products/swim"},
 		{Project: "/c/personal/swim"},
-	})
-	personal := catalog.ref("/missing/personal/api")
-	work := catalog.ref("/missing/work/api")
+	}, model.ProjectLineage{})
+	personal := catalog.ref(model.Turn{Project: "/missing/personal/api"})
+	work := catalog.ref(model.Turn{Project: "/missing/work/api"})
 	if personal.key == work.key {
 		t.Fatalf("same-basename paths were merged: %q", personal.key)
 	}
@@ -88,7 +88,7 @@ func TestProjectCatalogKeepsSameBasenameFamiliesSeparateAndLabelsThem(t *testing
 	if got := catalog.label(work.key); got != "work/api" {
 		t.Errorf("work label = %q, want work/api", got)
 	}
-	if got := catalog.label(catalog.ref("/c/personal/swim").key); got != "personal/swim" {
+	if got := catalog.label(catalog.ref(model.Turn{Project: "/c/personal/swim"}).key); got != "personal/swim" {
 		t.Errorf("shortest unique label = %q, want personal/swim", got)
 	}
 }
@@ -142,6 +142,116 @@ func TestProjectFilterMatchesFamilyAndExactRecordedPath(t *testing.T) {
 	}
 	if got := Build(turns, tbl(), Filter{Projects: []string{nested}}, Daily, 0, nil).MatchedTurns; got != 1 {
 		t.Errorf("exact CWD filter matched %d turns, want 1", got)
+	}
+}
+
+func TestProjectBuildUsesPersistedRootForDeletedWorktreeAndNestedCWD(t *testing.T) {
+	base := t.TempDir()
+	main := filepath.Join(base, "main")
+	worktree := filepath.Join(base, "deleted-worktree")
+	nested := filepath.Join(worktree, "engine", "internal")
+	if err := os.MkdirAll(filepath.Join(main, ".git"), 0700); err != nil {
+		t.Fatal(err)
+	}
+	turns := []model.Turn{
+		turn("worktree", "cheap", worktree, local(2026, time.August, 1, 10, 0), 1),
+		turn("nested", "cheap", nested, local(2026, time.August, 1, 11, 0), 1),
+	}
+	lineage := model.ProjectLineage{WorktreeRoots: map[string]string{worktree: main}}
+
+	rep := BuildWithProjectLineage(turns, tbl(), Filter{}, Daily, 0, nil, lineage)
+	if len(rep.ByProject) != 1 {
+		t.Fatalf("project buckets = %d, want 1: %+v", len(rep.ByProject), rep.ByProject)
+	}
+	if got, want := rep.ByProject[0].Key, normalizeProjectPath(main); got != want {
+		t.Errorf("project key = %q, want %q", got, want)
+	}
+	wantPaths := []string{nested, worktree}
+	sort.Strings(wantPaths)
+	if got := rep.ByProject[0].ProjectPaths; len(got) != len(wantPaths) || got[0] != wantPaths[0] || got[1] != wantPaths[1] {
+		t.Errorf("project paths = %v, want %v", got, wantPaths)
+	}
+
+	if got := BuildWithProjectLineage(turns, tbl(), Filter{Projects: []string{filepath.Base(main)}}, Daily, 0, nil, lineage).MatchedTurns; got != 2 {
+		t.Errorf("family filter matched %d turns, want 2", got)
+	}
+	if got := BuildWithProjectLineage(turns, tbl(), Filter{Projects: []string{nested}}, Daily, 0, nil, lineage).MatchedTurns; got != 1 {
+		t.Errorf("exact nested CWD filter matched %d turns, want 1", got)
+	}
+}
+
+func TestProjectPersistedRootsUseLongestPathBoundaryMatch(t *testing.T) {
+	lineage := model.ProjectLineage{WorktreeRoots: map[string]string{
+		"/deleted/worktree":        "/repos/outer",
+		"/deleted/worktree/nested": "/repos/inner",
+	}}
+	catalog := newProjectCatalog([]model.Turn{
+		{Project: "/deleted/worktree/nested/src"},
+		{Project: "/deleted/worktree-other"},
+	}, lineage)
+	if got := catalog.ref(model.Turn{Project: "/deleted/worktree/nested/src"}).key; got != "/repos/inner" {
+		t.Errorf("longest mapped ancestor resolved to %q, want /repos/inner", got)
+	}
+	if got := catalog.ref(model.Turn{Project: "/deleted/worktree-other"}).key; got != "/deleted/worktree-other" {
+		t.Errorf("non-boundary prefix resolved to %q", got)
+	}
+}
+
+func TestProjectPersistedRootsRejectCaseInsensitiveWindowsAmbiguity(t *testing.T) {
+	lineage := model.ProjectLineage{WorktreeRoots: map[string]string{
+		`C:\Worktrees\App`: `C:\Repos\One`,
+		`c:\worktrees\app`: `C:\Repos\Two`,
+	}}
+	turn := model.Turn{Project: `C:\Worktrees\App\src`}
+	catalog := newProjectCatalog([]model.Turn{turn}, lineage)
+	if got, want := catalog.ref(turn).key, `C:/Worktrees/App/src`; got != want {
+		t.Errorf("ambiguous Windows alias resolved to %q, want raw path %q", got, want)
+	}
+}
+
+func TestProjectLiveGitMetadataWinsOverPersistedRoot(t *testing.T) {
+	main, _, worktree := makeGitFamily(t)
+	catalog := newProjectCatalog(
+		[]model.Turn{{Project: worktree}},
+		model.ProjectLineage{WorktreeRoots: map[string]string{worktree: "/wrong/persisted/root"}},
+	)
+	if got, want := catalog.ref(model.Turn{Project: worktree}).key, normalizeProjectPath(main); got != want {
+		t.Errorf("live Git root = %q, want %q", got, want)
+	}
+}
+
+func TestProjectSessionLineageWinsOverLiveGitAndPathAlias(t *testing.T) {
+	main, _, worktree := makeGitFamily(t)
+	turn := model.Turn{Agent: model.AgentCodex, SessionID: "codex-session", Project: worktree}
+	lineage := model.ProjectLineage{
+		SessionRoots: map[model.ProjectSession]string{
+			{Agent: model.AgentCodex, SessionID: "codex-session"}: "/repos/session-root",
+		},
+		WorktreeRoots: map[string]string{worktree: "/repos/path-root"},
+	}
+	catalog := newProjectCatalog([]model.Turn{turn}, lineage)
+	if got := catalog.ref(turn).key; got != "/repos/session-root" {
+		t.Errorf("session root = %q, want /repos/session-root (live root was %q)", got, main)
+	}
+
+	otherSession := turn
+	otherSession.SessionID = "other"
+	if got, want := catalog.ref(otherSession).key, normalizeProjectPath(main); got != want {
+		t.Errorf("unmapped session root = %q, want live Git root %q", got, want)
+	}
+}
+
+func TestProjectFilterMatchesSessionLineageWithoutRecordedCWD(t *testing.T) {
+	turnWithNoCWD := turn("session", "cheap", "", local(2026, time.August, 1, 10, 0), 1)
+	turnWithNoCWD.Agent = model.AgentCodex
+	turnWithNoCWD.SessionID = "session"
+	turns := []model.Turn{turnWithNoCWD}
+	lineage := model.ProjectLineage{SessionRoots: map[model.ProjectSession]string{
+		{Agent: model.AgentCodex, SessionID: "session"}: "/repos/session-root",
+	}}
+	filter := Filter{Projects: []string{"session-root"}}
+	if got := BuildWithProjectLineage(turns, tbl(), filter, Daily, 0, nil, lineage).MatchedTurns; got != 1 {
+		t.Errorf("session-root filter matched %d turns, want 1", got)
 	}
 }
 

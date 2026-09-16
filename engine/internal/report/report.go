@@ -262,6 +262,13 @@ func (a *acc) bucket(key string) Bucket {
 // groupBy nests additional dimensions inside the command's own top-level
 // grouping, so `daily --group-by agent,model` yields day → agent → model.
 func Build(turns []model.Turn, tbl *pricing.Table, f Filter, g Granularity, duplicates int, groupBy []Dimension) *Report {
+	return BuildWithProjectLineage(turns, tbl, f, g, duplicates, groupBy, model.ProjectLineage{})
+}
+
+// BuildWithProjectLineage aggregates turns while applying verified historical
+// session and worktree relationships. Build remains the pure default so callers
+// and tests never inspect machine state implicitly.
+func BuildWithProjectLineage(turns []model.Turn, tbl *pricing.Table, f Filter, g Granularity, duplicates int, groupBy []Dimension, lineage model.ProjectLineage) *Report {
 	if g == "" {
 		g = Daily
 	}
@@ -278,11 +285,11 @@ func Build(turns []model.Turn, tbl *pricing.Table, f Filter, g Granularity, dupl
 	unpricedModels := map[string]struct{}{}
 	totals := newAcc(nil, false)
 	billing := map[string]float64{}
-	projects := newProjectCatalog(turns)
+	projects := newProjectCatalog(turns, lineage)
 
 	for _, t := range turns {
 		c := cost.Of(t, tbl)
-		project := projects.ref(t.Project)
+		project := projects.ref(t)
 		if !f.match(t, c.Model, project) {
 			continue
 		}
@@ -442,7 +449,7 @@ func containsFold(list []string, v string) bool {
 // canonical Git family root, or either trailing folder name. Thus a family
 // query includes nested CWDs while an exact child CWD remains selectable.
 func matchProject(list []string, raw, key string) bool {
-	if raw == "" {
+	if raw == "" && (key == "" || key == "(unknown)") {
 		return false
 	}
 	normalized := normalizeProjectPath(raw)

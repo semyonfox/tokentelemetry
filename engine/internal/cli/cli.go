@@ -13,6 +13,7 @@ import (
 
 	"github.com/VasiHemanth/tokentelemetry/engine/internal/ingest"
 	"github.com/VasiHemanth/tokentelemetry/engine/internal/pricing"
+	"github.com/VasiHemanth/tokentelemetry/engine/internal/projectmeta"
 	"github.com/VasiHemanth/tokentelemetry/engine/internal/report"
 )
 
@@ -221,6 +222,7 @@ func cmdReport(cmd string, args []string) int {
 		fmt.Fprintf(os.Stderr, "tokentelemetry: %v\n", err)
 		return 1
 	}
+	lineage, lineageErr := projectmeta.LoadT3ProjectLineage(ctx)
 
 	g := report.Daily
 	switch cmd {
@@ -230,8 +232,11 @@ func cmdReport(cmd string, args []string) int {
 		g = report.Monthly
 	}
 	progress.Update("Calculating usage and costs...")
-	rep := report.Build(res.Turns, tbl, f, g, res.Duplicates, dims)
+	rep := report.BuildWithProjectLineage(res.Turns, tbl, f, g, res.Duplicates, dims, lineage)
 	progress.Stop()
+	if lineageErr != nil {
+		fmt.Fprintf(os.Stderr, "tokentelemetry: warning: %v\n", lineageErr)
+	}
 	for _, e := range res.Errors {
 		fmt.Fprintf(os.Stderr, "tokentelemetry: warning: %v\n", e)
 	}

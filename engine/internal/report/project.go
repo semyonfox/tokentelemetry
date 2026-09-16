@@ -14,52 +14,179 @@ import (
 const maxGitMetadataBytes = 4096
 
 // projectRef is the key used to aggregate one recorded CWD. It changes only
-// when local Git metadata proves that two CWDs belong to the same checkout.
-// Missing or malformed metadata therefore falls back to the recorded path
-// instead of joining unrelated projects by guesswork.
+// when exact host lineage or local Git metadata identifies the owning checkout.
+// Missing or ambiguous metadata falls back to the recorded path instead of
+// joining unrelated projects by guesswork.
 type projectRef struct {
 	key string
 }
 
-// projectCatalog resolves each distinct recorded CWD once per report and makes
-// terminal labels unambiguous without using those labels as aggregate keys.
+// projectCatalog resolves each distinct recorded CWD/session pair once per
+// report and makes terminal labels unambiguous without using those labels as
+// aggregate keys.
 type projectCatalog struct {
-	byRaw  map[string]projectRef
-	labels map[string]string
-	home   string
+	byTurn         map[projectLookup]projectRef
+	labels         map[string]string
+	sessionRoots   map[model.ProjectSession]string
+	persistedRoots []projectRootMapping
+	home           string
 }
 
-func newProjectCatalog(turns []model.Turn) *projectCatalog {
+type projectLookup struct {
+	raw         string
+	sessionRoot string
+}
+
+type projectRootMapping struct {
+	path string
+	root string
+}
+
+func newProjectCatalog(turns []model.Turn, lineage model.ProjectLineage) *projectCatalog {
 	c := &projectCatalog{
-		byRaw:  make(map[string]projectRef),
-		labels: make(map[string]string),
+		byTurn:         make(map[projectLookup]projectRef),
+		labels:         make(map[string]string),
+		sessionRoots:   normalizeSessionRoots(lineage.SessionRoots),
+		persistedRoots: normalizeProjectRoots(lineage.WorktreeRoots),
 	}
 	if home, err := os.UserHomeDir(); err == nil {
 		c.home = normalizeProjectPath(home)
 	}
 	for _, t := range turns {
-		c.ref(t.Project)
+		c.ref(t)
 	}
 	c.buildLabels()
 	return c
 }
 
-func (c *projectCatalog) ref(raw string) projectRef {
-	if ref, ok := c.byRaw[raw]; ok {
+func (c *projectCatalog) ref(turn model.Turn) projectRef {
+	session := model.ProjectSession{Agent: turn.Agent, SessionID: turn.SessionID}
+	sessionRoot := c.sessionRoots[session]
+	lookup := projectLookup{raw: turn.Project, sessionRoot: sessionRoot}
+	if ref, ok := c.byTurn[lookup]; ok {
 		return ref
 	}
 
 	ref := projectRef{}
-	normalized := normalizeProjectPath(raw)
-	if normalized == "" {
+	normalized := normalizeProjectPath(turn.Project)
+	if sessionRoot != "" {
+		ref.key = sessionRoot
+	} else if normalized == "" {
 		ref.key = "(unknown)"
 	} else if root, ok := discoverGitFamily(normalized); ok {
+		ref.key = root
+	} else if root, ok := c.persistedRoot(normalized); ok {
 		ref.key = root
 	} else {
 		ref.key = normalized
 	}
-	c.byRaw[raw] = ref
+	c.byTurn[lookup] = ref
 	return ref
+}
+
+func normalizeSessionRoots(roots map[model.ProjectSession]string) map[model.ProjectSession]string {
+	out := make(map[model.ProjectSession]string, len(roots))
+	for session, rawRoot := range roots {
+		if session.Agent == "" || session.SessionID == "" {
+			continue
+		}
+		root := normalizeProjectRoot(rawRoot)
+		if root != "" {
+			out[session] = root
+		}
+	}
+	return out
+}
+
+func normalizeProjectRoot(raw string) string {
+	root := normalizeProjectPath(raw)
+	if root == "" {
+		return ""
+	}
+	if family, ok := discoverGitFamily(root); ok {
+		return family
+	}
+	return root
+}
+
+// normalizeProjectRoots prepares exact provenance supplied by an external
+// project registry. Live Git metadata still wins in ref; these mappings exist
+// for deleted worktrees whose .git pointer is no longer available.
+func normalizeProjectRoots(roots map[string]string) []projectRootMapping {
+	type candidates struct {
+		path  string
+		roots map[string]string
+	}
+	byPath := make(map[string]*candidates, len(roots))
+	for rawPath, rawRoot := range roots {
+		projectPath := normalizeProjectPath(rawPath)
+		projectRoot := normalizeProjectRoot(rawRoot)
+		if projectPath == "" || projectRoot == "" {
+			continue
+		}
+		pathIdentity := projectPathIdentity(projectPath)
+		entry := byPath[pathIdentity]
+		if entry == nil {
+			entry = &candidates{path: projectPath, roots: make(map[string]string)}
+			byPath[pathIdentity] = entry
+		} else if projectPath < entry.path {
+			entry.path = projectPath
+		}
+		rootIdentity := projectPathIdentity(projectRoot)
+		if previous, ok := entry.roots[rootIdentity]; !ok || projectRoot < previous {
+			entry.roots[rootIdentity] = projectRoot
+		}
+	}
+
+	out := make([]projectRootMapping, 0, len(byPath))
+	for _, candidates := range byPath {
+		// Refuse an ambiguous normalized path even if a caller supplied aliases
+		// with different original spellings or Windows casing. Guessing here would
+		// merge unrelated usage and make every downstream total wrong.
+		if len(candidates.roots) != 1 {
+			continue
+		}
+		for _, root := range candidates.roots {
+			out = append(out, projectRootMapping{path: candidates.path, root: root})
+		}
+	}
+	sort.Slice(out, func(i, j int) bool {
+		if len(out[i].path) != len(out[j].path) {
+			return len(out[i].path) > len(out[j].path)
+		}
+		return out[i].path < out[j].path
+	})
+	return out
+}
+
+func projectPathIdentity(projectPath string) string {
+	if isWindowsVolumePath(projectPath) {
+		return strings.ToLower(projectPath)
+	}
+	return projectPath
+}
+
+func (c *projectCatalog) persistedRoot(projectPath string) (string, bool) {
+	for _, mapping := range c.persistedRoots {
+		if projectPathWithin(projectPath, mapping.path) {
+			return mapping.root, true
+		}
+	}
+	return "", false
+}
+
+func projectPathWithin(projectPath, ancestor string) bool {
+	left, right := projectPath, ancestor
+	if isWindowsVolumePath(left) && isWindowsVolumePath(right) {
+		left, right = strings.ToLower(left), strings.ToLower(right)
+	}
+	if left == right {
+		return true
+	}
+	if right == "/" {
+		return strings.HasPrefix(left, "/")
+	}
+	return strings.HasPrefix(left, strings.TrimSuffix(right, "/")+"/")
 }
 
 func (c *projectCatalog) label(key string) string {
@@ -71,7 +198,7 @@ func (c *projectCatalog) label(key string) string {
 
 func (c *projectCatalog) buildLabels() {
 	byBase := make(map[string][]string)
-	for _, ref := range c.byRaw {
+	for _, ref := range c.byTurn {
 		byBase[projectBaseLabel(ref.key, c.home)] = append(byBase[projectBaseLabel(ref.key, c.home)], ref.key)
 	}
 	for base, keys := range byBase {

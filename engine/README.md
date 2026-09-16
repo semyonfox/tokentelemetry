@@ -45,10 +45,12 @@ Detailed timeline and session views default to a model breakdown. `project` stay
 flat by default, ranked by list cost, so it remains a useful overview; add
 `--group-by model` or `--breakdown` when the per-model detail is needed.
 
-Project grouping normalizes path separators and, for a checkout that still
-exists, groups nested CWDs and linked Git worktrees under the main checkout.
-Deleted or non-Git paths stay separate rather than being guessed together. JSON
-project rows retain their recorded CWDs in `project_paths`.
+Project grouping normalizes path separators. An exact Codex session link from
+an active T3 project takes precedence; otherwise live Git metadata groups nested
+CWDs and linked worktrees under the main checkout. Unambiguous T3 worktree
+metadata can also recover deleted worktrees. Unknown or ambiguous paths stay
+separate rather than being guessed together. JSON project rows retain their
+recorded CWDs in `project_paths`.
 
 ```sh
 ./dist/tokentelemetry summary --agent claude,codex

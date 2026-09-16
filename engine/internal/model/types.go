@@ -38,6 +38,21 @@ const (
 	AgentVibe        Agent = "vibe"
 )
 
+// ProjectSession identifies one provider conversation without conflating
+// identical session IDs from different agents.
+type ProjectSession struct {
+	Agent     Agent
+	SessionID string
+}
+
+// ProjectLineage carries verified relationships from an agent host's durable
+// state. SessionRoots is stronger than WorktreeRoots: a reused path can point
+// at different projects over time, while a provider session belongs to one.
+type ProjectLineage struct {
+	SessionRoots  map[ProjectSession]string
+	WorktreeRoots map[string]string
+}
+
 // Usage is the token accounting for a single API call.
 //
 // Input is the NET uncached prompt, never the gross figure. Providers differ
