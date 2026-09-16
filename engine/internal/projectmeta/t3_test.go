@@ -10,8 +10,27 @@ import (
 	"github.com/VasiHemanth/tokentelemetry/engine/internal/model"
 )
 
-func makeT3StateDB(t *testing.T, baseDir string) string {
+type t3TestPaths struct {
+	alphaRoot         string
+	alphaWorktree     string
+	sharedWorktree    string
+	invalidWorktree   string
+	deletedWorktree   string
+	malformedWorktree string
+	claudeWorktree    string
+}
+
+func makeT3StateDB(t *testing.T, baseDir string) (string, t3TestPaths) {
 	t.Helper()
+	paths := t3TestPaths{
+		alphaRoot:         filepath.Join(baseDir, "repos", "alpha"),
+		alphaWorktree:     filepath.Join(baseDir, "old", "worktrees", "alpha"),
+		sharedWorktree:    filepath.Join(baseDir, "old", "worktrees", "shared"),
+		invalidWorktree:   filepath.Join(baseDir, "old", "worktrees", "invalid"),
+		deletedWorktree:   filepath.Join(baseDir, "old", "worktrees", "deleted"),
+		malformedWorktree: filepath.Join(baseDir, "old", "worktrees", "malformed"),
+		claudeWorktree:    filepath.Join(baseDir, "old", "worktrees", "claude"),
+	}
 	stateDir := filepath.Join(baseDir, "userdata")
 	if err := os.MkdirAll(stateDir, 0700); err != nil {
 		t.Fatal(err)
@@ -37,36 +56,70 @@ func makeT3StateDB(t *testing.T, baseDir string) string {
 			adapter_key TEXT NOT NULL,
 			resume_cursor_json TEXT
 		)`,
-		`INSERT INTO projection_projects VALUES
-			('alpha', '/repos/alpha', NULL),
-			('alpha-copy', '/repos/alpha/.', NULL),
-			('beta', '/repos/beta', NULL),
-			('invalid', 'relative/root', NULL),
-			('deleted', '/repos/deleted', '2026-09-01')`,
-		`INSERT INTO projection_threads VALUES
-			('alpha-1', 'alpha', '/old/worktrees/alpha'),
-			('alpha-2', 'alpha-copy', '/old/worktrees/alpha/.'),
-			('shared-alpha', 'alpha', '/old/worktrees/shared'),
-			('shared-beta', 'beta', '/old/worktrees/shared'),
-			('relative-worktree', 'alpha', 'relative/worktree'),
-			('invalid-root', 'invalid', '/old/worktrees/invalid'),
-			('local-thread', 'alpha', NULL),
-			('deleted-thread', 'deleted', '/old/worktrees/deleted'),
-			('malformed-cursor', 'alpha', '/old/worktrees/malformed'),
-			('claude-cursor', 'alpha', '/old/worktrees/claude')`,
-		`INSERT INTO provider_session_runtime VALUES
-			('alpha-1', 'codex', '{"threadId":"codex-alpha"}'),
-			('alpha-2', 'codex', '{"threadId":"codex-alpha"}'),
-			('shared-alpha', 'codex', '{"threadId":"codex-shared"}'),
-			('shared-beta', 'codex', '{"threadId":"codex-shared"}'),
-			('relative-worktree', 'codex', '{"threadId":"codex-relative-worktree"}'),
-			('invalid-root', 'codex', '{"threadId":"codex-invalid-root"}'),
-			('local-thread', 'codex', '{"threadId":"codex-local"}'),
-			('deleted-thread', 'codex', '{"threadId":"codex-deleted"}'),
-			('malformed-cursor', 'codex', 'not-json'),
-			('claude-cursor', 'claudeAgent', '{"threadId":"not-a-codex-session"}')`,
 	} {
 		if _, err := db.Exec(statement); err != nil {
+			db.Close()
+			t.Fatal(err)
+		}
+	}
+	statements := []struct {
+		query string
+		args  []any
+	}{
+		{
+			`INSERT INTO projection_projects VALUES
+				('alpha', ?, NULL),
+				('alpha-copy', ?, NULL),
+				('beta', ?, NULL),
+				('invalid', 'relative/root', NULL),
+				('deleted', ?, '2026-09-01')`,
+			[]any{
+				paths.alphaRoot,
+				paths.alphaRoot + string(filepath.Separator) + ".",
+				filepath.Join(baseDir, "repos", "beta"),
+				filepath.Join(baseDir, "repos", "deleted"),
+			},
+		},
+		{
+			`INSERT INTO projection_threads VALUES
+				('alpha-1', 'alpha', ?),
+				('alpha-2', 'alpha-copy', ?),
+				('shared-alpha', 'alpha', ?),
+				('shared-beta', 'beta', ?),
+				('relative-worktree', 'alpha', 'relative/worktree'),
+				('invalid-root', 'invalid', ?),
+				('local-thread', 'alpha', NULL),
+				('deleted-thread', 'deleted', ?),
+				('malformed-cursor', 'alpha', ?),
+				('claude-cursor', 'alpha', ?)`,
+			[]any{
+				paths.alphaWorktree,
+				paths.alphaWorktree + string(filepath.Separator) + ".",
+				paths.sharedWorktree,
+				paths.sharedWorktree,
+				paths.invalidWorktree,
+				paths.deletedWorktree,
+				paths.malformedWorktree,
+				paths.claudeWorktree,
+			},
+		},
+		{
+			`INSERT INTO provider_session_runtime VALUES
+				('alpha-1', 'codex', '{"threadId":"codex-alpha"}'),
+				('alpha-2', 'codex', '{"threadId":"codex-alpha"}'),
+				('shared-alpha', 'codex', '{"threadId":"codex-shared"}'),
+				('shared-beta', 'codex', '{"threadId":"codex-shared"}'),
+				('relative-worktree', 'codex', '{"threadId":"codex-relative-worktree"}'),
+				('invalid-root', 'codex', '{"threadId":"codex-invalid-root"}'),
+				('local-thread', 'codex', '{"threadId":"codex-local"}'),
+				('deleted-thread', 'codex', '{"threadId":"codex-deleted"}'),
+				('malformed-cursor', 'codex', 'not-json'),
+				('claude-cursor', 'claudeAgent', '{"threadId":"not-a-codex-session"}')`,
+			nil,
+		},
+	}
+	for _, statement := range statements {
+		if _, err := db.Exec(statement.query, statement.args...); err != nil {
 			db.Close()
 			t.Fatal(err)
 		}
@@ -74,12 +127,12 @@ func makeT3StateDB(t *testing.T, baseDir string) string {
 	if err := db.Close(); err != nil {
 		t.Fatal(err)
 	}
-	return dbPath
+	return dbPath, paths
 }
 
 func TestLoadT3ProjectLineageUsesExplicitHomeAndRejectsAmbiguity(t *testing.T) {
 	baseDir := t.TempDir()
-	dbPath := makeT3StateDB(t, baseDir)
+	dbPath, paths := makeT3StateDB(t, baseDir)
 	t.Setenv("T3CODE_HOME", baseDir)
 	if err := os.Chmod(dbPath, 0400); err != nil {
 		t.Fatal(err)
@@ -89,15 +142,15 @@ func TestLoadT3ProjectLineageUsesExplicitHomeAndRejectsAmbiguity(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	wantPath := filepath.Clean("/old/worktrees/alpha")
-	if got, want := lineage.WorktreeRoots[wantPath], filepath.Clean("/repos/alpha"); got != want {
+	wantPath := filepath.Clean(paths.alphaWorktree)
+	if got, want := lineage.WorktreeRoots[wantPath], filepath.Clean(paths.alphaRoot); got != want {
 		t.Errorf("alpha root = %q, want %q", got, want)
 	}
 	for _, rejected := range []string{
-		"/old/worktrees/shared",
+		paths.sharedWorktree,
 		"relative/worktree",
-		"/old/worktrees/invalid",
-		"/old/worktrees/deleted",
+		paths.invalidWorktree,
+		paths.deletedWorktree,
 	} {
 		if root, ok := lineage.WorktreeRoots[filepath.Clean(rejected)]; ok {
 			t.Errorf("invalid, deleted, or ambiguous mapping %q -> %q was retained", rejected, root)
@@ -108,7 +161,7 @@ func TestLoadT3ProjectLineageUsesExplicitHomeAndRejectsAmbiguity(t *testing.T) {
 	}
 
 	alpha := model.ProjectSession{Agent: model.AgentCodex, SessionID: "codex-alpha"}
-	if got, want := lineage.SessionRoots[alpha], filepath.Clean("/repos/alpha"); got != want {
+	if got, want := lineage.SessionRoots[alpha], filepath.Clean(paths.alphaRoot); got != want {
 		t.Errorf("Codex session root = %q, want %q", got, want)
 	}
 	for _, rejected := range []string{
@@ -131,7 +184,7 @@ func TestLoadT3ProjectLineageUsesExplicitHomeAndRejectsAmbiguity(t *testing.T) {
 
 func TestLoadT3ProjectLineageUsesDefaultHome(t *testing.T) {
 	home := t.TempDir()
-	makeT3StateDB(t, filepath.Join(home, ".t3"))
+	_, paths := makeT3StateDB(t, filepath.Join(home, ".t3"))
 	t.Setenv("T3CODE_HOME", "")
 	t.Setenv("HOME", home)
 
@@ -139,7 +192,7 @@ func TestLoadT3ProjectLineageUsesDefaultHome(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if got := lineage.WorktreeRoots[filepath.Clean("/old/worktrees/alpha")]; got != filepath.Clean("/repos/alpha") {
+	if got := lineage.WorktreeRoots[filepath.Clean(paths.alphaWorktree)]; got != filepath.Clean(paths.alphaRoot) {
 		t.Errorf("default-home root = %q", got)
 	}
 }
