@@ -187,6 +187,7 @@ func TestLoadT3ProjectLineageUsesDefaultHome(t *testing.T) {
 	_, paths := makeT3StateDB(t, filepath.Join(home, ".t3"))
 	t.Setenv("T3CODE_HOME", "")
 	t.Setenv("HOME", home)
+	t.Setenv("USERPROFILE", home)
 
 	lineage, err := LoadT3ProjectLineage(context.Background())
 	if err != nil {
