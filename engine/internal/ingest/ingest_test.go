@@ -38,6 +38,28 @@ func totalOut(turns []model.Turn) int64 {
 	return n
 }
 
+func TestAllRegistersSupportedReaders(t *testing.T) {
+	registered := make(map[model.Agent]bool)
+	for _, scanner := range All() {
+		registered[scanner.Agent()] = true
+	}
+	for _, agent := range []model.Agent{
+		model.AgentClaude,
+		model.AgentCodex,
+		model.AgentCopilot,
+		model.AgentGrok,
+		model.AgentAntigravity,
+		model.AgentHermes,
+		model.AgentOpenCode,
+		model.AgentGemini,
+		model.AgentPi,
+	} {
+		if !registered[agent] {
+			t.Errorf("%s reader is not registered", agent)
+		}
+	}
+}
+
 // --- Claude -----------------------------------------------------------------
 
 func claudeLine(msgID, reqID, model, ts string, in, out, cr, cw int64) string {

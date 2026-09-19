@@ -49,6 +49,7 @@ var subscriptionAgents = map[model.Agent]bool{
 	model.AgentCursor:      true,
 	model.AgentGemini:      true,
 	model.AgentAntigravity: true,
+	model.AgentGrok:        true,
 	model.AgentQwen:        true,
 }
 

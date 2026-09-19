@@ -144,7 +144,7 @@ func (h *Hermes) scanDB(ctx context.Context, path string) ([]model.Turn, error) 
 		usage := model.Usage{
 			Input: in, Output: out, CacheRead: cr, CacheWrite: cw, Reasoning: reasoning,
 		}
-		usage, ok := sanitizeHermesAggregate(usage)
+		usage, ok := sanitizeAggregateUsage(usage)
 		if !ok || usage.IsZero() {
 			continue
 		}
@@ -202,9 +202,9 @@ func hermesColumns(ctx context.Context, db *sql.DB) (map[string]bool, error) {
 	return cols, rows.Err()
 }
 
-// Session aggregates can legitimately exceed any per-call token limit. Keep
+// Aggregate records can legitimately exceed any per-call token limit. Keep
 // negative values clamped as for other readers, but reject arithmetic overflow.
-func sanitizeHermesAggregate(u model.Usage) (model.Usage, bool) {
+func sanitizeAggregateUsage(u model.Usage) (model.Usage, bool) {
 	for _, p := range []*int64{&u.Input, &u.Output, &u.CacheRead, &u.CacheWrite, &u.Reasoning} {
 		if *p < 0 {
 			*p = 0

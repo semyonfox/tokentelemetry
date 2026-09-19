@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add native local readers for GitHub Copilot's session store and session
+  journals and VS Code storage, Grok Build's persisted usage ledger, and
+  recognized Antigravity conversation metadata.
+- Read optional Copilot CLI OpenTelemetry file exports for conversations
+  without native usage, excluding overlapping records and metric rollups.
 - Prefer Codex per-response usage records and preserve legacy turns in upgraded sessions.
 - Reconcile complete Hermes call logs against database rows for daily attribution.
 - Preserve distinct Hermes task/route rows and large session aggregates; disclose

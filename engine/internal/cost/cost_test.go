@@ -89,6 +89,22 @@ func TestSubscriptionIsLabelledNotZeroed(t *testing.T) {
 	near(t, c.USD, 100)
 }
 
+// Grok Build's persisted local ledger has no endpoint or credential-mode
+// marker. Its normal product route is a flat plan, so retain the same useful
+// list-price caveat as the other first-party coding agents.
+func TestGrokDefaultsToSubscription(t *testing.T) {
+	c := Of(model.Turn{
+		Model:     "m1",
+		Agent:     model.AgentGrok,
+		Timestamp: at("2026-06-01"),
+		Usage:     model.Usage{Output: 1_000_000},
+	}, table())
+	if c.Billing != BillingSubscription {
+		t.Errorf("billing = %v, want subscription", c.Billing)
+	}
+	near(t, c.USD, 100)
+}
+
 func TestLocalIsLabelledNotZeroed(t *testing.T) {
 	c := Of(model.Turn{
 		Model:     "m1",

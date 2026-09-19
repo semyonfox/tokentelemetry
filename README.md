@@ -4,7 +4,8 @@ Local token and cost reports for AI coding agents, built around a Go accounting
 engine. Reads existing logs and SQLite databases. Reports need no Python runtime,
 web server or browser. Usage logs stay local.
 
-Supported readers: Claude Code, Codex CLI, Gemini CLI, OpenCode, Hermes and Pi.
+Supported readers: Claude Code, Codex CLI, GitHub Copilot, Grok Build,
+Antigravity, Gemini CLI, OpenCode, Hermes and Pi.
 
 ## Run from source
 
@@ -64,6 +65,33 @@ Accuracy has limits:
   the affected cost disclosed.
 - Missing, unreadable or changed source logs can make reports incomplete.
   Compressed Codex rollouts are not currently read.
+- GitHub Copilot scans its already-written CLI session store and shutdown
+  journal, plus VS Code's persisted chat-session records when they include
+  complete per-model totals for a recognized GitHub Copilot participant. It
+  never enables telemetry, and it does not retain or report prompt and response
+  text. Where a shutdown aggregate disagrees with the session-store total, it
+  uses that native aggregate and reports the mismatch; missing native records
+  remain unavailable rather than estimated. Older stores that lack those
+  counters remain unavailable rather than being estimated. The Copilot CLI
+  Agent Host's duplicate VS Code copy is excluded. An optional Copilot CLI
+  OpenTelemetry file export fills conversations without native usage; native
+  records take precedence for overlapping conversations. See
+  [export setup and limits](engine/README.md#optional-copilot-file-exports).
+- Grok Build reads its persisted per-turn usage ledger. Sessions created before
+  that ledger existed cannot be reconstructed from debug logs or transcripts.
+  When Grok marks a row `usageIsIncomplete`, the reader retains its available
+  counters and reports a scan warning. If child-ledger usage could overlap a
+  parent aggregate, it retains the exact child and omits the parent with a
+  warning. The ledger does not record whether a call used signed-in plan
+  access, an API key or a custom endpoint, so its subscription billing label is
+  a normal-route default rather than invoice attribution.
+- Antigravity reads recognized invocation metadata from schema-gated local
+  conversation databases. Unsupported database versions/layouts, malformed
+  records and oversized metadata blobs are skipped with no transcript-based
+  token estimates; numeric-only models remain visible but unpriced unless a
+  pricing alias maps them. Its metadata has no endpoint or credential-mode
+  field, so its subscription billing label is likewise a normal-route default,
+  not invoice attribution.
 - Tests cover specific storage formats and accounting cases, not every provider
   version or billing arrangement.
 
