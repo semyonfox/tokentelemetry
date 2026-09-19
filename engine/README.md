@@ -117,8 +117,117 @@ packages plus the npm launcher into `engine/dist/npm`. Publishing is separate;
 use the local binary to test this checkout. Distributed packages include the MIT
 licence notice.
 
-Readers currently cover Claude Code, Codex CLI, Gemini CLI, OpenCode, Hermes and Pi.
+Readers currently cover Claude Code, Codex CLI, GitHub Copilot, Grok Build,
+Antigravity, Gemini CLI, OpenCode, Hermes and Pi.
 The scanner interface and registration live in `internal/ingest/ingest.go`.
+
+## GitHub Copilot
+
+GitHub Copilot needs no TokenTelemetry-specific setup. The reader checks
+the default `~/.copilot/session-store.db` (or an already-configured
+`COPILOT_HOME`) for its schema-gated observed `assistant_usage_events` table.
+This is a local implementation detail, not a documented Copilot reporting API,
+so unknown layouts are skipped. It reads the already-written
+`session-state/*/events.jsonl` shutdown aggregate and VS Code's persisted
+`chatSessions` records when they contain complete
+`modelTotals` fields and identify a recognized GitHub Copilot chat participant
+(legacy `github.copilot.*` or current non-CLI Copilot Agent Host ID). The
+Copilot CLI Agent Host shares the native session journal, so its duplicate
+VS Code copy is excluded. The scanner never enables OpenTelemetry or reads
+debug logs.
+VS Code session storage includes chat payloads, but the scanner neither retains
+nor reports prompt/response text and never uses those fields for accounting.
+
+When a clean-shutdown aggregate exists, the CLI database preserves individual
+requests only if their per-session/model sum agrees with it. If there is no
+corresponding ledger or the native totals disagree, the shutdown aggregate
+replaces that group and the scan reports a warning. A valid ledger without a
+shutdown record is retained as-is. Shutdown and VS Code totals are per-model
+aggregates and use base context pricing. A session with neither usable native
+source, or an older/changed schema without complete counters, remains
+unavailable rather than estimated. Copilot's scalar cache-write field can be
+incomplete for a compaction row; the reader retains its total tokens and
+reports that split as uncertain.
+
+### Optional Copilot file exports
+
+TokenTelemetry also reads Copilot CLI's existing OpenTelemetry JSON-lines file
+when `COPILOT_OTEL_FILE_EXPORTER_PATH` is set. Native scanning remains the
+default. To opt into Copilot's local exporter, use the same environment for
+Copilot and TokenTelemetry:
+
+```sh
+mkdir -p "$HOME/.copilot"
+export COPILOT_OTEL_FILE_EXPORTER_PATH="$HOME/.copilot/otel.jsonl"
+copilot
+tokentelemetry summary --agent copilot
+```
+
+The scanner reads completed model-call spans with recorded token counts and a
+conversation ID. It ignores metric rollups and message content. If a conversation
+already has native usage, the native records win for that entire conversation;
+the two sources have no shared per-request identity, so mixing partial records
+could double-count calls. Exported spans fill conversations with no native
+usage. TokenTelemetry never enables the exporter itself.
+
+The file path and span fields follow the
+[Copilot CLI OpenTelemetry reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#opentelemetry-monitoring).
+
+## Grok Build
+
+Grok Build versions that write an atomic per-turn `usage.json` ledger store it
+under `~/.grok/sessions/` by default (or an already-configured `GROK_HOME`).
+The reader finds that ledger automatically and reads only model IDs, end
+timestamps, token buckets and the narrow session metadata needed for
+project/subagent attribution. It does not parse prompts, responses, transcripts,
+hooks or debug logs. A ledger row can cover multiple calls; the reader marks it
+aggregate and uses base context pricing. Older sessions without `usage.json`
+remain unavailable rather than estimated. When Grok marks a row
+`usageIsIncomplete`, the reader retains
+its available counters and emits a scan warning. `grok usage <session-id>` is a
+useful diagnostic for the same native ledger.
+
+When a retained child ledger can overlap a parent aggregate, the format does
+not prove which child calls the parent folded. The reader keeps the exact child
+and omits that parent (and any ancestor aggregate) with a warning rather than
+double-counting or guessing at a split.
+
+The ledger has no endpoint or credential-mode field. Its subscription billing
+label is the normal-route default, not proof that a historical turn used
+signed-in plan access rather than an API key or custom endpoint.
+
+## Antigravity
+
+The Antigravity reader automatically scans recognized `.db` files below
+`~/.gemini/antigravity`, `~/.gemini/antigravity-cli`,
+`~/.gemini/antigravity-ide`, `~/.gemini/antigravity-backup`, and
+`~/.config/antigravity`, including nested conversation directories. It accepts
+only the observed conversation database version, the required `gen_metadata`
+table, and, when present, a recognized `steps` table. It opens candidate files
+only to inspect their schema, then queries only those metadata tables. For each
+metadata blob at most 4 MiB, it extracts direct generation counters and their
+same-record response model/ID; `steps` is timestamp-only join data. It never
+queries transcript, tool/event or `tokens_cache.json` data. Oversized blobs,
+unsupported versions and recognized-but-invalid table layouts produce a scan
+warning instead of an estimate; unrelated databases are ignored. Numeric-only
+models remain unpriced `antigravity-model-N` values unless a pricing alias maps
+them. Antigravity project attribution is not currently available. Its metadata
+has no endpoint or credential-mode field, so the subscription billing label is
+a normal-route default rather than invoice attribution.
+
+## Hook availability
+
+Cursor's documented [hooks](https://cursor.com/docs/hooks#afteragentresponse)
+and [CLI output](https://cursor.com/docs/cli/reference/output-format) do not
+provide per-call token counters, so Cursor is not a supported usage source yet.
+Its SDK and remote Admin API cover separate workflows, not ordinary local
+editor sessions.
+
+[Antigravity hooks](https://antigravity.google/docs/hooks#postinvocation) provide
+invocation identifiers without token counters; the local database reader is
+the accounting source. Grok's native ledger already persists usage locally.
+Its optional [external telemetry](https://github.com/xai-org/grok-build/blob/main/crates/codegen/xai-grok-pager/docs/user-guide/24-monitoring-usage.md)
+targets a collector or console, so it does not need another local capture hook.
 
 ## Source accuracy and reconciliation
 

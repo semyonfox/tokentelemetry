@@ -54,6 +54,9 @@ func All() []Scanner {
 	return []Scanner{
 		NewClaude(),
 		NewCodex(),
+		NewCopilot(),
+		NewGrok(),
+		NewAntigravity(),
 		NewHermes(),
 		NewOpenCode(),
 		NewGemini(),
