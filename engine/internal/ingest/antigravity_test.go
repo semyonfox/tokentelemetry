@@ -194,8 +194,13 @@ func TestAntigravityKeepsNumericOnlyAndNoIdentityUsage(t *testing.T) {
 	if len(turns) != 2 {
 		t.Fatalf("turns = %#v", turns)
 	}
+	// Discovery resolves the root, including macOS's /var -> /private/var.
+	dbPath, err := filepath.EvalSymlinks(filepath.Join(root, "session-native.db"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	for index, turn := range turns {
-		if turn.Model != "antigravity-model-777" || turn.Key != identityKey("antigravity-row", antigravitySourceID(filepath.Join(root, "session-native.db")), "gen_metadata", itoa(int64(index)), "0") {
+		if turn.Model != "antigravity-model-777" || turn.Key != identityKey("antigravity-row", antigravitySourceID(dbPath), "gen_metadata", itoa(int64(index)), "0") {
 			t.Fatalf("native-only turn = %#v", turn)
 		}
 	}
@@ -525,6 +530,16 @@ func TestAntigravityScansSymlinkedRoot(t *testing.T) {
 	turns := scan(t, &Antigravity{roots: []string{link}})
 	if len(turns) != 1 || turns[0].Key != identityKey("antigravity-response", "symlinked") {
 		t.Fatalf("symlinked-root turns = %#v", turns)
+	}
+
+	writeAntigravityDB(t, target, "identityless", antigravityTestBlob(antigravityTestRecord{
+		modelID: 777, seconds: 1_800_000_097, input: 2, output: 1,
+	}))
+	direct := scan(t, &Antigravity{roots: []string{target}})
+	linked := scan(t, &Antigravity{roots: []string{link}})
+	combined := scan(t, &Antigravity{roots: []string{target, link}})
+	if len(direct) != 2 || !reflect.DeepEqual(direct, linked) || !reflect.DeepEqual(direct, combined) {
+		t.Fatalf("root aliases changed accounting: direct=%#v linked=%#v combined=%#v", direct, linked, combined)
 	}
 }
 
