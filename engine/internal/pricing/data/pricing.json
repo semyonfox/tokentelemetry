@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-09-19",
+  "updated": "2026-09-20",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -1212,6 +1212,32 @@
           "cache_read": 0.06,
           "cache_write": 0.25,
           "source": "digitalocean"
+        }
+      ]
+    },
+    "arrow-2": {
+      "id": "arrow-2",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.4,
+          "cache_write": 5,
+          "source": "vercel"
+        }
+      ]
+    },
+    "arrow-2-telos": {
+      "id": "arrow-2-telos",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 6,
+          "out": 30,
+          "cache_read": 0.6,
+          "cache_write": 7.5,
+          "source": "vercel"
         }
       ]
     },
@@ -6071,6 +6097,19 @@
       ],
       "first_party": true
     },
+    "diffusiongemma": {
+      "id": "diffusiongemma",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.05,
+          "out": 0.15,
+          "cache_read": 0.025,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "diffusiongemma-26b-a4b-it": {
       "id": "diffusiongemma-26b-a4b-it",
       "rates": [
@@ -9398,6 +9437,19 @@
         }
       ]
     },
+    "gemma-4-26b-a4b-it-cybersecurity": {
+      "id": "gemma-4-26b-a4b-it-cybersecurity",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.1056,
+          "out": 0.3344,
+          "cache_read": 0.0528,
+          "cache_write": 0.1056,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "gemma-4-26b-a4b-it-darksoul": {
       "id": "gemma-4-26b-a4b-it-darksoul",
       "rates": [
@@ -10485,6 +10537,15 @@
           "cache_read": 0,
           "cache_write": 0,
           "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "tier_threshold": 32000,
+          "source": "zenmux"
         }
       ]
     },
@@ -11282,6 +11343,19 @@
         }
       ],
       "first_party": true
+    },
+    "glm-5.3-flash-cybersecurity": {
+      "id": "glm-5.3-flash-cybersecurity",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0.075,
+          "cache_write": 0.15,
+          "source": "nano-gpt"
+        }
+      ]
     },
     "glm-5.3-flash-fp4": {
       "id": "glm-5.3-flash-fp4",
@@ -14966,6 +15040,19 @@
           "cache_read": 0,
           "cache_write": 3,
           "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.2,
+          "cache_write": 2,
+          "tier_threshold": 128000,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 0.2,
+          "tier_cache_write": 4,
+          "source": "zenmux"
         }
       ]
     },
@@ -14978,6 +15065,19 @@
           "out": 9,
           "cache_read": 0,
           "cache_write": 3,
+          "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.2,
+          "cache_write": 2,
+          "tier_threshold": 128000,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 0.2,
+          "tier_cache_write": 4,
           "source": "zenmux"
         }
       ]
@@ -27682,6 +27782,19 @@
         }
       ]
     },
+    "qwen3.8-27b-cybersecurity": {
+      "id": "qwen3.8-27b-cybersecurity",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "qwen3.8-27b-fable": {
       "id": "qwen3.8-27b-fable",
       "rates": [
@@ -27822,6 +27935,14 @@
           "out": 1.5,
           "cache_read": 0.125,
           "cache_write": 0.25,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.15,
+          "out": 1.2,
+          "cache_read": 0.125,
+          "cache_write": 0.15,
           "source": "nano-gpt"
         }
       ]
@@ -29115,6 +29236,19 @@
         }
       ]
     },
+    "step-5-preview": {
+      "id": "step-5-preview",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 1,
+          "out": 2.7,
+          "cache_read": 0.05,
+          "cache_write": 1,
+          "source": "vercel"
+        }
+      ]
+    },
     "step-r1-v-mini": {
       "id": "step-r1-v-mini",
       "rates": [
@@ -29306,6 +29440,19 @@
           "cache_read": 0.15,
           "cache_write": 0.3,
           "source": "subconscious"
+        }
+      ]
+    },
+    "toast-1": {
+      "id": "toast-1",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.3,
+          "out": 0.72,
+          "cache_read": 0.036,
+          "cache_write": 0.3,
+          "source": "vercel"
         }
       ]
     },
@@ -50134,6 +50281,19 @@
         }
       ]
     },
+    "crossmodel\u0000qwen3.8-omni-flash": {
+      "id": "qwen3.8-omni-flash",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.13,
+          "out": 0.43,
+          "cache_read": 0.016,
+          "cache_write": 0.13,
+          "source": "crossmodel"
+        }
+      ]
+    },
     "crusoe\u0000deepseek-v3-0324": {
       "id": "deepseek-v3-0324",
       "rates": [
@@ -69911,6 +70071,14 @@
           "cache_read": 0.018396,
           "cache_write": 0.57816,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.56628,
+          "out": 1.69884,
+          "cache_read": 0.018876,
+          "cache_write": 0.56628,
+          "source": "kilo"
         }
       ]
     },
@@ -70834,6 +71002,14 @@
           "out": 2.8028,
           "cache_read": 0.16562,
           "cache_write": 0.8918,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.8442,
+          "out": 2.6532,
+          "cache_read": 0.15678,
+          "cache_write": 0.8442,
           "source": "kilo"
         }
       ]
@@ -87567,6 +87743,19 @@
         }
       ]
     },
+    "nano-gpt\u0000diffusiongemma": {
+      "id": "diffusiongemma",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.05,
+          "out": 0.15,
+          "cache_read": 0.025,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000dmind-1-mini": {
       "id": "dmind-1-mini",
       "rates": [
@@ -88541,6 +88730,19 @@
         }
       ]
     },
+    "nano-gpt\u0000gemma-4-26b-a4b-it-cybersecurity": {
+      "id": "gemma-4-26b-a4b-it-cybersecurity",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.1056,
+          "out": 0.3344,
+          "cache_read": 0.0528,
+          "cache_write": 0.1056,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000gemma-4-26b-a4b-it-darksoul": {
       "id": "gemma-4-26b-a4b-it-darksoul",
       "rates": [
@@ -89378,6 +89580,19 @@
           "out": 0.25,
           "cache_read": 0.015,
           "cache_write": 0.075,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000glm-5.3-flash-cybersecurity": {
+      "id": "glm-5.3-flash-cybersecurity",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0.075,
+          "cache_write": 0.15,
           "source": "nano-gpt"
         }
       ]
@@ -90571,6 +90786,19 @@
           "out": 0.408,
           "cache_read": 0.09945,
           "cache_write": 0.1989,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000jev": {
+      "id": "jev",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.042,
+          "out": 0,
+          "cache_read": 0.021,
+          "cache_write": 0.042,
           "source": "nano-gpt"
         }
       ]
@@ -92034,6 +92262,19 @@
         }
       ]
     },
+    "nano-gpt\u0000nemotron-3.5-content-safety": {
+      "id": "nemotron-3.5-content-safety",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.05,
+          "out": 0.15,
+          "cache_read": 0.025,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000nemotron-3.5-lightning": {
       "id": "nemotron-3.5-lightning",
       "rates": [
@@ -93210,6 +93451,19 @@
         }
       ]
     },
+    "nano-gpt\u0000qwen3.8-27b-cybersecurity": {
+      "id": "qwen3.8-27b-cybersecurity",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000qwen3.8-27b-fable": {
       "id": "qwen3.8-27b-fable",
       "rates": [
@@ -93282,6 +93536,14 @@
           "out": 1.5,
           "cache_read": 0.125,
           "cache_write": 0.25,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.15,
+          "out": 1.2,
+          "cache_read": 0.125,
+          "cache_write": 0.15,
           "source": "nano-gpt"
         }
       ]
@@ -94429,6 +94691,32 @@
         }
       ]
     },
+    "nebius\u0000deepseek-v4-pro-0813": {
+      "id": "deepseek-v4-pro-0813",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 1.32,
+          "out": 3.96,
+          "cache_read": 1.32,
+          "cache_write": 1.32,
+          "source": "nebius"
+        }
+      ]
+    },
+    "nebius\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.3,
+          "cache_write": 0.3,
+          "source": "nebius"
+        }
+      ]
+    },
     "nebius\u0000gemma-3-27b-it": {
       "id": "gemma-3-27b-it",
       "rates": [
@@ -94463,6 +94751,19 @@
           "in": 1.4,
           "out": 4.4,
           "cache_read": 0,
+          "cache_write": 1.4,
+          "source": "nebius"
+        }
+      ]
+    },
+    "nebius\u0000glm-5.3": {
+      "id": "glm-5.3",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 1.4,
           "cache_write": 1.4,
           "source": "nebius"
         }
@@ -104429,6 +104730,14 @@
           "cache_read": 0.018396,
           "cache_write": 0.57816,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.56628,
+          "out": 1.69884,
+          "cache_read": 0.018876,
+          "cache_write": 0.56628,
+          "source": "openrouter"
         }
       ]
     },
@@ -104629,6 +104938,14 @@
           "cache_read": 0.012,
           "cache_write": 0.06,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.04,
+          "out": 0.08,
+          "cache_read": 0.016,
+          "cache_write": 0.04,
+          "source": "openrouter"
         }
       ]
     },
@@ -104694,6 +105011,14 @@
           "out": 0.98658,
           "cache_read": 0.041108,
           "cache_write": 0.49329,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.422298,
+          "out": 0.844596,
+          "cache_read": 0.035192,
+          "cache_write": 0.422298,
           "source": "openrouter"
         }
       ]
@@ -104763,6 +105088,14 @@
           "out": 1.73448,
           "cache_read": 0.018396,
           "cache_write": 0.57816,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.66,
+          "out": 1.98,
+          "cache_read": 0.022,
+          "cache_write": 0.66,
           "source": "openrouter"
         }
       ]
@@ -105407,6 +105740,14 @@
           "cache_read": 0.16562,
           "cache_write": 0.8918,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.8442,
+          "out": 2.6532,
+          "cache_read": 0.15678,
+          "cache_write": 0.8442,
+          "source": "openrouter"
         }
       ]
     },
@@ -105674,6 +106015,14 @@
           "out": 2.86,
           "cache_read": 0.169,
           "cache_write": 0.91,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.896,
+          "out": 2.816,
+          "cache_read": 0.1664,
+          "cache_write": 0.896,
           "source": "openrouter"
         }
       ]
@@ -108164,6 +108513,14 @@
           "cache_read": 0.04,
           "cache_write": 0.35,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.04,
+          "cache_write": 0.3,
+          "source": "openrouter"
         }
       ]
     },
@@ -109224,6 +109581,14 @@
           "out": 1.3,
           "cache_read": 0,
           "cache_write": 0.1625,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.3125,
+          "out": 1.25,
+          "cache_read": 0.15625,
+          "cache_write": 0.3125,
           "source": "openrouter"
         }
       ]
@@ -123291,6 +123656,19 @@
         }
       ]
     },
+    "tensorx\u0000deepseek-v4-pro-0813": {
+      "id": "deepseek-v4-pro-0813",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 2,
+          "out": 4,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "source": "tensorx"
+        }
+      ]
+    },
     "tensorx\u0000deepseek-v4.1-flash": {
       "id": "deepseek-v4.1-flash",
       "rates": [
@@ -123365,6 +123743,32 @@
           "out": 4.5,
           "cache_read": 0.375,
           "cache_write": 1.5,
+          "source": "tensorx"
+        }
+      ]
+    },
+    "tensorx\u0000glm-5.3": {
+      "id": "glm-5.3",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 1.75,
+          "out": 4.5,
+          "cache_read": 0.44,
+          "cache_write": 1.75,
+          "source": "tensorx"
+        }
+      ]
+    },
+    "tensorx\u0000glm-5.3-flash": {
+      "id": "glm-5.3-flash",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.2,
+          "out": 0.5,
+          "cache_read": 0.05,
+          "cache_write": 0.2,
           "source": "tensorx"
         }
       ]
@@ -123547,6 +123951,45 @@
           "out": 0.2,
           "cache_read": 0.0375,
           "cache_write": 0.1875,
+          "source": "tensorx"
+        }
+      ]
+    },
+    "tensorx\u0000qwen3.8-2.4t-a95b": {
+      "id": "qwen3.8-2.4t-a95b",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 2.5,
+          "out": 6,
+          "cache_read": 0.63,
+          "cache_write": 2.5,
+          "source": "tensorx"
+        }
+      ]
+    },
+    "tensorx\u0000qwen3.8-27b": {
+      "id": "qwen3.8-27b",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.4,
+          "out": 2.4,
+          "cache_read": 0.1,
+          "cache_write": 0.4,
+          "source": "tensorx"
+        }
+      ]
+    },
+    "tensorx\u0000qwen3.8-flash-next": {
+      "id": "qwen3.8-flash-next",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.2,
+          "out": 0.5,
+          "cache_read": 0.05,
+          "cache_write": 0.2,
           "source": "tensorx"
         }
       ]
@@ -126691,6 +127134,32 @@
           "cache_read": 0.26,
           "cache_write": 1.4,
           "source": "venice"
+        }
+      ]
+    },
+    "vercel\u0000arrow-2": {
+      "id": "arrow-2",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.4,
+          "cache_write": 5,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000arrow-2-telos": {
+      "id": "arrow-2-telos",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 6,
+          "out": 30,
+          "cache_read": 0.6,
+          "cache_write": 7.5,
+          "source": "vercel"
         }
       ]
     },
@@ -130566,6 +131035,32 @@
         }
       ]
     },
+    "vercel\u0000step-5-preview": {
+      "id": "step-5-preview",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 1,
+          "out": 2.7,
+          "cache_read": 0.05,
+          "cache_write": 1,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000toast-1": {
+      "id": "toast-1",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.3,
+          "out": 0.72,
+          "cache_read": 0.036,
+          "cache_write": 0.3,
+          "source": "vercel"
+        }
+      ]
+    },
     "vercel\u0000trinity-large-thinking": {
       "id": "trinity-large-thinking",
       "rates": [
@@ -134000,6 +134495,19 @@
           "cache_read": 0.07,
           "cache_write": 0.35,
           "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.2911,
+          "out": 1.1645,
+          "cache_read": 0.0582,
+          "cache_write": 0.2911,
+          "tier_threshold": 32000,
+          "tier_in": 0.5823,
+          "tier_out": 2.3291,
+          "tier_cache_read": 0.1165,
+          "tier_cache_write": 0.5823,
+          "source": "zenmux"
         }
       ]
     },
@@ -134012,6 +134520,19 @@
           "out": 0.56,
           "cache_read": 0.02,
           "cache_write": 0.11,
+          "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.1165,
+          "out": 0.2911,
+          "cache_read": 0.0233,
+          "cache_write": 0.1165,
+          "tier_threshold": 32000,
+          "tier_in": 0.1747,
+          "tier_out": 1.1645,
+          "tier_cache_read": 0.0349,
+          "tier_cache_write": 0.1747,
           "source": "zenmux"
         }
       ]
@@ -134026,6 +134547,19 @@
           "cache_read": 0.07,
           "cache_write": 0.35,
           "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.2911,
+          "out": 1.1645,
+          "cache_read": 0.0582,
+          "cache_write": 0.2911,
+          "tier_threshold": 32000,
+          "tier_in": 0.5823,
+          "tier_out": 2.3291,
+          "tier_cache_read": 0.1165,
+          "tier_cache_write": 0.5823,
+          "source": "zenmux"
         }
       ]
     },
@@ -134038,6 +134572,19 @@
           "out": 0.42,
           "cache_read": 0.03,
           "cache_write": 0.14,
+          "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.1456,
+          "out": 0.4367,
+          "cache_read": 0.0291,
+          "cache_write": 0.1456,
+          "tier_threshold": 32000,
+          "tier_in": 0.2911,
+          "tier_out": 0.8734,
+          "tier_cache_read": 0.0582,
+          "tier_cache_write": 0.2911,
           "source": "zenmux"
         }
       ]
@@ -134052,6 +134599,19 @@
           "cache_read": 0.0043,
           "cache_write": 0.02,
           "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.0218,
+          "out": 0.2184,
+          "cache_read": 0.0044,
+          "cache_write": 0.0218,
+          "tier_threshold": 32000,
+          "tier_in": 0.0437,
+          "tier_out": 0.4367,
+          "tier_cache_read": 0.0044,
+          "tier_cache_write": 0.0437,
+          "source": "zenmux"
         }
       ]
     },
@@ -134065,6 +134625,15 @@
           "cache_read": 0,
           "cache_write": 0,
           "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "tier_threshold": 32000,
+          "source": "zenmux"
         }
       ]
     },
@@ -134077,6 +134646,19 @@
           "out": 1.14,
           "cache_read": 0.06,
           "cache_write": 0.28,
+          "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.2911,
+          "out": 1.1645,
+          "cache_read": 0.0582,
+          "cache_write": 0.2911,
+          "tier_threshold": 32000,
+          "tier_in": 0.5823,
+          "tier_out": 2.3291,
+          "tier_cache_read": 0.1165,
+          "tier_cache_write": 0.5823,
           "source": "zenmux"
         }
       ]
@@ -134104,6 +134686,14 @@
           "cache_read": 0.01,
           "cache_write": 0.07,
           "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.0728,
+          "out": 0.4367,
+          "cache_read": 0.0146,
+          "cache_write": 0.0728,
+          "source": "zenmux"
         }
       ]
     },
@@ -134116,6 +134706,19 @@
           "out": 2.6,
           "cache_read": 0.14,
           "cache_write": 0.58,
+          "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.58,
+          "out": 2.6,
+          "cache_read": 0.14,
+          "cache_write": 0.58,
+          "tier_threshold": 32000,
+          "tier_in": 0.87,
+          "tier_out": 3.18,
+          "tier_cache_read": 0.22,
+          "tier_cache_write": 0.87,
           "source": "zenmux"
         }
       ]
@@ -134130,6 +134733,19 @@
           "cache_read": 0,
           "cache_write": 0.88,
           "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.73,
+          "out": 3.19,
+          "cache_read": 0.174,
+          "cache_write": 0.73,
+          "tier_threshold": 32000,
+          "tier_in": 1.02,
+          "tier_out": 3.77,
+          "tier_cache_read": 0.261,
+          "tier_cache_write": 1.02,
+          "source": "zenmux"
         }
       ]
     },
@@ -134143,6 +134759,19 @@
           "cache_read": 0.1903,
           "cache_write": 0.8781,
           "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.8781,
+          "out": 3.5126,
+          "cache_read": 0.1903,
+          "cache_write": 0.8781,
+          "tier_threshold": 32000,
+          "tier_in": 1.1709,
+          "tier_out": 4.098,
+          "tier_cache_read": 0.2927,
+          "tier_cache_write": 1.1709,
+          "source": "zenmux"
         }
       ]
     },
@@ -134155,6 +134784,14 @@
           "out": 4.5,
           "cache_read": 0.26,
           "cache_write": 1.4,
+          "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.98,
+          "out": 3.08,
+          "cache_read": 0.182,
+          "cache_write": 0.98,
           "source": "zenmux"
         }
       ]
@@ -134172,6 +134809,45 @@
         }
       ]
     },
+    "zenmux\u0000glm-5.3": {
+      "id": "glm-5.3",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.26,
+          "cache_write": 1.4,
+          "source": "zenmux"
+        }
+      ]
+    },
+    "zenmux\u0000glm-5.3-flash": {
+      "id": "glm-5.3-flash",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0.03,
+          "cache_write": 0.15,
+          "source": "zenmux"
+        }
+      ]
+    },
+    "zenmux\u0000glm-5.3-flashx": {
+      "id": "glm-5.3-flashx",
+      "rates": [
+        {
+          "from": "2026-09-20",
+          "in": 0.375,
+          "out": 1.25,
+          "cache_read": 0.075,
+          "cache_write": 0.375,
+          "source": "zenmux"
+        }
+      ]
+    },
     "zenmux\u0000glm-5v-turbo": {
       "id": "glm-5v-turbo",
       "rates": [
@@ -134181,6 +134857,19 @@
           "out": 3.1946,
           "cache_read": 0.1743,
           "cache_write": 0.726,
+          "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 0.726,
+          "out": 3.1946,
+          "cache_read": 0.1743,
+          "cache_write": 0.726,
+          "tier_threshold": 32000,
+          "tier_in": 1.0165,
+          "tier_out": 3.7754,
+          "tier_cache_read": 0.2614,
+          "tier_cache_write": 1.0165,
           "source": "zenmux"
         }
       ]
@@ -134544,6 +135233,19 @@
           "cache_read": 0,
           "cache_write": 3,
           "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.2,
+          "cache_write": 2,
+          "tier_threshold": 128000,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 0.2,
+          "tier_cache_write": 4,
+          "source": "zenmux"
         }
       ]
     },
@@ -134556,6 +135258,19 @@
           "out": 9,
           "cache_read": 0,
           "cache_write": 3,
+          "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.2,
+          "cache_write": 2,
+          "tier_threshold": 128000,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 0.2,
+          "tier_cache_write": 4,
           "source": "zenmux"
         }
       ]
@@ -134574,6 +135289,19 @@
           "tier_out": 5,
           "tier_cache_read": 0.4,
           "source": "zenmux"
+        },
+        {
+          "from": "2026-09-20",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200000,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
+          "source": "zenmux"
         }
       ]
     },
@@ -134582,6 +135310,24 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 1,
+          "tier_cache_write": 4,
+          "source": "zenmux"
+        }
+      ]
+    },
+    "zenmux\u0000grok-4.6": {
+      "id": "grok-4.6",
+      "rates": [
+        {
+          "from": "2026-09-20",
           "in": 2,
           "out": 6,
           "cache_read": 0.5,
@@ -135452,6 +136198,8 @@
     "apertus-v1.5-70b-latest": "apertus-v1.5-70b",
     "apertus-v1p5-70b": "apertus-v1.5-70b",
     "arcee-trinity-large-thinking-latest": "arcee-trinity-large-thinking",
+    "arrow-2-latest": "arrow-2",
+    "arrow-2-telos-latest": "arrow-2-telos",
     "artemis-v1-1": "artemis-v1.1",
     "artemis-v1.1-latest": "artemis-v1.1",
     "artemis-v1p1": "artemis-v1.1",
@@ -135873,6 +136621,7 @@
     "devstral-small-2505-latest": "devstral-small-2505",
     "devstral-small-2507-latest": "devstral-small-2507",
     "diffusiongemma-26b-a4b-it-latest": "diffusiongemma-26b-a4b-it",
+    "diffusiongemma-latest": "diffusiongemma",
     "dola-seed-2-0-code": "dola-seed-2.0-code",
     "dola-seed-2-0-code-preview": "dola-seed-2.0-code-preview",
     "dola-seed-2-0-lite": "dola-seed-2.0-lite",
@@ -136324,6 +137073,7 @@
     "gemma-4-12b-it-semancer-latest": "gemma-4-12b-it-semancer",
     "gemma-4-12b-it-station-keeper-latest": "gemma-4-12b-it-station-keeper",
     "gemma-4-26b-a4b-it-chimerax-latest": "gemma-4-26b-a4b-it-chimerax",
+    "gemma-4-26b-a4b-it-cybersecurity-latest": "gemma-4-26b-a4b-it-cybersecurity",
     "gemma-4-26b-a4b-it-darksoul-latest": "gemma-4-26b-a4b-it-darksoul",
     "gemma-4-26b-a4b-it-latest": "gemma-4-26b-a4b-it",
     "gemma-4-26b-a4b-it-luminous-latest": "gemma-4-26b-a4b-it-luminous",
@@ -136487,6 +137237,7 @@
     "glm-5-2@eu": "glm-5.2@eu",
     "glm-5-3-fast": "glm-5.3-fast",
     "glm-5-3-flash-260828-latest": "glm-5-3-flash-260828",
+    "glm-5-3-flash-cybersecurity": "glm-5.3-flash-cybersecurity",
     "glm-5-3-flash-fp4": "glm-5.3-flash-fp4",
     "glm-5-3-flash-free": "glm-5.3-flash-free",
     "glm-5-3-flash-latest": "glm-5-3-flash",
@@ -136534,6 +137285,7 @@
     "glm-5.2-tee-latest": "glm-5.2-tee",
     "glm-5.2@eu-latest": "glm-5.2@eu",
     "glm-5.3-fast-latest": "glm-5.3-fast",
+    "glm-5.3-flash-cybersecurity-latest": "glm-5.3-flash-cybersecurity",
     "glm-5.3-flash-fp4-latest": "glm-5.3-flash-fp4",
     "glm-5.3-flash-free-latest": "glm-5.3-flash-free",
     "glm-5.3-flash-latest": "glm-5.3-flash",
@@ -136575,6 +137327,7 @@
     "glm-5p2-tee": "glm-5.2-tee",
     "glm-5p2@eu": "glm-5.2@eu",
     "glm-5p3-fast-latest": "glm-5p3-fast",
+    "glm-5p3-flash-cybersecurity": "glm-5.3-flash-cybersecurity",
     "glm-5p3-flash-fp4": "glm-5.3-flash-fp4",
     "glm-5p3-flash-free": "glm-5.3-flash-free",
     "glm-5p3-flash-latest": "glm-5p3-flash",
@@ -138317,6 +139070,7 @@
     "qwen3-8-2-4t-a95b": "qwen3.8-2.4t-a95b",
     "qwen3-8-2-4t-a95b-nvfp4": "qwen3.8-2.4t-a95b-nvfp4",
     "qwen3-8-2-4t-a95b@eu": "qwen3.8-2.4t-a95b@eu",
+    "qwen3-8-27b-cybersecurity": "qwen3.8-27b-cybersecurity",
     "qwen3-8-27b-fable": "qwen3.8-27b-fable",
     "qwen3-8-27b-fp8": "qwen3.8-27b-fp8",
     "qwen3-8-27b-free": "qwen3.8-27b-free",
@@ -138436,6 +139190,7 @@
     "qwen3.8-2.4t-a95b-latest": "qwen3.8-2.4t-a95b",
     "qwen3.8-2.4t-a95b-nvfp4-latest": "qwen3.8-2.4t-a95b-nvfp4",
     "qwen3.8-2.4t-a95b@eu-latest": "qwen3.8-2.4t-a95b@eu",
+    "qwen3.8-27b-cybersecurity-latest": "qwen3.8-27b-cybersecurity",
     "qwen3.8-27b-fable-latest": "qwen3.8-27b-fable",
     "qwen3.8-27b-fp8-latest": "qwen3.8-27b-fp8",
     "qwen3.8-27b-free-latest": "qwen3.8-27b-free",
@@ -138504,6 +139259,7 @@
     "qwen3p7-max-2026-06-08": "qwen3.7-max-2026-06-08",
     "qwen3p7-plus-latest": "qwen3p7-plus",
     "qwen3p8-27b": "qwen3.8-27b",
+    "qwen3p8-27b-cybersecurity": "qwen3.8-27b-cybersecurity",
     "qwen3p8-27b-fable": "qwen3.8-27b-fable",
     "qwen3p8-27b-fp8": "qwen3.8-27b-fp8",
     "qwen3p8-27b-free": "qwen3.8-27b-free",
@@ -138639,6 +139395,7 @@
     "step-3p5-flash-2603": "step-3.5-flash-2603",
     "step-3p7-flash": "step-3.7-flash",
     "step-3p7-flash-free": "step-3.7-flash-free",
+    "step-5-preview-latest": "step-5-preview",
     "streampetr-latest": "streampetr",
     "studiovoice-latest": "studiovoice",
     "synthetic-video-detector-latest": "synthetic-video-detector",
@@ -138656,6 +139413,7 @@
     "tim-qwen3-6-27b": "tim-qwen3.6-27b",
     "tim-qwen3.6-27b-latest": "tim-qwen3.6-27b",
     "tim-qwen3p6-27b": "tim-qwen3.6-27b",
+    "toast-1-latest": "toast-1",
     "tongyi-intent-detect-v3-latest": "tongyi-intent-detect-v3",
     "trendyol-asure-12b-latest": "trendyol-asure-12b",
     "trinity-large-preview-free-latest": "trinity-large-preview-free",
