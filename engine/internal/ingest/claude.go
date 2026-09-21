@@ -3,8 +3,11 @@ package ingest
 import (
 	"context"
 	"encoding/json"
+	"errors"
+	"io/fs"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/semyonfox/tokentelemetry/engine/internal/model"
@@ -23,23 +26,72 @@ import (
 // message id and request id, and the pair survives the copy — which is what
 // makes deduplication possible at all.
 type Claude struct {
-	root string
+	roots []string
 }
 
 func NewClaude() *Claude {
-	return &Claude{root: envDir("CLAUDE_CONFIG_DIR", ".claude")}
+	var candidates []string
+	explicit := false
+	for _, name := range []string{"CLAUDE_CONFIG_DIRS", "CLAUDE_CONFIG_DIR"} {
+		if value := strings.TrimSpace(os.Getenv(name)); value != "" {
+			explicit = true
+			for _, part := range strings.Split(value, ",") {
+				candidates = append(candidates, filepath.SplitList(strings.TrimSpace(part))...)
+			}
+			break
+		}
+	}
+	if !explicit {
+		if home := homeDir(); home != "" {
+			xdg := os.Getenv("XDG_CONFIG_HOME")
+			if !filepath.IsAbs(xdg) {
+				xdg = filepath.Join(home, ".config")
+			}
+			candidates = []string{filepath.Join(xdg, "claude"), filepath.Join(home, ".claude")}
+		}
+	}
+	c := &Claude{}
+	seen := make(map[string]bool)
+	for _, dir := range candidates {
+		dir = strings.TrimSpace(dir)
+		if dir == "" {
+			continue
+		}
+		if dir == "~" || strings.HasPrefix(dir, "~/") || strings.HasPrefix(dir, `~\`) {
+			dir = filepath.Join(homeDir(), strings.TrimLeft(strings.TrimPrefix(dir, "~"), `/\`))
+		}
+		if projects := existingDir(filepath.Join(dir, "projects")); projects != "" {
+			dir = projects
+		} else if !explicit {
+			continue
+		}
+		if existingDir(dir) == "" {
+			continue
+		}
+		resolved, err := filepath.EvalSymlinks(dir)
+		if err != nil {
+			continue
+		}
+		resolved, err = filepath.Abs(resolved)
+		if err != nil || seen[resolved] {
+			continue
+		}
+		seen[resolved] = true
+		c.roots = append(c.roots, resolved)
+	}
+	return c
 }
 
 func (c *Claude) Agent() model.Agent { return model.AgentClaude }
 
 func (c *Claude) Roots() []string {
-	if c.root == "" {
-		return nil
+	var roots []string
+	for _, dir := range c.roots {
+		if existingDir(dir) != "" {
+			roots = append(roots, dir)
+		}
 	}
-	if d := existingDir(filepath.Join(c.root, "projects")); d != "" {
-		return []string{d}
-	}
-	return nil
+	return roots
 }
 
 // claudeRecord is the subset of a transcript line we care about. Decoding a
@@ -73,40 +125,38 @@ func (c *Claude) Scan(ctx context.Context, emit func(model.Turn)) error {
 	if len(roots) == 0 {
 		return nil
 	}
-	projects := roots[0]
-
-	entries, err := os.ReadDir(projects)
-	if err != nil {
-		return err
-	}
-	// Collect every path first, then read them in parallel. Transcripts sit
-	// directly in the project dir; delegated subagent transcripts sit one level
-	// deeper. Both are real spend.
+	// Explicit roots may be collected archives with extra directory levels.
+	// Native request identities still deduplicate copies across every root.
 	var paths []string
-	var subagentPath = map[string]bool{}
-	for _, e := range entries {
-		if err := ctx.Err(); err != nil {
+	seen := make(map[string]bool)
+	var scanErrors []error
+	for _, root := range roots {
+		err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+			if ctx.Err() != nil {
+				return ctx.Err()
+			}
+			if err != nil {
+				scanErrors = append(scanErrors, err)
+				return nil
+			}
+			if entry.IsDir() || entry.Type()&os.ModeSymlink != 0 || filepath.Ext(path) != ".jsonl" || seen[path] {
+				return nil
+			}
+			seen[path] = true
+			paths = append(paths, path)
+			return nil
+		})
+		if err != nil {
 			return err
-		}
-		if !e.IsDir() {
-			continue
-		}
-		dir := filepath.Join(projects, e.Name())
-		for _, p := range globJSONL(filepath.Join(dir, "*.jsonl")) {
-			paths = append(paths, p)
-		}
-		for _, p := range c.subagentFiles(dir) {
-			paths = append(paths, p)
-			subagentPath[p] = true
 		}
 	}
 	turns := mapFiles(ctx, paths, func(path string) []model.Turn {
-		return c.scanFile(path, subagentPath[path])
+		return c.scanFile(path, strings.Contains(filepath.ToSlash(path), "/subagents/"))
 	})
 	for _, t := range turns {
 		emit(t)
 	}
-	return nil
+	return errors.Join(scanErrors...)
 }
 
 func globJSONL(pattern string) []string {
@@ -115,28 +165,6 @@ func globJSONL(pattern string) []string {
 		return nil
 	}
 	return matches
-}
-
-// subagentFiles lists <project>/<session-id>/subagents/agent-*.jsonl. These are
-// separate API conversations spawned by delegation and are billed separately,
-// so they are counted — they are not a duplicate view of the parent.
-func (c *Claude) subagentFiles(dir string) []string {
-	sessions, err := os.ReadDir(dir)
-	if err != nil {
-		return nil
-	}
-	var out []string
-	for _, s := range sessions {
-		if !s.IsDir() {
-			continue
-		}
-		sub := filepath.Join(dir, s.Name(), "subagents")
-		if existingDir(sub) == "" {
-			continue
-		}
-		out = append(out, globJSONL(filepath.Join(sub, "agent-*.jsonl"))...)
-	}
-	return out
 }
 
 func (c *Claude) scanFile(path string, subagent bool) []model.Turn {

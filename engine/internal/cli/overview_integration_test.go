@@ -15,6 +15,7 @@ import (
 
 func TestSummaryFromSyntheticTranscripts(t *testing.T) {
 	root := t.TempDir()
+	t.Setenv("CLAUDE_CONFIG_DIRS", "")
 	t.Setenv("CLAUDE_CONFIG_DIR", root)
 	t.Setenv("TT_PLANS_FILE", filepath.Join(root, "missing.json"))
 	t.Setenv("COLUMNS", "80")

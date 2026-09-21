@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"io"
 	"path"
+	"sort"
 	"strings"
 	"time"
+	"unicode"
 
 	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 	"github.com/semyonfox/tokentelemetry/engine/internal/plans"
@@ -312,6 +314,28 @@ func summary(w io.Writer, th theme, rep *report.Report, truncated int, verbose b
 	}
 	if t.AggregateRecords > 0 {
 		note(th.warn, "!", fmt.Sprintf("%s aggregate records (%s tokens): dates and costs approximate; per-call logs incomplete or ambiguous", humanInt(t.AggregateRecords), tokens(t.AggregateTokens)))
+	}
+	if len(rep.ExcludedOverlaps) > 0 {
+		note(th.warn, "!", fmt.Sprintf("%d overlapping runtime records excluded; native executor history counted. Mixed history may be incomplete; inspect excluded_overlaps in --json or select the wrapper alone", len(rep.ExcludedOverlaps)))
+	}
+	if t.Usage.Unclassified > 0 {
+		note(th.warn, "!", fmt.Sprintf("%s measured tokens lack an input/output/cache split; cost excluded", tokens(t.Usage.Unclassified)))
+	}
+	for _, reason := range t.UnpricedReasons {
+		note(th.warn, "!", strings.Map(func(r rune) rune {
+			if unicode.IsControl(r) {
+				return ' '
+			}
+			return r
+		}, reason))
+	}
+	creditAgents := make([]string, 0, len(t.CreditsByAgent))
+	for agent := range t.CreditsByAgent {
+		creditAgents = append(creditAgents, agent)
+	}
+	sort.Strings(creditAgents)
+	for _, agent := range creditAgents {
+		note(th.dim, "·", fmt.Sprintf("%s: %g reported credits (separate from tokens and USD)", chartLabel(agent), t.CreditsByAgent[agent]))
 	}
 	if t.HeuristicRecords > 0 {
 		note(th.warn, "!", fmt.Sprintf("%s legacy records use timing-based replay detection", humanInt(t.HeuristicRecords)))

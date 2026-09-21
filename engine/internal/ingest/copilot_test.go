@@ -172,12 +172,29 @@ func TestCopilotRejectsContradictoryNativeCacheBuckets(t *testing.T) {
 	insertCopilotUsage(t, db, "bad", "gpt-5", 100, 2, 90, 20, 0, "", "2026-09-19T10:00:00Z")
 	insertCopilotUsage(t, db, "negative", "gpt-5", 100, 2, -10, -20, -1, "", "2026-09-19T10:00:01Z")
 
-	turns := scan(t, newCopilotAt(root))
+	var turns []model.Turn
+	err := newCopilotAt(root).Scan(context.Background(), func(turn model.Turn) { turns = append(turns, turn) })
+	if err == nil || !strings.Contains(err.Error(), "no shutdown aggregate") {
+		t.Fatalf("invalid group was silently lost: %v", err)
+	}
 	if len(turns) != 1 {
 		t.Fatalf("turns = %#v, want only recoverable negative row", turns)
 	}
 	if got, want := turns[0].Usage, (model.Usage{Input: 100, Output: 2, ContextTokens: 100}); got != want {
 		t.Fatalf("usage = %#v, want %#v", got, want)
+	}
+}
+
+func TestCopilotZeroUsageRowDoesNotDuplicateLaterValidPair(t *testing.T) {
+	root := t.TempDir()
+	db := writeCopilotUsageStore(t, root)
+	defer db.Close()
+	insertCopilotUsage(t, db, "session", "gpt-5", 0, 0, 0, 0, 0, "", "2026-09-19T10:00:00Z")
+	insertCopilotUsage(t, db, "session", "gpt-5", 20, 3, 4, 1, 1, "", "2026-09-19T10:01:00Z")
+
+	turns := scan(t, newCopilotAt(root))
+	if len(turns) != 1 || turns[0].Usage != (model.Usage{Input: 15, Output: 3, CacheRead: 4, CacheWrite: 1, Reasoning: 1, ContextTokens: 20}) {
+		t.Fatalf("turns = %#v, want one valid request", turns)
 	}
 }
 
@@ -280,7 +297,7 @@ func TestCopilotShutdownFillsModelsMissingFromLedger(t *testing.T) {
 	}
 }
 
-func TestCopilotShutdownReplacesMismatchedLedger(t *testing.T) {
+func TestCopilotPartialLedgerEmitsOnlyShutdownResidual(t *testing.T) {
 	root := t.TempDir()
 	db := writeCopilotUsageStore(t, root)
 	defer db.Close()
@@ -289,16 +306,19 @@ func TestCopilotShutdownReplacesMismatchedLedger(t *testing.T) {
 		`{"type":"session.shutdown","timestamp":"2026-09-19T10:02:00Z","data":{"modelMetrics":{"gpt-5":{"usage":{"inputTokens":200,"outputTokens":30,"cacheReadTokens":50,"cacheWriteTokens":10,"reasoningTokens":3}}}}}`,
 	)
 
-	var turns []model.Turn
-	err := newCopilotAt(root).Scan(context.Background(), func(turn model.Turn) { turns = append(turns, turn) })
-	if len(turns) != 1 || !turns[0].Aggregate {
-		t.Fatalf("turns = %#v, want the exact shutdown aggregate", turns)
+	turns := scan(t, newCopilotAt(root))
+	if len(turns) != 2 || turns[0].Aggregate || !turns[1].Aggregate {
+		t.Fatalf("turns = %#v, want exact row plus uncovered residual", turns)
 	}
-	if got, want := turns[0].Usage, (model.Usage{Input: 140, Output: 30, CacheRead: 50, CacheWrite: 10, Reasoning: 3}); got != want {
+	if got, want := turns[1].Usage, (model.Usage{Input: 65, Output: 20, CacheRead: 30, CacheWrite: 5, Reasoning: 1}); got != want {
 		t.Fatalf("usage = %#v, want %#v", got, want)
 	}
-	if err == nil || !strings.Contains(err.Error(), "disagreed with the per-request ledger") {
-		t.Fatalf("error = %v, want reconciliation warning", err)
+	var total model.Usage
+	for _, turn := range turns {
+		total.Add(turn.Usage)
+	}
+	if got, want := total, (model.Usage{Input: 140, Output: 30, CacheRead: 50, CacheWrite: 10, Reasoning: 3, ContextTokens: 100}); got != want {
+		t.Fatalf("total = %#v, want %#v", got, want)
 	}
 }
 
@@ -347,6 +367,147 @@ func TestCopilotCompactionKeepsTokensAndDisclosesUnknownCacheSplit(t *testing.T)
 	if err == nil || !strings.Contains(err.Error(), "cache-write breakdown") {
 		t.Fatalf("error = %v, want cache split warning", err)
 	}
+}
+
+func TestCopilotStoreRowsAfterShutdownDoNotConsumeOlderAggregate(t *testing.T) {
+	root := t.TempDir()
+	db := writeCopilotUsageStore(t, root)
+	defer db.Close()
+	insertCopilotUsage(t, db, "later", "gpt-5", 100, 10, 40, 10, 2, "", "2026-09-19T12:00:00Z")
+	writeFile(t, filepath.Join(root, "session-state", "later", "events.jsonl"),
+		copilotShutdownLine("2026-09-19T11:00:00Z", `{"gpt-5":{"usage":{"inputTokens":80,"outputTokens":8,"cacheReadTokens":30,"cacheWriteTokens":10,"reasoningTokens":1}}}`),
+	)
+
+	turns := scan(t, newCopilotAt(root))
+	if len(turns) != 2 {
+		t.Fatalf("turns = %#v, want older aggregate and later exact row", turns)
+	}
+	if turns[0].Aggregate || !turns[1].Aggregate {
+		t.Fatalf("source precision = %#v", turns)
+	}
+}
+
+func TestCopilotMixedStoreAndShutdownTotalsKeepOnlyExactRows(t *testing.T) {
+	root := t.TempDir()
+	db := writeCopilotUsageStore(t, root)
+	defer db.Close()
+	insertCopilotUsage(t, db, "mismatch", "gpt-5", 100, 10, 30, 10, 1, "", "2026-09-19T10:00:00Z")
+	writeFile(t, filepath.Join(root, "session-state", "mismatch", "events.jsonl"),
+		copilotShutdownLine("2026-09-19T11:00:00Z", `{"gpt-5":{"usage":{"inputTokens":100,"outputTokens":20,"cacheReadTokens":50,"cacheWriteTokens":20,"reasoningTokens":2}}}`),
+	)
+
+	var turns []model.Turn
+	err := newCopilotAt(root).Scan(context.Background(), func(turn model.Turn) { turns = append(turns, turn) })
+	if err == nil || !strings.Contains(err.Error(), "do not reconcile componentwise") {
+		t.Fatalf("error = %v, want componentwise mismatch", err)
+	}
+	if len(turns) != 1 || turns[0].Aggregate {
+		t.Fatalf("turns = %#v, want only authoritative request row", turns)
+	}
+}
+
+func TestCopilotModelAliasReconcilesOnlyUnknownResidual(t *testing.T) {
+	root := t.TempDir()
+	db := writeCopilotUsageStore(t, root)
+	defer db.Close()
+	insertCopilotUsage(t, db, "alias", "gpt-5", 60, 6, 30, 10, 1, "", "2026-09-19T10:00:00Z")
+	writeFile(t, filepath.Join(root, "session-state", "alias", "events.jsonl"),
+		copilotShutdownLine("2026-09-19T11:00:00Z", `{"gpt-5-2026-08-01":{"usage":{"inputTokens":100,"outputTokens":10,"cacheReadTokens":50,"cacheWriteTokens":20,"reasoningTokens":2}}}`),
+	)
+
+	var turns []model.Turn
+	err := newCopilotAt(root).Scan(context.Background(), func(turn model.Turn) { turns = append(turns, turn) })
+	if err == nil || !strings.Contains(err.Error(), "model identifiers differ") {
+		t.Fatalf("error = %v, want model-attribution diagnostic", err)
+	}
+	if len(turns) != 2 || turns[0].Aggregate || !turns[1].Aggregate {
+		t.Fatalf("turns = %#v", turns)
+	}
+	residual := turns[1]
+	if residual.Model != "unknown" || residual.UnpricedReason == "" {
+		t.Fatalf("residual attribution = %#v", residual)
+	}
+	if got, want := residual.Usage, (model.Usage{Input: 10, Output: 4, CacheRead: 20, CacheWrite: 10, Reasoning: 1}); got != want {
+		t.Fatalf("residual = %#v, want %#v", got, want)
+	}
+}
+
+func TestCopilotInvalidStorePairFallsBackAsAWhole(t *testing.T) {
+	root := t.TempDir()
+	db := writeCopilotUsageStore(t, root)
+	defer db.Close()
+	insertCopilotUsage(t, db, "bad", "gpt-5", 100, 10, 40, 10, 2, "", "2026-09-19T10:00:00Z")
+	insertCopilotUsage(t, db, "bad", "gpt-5", 20, 5, 30, 0, 1, "", "2026-09-19T10:01:00Z")
+	writeFile(t, filepath.Join(root, "session-state", "bad", "events.jsonl"),
+		copilotShutdownLine("2026-09-19T11:00:00Z", `{"gpt-5":{"usage":{"inputTokens":120,"outputTokens":15,"cacheReadTokens":50,"cacheWriteTokens":10,"reasoningTokens":3}}}`),
+	)
+
+	var turns []model.Turn
+	err := newCopilotAt(root).Scan(context.Background(), func(turn model.Turn) { turns = append(turns, turn) })
+	if err == nil || !strings.Contains(err.Error(), "invalid request row") {
+		t.Fatalf("error = %v", err)
+	}
+	if len(turns) != 1 || !turns[0].Aggregate || turns[0].Usage.Total() != 135 {
+		t.Fatalf("turns = %#v", turns)
+	}
+}
+
+func TestCopilotShutdownSnapshotsAreDeltasAcrossCompaction(t *testing.T) {
+	root := t.TempDir()
+	writeFile(t, filepath.Join(root, "session-state", "compact", "events.jsonl"),
+		copilotShutdownLine("2026-09-19T09:00:00Z", `{"gpt-5":{"usage":{"inputTokens":100,"outputTokens":10,"cacheReadTokens":40,"cacheWriteTokens":10,"reasoningTokens":2}}}`),
+		`{"type":"session.compaction_complete","timestamp":"2026-09-19T09:30:00Z","data":{"success":true}}`,
+		copilotShutdownLine("2026-09-19T10:00:00Z", `{"gpt-5":{"usage":{"inputTokens":30,"outputTokens":4,"cacheReadTokens":10,"cacheWriteTokens":5,"reasoningTokens":1}}}`),
+	)
+
+	var turns []model.Turn
+	err := newCopilotAt(root).Scan(context.Background(), func(turn model.Turn) { turns = append(turns, turn) })
+	if err == nil || !strings.Contains(err.Error(), "pre-compaction usage may be missing") {
+		t.Fatalf("error = %v", err)
+	}
+	if len(turns) != 2 || turns[0].Usage.Total() != 110 || turns[1].Usage != (model.Usage{Input: 15, Output: 4, CacheRead: 10, CacheWrite: 5, Reasoning: 1}) {
+		t.Fatalf("turns = %#v", turns)
+	}
+}
+
+func TestCopilotMixedDirectionShutdownSnapshotIsExcluded(t *testing.T) {
+	root := t.TempDir()
+	writeFile(t, filepath.Join(root, "session-state", "mixed", "events.jsonl"),
+		copilotShutdownLine("2026-09-19T09:00:00Z", `{"gpt-5":{"usage":{"inputTokens":100,"outputTokens":10,"cacheReadTokens":40,"cacheWriteTokens":10,"reasoningTokens":2}}}`),
+		copilotShutdownLine("2026-09-19T10:00:00Z", `{"gpt-5":{"usage":{"inputTokens":90,"outputTokens":12,"cacheReadTokens":30,"cacheWriteTokens":10,"reasoningTokens":2}}}`),
+		copilotShutdownLine("2026-09-19T11:00:00Z", `{"gpt-5":{"usage":{"inputTokens":150,"outputTokens":15,"cacheReadTokens":60,"cacheWriteTokens":15,"reasoningTokens":3}}}`),
+	)
+
+	var turns []model.Turn
+	err := newCopilotAt(root).Scan(context.Background(), func(turn model.Turn) { turns = append(turns, turn) })
+	if err == nil || !strings.Contains(err.Error(), "mixed-direction") {
+		t.Fatalf("error = %v", err)
+	}
+	if len(turns) != 2 || turns[0].Usage.Total() != 110 || turns[1].Usage != (model.Usage{Input: 25, Output: 5, CacheRead: 20, CacheWrite: 5, Reasoning: 1}) {
+		t.Fatalf("turns = %#v", turns)
+	}
+}
+
+func TestCopilotInvalidShutdownSnapshotDoesNotAdvanceBaseline(t *testing.T) {
+	root := t.TempDir()
+	writeFile(t, filepath.Join(root, "session-state", "invalid-middle", "events.jsonl"),
+		copilotShutdownLine("2026-09-19T09:00:00Z", `{"gpt-5":{"usage":{"inputTokens":100,"outputTokens":10,"cacheReadTokens":40,"cacheWriteTokens":10,"reasoningTokens":2}}}`),
+		copilotShutdownLine("2026-09-19T10:00:00Z", `{"gpt-5":{"usage":{"inputTokens":120,"outputTokens":12,"cacheReadTokens":130,"cacheWriteTokens":10,"reasoningTokens":2}}}`),
+		copilotShutdownLine("2026-09-19T11:00:00Z", `{"gpt-5":{"usage":{"inputTokens":150,"outputTokens":15,"cacheReadTokens":60,"cacheWriteTokens":15,"reasoningTokens":3}}}`),
+	)
+
+	var turns []model.Turn
+	err := newCopilotAt(root).Scan(context.Background(), func(turn model.Turn) { turns = append(turns, turn) })
+	if err == nil || !strings.Contains(err.Error(), "invalid shutdown usage") {
+		t.Fatalf("error = %v", err)
+	}
+	if len(turns) != 2 || turns[1].Usage != (model.Usage{Input: 25, Output: 5, CacheRead: 20, CacheWrite: 5, Reasoning: 1}) {
+		t.Fatalf("turns = %#v", turns)
+	}
+}
+
+func copilotShutdownLine(timestamp, metrics string) string {
+	return fmt.Sprintf(`{"type":"session.shutdown","timestamp":%q,"data":{"modelMetrics":%s}}`, timestamp, metrics)
 }
 
 func writeCopilotUsageStore(t *testing.T, root string) *sql.DB {

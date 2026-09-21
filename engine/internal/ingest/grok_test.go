@@ -45,10 +45,14 @@ func TestGrokEmitsPerModelRowsAndNormalizesGrossInput(t *testing.T) {
 		"turns":[{
 			"turnNumber":7,
 			"endedAt":"2026-09-18T12:00:00.123Z",
-			"inputTokens":999999,
-			"outputTokens":999999,
-			"modelCalls":99,
-			"primaryModelId":"enclosing-total-must-not-emit",
+			"inputTokens":1400,
+			"outputTokens":280,
+			"cachedReadTokens":700,
+			"cacheCreationTokens":150,
+			"reasoningTokens":70,
+			"totalTokens":1680,
+			"modelCalls":3,
+			"primaryModelId":"",
 			"modelUsage":{
 				"grok-4-fast":{"inputTokens":1000,"outputTokens":200,"cachedReadTokens":600,"cacheCreationTokens":100,"reasoningTokens":50,"totalTokens":1200,"modelCalls":1,"costUsdTicks":1200000},
 				"grok-code-fast-1":{"inputTokens":400,"outputTokens":80,"cachedReadTokens":100,"cacheCreationTokens":50,"reasoningTokens":20,"totalTokens":480,"modelCalls":2,"costUsdTicks":480000}
@@ -130,6 +134,10 @@ func TestGrokWarnsWhenNestedModelUsageIsIncomplete(t *testing.T) {
 		"turns":[{
 			"turnNumber":1,
 			"endedAt":"2026-09-18T13:00:00Z",
+			"inputTokens":10,
+			"outputTokens":2,
+			"totalTokens":12,
+			"modelCalls":1,
 			"modelUsage":{"grok-code-fast-1":{"inputTokens":10,"outputTokens":2,"totalTokens":12,"modelCalls":1,"usageIsIncomplete":true}}
 		}]
 	}`)
@@ -149,6 +157,7 @@ func TestGrokForkFingerprintExcludesSessionIdentity(t *testing.T) {
 		"turns":[{
 			"turnNumber":3,
 			"endedAt":"2026-09-18T14:00:00Z",
+			"inputTokens":100,"outputTokens":20,"cachedReadTokens":70,"cacheCreationTokens":10,"reasoningTokens":5,"totalTokens":120,"modelCalls":1,
 			"modelUsage":{"grok-code-fast-1":{"inputTokens":100,"outputTokens":20,"cachedReadTokens":70,"cacheCreationTokens":10,"reasoningTokens":5,"totalTokens":120,"modelCalls":1,"costUsdTicks":77}}
 		}]
 	}`
@@ -156,6 +165,7 @@ func TestGrokForkFingerprintExcludesSessionIdentity(t *testing.T) {
 		"turns":[{
 			"turnNumber":3,
 			"endedAt":"2026-09-18T15:00:00+01:00",
+			"inputTokens":100,"outputTokens":20,"cachedReadTokens":70,"cacheCreationTokens":10,"reasoningTokens":5,"totalTokens":120,"modelCalls":1,
 			"modelUsage":{"grok-code-fast-1":{"inputTokens":100,"outputTokens":20,"cachedReadTokens":70,"cacheCreationTokens":10,"reasoningTokens":5,"totalTokens":120,"modelCalls":1,"costUsdTicks":88}}
 		}]
 	}`
@@ -363,7 +373,10 @@ func TestGrokSkipsMalformedTornAndInvalidRecords(t *testing.T) {
 		]
 	}`)
 
-	turns := scan(t, newGrokAt(root))
+	turns, err := collectGrok(t, newGrokAt(root))
+	if err == nil || !strings.Contains(err.Error(), "decode authoritative usage.json") {
+		t.Fatalf("warning = %v, want malformed-ledger diagnostics", err)
+	}
 	if got, want := len(turns), 1; got != want {
 		t.Fatalf("turns = %d, want only valid row (%d)", got, want)
 	}
@@ -399,7 +412,11 @@ func TestGrokRequiresLedgerSessionID(t *testing.T) {
 	writeFile(t, filepath.Join(dir, "summary.json"), `{"info":{"cwd":"/work"}}`)
 	writeFile(t, filepath.Join(dir, "usage.json"), `{"turns":[{"turnNumber":1,"endedAt":"2026-09-18T16:30:00Z","primaryModelId":"grok-code-fast-1","inputTokens":10,"outputTokens":1,"totalTokens":11,"modelCalls":1}]}`)
 
-	if turns := scan(t, newGrokAt(root)); len(turns) != 0 {
+	turns, err := collectGrok(t, newGrokAt(root))
+	if err == nil || !strings.Contains(err.Error(), "lacks sessionId") {
+		t.Fatalf("warning = %v, want missing-session diagnostic", err)
+	}
+	if len(turns) != 0 {
 		t.Fatalf("turns = %d, want ledger without sessionId skipped", len(turns))
 	}
 }
@@ -442,5 +459,88 @@ func TestNewGrokUsesGrokHomeSessionsDirectory(t *testing.T) {
 	want := filepath.Join(root, "sessions")
 	if got := scanner.Roots(); len(got) != 1 || got[0] != want {
 		t.Fatalf("roots = %v, want [%s]", got, want)
+	}
+}
+
+func TestGrokUsesFinalMeasuredLegacyTurnUsage(t *testing.T) {
+	root := t.TempDir()
+	dir := filepath.Join(root, "project", "session")
+	writeFile(t, filepath.Join(dir, "summary.json"), `{"info":{"id":"session","cwd":"/work"},"updated_at":"2026-09-01T10:00:00Z","current_model_id":"must-not-be-inferred"}`)
+	first := `{"params":{"update":{"sessionUpdate":"turn_completed","prompt_id":"prompt","usage":{"inputTokens":100,"outputTokens":20,"cachedReadTokens":60,"cacheCreationTokens":10,"reasoningTokens":5,"modelUsage":{"grok-4":{"inputTokens":100}}}}}}`
+	last := strings.Replace(first, `"outputTokens":20`, `"outputTokens":30`, 1)
+	writeFile(t, filepath.Join(dir, "updates.jsonl"), first, last)
+
+	turns := scan(t, newGrokAt(root))
+	want := model.Usage{Input: 30, Output: 30, CacheRead: 60, CacheWrite: 10, Reasoning: 5}
+	if len(turns) != 1 || turns[0].Usage != want || turns[0].Model != "grok-4" || !turns[0].Aggregate {
+		t.Fatalf("turns = %+v, want final measured legacy update", turns)
+	}
+}
+
+func TestGrokLegacyDoesNotInferSummaryModelOrTimestamp(t *testing.T) {
+	root := t.TempDir()
+	dir := filepath.Join(root, "session")
+	writeFile(t, filepath.Join(dir, "summary.json"), `{"info":{"id":"session"},"current_model_id":"wrong-historical-model"}`)
+	writeFile(t, filepath.Join(dir, "updates.jsonl"), `{"params":{"update":{"sessionUpdate":"turn_completed","prompt_id":"prompt","usage":{"inputTokens":10,"outputTokens":2}}}}`)
+
+	turns := scan(t, newGrokAt(root))
+	if len(turns) != 1 || turns[0].Model != "unknown" || !turns[0].Timestamp.IsZero() || turns[0].UnpricedReason == "" {
+		t.Fatalf("turns = %+v, want undated unpriced unknown-model usage", turns)
+	}
+}
+
+func TestGrokInvalidUsageJSONMasksLegacyUpdates(t *testing.T) {
+	root := t.TempDir()
+	dir := filepath.Join(root, "session")
+	writeFile(t, filepath.Join(dir, "summary.json"), `{"info":{"id":"session"}}`)
+	writeFile(t, filepath.Join(dir, "usage.json"), `{not-json`)
+	writeFile(t, filepath.Join(dir, "updates.jsonl"), `{"params":{"update":{"sessionUpdate":"turn_completed","prompt_id":"prompt","usage":{"inputTokens":10,"outputTokens":2}}}}`)
+
+	turns, err := collectGrok(t, newGrokAt(root))
+	if err == nil || !strings.Contains(err.Error(), "authoritative usage.json") || len(turns) != 0 {
+		t.Fatalf("warning = %v turns = %+v, want current ledger to mask legacy fallback", err, turns)
+	}
+}
+
+func TestGrokUsageJSONKeepsOneUnknownTotalWhenModelsDoNotReconcile(t *testing.T) {
+	root := t.TempDir()
+	writeGrokSession(t, root, "project", "session", "/work", "main", "", `{
+		"turns":[{"turnNumber":1,"endedAt":"2026-09-01T10:00:00Z","inputTokens":100,"outputTokens":20,"cachedReadTokens":60,"cacheCreationTokens":10,"reasoningTokens":5,"totalTokens":120,"modelCalls":1,
+		"modelUsage":{"grok-4":{"inputTokens":99,"outputTokens":20,"cachedReadTokens":60,"cacheCreationTokens":10,"reasoningTokens":5,"totalTokens":119,"modelCalls":1}}}]
+	}`)
+
+	turns := scan(t, newGrokAt(root))
+	if len(turns) != 1 || turns[0].Model != "unknown" || turns[0].Usage.Input != 30 || turns[0].UnpricedReason == "" {
+		t.Fatalf("turns = %+v, want one measured unknown aggregate", turns)
+	}
+}
+
+func TestGrokProvenCompletedSubagentUsageCountsOnlyInParent(t *testing.T) {
+	root := t.TempDir()
+	parent := writeGrokSession(t, root, "project", "parent", "/work", "main", "", `{
+		"turns":[{"turnNumber":1,"endedAt":"2026-09-01T10:00:00Z","inputTokens":100,"outputTokens":20,"cachedReadTokens":60,"cacheCreationTokens":10,"reasoningTokens":5,"totalTokens":120,"modelCalls":1,"primaryModelId":"grok-4"}]
+	}`)
+	writeFile(t, filepath.Join(parent, "updates.jsonl"),
+		`{"params":{"update":{"sessionUpdate":"subagent_finished","child_session_id":"child"}}}`,
+		`{"params":{"update":{"sessionUpdate":"turn_completed","usage":{"inputTokens":100,"outputTokens":20,"cachedReadTokens":60,"cacheCreationTokens":10,"reasoningTokens":5,"totalTokens":120,"modelCalls":1}}}}`)
+	writeGrokSession(t, root, "project", "child", "/work", "subagent", "parent", `{
+		"turns":[{"turnNumber":1,"endedAt":"2026-09-01T09:59:00Z","inputTokens":10,"outputTokens":2,"totalTokens":12,"modelCalls":1,"primaryModelId":"grok-4"}]
+	}`)
+
+	turns := scan(t, newGrokAt(root))
+	if len(turns) != 1 || turns[0].SessionID != "parent" {
+		t.Fatalf("turns = %+v, want only proven folded parent", turns)
+	}
+}
+
+func TestGrokMissingNativeTimestampRemainsMeasuredAndUnpriced(t *testing.T) {
+	root := t.TempDir()
+	writeGrokSession(t, root, "project", "session", "/work", "main", "", `{
+		"turns":[{"turnNumber":1,"inputTokens":10,"outputTokens":2,"totalTokens":12,"modelCalls":1,"primaryModelId":"grok-4"}]
+	}`)
+
+	turns := scan(t, newGrokAt(root))
+	if len(turns) != 1 || !turns[0].Timestamp.IsZero() || turns[0].Usage.Total() != 12 || turns[0].UnpricedReason == "" {
+		t.Fatalf("turns = %+v, want undated measured usage", turns)
 	}
 }

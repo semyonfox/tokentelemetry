@@ -34,7 +34,7 @@ COMMANDS
   model      usage per model
   project    usage per project
   price      show a model's rate history
-  agents     list detected agents and where their logs live
+  agents     list provider coverage and detected source paths
   version    print the version
 
 FILTERS (every report command)
@@ -153,6 +153,19 @@ func cmdReport(cmd string, args []string) int {
 		fmt.Fprintln(os.Stderr, "tokentelemetry: unexpected arguments or negative --limit")
 		return 2
 	}
+	var cursorCSV, cursorSDK bool
+	for _, agent := range agents {
+		if reason := ingest.SourceLimitation(agent); reason != "" {
+			fmt.Fprintf(os.Stderr, "tokentelemetry: %s: %s\n", agent, reason)
+			return 2
+		}
+		cursorCSV = cursorCSV || strings.EqualFold(agent, "cursor")
+		cursorSDK = cursorSDK || strings.EqualFold(agent, "cursor-agent")
+	}
+	if cursorCSV && cursorSDK {
+		fmt.Fprintln(os.Stderr, "tokentelemetry: Cursor history and SDK results may contain the same usage without shared request IDs; select --agent cursor or --agent cursor-agent separately")
+		return 2
+	}
 	f := report.Filter{
 		From:      firstNonEmpty(*since, *from),
 		To:        firstNonEmpty(*until, *to),
@@ -209,7 +222,7 @@ func cmdReport(cmd string, args []string) int {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	progress.Update("Finding agent logs...")
-	scanners := ingest.Available()
+	scanners := ingest.Available(agents...)
 	if len(scanners) == 0 {
 		progress.Stop()
 		fmt.Fprintln(os.Stderr, "tokentelemetry: no agent logs found on this machine (try `tokentelemetry agents`)")
@@ -297,16 +310,7 @@ func view(cmd string, rep *report.Report) any {
 
 func cmdAgents(args []string) int {
 	asJSON := len(args) > 0 && args[0] == "--json"
-	type row struct {
-		Agent     string   `json:"agent"`
-		Installed bool     `json:"installed"`
-		Roots     []string `json:"roots,omitempty"`
-	}
-	var rows []row
-	for _, s := range ingest.All() {
-		r := s.Roots()
-		rows = append(rows, row{Agent: string(s.Agent()), Installed: len(r) > 0, Roots: r})
-	}
+	rows := ingest.Catalog()
 	if asJSON {
 		enc := json.NewEncoder(os.Stdout)
 		enc.SetIndent("", "  ")
@@ -318,7 +322,13 @@ func cmdAgents(args []string) int {
 		if r.Installed {
 			mark = "✓"
 		}
-		fmt.Printf(" %s  %-14s %s\n", mark, r.Agent, strings.Join(r.Roots, ", "))
+		fmt.Printf(" %s  %-16s %-14s %s\n", mark, r.Agent, r.Status, strings.Join(r.Roots, ", "))
+		if r.Coverage != "" {
+			fmt.Printf("      %s\n", r.Coverage)
+		}
+		if r.ExplicitOnly {
+			fmt.Printf("      Requires --agent %s; may overlap other usage sources\n", r.Agent)
+		}
 	}
 	return 0
 }

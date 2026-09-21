@@ -71,6 +71,9 @@ func (c Cost) Priced() bool { return c.Confidence != pricing.ConfidenceUnpriced 
 func Of(t model.Turn, tbl *pricing.Table) Cost {
 	id := pricing.Normalize(t.Model)
 	c := Cost{Model: id, Billing: classify(t)}
+	if t.UnpricedReason != "" || t.Usage.Unclassified > 0 || (t.Credits != nil && t.Usage.IsZero()) {
+		return c
+	}
 
 	rate, conf, ok := tbl.Lookup(t.Model, t.Provider, t.Timestamp)
 	c.Confidence = conf

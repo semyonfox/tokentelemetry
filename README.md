@@ -4,8 +4,12 @@ Local token and cost reports for AI coding agents, built around a Go accounting
 engine. Reads existing logs and SQLite databases. Reports need no Python runtime,
 web server or browser. Usage logs stay local.
 
-Supported readers: Claude Code, Codex CLI, GitHub Copilot, Grok Build,
-Antigravity, Gemini CLI, OpenCode, Hermes and Pi.
+The [provider inventory](docs/provider-inventory.md) lists all 42 audited adapters:
+40 local readers/importers, plus explicit source limitations for Crush and
+Grokbot. Coverage includes Copilot CLI and supported VS Code stores, Cursor local counters
+and CSV exports, Cline, Roo, Kilo,
+Qwen, Goose and Zed. Some sources provide only session totals or credits.
+Run `tokentelemetry agents` to see coverage and detected source paths.
 
 ## Run from source
 
@@ -43,7 +47,10 @@ such as `daily` and `model` include all history unless filtered.
 Each reader normalises usage into fresh input, output, cache reads and cache
 writes. Reports use the same pricing and aggregation code for every command.
 Rates are embedded, effective-dated and include supported context tiers and cache
-rates. Unknown models keep their token counts but contribute no invented cost.
+rates. Unknown models and ambiguous session attribution keep their token counts
+but contribute no invented cost. Measured tokens without a reliable split remain
+unclassified. Kiro and Codebuff credits are reported separately from tokens and
+dollars. See the inventory for import configuration and source-specific limits.
 
 The dollar total is API list value, not a provider invoice. Subscription and
 local usage are classified separately. Optional plan costs in
@@ -63,28 +70,33 @@ Accuracy has limits:
   the local timezone.
 - Usage older than available price history uses the earliest known rate, with
   the affected cost disclosed.
+- Hermes aggregates explicitly linked to a scanned Codex runtime thread are
+  excluded from combined totals and retained in JSON `excluded_overlaps`. Mixed
+  sessions and older histories without shared identities cannot be fully
+  reconciled. See [runtime overlap rules](docs/provider-evidence-overlap.md).
 - Missing, unreadable or changed source logs can make reports incomplete.
   Compressed Codex rollouts are not currently read.
+- Cursor's local counters are best-effort and often empty. Automatic discovery
+  reads measured counters and reports gaps; missing cache details stay unpriced.
+  An optional CSV replaces local history. See [Cursor setup](engine/README.md#cursor-usage).
 - GitHub Copilot scans its already-written CLI session store and shutdown
   journal, plus VS Code's persisted chat-session records when they include
   complete per-model totals for a recognized GitHub Copilot participant. It
   never enables telemetry, and it does not retain or report prompt and response
-  text. Where a shutdown aggregate disagrees with the session-store total, it
-  uses that native aggregate and reports the mismatch; missing native records
-  remain unavailable rather than estimated. Older stores that lack those
-  counters remain unavailable rather than being estimated. The Copilot CLI
+  text. Valid request rows remain authoritative. Shutdown snapshots add only
+  usage that reconciles against those rows in every token bucket; ambiguous
+  differences produce warnings. Older stores without measured counters remain
+  unavailable. The Copilot CLI
   Agent Host's duplicate VS Code copy is excluded. An optional Copilot CLI
   OpenTelemetry file export fills conversations without native usage; native
   records take precedence for overlapping conversations. See
   [export setup and limits](engine/README.md#optional-copilot-file-exports).
-- Grok Build reads its persisted per-turn usage ledger. Sessions created before
-  that ledger existed cannot be reconstructed from debug logs or transcripts.
-  When Grok marks a row `usageIsIncomplete`, the reader retains its available
-  counters and reports a scan warning. If child-ledger usage could overlap a
-  parent aggregate, it retains the exact child and omits the parent with a
-  warning. The ledger does not record whether a call used signed-in plan
-  access, an API key or a custom endpoint, so its subscription billing label is
-  a normal-route default rather than invoice attribution.
+- Grok Build prefers its native `usage.json` ledger and uses legacy completion
+  counters only when that ledger is absent. Missing timestamps and uncertain
+  model attribution remain explicit and unpriced. Proven parent/child folds
+  count once; otherwise exact child history takes precedence over ambiguous
+  parent aggregates, with a warning. Its subscription billing label is a
+  normal-route default, not invoice attribution.
 - Antigravity reads recognized invocation metadata from schema-gated local
   conversation databases. Unsupported database versions/layouts, malformed
   records and oversized metadata blobs are skipped with no transcript-based
@@ -106,8 +118,7 @@ make build
 make packages  # optional: needs Node.js; builds six native npm packages + launcher
 ```
 
-The Go module remains under `engine/`. Its historical module path is retained
-for source compatibility. Generated npm packages live in `engine/dist/npm`;
+The Go module remains under `engine/`. Generated npm packages live in `engine/dist/npm`;
 this checkout does not establish that they have been published. Use the local
 binary above to run this version.
 

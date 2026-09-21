@@ -16,7 +16,10 @@
 // identity, bucket on the turn's own clock, price with the turn's own model.
 package model
 
-import "time"
+import (
+	"math"
+	"time"
+)
 
 // Agent is the coding agent a turn came from.
 type Agent string
@@ -53,7 +56,7 @@ type ProjectLineage struct {
 	WorktreeRoots map[string]string
 }
 
-// Usage is the token accounting for a single API call.
+// Usage is the token accounting for a call or a labelled source aggregate.
 //
 // Input is the NET uncached prompt, never the gross figure. Providers differ
 // here — Anthropic reports input_tokens already exclusive of cache reads, while
@@ -69,11 +72,14 @@ type Usage struct {
 	CacheWrite1h  int64 `json:"cache_write_1h,omitempty"`
 	Reasoning     int64 `json:"reasoning,omitempty"`
 	ContextTokens int64 `json:"context_tokens,omitempty"`
+	// Unclassified is measured usage whose input/output/cache split is absent.
+	// It contributes to token totals but cannot be assigned a token price.
+	Unclassified int64 `json:"unclassified,omitempty"`
 }
 
-// Total is every billable token in the call.
+// Total sums the measured disjoint buckets, including unclassified tokens.
 func (u Usage) Total() int64 {
-	return u.Input + u.Output + u.CacheRead + u.CacheWrite
+	return u.Input + u.Output + u.CacheRead + u.CacheWrite + u.Unclassified
 }
 
 // Add accumulates another usage into this one.
@@ -84,6 +90,7 @@ func (u *Usage) Add(o Usage) {
 	u.CacheWrite += o.CacheWrite
 	u.CacheWrite1h += o.CacheWrite1h
 	u.Reasoning += o.Reasoning
+	u.Unclassified += o.Unclassified
 	if o.ContextTokens > u.ContextTokens {
 		u.ContextTokens = o.ContextTokens
 	}
@@ -110,6 +117,16 @@ const MaxPerCallTokens = 50_000_000
 // different in kind: it means the record cannot be trusted at all, so the
 // caller is told to drop it.
 func (u Usage) Sanitize() (Usage, bool) {
+	return u.sanitize(MaxPerCallTokens)
+}
+
+// SanitizeAggregate allows long-lived session counters beyond one prompt's
+// bound, while keeping enough integer headroom to sum the disjoint buckets.
+func (u Usage) SanitizeAggregate() (Usage, bool) {
+	return u.sanitize(math.MaxInt64 / 16)
+}
+
+func (u Usage) sanitize(limit int64) (Usage, bool) {
 	clamp := func(v *int64) {
 		if *v < 0 {
 			*v = 0
@@ -122,9 +139,10 @@ func (u Usage) Sanitize() (Usage, bool) {
 	clamp(&u.CacheWrite1h)
 	clamp(&u.Reasoning)
 	clamp(&u.ContextTokens)
+	clamp(&u.Unclassified)
 
-	for _, v := range [...]int64{u.Input, u.Output, u.CacheRead, u.CacheWrite, u.Reasoning} {
-		if v > MaxPerCallTokens {
+	for _, v := range [...]int64{u.Input, u.Output, u.CacheRead, u.CacheWrite, u.Reasoning, u.Unclassified} {
+		if v > limit {
 			return u, false
 		}
 	}
@@ -163,6 +181,14 @@ type Turn struct {
 	Project string `json:"project,omitempty"`
 	Usage   Usage  `json:"usage"`
 
+	// Runtime links a wrapper's usage to a native executor session only
+	// when the producer persisted that identity. Shared model names are not links.
+	RuntimeAgent     Agent  `json:"runtime_agent,omitempty"`
+	RuntimeSessionID string `json:"runtime_session_id,omitempty"`
+	// ExcludedReason retains overlapping usage for audit without adding
+	// it to totals when its native executor history is also available.
+	ExcludedReason string `json:"excluded_reason,omitempty"`
+
 	// ServiceTier is the provider's billing tier for the call ("standard",
 	// "batch", "priority"). Batch traffic bills at half rate, so ignoring this
 	// overstates the cost of anything run through a batch queue.
@@ -176,6 +202,12 @@ type Turn struct {
 	// Aggregate marks usage that cannot be resolved into individual calls.
 	// Its timestamp is an attribution estimate and its context size is unknown.
 	Aggregate bool `json:"aggregate,omitempty"`
+	// UnpricedReason preserves the recorded model while excluding usage whose
+	// accounting fields or model attribution are insufficient for pricing.
+	UnpricedReason string `json:"unpriced_reason,omitempty"`
+	// Credits are provider-reported metering units, not dollars or tokens.
+	// Different agents' credits are never combined or assigned an exchange rate.
+	Credits *float64 `json:"credits,omitempty"`
 	// ReplayHeuristic marks legacy Codex history processed using timing.
 	ReplayHeuristic bool `json:"replay_heuristic,omitempty"`
 }

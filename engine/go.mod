@@ -3,6 +3,7 @@ module github.com/semyonfox/tokentelemetry/engine
 go 1.26
 
 require (
+	github.com/klauspost/compress v1.19.0
 	github.com/mattn/go-isatty v0.0.24
 	modernc.org/sqlite v1.57.0
 )

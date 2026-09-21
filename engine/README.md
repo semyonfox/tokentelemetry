@@ -10,13 +10,17 @@ summary                      overview with terminal charts; default command
  daily | weekly | monthly    usage over time
 session | model | project    usage by dimension
 price <model>                a model's rate history
-agents                       detected agents and log paths
+agents                       provider coverage and detected log paths
 version                      build version
 ```
 
 `summary` defaults to the last 30 local calendar days, including today. An explicit
 `--since` or `--until` replaces that default. Other report commands default to all
 available history. Usage logs stay local.
+
+See the [complete 42-adapter inventory](../docs/provider-inventory.md) for local
+readers, explicit imports, credits-only sources and unsupported source limits.
+`agents --json` includes coverage status and whether explicit selection is required.
 
 ## Filters and output
 
@@ -58,6 +62,47 @@ recorded CWDs in `project_paths`.
 ./dist/tokentelemetry daily --group-by agent,model
 ./dist/tokentelemetry session --project tokentelemetry --limit 10
 ```
+
+## Cursor usage
+
+Cursor's IDE database is discovered automatically on Linux, macOS and Windows:
+
+```sh
+./dist/tokentelemetry daily --agent cursor --plain
+```
+
+Only recorded token counters are included. Cursor often leaves those counters
+empty, so the reader reports missing usage and cannot recover a complete history.
+Its local input counters have no cache breakdown and stay unclassified and
+unpriced. `TT_CURSOR_DB` can point to a database in a custom data directory.
+
+For fuller history, `TT_CURSOR_CSV` optionally selects a usage export containing
+the request date, model, input, output, cache and total token columns:
+
+```sh
+TT_CURSOR_CSV=/path/to/usage.csv ./dist/tokentelemetry daily --agent cursor --plain
+```
+
+The CSV replaces local database history entirely, preventing overlap. Replace
+that file when downloading a newer export. Reports read the current
+snapshot, so rerunning a report does not accumulate earlier imports. Identical
+rows within one export remain separate requests. See the
+[CSV format and accounting limits](../docs/provider-evidence-next-cli.md#cursor-dashboard-csv).
+
+Local Cursor SDK stores are discovered under `~/.cursor/projects/` when selected:
+
+```sh
+./dist/tokentelemetry daily --agent cursor-agent --plain
+```
+
+This reads SDK runs, not ordinary Cursor CLI transcripts. Terminal runs provide
+measured token buckets; their model selection cannot establish the historical
+model for every subagent call, so these aggregates stay unpriced. Saved SDK
+results remain available through `TT_CURSOR_AGENT_DIR`.
+
+The SDK source requires explicit selection, and the CLI rejects selecting both `cursor`
+and `cursor-agent` in one report because the sources can overlap without shared
+request IDs. Neither importer fetches account data automatically.
 
 ## Plan costs
 
@@ -117,8 +162,7 @@ packages plus the npm launcher into `engine/dist/npm`. Publishing is separate;
 use the local binary to test this checkout. Distributed packages include the MIT
 licence notice.
 
-Readers currently cover Claude Code, Codex CLI, GitHub Copilot, Grok Build,
-Antigravity, Gemini CLI, OpenCode, Hermes and Pi.
+The [provider inventory](../docs/provider-inventory.md) describes all 42 audited adapters.
 The scanner interface and registration live in `internal/ingest/ingest.go`.
 
 ## GitHub Copilot
@@ -138,16 +182,21 @@ debug logs.
 VS Code session storage includes chat payloads, but the scanner neither retains
 nor reports prompt/response text and never uses those fields for accounting.
 
-When a clean-shutdown aggregate exists, the CLI database preserves individual
-requests only if their per-session/model sum agrees with it. If there is no
-corresponding ledger or the native totals disagree, the shutdown aggregate
-replaces that group and the scan reports a warning. A valid ledger without a
-shutdown record is retained as-is. Shutdown and VS Code totals are per-model
-aggregates and use base context pricing. A session with neither usable native
-source, or an older/changed schema without complete counters, remains
-unavailable rather than estimated. Copilot's scalar cache-write field can be
-incomplete for a compaction row; the reader retains its total tokens and
-reports that split as uncertain.
+Valid CLI request rows remain authoritative. Cumulative shutdown snapshots
+become interval deltas. The reader subtracts request rows at or before the
+shutdown only when every token bucket reconciles, then adds the uncovered
+residual. Later requests remain separate. Conflicting buckets produce a warning
+and keep only exact rows. If model identifiers differ, any reconciled residual
+has unknown model attribution and stays unpriced. An invalid request row
+invalidates its session/model group; a matching shutdown aggregate can replace
+that group with a diagnostic.
+
+Shutdown residuals and VS Code totals are aggregates and use base context
+pricing. Resets and compaction boundaries disclose possible missing history.
+A session with neither usable native source, or an older/changed schema without
+complete counters, remains unavailable rather than estimated. Copilot's scalar
+cache-write field can be incomplete for a compaction row; the reader retains
+its total tokens and reports that split as uncertain.
 
 ### Optional Copilot file exports
 
@@ -177,20 +226,25 @@ The file path and span fields follow the
 
 Grok Build versions that write an atomic per-turn `usage.json` ledger store it
 under `~/.grok/sessions/` by default (or an already-configured `GROK_HOME`).
-The reader finds that ledger automatically and reads only model IDs, end
-timestamps, token buckets and the narrow session metadata needed for
-project/subagent attribution. It does not parse prompts, responses, transcripts,
-hooks or debug logs. A ledger row can cover multiple calls; the reader marks it
-aggregate and uses base context pricing. Older sessions without `usage.json`
-remain unavailable rather than estimated. When Grok marks a row
-`usageIsIncomplete`, the reader retains
-its available counters and emits a scan warning. `grok usage <session-id>` is a
-useful diagnostic for the same native ledger.
+The reader finds that ledger automatically and reads model IDs, end timestamps,
+token buckets and session metadata for project/subagent attribution. Per-model
+rows are used only when their counters and call counts reconcile with the turn
+total; otherwise measured usage stays unknown and unpriced. Multiple-call rows
+use aggregate pricing. Missing end times stay undated and unpriced; malformed
+nonempty times are rejected. Incomplete rows retain measured counters with a
+warning and no assigned cost. `grok usage <session-id>` diagnoses the same ledger.
 
-When a retained child ledger can overlap a parent aggregate, the format does
-not prove which child calls the parent folded. The reader keeps the exact child
-and omits that parent (and any ancestor aggregate) with a warning rather than
-double-counting or guessing at a split.
+An explicit fork link and an exactly matching inherited turn preserve the
+original request identity. A recorded child completion followed by a complete,
+matching parent turn establishes a folded aggregate and counts it once. Without
+that evidence, exact child ledgers take precedence over overlapping parent and
+ancestor aggregates, with a warning.
+
+Legacy `updates.jsonl` completion counters are read only when `usage.json` is
+absent. Repeated prompt IDs replace earlier snapshots. These records stay
+undated and unpriced because the source lacks per-turn time and reliable model
+attribution. A malformed current ledger never triggers a legacy fallback.
+Prompt/response text and debug logs are not used to estimate usage.
 
 The ledger has no endpoint or credential-mode field. Its subscription billing
 label is the normal-route default, not proof that a historical turn used
@@ -205,7 +259,7 @@ The Antigravity reader automatically scans recognized `.db` files below
 only the observed conversation database version, the required `gen_metadata`
 table, and, when present, a recognized `steps` table. It opens candidate files
 only to inspect their schema, then queries only those metadata tables. For each
-metadata blob at most 4 MiB, it extracts direct generation counters and their
+metadata blob at most 64 MiB, it extracts direct generation counters and their
 same-record response model/ID; `steps` is timestamp-only join data. It never
 queries transcript, tool/event or `tokens_cache.json` data. Oversized blobs,
 unsupported versions and recognized-but-invalid table layouts produce a scan
@@ -215,13 +269,19 @@ them. Antigravity project attribution is not currently available. Its metadata
 has no endpoint or credential-mode field, so the subscription billing label is
 a normal-route default rather than invoice attribution.
 
+Setting `TT_ANTIGRAVITY_DIR` selects saved stream-json captures instead of the
+native databases. Cumulative snapshots count once per conversation; malformed,
+conflicting or unfinished captures produce warnings. The two sources are never
+combined automatically.
+
 ## Hook availability
 
 Cursor's documented [hooks](https://cursor.com/docs/hooks#afteragentresponse)
 and [CLI output](https://cursor.com/docs/cli/reference/output-format) do not
-provide per-call token counters, so Cursor is not a supported usage source yet.
-Its SDK and remote Admin API cover separate workflows, not ordinary local
-editor sessions.
+provide no per-call token counters. The Cursor reader instead discovers local
+IDE databases and uses measured counters where available; missing history stays
+explicitly unavailable. SDK stores and optional CSV exports cover separate
+workflows. See [Cursor usage](#cursor-usage) for their limits.
 
 [Antigravity hooks](https://antigravity.google/docs/hooks#postinvocation) provide
 invocation identifiers without token counters; the local database reader is

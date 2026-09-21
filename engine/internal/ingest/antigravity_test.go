@@ -467,6 +467,56 @@ func TestAntigravitySkipsOversizedMetadataWithoutDroppingValidRows(t *testing.T)
 	}
 }
 
+func TestAntigravityAcceptsLargeGenerationMetadataWithoutRetainingPayloadFields(t *testing.T) {
+	root := t.TempDir()
+	record := antigravityTestRecord{
+		model: "Gemini 3.6 Flash", responseID: "large-generation",
+		seconds: 1_800_000_081, input: 123, output: 7,
+	}
+	chatModel := antigravityProtoTestMessage(
+		// Official metadata embeds prompts and messages in the same chat-model
+		// message as usage. This unrelated field makes the row legitimately large.
+		antigravityProtoTestBytes(1, make([]byte, (4<<20)+1)),
+		antigravityProtoTestBytes(4, antigravityTestUsage(record)),
+		antigravityProtoTestBytes(9, antigravityProtoTestBytes(4, antigravityTestTimestamp(record))),
+		antigravityProtoTestBytes(19, []byte(record.model)),
+	)
+	writeAntigravityDB(t, root, "large-generation", antigravityProtoTestBytes(1, chatModel))
+
+	result, err := Run(context.Background(), []Scanner{&Antigravity{roots: []string{root}}})
+	if err != nil || len(result.Errors) != 0 || len(result.Turns) != 1 {
+		t.Fatalf("result = %#v, err = %v", result, err)
+	}
+	if got := result.Turns[0]; got.Usage.Input != 123 || got.Usage.Output != 7 || got.Model != "gemini-3.6-flash" {
+		t.Fatalf("turn = %#v", got)
+	}
+}
+
+func TestAntigravityAcceptsLargeStepMetadataForExactTimestamp(t *testing.T) {
+	root := t.TempDir()
+	generation := antigravityTestRecord{
+		model: "Gemini 3.6 Flash", responseID: "large-step",
+		executionID: "large-step-execution", input: 10, output: 2,
+	}
+	writeAntigravityDB(t, root, "large-step", antigravityTestBlob(generation))
+	step := generation
+	step.seconds = 1_800_000_082
+	stepBlob := antigravityProtoTestMessage(
+		antigravityProtoTestBytes(2, make([]byte, (4<<20)+1)),
+		antigravityProtoTestBytes(8, antigravityTestTimestamp(step)),
+		antigravityProtoTestBytes(12, []byte(step.executionID)),
+	)
+	writeAntigravitySteps(t, root, "large-step", stepBlob)
+
+	result, err := Run(context.Background(), []Scanner{&Antigravity{roots: []string{root}}})
+	if err != nil || len(result.Errors) != 0 || len(result.Turns) != 1 {
+		t.Fatalf("result = %#v, err = %v", result, err)
+	}
+	if got := result.Turns[0]; !got.Timestamp.Equal(time.Unix(int64(step.seconds), 0)) || got.Usage.Total() != 12 {
+		t.Fatalf("turn = %#v", got)
+	}
+}
+
 func TestAntigravityRejectsUnknownDatabaseVersion(t *testing.T) {
 	root := t.TempDir()
 	writeAntigravityDB(t, root, "unknown-version", antigravityTestBlob(antigravityTestRecord{
@@ -487,6 +537,7 @@ func TestAntigravityDiscoversAllConversationRoots(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("USERPROFILE", home)
+	t.Setenv("TT_ANTIGRAVITY_DIR", "")
 	roots := []string{
 		filepath.Join(home, ".gemini", "antigravity", "conversations"),
 		filepath.Join(home, ".gemini", "antigravity-cli", "conversations"),

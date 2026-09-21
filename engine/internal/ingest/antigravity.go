@@ -9,6 +9,7 @@ import (
 	"io/fs"
 	"math"
 	"net/url"
+	"os"
 	"path/filepath"
 	"sort"
 	"strconv"
@@ -21,22 +22,30 @@ import (
 	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 )
 
-// Antigravity reads per-invocation counters from the local conversation
-// databases shared by its CLI and IDE variants. The protobuf layout is private,
-// so this reader accepts only the observed database version and table shape.
+// Antigravity reads per-invocation counters from local conversation databases.
+// An explicit streamRoot switches it to saved public headless results instead;
+// the two ledgers can describe the same calls and must not be added together.
 type Antigravity struct {
-	roots []string
+	roots      []string
+	streamRoot string
 }
 
 const (
-	antigravityDatabaseVersion  = 1
-	antigravityMaxMetadataBytes = 4 << 20
+	antigravityDatabaseVersion = 1
+	// Generator metadata embeds prompts, messages and tool definitions alongside
+	// its small accounting fields. Current native records can legitimately exceed
+	// 4 MiB, so bound the complete protobuf at a size that covers those records
+	// while retaining only the field paths used for accounting below.
+	antigravityMaxMetadataBytes = 64 << 20
 	antigravityMaxProtoFields   = 8_192
 	antigravityMaxModelBytes    = 256
 	antigravityMaxIDBytes       = 1_024
 )
 
 func NewAntigravity() *Antigravity {
+	if configured := os.Getenv("TT_ANTIGRAVITY_DIR"); configured != "" {
+		return &Antigravity{streamRoot: existingDir(configured)}
+	}
 	home := homeDir()
 	if home == "" {
 		return &Antigravity{}
@@ -62,10 +71,16 @@ func NewAntigravity() *Antigravity {
 func (a *Antigravity) Agent() model.Agent { return model.AgentAntigravity }
 
 func (a *Antigravity) Roots() []string {
+	if a.streamRoot != "" {
+		return []string{a.streamRoot}
+	}
 	return append([]string(nil), a.roots...)
 }
 
 func (a *Antigravity) Scan(ctx context.Context, emit func(model.Turn)) error {
+	if a.streamRoot != "" {
+		return scanAntigravityStreams(ctx, a.streamRoot, emit)
+	}
 	var candidates []antigravityCandidate
 	var scanErr error
 	paths, err := antigravityDBPaths(ctx, a.roots)
@@ -396,7 +411,7 @@ type antigravityCandidate struct {
 }
 
 func parseAntigravityGeneration(data []byte) (antigravityModel, uint64, time.Time, string, []antigravityUsage, bool) {
-	outer, ok := parseAntigravityProto(data)
+	outer, ok := parseAntigravityProtoOnly(data, 1, 4)
 	if !ok {
 		return antigravityModel{}, 0, time.Time{}, "", nil, false
 	}
@@ -404,7 +419,7 @@ func parseAntigravityGeneration(data []byte) (antigravityModel, uint64, time.Tim
 	if !ok {
 		return antigravityModel{}, 0, time.Time{}, "", nil, false
 	}
-	chatModel, ok := parseAntigravityProto(chatModelData)
+	chatModel, ok := parseAntigravityProtoOnly(chatModelData, 3, 4, 9, 19)
 	if !ok {
 		return antigravityModel{}, 0, time.Time{}, "", nil, false
 	}
@@ -426,7 +441,7 @@ func parseAntigravityGeneration(data []byte) (antigravityModel, uint64, time.Tim
 }
 
 func parseAntigravityStepTimestamp(data []byte) (antigravityStepTimeMetadata, bool) {
-	fields, ok := parseAntigravityProto(data)
+	fields, ok := parseAntigravityProtoOnly(data, 1, 8, 9, 12)
 	if !ok {
 		return antigravityStepTimeMetadata{}, false
 	}
@@ -437,7 +452,7 @@ func parseAntigravityStepTimestamp(data []byte) (antigravityStepTimeMetadata, bo
 
 	var responseID string
 	if chatModelData, found := antigravityProtoBytes(fields, 9); found {
-		if chatModel, valid := parseAntigravityProto(chatModelData); valid {
+		if chatModel, valid := parseAntigravityProtoOnly(chatModelData, 11); valid {
 			responseID = antigravityProtoText(chatModel, 11, antigravityMaxIDBytes)
 		}
 	}
@@ -451,7 +466,7 @@ func parseAntigravityStepTimestamp(data []byte) (antigravityStepTimeMetadata, bo
 }
 
 func parseAntigravityUsage(data []byte) (antigravityUsage, bool) {
-	fields, ok := parseAntigravityProto(data)
+	fields, ok := parseAntigravityProtoOnly(data, 1, 2, 3, 4, 5, 11)
 	if !ok {
 		return antigravityUsage{}, false
 	}
@@ -499,7 +514,7 @@ func antigravityGenerationTimestamp(fields []antigravityProtoField) (time.Time, 
 	if !ok {
 		return time.Time{}, false
 	}
-	wrapper, ok := parseAntigravityProto(wrapperData)
+	wrapper, ok := parseAntigravityProtoOnly(wrapperData, 4)
 	if !ok {
 		return time.Time{}, false
 	}
@@ -522,7 +537,7 @@ func antigravityStepTimestamp(fields []antigravityProtoField) (time.Time, bool) 
 }
 
 func antigravityTimestamp(data []byte) (time.Time, bool) {
-	fields, ok := parseAntigravityProto(data)
+	fields, ok := parseAntigravityProtoOnly(data, 1, 2)
 	if !ok {
 		return time.Time{}, false
 	}
@@ -763,12 +778,18 @@ type antigravityProtoField struct {
 	bytes  []byte
 }
 
-func parseAntigravityProto(data []byte) ([]antigravityProtoField, bool) {
+// parseAntigravityProtoOnly validates the complete message but retains only
+// explicitly requested fields. Large prompts, messages, tools and outputs can
+// therefore make a native metadata record large without multiplying parser
+// memory or becoming accidental accounting inputs.
+func parseAntigravityProtoOnly(data []byte, keep ...int) ([]antigravityProtoField, bool) {
 	fields := make([]antigravityProtoField, 0, 8)
+	fieldCount := 0
 	for pos := 0; pos < len(data); {
-		if len(fields) == antigravityMaxProtoFields {
+		if fieldCount == antigravityMaxProtoFields {
 			return nil, false
 		}
+		fieldCount++
 		key, ok := readAntigravityVarint(data, &pos)
 		if !ok || key>>3 == 0 || key>>3 > math.MaxInt32 {
 			return nil, false
@@ -801,7 +822,12 @@ func parseAntigravityProto(data []byte) ([]antigravityProtoField, bool) {
 		default:
 			return nil, false
 		}
-		fields = append(fields, field)
+		for _, number := range keep {
+			if field.number == number {
+				fields = append(fields, field)
+				break
+			}
+		}
 	}
 	return fields, true
 }

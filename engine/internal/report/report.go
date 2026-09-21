@@ -11,6 +11,7 @@
 package report
 
 import (
+	"math"
 	"sort"
 	"strings"
 	"time"
@@ -90,8 +91,10 @@ type Totals struct {
 	// UnpricedTurns counts calls we hold no rate for. Their cost is excluded
 	// from Cost entirely rather than being invented — the old $2/$10 fallback
 	// billed 965 sessions of a free model at $380.
-	UnpricedTurns  int      `json:"unpriced_turns"`
-	UnpricedModels []string `json:"unpriced_models,omitempty"`
+	UnpricedTurns   int                `json:"unpriced_turns"`
+	UnpricedModels  []string           `json:"unpriced_models,omitempty"`
+	UnpricedReasons []string           `json:"unpriced_reasons,omitempty"`
+	CreditsByAgent  map[string]float64 `json:"credits_by_agent,omitempty"`
 
 	// StaleRatedTurns counts calls priced with a rate that took effect after
 	// the call happened.
@@ -137,6 +140,8 @@ type Report struct {
 	ByModel   []Bucket `json:"by_model,omitempty"`
 	ByProject []Bucket `json:"by_project,omitempty"`
 	Sessions  []Bucket `json:"sessions,omitempty"`
+	// ExcludedOverlaps preserves source aggregates withheld from every total.
+	ExcludedOverlaps []ExcludedOverlap `json:"excluded_overlaps,omitempty"`
 
 	// WindowFrom/WindowTo bound the matched turns as local day keys, used to
 	// prorate flat-rate subscriptions over exactly the period on screen.
@@ -151,6 +156,19 @@ type Report struct {
 	Duplicates   int          `json:"duplicates_dropped"`
 	MatchedTurns int          `json:"matched_turns"`
 	ScannedTurns int          `json:"scanned_turns"`
+}
+
+// ExcludedOverlap exposes accounting evidence only, without transport endpoints
+// or configuration that might contain credentials.
+type ExcludedOverlap struct {
+	Agent            model.Agent `json:"agent"`
+	SessionID        string      `json:"session_id"`
+	Model            string      `json:"model"`
+	Timestamp        time.Time   `json:"timestamp"`
+	Usage            model.Usage `json:"usage"`
+	RuntimeAgent     model.Agent `json:"runtime_agent"`
+	RuntimeSessionID string      `json:"runtime_session_id"`
+	ExcludedReason   string      `json:"excluded_reason"`
 }
 
 type acc struct {
@@ -283,9 +301,31 @@ func BuildWithProjectLineage(turns []model.Turn, tbl *pricing.Table, f Filter, g
 	byProject := map[string]*acc{}
 	bySession := map[string]*acc{}
 	unpricedModels := map[string]struct{}{}
+	unpricedReasons := map[string]struct{}{}
 	totals := newAcc(nil, false)
 	billing := map[string]float64{}
 	projects := newProjectCatalog(turns, lineage)
+	type runtimeSource struct {
+		agent   model.Agent
+		session string
+	}
+	matchedNative := make(map[runtimeSource]bool)
+	linkedAgents := make(map[model.Agent]bool)
+	for _, t := range turns {
+		if t.RuntimeAgent != "" && t.RuntimeSessionID != "" {
+			linkedAgents[t.RuntimeAgent] = true
+		}
+	}
+	for _, t := range turns {
+		if !linkedAgents[t.Agent] || t.SessionID == "" || t.RuntimeSessionID != "" || t.Usage.IsZero() || t.ExcludedReason != "" {
+			continue
+		}
+		c := cost.Of(t, tbl)
+		if !f.match(t, c.Model, projects.ref(t)) {
+			continue
+		}
+		matchedNative[runtimeSource{t.Agent, t.SessionID}] = true
+	}
 
 	for _, t := range turns {
 		c := cost.Of(t, tbl)
@@ -293,11 +333,38 @@ func BuildWithProjectLineage(turns []model.Turn, tbl *pricing.Table, f Filter, g
 		if !f.match(t, c.Model, project) {
 			continue
 		}
+		if t.RuntimeAgent != "" && t.RuntimeSessionID != "" {
+			reason := runtimeOverlapReason(t)
+			// Ingestion records an exclusion against the complete scan. Re-evaluate
+			// that marker against this report's filtered native records so selecting
+			// the wrapper alone still counts its source ledger. Other exclusion
+			// reasons remain untouched.
+			if t.ExcludedReason == "" || t.ExcludedReason == reason {
+				if matchedNative[runtimeSource{t.RuntimeAgent, t.RuntimeSessionID}] {
+					t.ExcludedReason = reason
+				} else {
+					t.ExcludedReason = ""
+				}
+			}
+		}
+		if t.ExcludedReason != "" {
+			rep.ExcludedOverlaps = append(rep.ExcludedOverlaps, ExcludedOverlap{
+				Agent: t.Agent, SessionID: t.SessionID, Model: t.Model, Timestamp: t.Timestamp,
+				Usage: t.Usage, RuntimeAgent: t.RuntimeAgent, RuntimeSessionID: t.RuntimeSessionID, ExcludedReason: t.ExcludedReason,
+			})
+			continue
+		}
 		rawProject := t.Project
 		// Keep the original CWD for JSON audit trails while every aggregation
 		// path uses the same canonical project-family key.
 		t.Project = project.key
 		rep.MatchedTurns++
+		if t.Credits != nil && *t.Credits >= 0 && !math.IsInf(*t.Credits, 0) && !math.IsNaN(*t.Credits) {
+			if rep.Totals.CreditsByAgent == nil {
+				rep.Totals.CreditsByAgent = map[string]float64{}
+			}
+			rep.Totals.CreditsByAgent[string(t.Agent)] += *t.Credits
+		}
 		if t.Aggregate {
 			rep.Totals.AggregateRecords++
 			rep.Totals.AggregateTokens += t.Usage.Total()
@@ -321,6 +388,9 @@ func BuildWithProjectLineage(turns []model.Turn, tbl *pricing.Table, f Filter, g
 				name = "(unknown)"
 			}
 			unpricedModels[name] = struct{}{}
+			if t.UnpricedReason != "" {
+				unpricedReasons[t.UnpricedReason] = struct{}{}
+			}
 		} else {
 			billing[c.Billing.String()] += c.USD
 			if c.RateNewerThanCall {
@@ -348,6 +418,10 @@ func BuildWithProjectLineage(turns []model.Turn, tbl *pricing.Table, f Filter, g
 		rep.Totals.UnpricedModels = append(rep.Totals.UnpricedModels, m)
 	}
 	sort.Strings(rep.Totals.UnpricedModels)
+	for reason := range unpricedReasons {
+		rep.Totals.UnpricedReasons = append(rep.Totals.UnpricedReasons, reason)
+	}
+	sort.Strings(rep.Totals.UnpricedReasons)
 
 	rep.Series = sortedByKey(series)
 	rep.ByAgent = sortedByCost(byAgent)
@@ -361,6 +435,10 @@ func BuildWithProjectLineage(turns []model.Turn, tbl *pricing.Table, f Filter, g
 	projects.decorate(rep.Sessions, false, groupBy)
 	sortProjectBuckets(rep.ByProject)
 	return rep
+}
+
+func runtimeOverlapReason(t model.Turn) string {
+	return string(t.Agent) + " record overlaps its explicitly linked " + string(t.RuntimeAgent) + " session; native history counted, mirrored or mixed usage excluded without guessing a residual"
 }
 
 func addTo(m map[string]*acc, key string, t model.Turn, c cost.Cost, dims []Dimension, rawProject string, projectBucket bool) {

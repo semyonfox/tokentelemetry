@@ -88,7 +88,9 @@ func itoa(n int64) string {
 	return string(b)
 }
 
-func newClaudeAt(root string) *Claude { return &Claude{root: root} }
+func newClaudeAt(root string) *Claude {
+	return &Claude{roots: []string{filepath.Join(root, "projects")}}
+}
 
 // Resuming or forking a Claude session copies earlier assistant messages into
 // the new transcript verbatim. Half of all assistant messages on the audited

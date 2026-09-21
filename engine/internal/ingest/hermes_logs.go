@@ -165,6 +165,9 @@ func reconcileHermesLogs(ctx context.Context, dbPath string, aggregates []hermes
 			call.Timestamp = c.timestamp
 			call.Usage = c.usage
 			call.Aggregate = false
+			// These normal-loop API logs are direct calls, not the app-server's
+			// aggregate mirror. A session's current binding does not change them.
+			call.RuntimeAgent, call.RuntimeSessionID = "", ""
 			turns = append(turns, call)
 		}
 		// Reasoning is a subset of output, not an extra charge. Logs do not expose
@@ -172,6 +175,7 @@ func reconcileHermesLogs(ctx context.Context, dbPath string, aggregates []hermes
 		if t.Usage.Reasoning > 0 {
 			t.Key += "|reasoning"
 			t.Usage = model.Usage{Reasoning: t.Usage.Reasoning}
+			t.RuntimeAgent, t.RuntimeSessionID = "", ""
 			turns = append(turns, t)
 		}
 	}

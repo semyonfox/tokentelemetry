@@ -1,6 +1,6 @@
 // Package ingest discovers agent logs on disk and turns them into turns.
 //
-// Every scanner emits Turn values and never aggregates. Deduplication happens
+// Every scanner emits Turn values, marking source aggregates explicitly. Deduplication happens
 // once, centrally, in Run — which is the whole point: agents replay history
 // into new transcripts when a session is resumed, forked or compacted, and the
 // only safe place to notice that a call has already been counted is a single
@@ -20,6 +20,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"sort"
+	"strings"
 	"sync"
 
 	"github.com/semyonfox/tokentelemetry/engine/internal/model"
@@ -54,25 +55,76 @@ func All() []Scanner {
 	return []Scanner{
 		NewClaude(),
 		NewCodex(),
-		NewCopilot(),
-		NewGrok(),
-		NewAntigravity(),
 		NewHermes(),
 		NewOpenCode(),
 		NewGemini(),
 		NewPi(),
+		NewCline(),
+		NewClineCLI(),
+		NewCopilot(),
+		NewKilo(),
+		NewRooCode(),
+		NewMux(),
+		NewZerostack(),
+		NewQuickdesk(),
+		NewAntigravity(),
+		NewVercelGateway(),
+		NewCursorAgent(),
+		NewQwen(),
+		NewKimi(),
+		NewKimiCode(),
+		NewVibe(),
+		NewZCode(),
+		NewForge(),
+		NewGoose(),
+		NewZed(),
+		NewOpenClaude(),
+		NewOpenClaw(),
+		NewOMP(),
+		NewDroid(),
+		NewIBMBob(),
+		NewKiro(),
+		NewCursor(),
+		NewGrok(),
+		NewCodeWhale(),
+		NewCodebuff(),
+		NewDevin(),
+		NewOpenDesign(),
+		NewLingTai(),
+		NewWarp(),
+		NewDSH(),
 	}
 }
 
 // Available returns only the scanners whose logs exist on this machine.
-func Available() []Scanner {
+func Available(agents ...string) []Scanner {
 	var out []Scanner
 	for _, s := range All() {
+		if !Selected(s, agents) {
+			continue
+		}
 		if len(s.Roots()) > 0 {
 			out = append(out, s)
 		}
 	}
 	return out
+}
+
+// Selected prevents an agent filter from reading every other provider's store.
+// Overlapping gateway snapshots require explicit selection even when configured.
+func Selected(s Scanner, agents []string) bool {
+	if len(agents) == 0 {
+		if e, ok := s.(interface{ ExplicitOnly() bool }); ok && e.ExplicitOnly() {
+			return false
+		}
+		return true
+	}
+	for _, agent := range agents {
+		if strings.EqualFold(string(s.Agent()), agent) {
+			return true
+		}
+	}
+	return false
 }
 
 // Run executes scanners concurrently and returns the deduplicated turns,
@@ -82,8 +134,9 @@ func Available() []Scanner {
 // of small files; on the audited machine that is 317 Claude transcripts and
 // 2,113 Codex rollouts.
 func Run(ctx context.Context, scanners []Scanner) (*Result, error) {
+	scanners, sourceWarnings := distinctPiSources(scanners)
 	if len(scanners) == 0 {
-		return &Result{}, nil
+		return &Result{Errors: sourceWarnings}, nil
 	}
 
 	type batch struct {
@@ -127,7 +180,7 @@ func Run(ctx context.Context, scanners []Scanner) (*Result, error) {
 		return nil, err
 	}
 
-	res := &Result{}
+	res := &Result{Errors: sourceWarnings}
 	seen := make(map[string]int, 1<<16)
 	for _, b := range out {
 		if b.err != nil && !errors.Is(b.err, os.ErrNotExist) {
@@ -143,6 +196,10 @@ func Run(ctx context.Context, scanners []Scanner) (*Result, error) {
 					// copied transcript must not steal ownership of the original call.
 					if moreCompleteUsage(t.Usage, res.Turns[kept].Usage) {
 						res.Turns[kept].Usage = t.Usage
+						res.Turns[kept].UnpricedReason = t.UnpricedReason
+					}
+					if t.Credits != nil && (res.Turns[kept].Credits == nil || *t.Credits > *res.Turns[kept].Credits) {
+						res.Turns[kept].Credits = t.Credits
 					}
 					continue
 				}
@@ -151,10 +208,77 @@ func Run(ctx context.Context, scanners []Scanner) (*Result, error) {
 			res.Turns = append(res.Turns, t)
 		}
 	}
+	markRuntimeOverlaps(res.Turns)
 	sort.Slice(res.Turns, func(i, j int) bool {
 		return res.Turns[i].Timestamp.Before(res.Turns[j].Timestamp)
 	})
 	return res, nil
+}
+
+// Runtime mirrors cannot be added to their executor's own ledger. A stored
+// session link proves the overlap, but does not provide the per-call split
+// needed to subtract a mixed aggregate. Retain it separately for inspection.
+func markRuntimeOverlaps(turns []model.Turn) {
+	type source struct {
+		agent   model.Agent
+		session string
+	}
+	native := map[source]bool{}
+	for _, turn := range turns {
+		if turn.SessionID != "" && turn.RuntimeSessionID == "" && !turn.Usage.IsZero() {
+			native[source{turn.Agent, turn.SessionID}] = true
+		}
+	}
+	for i := range turns {
+		t := &turns[i]
+		if t.RuntimeAgent != "" && t.RuntimeSessionID != "" && native[source{t.RuntimeAgent, t.RuntimeSessionID}] {
+			t.ExcludedReason = fmt.Sprintf("%s record overlaps its explicitly linked %s session; native history counted, mirrored or mixed usage excluded without guessing a residual", t.Agent, t.RuntimeAgent)
+		}
+	}
+}
+
+// OMP is a Pi fork and honors Pi's directory override. If both scanners point
+// at the very same ledger, its superset parser reads it once. Distinct roots
+// remain independent; shared model names play no part in this decision.
+func distinctPiSources(scanners []Scanner) ([]Scanner, []error) {
+	var ompRoots []os.FileInfo
+	for _, s := range scanners {
+		if s.Agent() != model.Agent("omp") {
+			continue
+		}
+		for _, root := range s.Roots() {
+			if info, err := os.Stat(root); err == nil {
+				ompRoots = append(ompRoots, info)
+			}
+		}
+	}
+	if len(ompRoots) == 0 {
+		return scanners, nil
+	}
+	var out []Scanner
+	var warnings []error
+	for _, s := range scanners {
+		shared := false
+		if s.Agent() == model.AgentPi {
+			roots := s.Roots()
+			if len(roots) == 1 {
+				if info, err := os.Stat(roots[0]); err == nil {
+					for _, other := range ompRoots {
+						if os.SameFile(info, other) {
+							shared = true
+							break
+						}
+					}
+				}
+			}
+		}
+		if shared {
+			warnings = append(warnings, errors.New("pi and omp resolve to the same session ledger; scanned once with the OMP reader"))
+		} else {
+			out = append(out, s)
+		}
+	}
+	return out, warnings
 }
 
 // moreCompleteUsage orders cumulative snapshots without adding their fields.

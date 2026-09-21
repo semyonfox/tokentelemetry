@@ -93,7 +93,8 @@ SELECT
   COALESCE(s.parent_session_id, '')                     AS parent_id,
   %s AS billing_mode,
   %s AS task,
-  %s AS api_call_count
+  %s AS api_call_count,
+  %s AS codex_thread_id
 FROM session_model_usage u
 LEFT JOIN sessions s ON s.id = u.session_id
 `
@@ -112,7 +113,7 @@ func (h *Hermes) scanDB(ctx context.Context, path string) ([]model.Turn, error) 
 	}
 	defer db.Close()
 
-	cols, err := hermesColumns(ctx, db)
+	cols, err := hermesTableColumns(ctx, db, "session_model_usage")
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +123,16 @@ func (h *Hermes) scanDB(ctx context.Context, path string) ([]model.Turn, error) 
 		}
 		return fallback
 	}
-	query := fmt.Sprintf(hermesQuery, optional("billing_mode", "''"), optional("task", "''"), optional("api_call_count", "0"))
+	sessionCols, err := hermesTableColumns(ctx, db, "sessions")
+	if err != nil {
+		return nil, err
+	}
+	threadExpr := "''"
+	if sessionCols["model_config"] {
+		// Extract only the public runtime identity, never the configuration blob.
+		threadExpr = `CASE WHEN json_valid(s.model_config) THEN CASE WHEN json_type(s.model_config, '$.codex_thread_id') = 'text' THEN json_extract(s.model_config, '$.codex_thread_id') ELSE '' END ELSE '' END`
+	}
+	query := fmt.Sprintf(hermesQuery, optional("billing_mode", "''"), optional("task", "''"), optional("api_call_count", "0"), threadExpr)
 	rows, err := db.QueryContext(ctx, query)
 	if err != nil {
 		return nil, err
@@ -133,12 +143,12 @@ func (h *Hermes) scanDB(ctx context.Context, path string) ([]model.Turn, error) 
 	var aggregates []hermesAggregate
 	for rows.Next() {
 		var (
-			sessionID, modelID, provider, endpoint, cwd, parentID, billingMode, task string
-			in, out, cr, cw, reasoning, calls                                        int64
-			seenAt                                                                   float64
+			sessionID, modelID, provider, endpoint, cwd, parentID, billingMode, task, codexThread string
+			in, out, cr, cw, reasoning, calls                                                     int64
+			seenAt                                                                                float64
 		)
 		if err := rows.Scan(&sessionID, &modelID, &provider, &endpoint,
-			&in, &out, &cr, &cw, &reasoning, &seenAt, &cwd, &parentID, &billingMode, &task, &calls); err != nil {
+			&in, &out, &cr, &cw, &reasoning, &seenAt, &cwd, &parentID, &billingMode, &task, &calls, &codexThread); err != nil {
 			return nil, err
 		}
 		usage := model.Usage{
@@ -148,18 +158,28 @@ func (h *Hermes) scanDB(ctx context.Context, path string) ([]model.Turn, error) 
 		if !ok || usage.IsZero() {
 			continue
 		}
+		var runtimeAgent model.Agent
+		// Auxiliary task rows and other providers are independent calls. A main
+		// OpenAI aggregate may mix the app-server mirror with direct calls.
+		if codexThread != "" && task == "" && (provider == "openai" || provider == "openai-codex") {
+			runtimeAgent = model.AgentCodex
+		} else {
+			codexThread = ""
+		}
 		aggregates = append(aggregates, hermesAggregate{session: sessionID, task: task, calls: calls, turn: model.Turn{
-			Key:       identityKey("hermes-aggregate", path, sessionID, modelID, provider, endpoint, billingMode, task),
-			SessionID: fmt.Sprintf("%s@%x", sessionID, scope),
-			Agent:     model.AgentHermes,
-			Timestamp: unixFloat(seenAt),
-			Model:     modelID,
-			Provider:  provider,
-			Endpoint:  endpoint,
-			Project:   cwd,
-			Usage:     usage,
-			Subagent:  parentID != "",
-			Aggregate: true,
+			Key:              identityKey("hermes-aggregate", path, sessionID, modelID, provider, endpoint, billingMode, task),
+			SessionID:        fmt.Sprintf("%s@%x", sessionID, scope),
+			Agent:            model.AgentHermes,
+			Timestamp:        unixFloat(seenAt),
+			Model:            modelID,
+			Provider:         provider,
+			Endpoint:         endpoint,
+			Project:          cwd,
+			Usage:            usage,
+			Subagent:         parentID != "",
+			Aggregate:        true,
+			RuntimeAgent:     runtimeAgent,
+			RuntimeSessionID: codexThread,
 		}})
 	}
 	if err := rows.Err(); err != nil {
@@ -183,8 +203,9 @@ func fileExists(p string) bool {
 }
 
 // Optional columns support older five-part keys and pre-call-count schemas.
-func hermesColumns(ctx context.Context, db *sql.DB) (map[string]bool, error) {
-	rows, err := db.QueryContext(ctx, "PRAGMA table_info(session_model_usage)")
+func hermesTableColumns(ctx context.Context, db *sql.DB, table string) (map[string]bool, error) {
+	// table is one of the two compile-time names above, never user input.
+	rows, err := db.QueryContext(ctx, "PRAGMA table_info("+table+")")
 	if err != nil {
 		return nil, err
 	}

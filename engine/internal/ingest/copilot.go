@@ -8,7 +8,6 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	"math"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -92,6 +91,19 @@ func copilotVSCodeUserRoots() []string {
 	return roots
 }
 
+type copilotLedger struct {
+	turns        []model.Turn
+	exact        map[string]bool
+	invalid      map[string]copilotInvalidPair
+	invalidOrder []string
+}
+
+type copilotInvalidPair struct {
+	session string
+	model   string
+	reason  string
+}
+
 func (c *Copilot) Scan(ctx context.Context, emit func(model.Turn)) error {
 	var scanErr error
 	nativeSessions := make(map[string]bool)
@@ -102,7 +114,7 @@ func (c *Copilot) Scan(ctx context.Context, emit func(model.Turn)) error {
 	if c.root != "" {
 		ledger, ledgerErr := scanCopilotSessionStore(ctx, filepath.Join(c.root, "session-store.db"))
 		shutdown, shutdownErr := scanCopilotShutdownLogs(ctx, filepath.Join(c.root, "session-state"))
-		turns, disagreements := reconcileCopilotUsage(ledger, shutdown)
+		turns, reconcileErr := reconcileCopilotUsage(ledger, shutdown)
 		for _, turn := range turns {
 			emitNative(turn)
 		}
@@ -112,8 +124,8 @@ func (c *Copilot) Scan(ctx context.Context, emit func(model.Turn)) error {
 		if shutdownErr != nil {
 			scanErr = errors.Join(scanErr, shutdownErr)
 		}
-		if disagreements > 0 {
-			scanErr = errors.Join(scanErr, fmt.Errorf("Copilot: %d session/model aggregate(s) disagreed with the per-request ledger and replaced it; no usage was inferred", disagreements))
+		if reconcileErr != nil {
+			scanErr = errors.Join(scanErr, reconcileErr)
 		}
 	}
 	if len(c.vscodeRoots) > 0 {
@@ -142,26 +154,27 @@ func (c *Copilot) Scan(ctx context.Context, emit func(model.Turn)) error {
 // scanCopilotSessionStore reads only the native usage table. A missing or
 // pre-ledger database is not an error: its session journal can still supply a
 // completed aggregate for anything the per-request table did not cover.
-func scanCopilotSessionStore(ctx context.Context, dbPath string) ([]model.Turn, error) {
+func scanCopilotSessionStore(ctx context.Context, dbPath string) (copilotLedger, error) {
+	empty := copilotLedger{exact: make(map[string]bool), invalid: make(map[string]copilotInvalidPair)}
 	if !fileExists(dbPath) {
-		return nil, nil
+		return empty, nil
 	}
 	db, err := sql.Open("sqlite", copilotSQLiteDSN(dbPath))
 	if err != nil {
-		return nil, fmt.Errorf("open Copilot session store: %w", err)
+		return empty, fmt.Errorf("open Copilot session store: %w", err)
 	}
 	defer db.Close()
 
 	columns, exists, err := copilotUsageColumns(ctx, db)
 	if err != nil || !exists {
-		return nil, err
+		return empty, err
 	}
 	for _, column := range []string{
 		"id", "session_id", "model", "input_tokens", "output_tokens",
 		"cache_read_tokens", "cache_write_tokens", "created_at",
 	} {
 		if !columns[column] {
-			return nil, fmt.Errorf("unrecognised Copilot assistant_usage_events layout: missing %s", column)
+			return empty, fmt.Errorf("unrecognised Copilot assistant_usage_events layout: missing %s", column)
 		}
 	}
 
@@ -190,16 +203,19 @@ func scanCopilotSessionStore(ctx context.Context, dbPath string) ([]model.Turn, 
 		ORDER BY id`
 	rows, err := db.QueryContext(ctx, query)
 	if err != nil {
-		return nil, fmt.Errorf("query Copilot usage events: %w", err)
+		return empty, fmt.Errorf("query Copilot usage events: %w", err)
 	}
 	defer rows.Close()
 
 	sourceID := copilotSourceID(dbPath)
-	var turns []model.Turn
+	groups := make(map[string][]model.Turn)
+	groupOrder := make([]string, 0)
+	invalid := make(map[string]copilotInvalidPair)
+	invalidOrder := make([]string, 0)
 	compactionWarning := 0
 	for rows.Next() {
 		if err := ctx.Err(); err != nil {
-			return nil, err
+			return empty, err
 		}
 		var row copilotUsageRow
 		if err := rows.Scan(
@@ -207,23 +223,40 @@ func scanCopilotSessionStore(ctx context.Context, dbPath string) ([]model.Turn, 
 			&row.input, &row.output, &row.cacheRead, &row.cacheWrite,
 			&row.reasoning, &row.createdAt, &row.initiator,
 		); err != nil {
-			return nil, fmt.Errorf("read Copilot usage event: %w", err)
+			return empty, fmt.Errorf("read Copilot usage event: %w", err)
 		}
 		if row.id <= 0 || row.sessionID == "" || strings.TrimSpace(row.model) == "" {
 			continue
 		}
+		row.model = strings.TrimSpace(row.model)
+		pair := copilotSessionModelKey(row.sessionID, row.model)
+		if _, exists := groups[pair]; !exists {
+			groupOrder = append(groupOrder, pair)
+			groups[pair] = nil
+		}
 		timestamp := parseCopilotStoreTime(row.createdAt)
 		if timestamp.IsZero() {
+			if _, exists := invalid[pair]; !exists {
+				invalidOrder = append(invalidOrder, pair)
+			}
+			invalid[pair] = copilotInvalidPair{session: row.sessionID, model: row.model, reason: "request timestamp is missing or invalid"}
 			continue
 		}
 		usage, suspectCacheSplit, ok := normalizeCopilotUsage(row.input, row.output, row.cacheRead, row.cacheWrite, row.reasoning, false)
-		if !ok || usage.IsZero() {
+		if !ok {
+			if _, exists := invalid[pair]; !exists {
+				invalidOrder = append(invalidOrder, pair)
+			}
+			invalid[pair] = copilotInvalidPair{session: row.sessionID, model: row.model, reason: "token buckets do not reconcile"}
+			continue
+		}
+		if usage.IsZero() {
 			continue
 		}
 		if strings.EqualFold(strings.TrimSpace(row.initiator), "compaction") && suspectCacheSplit {
 			compactionWarning++
 		}
-		turns = append(turns, model.Turn{
+		groups[pair] = append(groups[pair], model.Turn{
 			Key:       copilotUsageKey(sourceID, row),
 			SessionID: row.sessionID,
 			Agent:     model.AgentCopilot,
@@ -234,12 +267,20 @@ func scanCopilotSessionStore(ctx context.Context, dbPath string) ([]model.Turn, 
 		})
 	}
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("iterate Copilot usage events: %w", err)
+		return empty, fmt.Errorf("iterate Copilot usage events: %w", err)
+	}
+	ledger := copilotLedger{exact: make(map[string]bool), invalid: invalid, invalidOrder: invalidOrder}
+	for _, pair := range groupOrder {
+		if _, bad := invalid[pair]; bad {
+			continue
+		}
+		ledger.exact[pair] = true
+		ledger.turns = append(ledger.turns, groups[pair]...)
 	}
 	if compactionWarning > 0 {
-		return turns, fmt.Errorf("Copilot session store: %d compaction row(s) have no cache-write breakdown; their total tokens are retained but the fresh/cache split may be incomplete", compactionWarning)
+		return ledger, fmt.Errorf("Copilot session store: %d compaction row(s) have no cache-write breakdown; their total tokens are retained but the fresh/cache split may be incomplete", compactionWarning)
 	}
-	return turns, nil
+	return ledger, nil
 }
 
 type copilotUsageRow struct {
@@ -386,95 +427,195 @@ func copilotSourceID(dbPath string) string {
 	return fmt.Sprintf("%x", sum[:])
 }
 
-// reconcileCopilotUsage uses the per-request ledger only when it adds up to
-// the native clean-shutdown aggregate for that session and model. A partial or
-// changed ledger cannot safely be added to the aggregate, so the exact
-// aggregate replaces that group and the caller reports the discrepancy.
-func reconcileCopilotUsage(ledger, shutdown []model.Turn) ([]model.Turn, int) {
-	ledgerByModel := make(map[string][]model.Turn)
-	ledgerOrder := make([]string, 0, len(ledger))
-	for _, turn := range ledger {
-		key := copilotSessionModelKey(turn.SessionID, turn.Model)
-		if _, exists := ledgerByModel[key]; !exists {
-			ledgerOrder = append(ledgerOrder, key)
-		}
-		ledgerByModel[key] = append(ledgerByModel[key], turn)
+// reconcileCopilotUsage keeps valid per-request rows authoritative and uses
+// shutdown snapshots only for history those rows provably do not cover. The
+// subtraction is componentwise: a mixed-direction mismatch is disclosed and
+// excluded instead of being turned into a positive-only residual.
+func reconcileCopilotUsage(ledger copilotLedger, shutdown []model.Turn) ([]model.Turn, error) {
+	ledgerByPair := make(map[string][]model.Turn)
+	ledgerBySession := make(map[string][]model.Turn)
+	for _, turn := range ledger.turns {
+		pair := copilotSessionModelKey(turn.SessionID, turn.Model)
+		ledgerByPair[pair] = append(ledgerByPair[pair], turn)
+		ledgerBySession[turn.SessionID] = append(ledgerBySession[turn.SessionID], turn)
 	}
 
-	shutdownByModel := make(map[string]model.Turn)
+	shutdownByPair := make(map[string][]model.Turn)
+	shutdownBySession := make(map[string][]model.Turn)
 	shutdownOrder := make([]string, 0, len(shutdown))
 	for _, turn := range shutdown {
-		key := copilotSessionModelKey(turn.SessionID, turn.Model)
-		previous, exists := shutdownByModel[key]
-		if !exists {
-			shutdownOrder = append(shutdownOrder, key)
-			shutdownByModel[key] = turn
-		} else if moreCompleteUsage(turn.Usage, previous.Usage) {
-			// A journal can retain repeated cumulative shutdown snapshots. They
-			// identify the same session/model, so retain the most complete one.
-			shutdownByModel[key] = turn
+		pair := copilotSessionModelKey(turn.SessionID, turn.Model)
+		if _, exists := shutdownByPair[pair]; !exists {
+			shutdownOrder = append(shutdownOrder, pair)
+		}
+		shutdownByPair[pair] = append(shutdownByPair[pair], turn)
+		shutdownBySession[turn.SessionID] = append(shutdownBySession[turn.SessionID], turn)
+	}
+
+	invalidSessions := make(map[string]bool)
+	for _, invalid := range ledger.invalid {
+		invalidSessions[invalid.session] = true
+	}
+	ambiguousSessions := make(map[string]bool)
+	for pair, rows := range ledgerByPair {
+		if len(shutdownByPair[pair]) > 0 || invalidSessions[rows[0].SessionID] {
+			continue
+		}
+		shutdownRows := shutdownBySession[rows[0].SessionID]
+		if len(shutdownRows) == 0 {
+			continue
+		}
+		exact, ok := copilotUsageThrough(rows, latestCopilotTurnTime(shutdownRows))
+		if !ok {
+			ambiguousSessions[rows[0].SessionID] = true
+			continue
+		}
+		if !exact.IsZero() {
+			ambiguousSessions[rows[0].SessionID] = true
 		}
 	}
 
-	var kept []model.Turn
-	usedShutdown := make(map[string]bool, len(shutdownByModel))
-	disagreements := 0
-	for _, key := range ledgerOrder {
-		rows := ledgerByModel[key]
-		shutdownTurn, hasShutdown := shutdownByModel[key]
-		if !hasShutdown || copilotUsageMatchesAggregate(rows, shutdownTurn.Usage) {
+	kept := append([]model.Turn(nil), ledger.turns...)
+	var reconcileErr error
+	handledAmbiguous := make(map[string]bool)
+	usedInvalidFallback := make(map[string]bool)
+	for _, pair := range shutdownOrder {
+		rows := shutdownByPair[pair]
+		session := rows[0].SessionID
+		if ambiguousSessions[session] {
+			if handledAmbiguous[session] {
+				continue
+			}
+			handledAmbiguous[session] = true
+			exact, ok := copilotUsageThrough(ledgerBySession[session], latestCopilotTurnTime(shutdownBySession[session]))
+			if !ok {
+				reconcileErr = errors.Join(reconcileErr, fmt.Errorf("Copilot session %q exact rows overflow aggregate accounting; exact rows kept", session))
+				continue
+			}
+			residual, err := copilotShutdownResidual(session, "unknown", exact, shutdownBySession[session])
+			if err != nil {
+				reconcileErr = errors.Join(reconcileErr, fmt.Errorf("Copilot session %q store and shutdown model identifiers differ: %w", session, err))
+				continue
+			}
+			reconcileErr = errors.Join(reconcileErr, fmt.Errorf("Copilot session %q store and shutdown model identifiers differ; reconciled the uncovered total without model attribution", session))
+			if residual != nil {
+				residual.Key = identityKey("copilot-shutdown-residual", session, "model-mismatch")
+				residual.Model = "unknown"
+				residual.UnpricedReason = "Copilot store and shutdown model identifiers differ; residual model attribution is unavailable"
+				kept = append(kept, *residual)
+			}
+			continue
+		}
+
+		if invalid, bad := ledger.invalid[pair]; bad {
+			kept = append(kept, rows...)
+			usedInvalidFallback[pair] = true
+			reconcileErr = errors.Join(reconcileErr, fmt.Errorf("Copilot session %q model %q has an invalid request row (%s); used its shutdown aggregate", invalid.session, invalid.model, invalid.reason))
+			continue
+		}
+		if !ledger.exact[pair] {
 			kept = append(kept, rows...)
 			continue
 		}
-		kept = append(kept, shutdownTurn)
-		usedShutdown[key] = true
-		disagreements++
-	}
-	for _, key := range shutdownOrder {
-		if !usedShutdown[key] {
-			if _, hasLedger := ledgerByModel[key]; !hasLedger {
-				kept = append(kept, shutdownByModel[key])
-			}
+
+		exact, ok := copilotUsageThrough(ledgerByPair[pair], latestCopilotTurnTime(rows))
+		if !ok {
+			reconcileErr = errors.Join(reconcileErr, fmt.Errorf("Copilot session %q model %q exact rows overflow aggregate accounting; exact rows kept", session, rows[0].Model))
+			continue
+		}
+		residual, err := copilotShutdownResidual(session, rows[0].Model, exact, rows)
+		if err != nil {
+			reconcileErr = errors.Join(reconcileErr, err)
+			continue
+		}
+		if residual != nil {
+			kept = append(kept, *residual)
 		}
 	}
-	return kept, disagreements
+	for _, pair := range ledger.invalidOrder {
+		if usedInvalidFallback[pair] {
+			continue
+		}
+		invalid := ledger.invalid[pair]
+		reconcileErr = errors.Join(reconcileErr, fmt.Errorf("Copilot session %q model %q has an invalid request row (%s) and no shutdown aggregate; request group excluded", invalid.session, invalid.model, invalid.reason))
+	}
+	return kept, reconcileErr
 }
 
 func copilotSessionModelKey(sessionID, modelID string) string {
 	return identityKey("copilot-session-model", sessionID, strings.ToLower(strings.TrimSpace(modelID)))
 }
 
-func copilotUsageMatchesAggregate(rows []model.Turn, aggregate model.Usage) bool {
-	var total model.Usage
-	for _, row := range rows {
-		if !copilotAddUsage(&total, row.Usage) {
-			return false
+func latestCopilotTurnTime(turns []model.Turn) time.Time {
+	var latest time.Time
+	for _, turn := range turns {
+		if turn.Timestamp.After(latest) {
+			latest = turn.Timestamp
 		}
 	}
-	return total.Input == aggregate.Input &&
-		total.Output == aggregate.Output &&
-		total.CacheRead == aggregate.CacheRead &&
-		total.CacheWrite == aggregate.CacheWrite &&
-		total.Reasoning == aggregate.Reasoning
+	return latest
+}
+
+func copilotUsageThrough(rows []model.Turn, cutoff time.Time) (model.Usage, bool) {
+	var total model.Usage
+	for _, row := range rows {
+		if row.Timestamp.After(cutoff) {
+			continue
+		}
+		if !copilotAddUsage(&total, row.Usage) {
+			return model.Usage{}, false
+		}
+	}
+	return total, true
+}
+
+func copilotShutdownResidual(sessionID, modelID string, exact model.Usage, shutdown []model.Turn) (*model.Turn, error) {
+	var cumulative model.Usage
+	latest := shutdown[0]
+	for _, turn := range shutdown {
+		if !copilotAddUsage(&cumulative, turn.Usage) {
+			return nil, fmt.Errorf("Copilot session %q model %q shutdown totals overflow aggregate accounting; exact rows kept", sessionID, modelID)
+		}
+		if turn.Timestamp.After(latest.Timestamp) {
+			latest = turn
+		}
+	}
+	if exact.Input > cumulative.Input || exact.Output > cumulative.Output ||
+		exact.CacheRead > cumulative.CacheRead || exact.CacheWrite > cumulative.CacheWrite ||
+		exact.Reasoning > cumulative.Reasoning {
+		return nil, fmt.Errorf("Copilot session %q model %q request rows do not reconcile componentwise with shutdown totals; exact rows kept", sessionID, modelID)
+	}
+	usage := model.Usage{
+		Input:      cumulative.Input - exact.Input,
+		Output:     cumulative.Output - exact.Output,
+		CacheRead:  cumulative.CacheRead - exact.CacheRead,
+		CacheWrite: cumulative.CacheWrite - exact.CacheWrite,
+		Reasoning:  cumulative.Reasoning - exact.Reasoning,
+	}
+	if usage.Reasoning > usage.Output {
+		return nil, fmt.Errorf("Copilot session %q model %q residual reasoning exceeds residual output; exact rows kept", sessionID, modelID)
+	}
+	if usage.IsZero() {
+		return nil, nil
+	}
+	latest.Key = identityKey("copilot-shutdown-residual", sessionID, strings.ToLower(strings.TrimSpace(modelID)))
+	latest.Usage = usage
+	latest.Aggregate = true
+	return &latest, nil
 }
 
 func copilotAddUsage(total *model.Usage, next model.Usage) bool {
-	buckets := [...]struct {
-		total *int64
-		next  int64
-	}{
-		{&total.Input, next.Input},
-		{&total.Output, next.Output},
-		{&total.CacheRead, next.CacheRead},
-		{&total.CacheWrite, next.CacheWrite},
-		{&total.Reasoning, next.Reasoning},
+	next, ok := next.SanitizeAggregate()
+	if !ok {
+		return false
 	}
-	for _, bucket := range buckets {
-		if bucket.next < 0 || bucket.next > math.MaxInt64-*bucket.total {
-			return false
-		}
-		*bucket.total += bucket.next
+	candidate := *total
+	candidate.Add(next)
+	candidate, ok = candidate.SanitizeAggregate()
+	if !ok {
+		return false
 	}
+	*total = candidate
 	return true
 }
 
@@ -501,17 +642,18 @@ func scanCopilotShutdownLogs(ctx context.Context, stateRoot string) ([]model.Tur
 	}
 	sort.Strings(paths)
 	var turns []model.Turn
+	var scanErr error
 	for _, eventPath := range paths {
 		if err := ctx.Err(); err != nil {
 			return nil, err
 		}
 		fileTurns, err := scanCopilotShutdownFile(ctx, eventPath)
 		if err != nil {
-			return nil, err
+			scanErr = errors.Join(scanErr, err)
 		}
 		turns = append(turns, fileTurns...)
 	}
-	return turns, nil
+	return turns, scanErr
 }
 
 type copilotJournalEvent struct {
@@ -542,6 +684,10 @@ type copilotJournalTokenUsage struct {
 	ReasoningTokens     int64 `json:"reasoningTokens"`
 }
 
+type copilotCumulativeUsage struct {
+	input, output, cacheRead, cacheWrite, reasoning int64
+}
+
 func scanCopilotShutdownFile(ctx context.Context, eventPath string) ([]model.Turn, error) {
 	f, err := os.Open(eventPath)
 	if err != nil {
@@ -550,25 +696,53 @@ func scanCopilotShutdownFile(ctx context.Context, eventPath string) ([]model.Tur
 	defer f.Close()
 
 	pathSessionID := filepath.Base(filepath.Dir(eventPath))
+	previous := make(map[string]copilotCumulativeUsage)
+	sequence := make(map[string]int)
+	lastTimestamp := time.Time{}
+	resetPending := false
 	var turns []model.Turn
+	var scanErr error
 	for line := range jsonLines(f) {
 		if err := ctx.Err(); err != nil {
 			return nil, err
 		}
 		var event copilotJournalEvent
-		if json.Unmarshal(line, &event) != nil || event.Type != "session.shutdown" {
+		if json.Unmarshal(line, &event) != nil {
+			continue
+		}
+		if timestamp := parseCopilotStoreTime(event.Timestamp); !timestamp.IsZero() {
+			lastTimestamp = timestamp
+		}
+		if event.Type == "session.compaction_complete" {
+			var data struct {
+				Success bool `json:"success"`
+			}
+			if json.Unmarshal(event.Data, &data) == nil && data.Success {
+				previous = make(map[string]copilotCumulativeUsage)
+				resetPending = true
+			}
+			continue
+		}
+		if event.Type != "session.shutdown" {
 			continue
 		}
 		var data copilotShutdownData
-		if json.Unmarshal(event.Data, &data) != nil || len(data.ModelMetrics) == 0 {
+		if json.Unmarshal(event.Data, &data) != nil {
+			scanErr = errors.Join(scanErr, fmt.Errorf("Copilot session %q has an unreadable shutdown snapshot", pathSessionID))
+			continue
+		}
+		if len(data.ModelMetrics) == 0 {
 			continue
 		}
 		sessionID := firstNonEmpty(data.SessionID, pathSessionID)
 		timestamp := parseCopilotStoreTime(event.Timestamp)
 		if timestamp.IsZero() {
+			timestamp = lastTimestamp
+		}
+		if timestamp.IsZero() {
 			timestamp = copilotJSONEpoch(data.SessionStartTime)
 		}
-		if sessionID == "" || timestamp.IsZero() {
+		if sessionID == "" {
 			continue
 		}
 		models := make([]string, 0, len(data.ModelMetrics))
@@ -579,19 +753,59 @@ func scanCopilotShutdownFile(ctx context.Context, eventPath string) ([]model.Tur
 		for _, mapModel := range models {
 			metric := data.ModelMetrics[mapModel]
 			modelID := firstNonEmpty(strings.TrimSpace(metric.Model), strings.TrimSpace(mapModel))
+			if modelID == "" {
+				modelID = "unknown"
+			}
 			cacheWrite := metric.Usage.CacheWriteTokens
 			if cacheWrite == 0 {
 				cacheWrite = metric.Usage.CacheCreationTokens
 			}
-			usage, _, ok := normalizeCopilotUsage(
-				metric.Usage.InputTokens, metric.Usage.OutputTokens,
-				metric.Usage.CacheReadTokens, cacheWrite, metric.Usage.ReasoningTokens, true,
-			)
-			if !ok || usage.IsZero() || modelID == "" {
+			current := copilotCumulativeUsage{
+				input: metric.Usage.InputTokens, output: metric.Usage.OutputTokens,
+				cacheRead: metric.Usage.CacheReadTokens, cacheWrite: cacheWrite,
+				reasoning: metric.Usage.ReasoningTokens,
+			}
+			modelKey := strings.ToLower(modelID)
+			prior, hasPrior := previous[modelKey]
+			delta := current
+			if hasPrior {
+				decreased, increased := copilotCounterDirections(current, prior)
+				switch {
+				case decreased && increased:
+					scanErr = errors.Join(scanErr, fmt.Errorf("Copilot session %q model %q has mixed-direction cumulative shutdown counters; ambiguous snapshot excluded", sessionID, modelID))
+					continue
+				case decreased:
+					scanErr = errors.Join(scanErr, fmt.Errorf("Copilot session %q model %q reset cumulative shutdown counters; aggregate history may be incomplete", sessionID, modelID))
+				default:
+					delta = copilotCumulativeDelta(current, prior)
+				}
+			}
+			if resetPending {
+				scanErr = errors.Join(scanErr, fmt.Errorf("Copilot session %q compacted before a shutdown aggregate; pre-compaction usage may be missing", sessionID))
+			}
+			if timestamp.IsZero() {
+				scanErr = errors.Join(scanErr, fmt.Errorf("Copilot session %q model %q has no usable shutdown timestamp", sessionID, modelID))
 				continue
 			}
+			usage, reason := copilotAggregateUsage(delta)
+			if reason != "" {
+				scanErr = errors.Join(scanErr, fmt.Errorf("Copilot session %q model %q has invalid shutdown usage (%s)", sessionID, modelID, reason))
+				continue
+			}
+			// Only an accepted cumulative snapshot may become the next delta
+			// baseline. Otherwise a torn or corrected row can make later valid
+			// usage overlap with history that was already emitted.
+			previous[modelKey] = current
+			if usage.IsZero() {
+				continue
+			}
+			sequence[modelKey]++
+			key := identityKey("copilot-shutdown", sessionID, modelID)
+			if sequence[modelKey] > 1 {
+				key = identityKey("copilot-shutdown", sessionID, modelID, strconv.Itoa(sequence[modelKey]))
+			}
 			turns = append(turns, model.Turn{
-				Key:       identityKey("copilot-shutdown", sessionID, modelID),
+				Key:       key,
 				SessionID: sessionID,
 				Agent:     model.AgentCopilot,
 				Timestamp: timestamp,
@@ -602,8 +816,50 @@ func scanCopilotShutdownFile(ctx context.Context, eventPath string) ([]model.Tur
 				Aggregate: true,
 			})
 		}
+		resetPending = false
 	}
-	return turns, nil
+	return turns, scanErr
+}
+
+func copilotCounterDirections(current, previous copilotCumulativeUsage) (decreased, increased bool) {
+	currentBuckets := [...]int64{current.input, current.output, current.cacheRead, current.cacheWrite, current.reasoning}
+	previousBuckets := [...]int64{previous.input, previous.output, previous.cacheRead, previous.cacheWrite, previous.reasoning}
+	for i := range currentBuckets {
+		decreased = decreased || currentBuckets[i] < previousBuckets[i]
+		increased = increased || currentBuckets[i] > previousBuckets[i]
+	}
+	return decreased, increased
+}
+
+func copilotCumulativeDelta(current, previous copilotCumulativeUsage) copilotCumulativeUsage {
+	return copilotCumulativeUsage{
+		input: current.input - previous.input, output: current.output - previous.output,
+		cacheRead:  current.cacheRead - previous.cacheRead,
+		cacheWrite: current.cacheWrite - previous.cacheWrite,
+		reasoning:  current.reasoning - previous.reasoning,
+	}
+}
+
+func copilotAggregateUsage(raw copilotCumulativeUsage) (model.Usage, string) {
+	for _, count := range []int64{raw.input, raw.output, raw.cacheRead, raw.cacheWrite, raw.reasoning} {
+		if count < 0 {
+			return model.Usage{}, "negative cumulative delta"
+		}
+	}
+	if raw.cacheRead > raw.input || raw.cacheWrite > raw.input-raw.cacheRead {
+		return model.Usage{}, "cache tokens exceed cache-inclusive input"
+	}
+	if raw.reasoning > raw.output {
+		return model.Usage{}, "reasoning tokens exceed output tokens"
+	}
+	usage, ok := (model.Usage{
+		Input: raw.input - raw.cacheRead - raw.cacheWrite, Output: raw.output,
+		CacheRead: raw.cacheRead, CacheWrite: raw.cacheWrite, Reasoning: raw.reasoning,
+	}).SanitizeAggregate()
+	if !ok {
+		return model.Usage{}, "usage overflows aggregate accounting"
+	}
+	return usage, ""
 }
 
 func copilotJSONEpoch(raw json.RawMessage) time.Time {
