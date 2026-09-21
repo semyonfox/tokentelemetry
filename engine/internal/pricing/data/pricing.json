@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-09-20",
+  "updated": "2026-09-21",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -26925,6 +26925,14 @@
           "cache_read": 0.25,
           "cache_write": 0.5,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.3,
+          "out": 1.9,
+          "cache_read": 0.15,
+          "cache_write": 0.3,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -27831,6 +27839,19 @@
           "cache_read": 0,
           "cache_write": 0,
           "source": "orcarouter"
+        }
+      ]
+    },
+    "qwen3.8-27b-hemmingway": {
+      "id": "qwen3.8-27b-hemmingway",
+      "rates": [
+        {
+          "from": "2026-09-21",
+          "in": 0.25,
+          "out": 1.5,
+          "cache_read": 0.125,
+          "cache_write": 0.25,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -48757,6 +48778,14 @@
           "out": 0.312,
           "cache_read": 0,
           "cache_write": 0.089,
+          "source": "cortecs"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.179,
+          "out": 0.697,
+          "cache_read": 0,
+          "cache_write": 0.179,
           "source": "cortecs"
         }
       ]
@@ -70050,6 +70079,14 @@
           "cache_read": 0.0026,
           "cache_write": 0.13,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.12,
+          "out": 0.48,
+          "cache_read": 0.0036,
+          "cache_write": 0.12,
+          "source": "kilo"
         }
       ]
     },
@@ -70078,6 +70115,14 @@
           "out": 1.69884,
           "cache_read": 0.018876,
           "cache_write": 0.56628,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.66,
+          "out": 1.98,
+          "cache_read": 0.022,
+          "cache_write": 0.66,
           "source": "kilo"
         }
       ]
@@ -70223,6 +70268,14 @@
           "from": "2026-09-19",
           "in": 0.04,
           "out": 0.08,
+          "cache_read": 0.016,
+          "cache_write": 0.04,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.04,
+          "out": 0.16,
           "cache_read": 0.016,
           "cache_write": 0.04,
           "source": "kilo"
@@ -71010,6 +71063,14 @@
           "out": 2.6532,
           "cache_read": 0.15678,
           "cache_write": 0.8442,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.7735,
+          "out": 2.431,
+          "cache_read": 0.127075,
+          "cache_write": 0.7735,
           "source": "kilo"
         }
       ]
@@ -74462,6 +74523,14 @@
           "out": 0.9,
           "cache_read": 0.05,
           "cache_write": 0.1,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.15,
+          "out": 1,
+          "cache_read": 0.05,
+          "cache_write": 0.15,
           "source": "kilo"
         }
       ]
@@ -87714,6 +87783,14 @@
           "cache_read": 0.003,
           "cache_write": 0.1,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.13,
+          "out": 0.52,
+          "cache_read": 0.006,
+          "cache_write": 0.13,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -93047,6 +93124,14 @@
           "cache_read": 0.15,
           "cache_write": 0.3,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.3,
+          "out": 1.9,
+          "cache_read": 0.15,
+          "cache_write": 0.3,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -93059,6 +93144,14 @@
           "out": 1.2,
           "cache_read": 0.25,
           "cache_write": 0.5,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.3,
+          "out": 1.9,
+          "cache_read": 0.15,
+          "cache_write": 0.3,
           "source": "nano-gpt"
         }
       ]
@@ -93469,6 +93562,19 @@
       "rates": [
         {
           "from": "2026-09-07",
+          "in": 0.25,
+          "out": 1.5,
+          "cache_read": 0.125,
+          "cache_write": 0.25,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000qwen3.8-27b-hemmingway": {
+      "id": "qwen3.8-27b-hemmingway",
+      "rates": [
+        {
+          "from": "2026-09-21",
           "in": 0.25,
           "out": 1.5,
           "cache_read": 0.125,
@@ -93924,6 +94030,19 @@
           "out": 1.15,
           "cache_read": 0.04,
           "cache_write": 0.2,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000step-5-preview": {
+      "id": "step-5-preview",
+      "rates": [
+        {
+          "from": "2026-09-21",
+          "in": 1,
+          "out": 2.7,
+          "cache_read": 0.05,
+          "cache_write": 1,
           "source": "nano-gpt"
         }
       ]
@@ -103898,6 +104017,14 @@
           "cache_read": 0.03,
           "cache_write": 0.3,
           "source": "opencode-go"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.06,
+          "cache_write": 0.375,
+          "source": "opencode-go"
         }
       ]
     },
@@ -103910,6 +104037,14 @@
           "out": 1.2,
           "cache_read": 0.06,
           "cache_write": 0.3,
+          "source": "opencode-go"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.06,
+          "cache_write": 0.375,
           "source": "opencode-go"
         }
       ]
@@ -104709,6 +104844,14 @@
           "cache_read": 0.0026,
           "cache_write": 0.13,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.12,
+          "out": 0.48,
+          "cache_read": 0.0036,
+          "cache_write": 0.12,
+          "source": "openrouter"
         }
       ]
     },
@@ -104737,6 +104880,14 @@
           "out": 1.69884,
           "cache_read": 0.018876,
           "cache_write": 0.56628,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.66,
+          "out": 1.98,
+          "cache_read": 0.022,
+          "cache_write": 0.66,
           "source": "openrouter"
         }
       ]
@@ -104893,6 +105044,14 @@
           "cache_read": 0.016,
           "cache_write": 0.04,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.04,
+          "out": 0.16,
+          "cache_read": 0.016,
+          "cache_write": 0.04,
+          "source": "openrouter"
         }
       ]
     },
@@ -104946,6 +105105,14 @@
           "cache_read": 0.016,
           "cache_write": 0.04,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.04,
+          "out": 0.16,
+          "cache_read": 0.016,
+          "cache_write": 0.04,
+          "source": "openrouter"
         }
       ]
     },
@@ -104966,6 +105133,14 @@
           "out": 0.6468,
           "cache_read": 0.00686,
           "cache_write": 0.2156,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.22,
+          "out": 0.66,
+          "cache_read": 0.007,
+          "cache_write": 0.22,
           "source": "openrouter"
         }
       ]
@@ -105019,6 +105194,14 @@
           "out": 0.844596,
           "cache_read": 0.035192,
           "cache_write": 0.422298,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.95526,
+          "out": 1.91052,
+          "cache_read": 0.079605,
+          "cache_write": 0.95526,
           "source": "openrouter"
         }
       ]
@@ -105748,6 +105931,14 @@
           "cache_read": 0.15678,
           "cache_write": 0.8442,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.7735,
+          "out": 2.431,
+          "cache_read": 0.127075,
+          "cache_write": 0.7735,
+          "source": "openrouter"
         }
       ]
     },
@@ -106023,6 +106214,14 @@
           "out": 2.816,
           "cache_read": 0.1664,
           "cache_write": 0.896,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.91,
+          "out": 2.86,
+          "cache_read": 0.169,
+          "cache_write": 0.91,
           "source": "openrouter"
         }
       ]
@@ -107016,6 +107215,14 @@
           "cache_read": 0.015,
           "cache_write": 0.06,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.1,
+          "out": 0.15,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "openrouter"
         }
       ]
     },
@@ -107805,6 +108012,14 @@
           "cache_read": 0,
           "cache_write": 0.4,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.72,
+          "out": 0.72,
+          "cache_read": 0,
+          "cache_write": 0.72,
+          "source": "openrouter"
         }
       ]
     },
@@ -107893,6 +108108,14 @@
           "out": 0.6525,
           "cache_read": 0,
           "cache_write": 0.1875,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.2,
+          "out": 0.8,
+          "cache_read": 0,
+          "cache_write": 0.2,
           "source": "openrouter"
         }
       ]
@@ -109459,6 +109682,14 @@
           "cache_read": 0,
           "cache_write": 0.2,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.13,
+          "out": 0.52,
+          "cache_read": 0,
+          "cache_write": 0.13,
+          "source": "openrouter"
         }
       ]
     },
@@ -109712,6 +109943,14 @@
           "out": 0.9,
           "cache_read": 0.05,
           "cache_write": 0.1,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-21",
+          "in": 0.15,
+          "out": 1,
+          "cache_read": 0.05,
+          "cache_write": 0.15,
           "source": "openrouter"
         }
       ]
@@ -139074,6 +139313,7 @@
     "qwen3-8-27b-fable": "qwen3.8-27b-fable",
     "qwen3-8-27b-fp8": "qwen3.8-27b-fp8",
     "qwen3-8-27b-free": "qwen3.8-27b-free",
+    "qwen3-8-27b-hemmingway": "qwen3.8-27b-hemmingway",
     "qwen3-8-27b-latest": "qwen3-8-27b",
     "qwen3-8-27b-nvfp4": "qwen3.8-27b-nvfp4",
     "qwen3-8-27b-obliterated": "qwen3.8-27b-obliterated",
@@ -139194,6 +139434,7 @@
     "qwen3.8-27b-fable-latest": "qwen3.8-27b-fable",
     "qwen3.8-27b-fp8-latest": "qwen3.8-27b-fp8",
     "qwen3.8-27b-free-latest": "qwen3.8-27b-free",
+    "qwen3.8-27b-hemmingway-latest": "qwen3.8-27b-hemmingway",
     "qwen3.8-27b-latest": "qwen3.8-27b",
     "qwen3.8-27b-nvfp4-latest": "qwen3.8-27b-nvfp4",
     "qwen3.8-27b-obliterated-latest": "qwen3.8-27b-obliterated",
@@ -139263,6 +139504,7 @@
     "qwen3p8-27b-fable": "qwen3.8-27b-fable",
     "qwen3p8-27b-fp8": "qwen3.8-27b-fp8",
     "qwen3p8-27b-free": "qwen3.8-27b-free",
+    "qwen3p8-27b-hemmingway": "qwen3.8-27b-hemmingway",
     "qwen3p8-27b-nvfp4": "qwen3.8-27b-nvfp4",
     "qwen3p8-27b-obliterated": "qwen3.8-27b-obliterated",
     "qwen3p8-27b-queen": "qwen3.8-27b-queen",
