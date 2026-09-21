@@ -102,7 +102,9 @@ func (c *Codex) Scan(ctx context.Context, emit func(model.Turn)) error {
 	if err != nil {
 		return err
 	}
-	for _, t := range mapFiles(ctx, files, c.scanFile) {
+	for _, t := range mapFiles(ctx, files, func(path string) []model.Turn {
+		return cachedParsedFile(ctx, path, "codex-rollout-v1", func() []model.Turn { return c.scanFile(path) })
+	}) {
 		emit(t)
 	}
 	return nil

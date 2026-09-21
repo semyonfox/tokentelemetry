@@ -72,7 +72,7 @@ TT_VERCEL_REPORT=/path/to/report.json tokentelemetry daily --agent vercel-gatewa
 
 Replace Cursor CSV and Vercel report snapshots when refreshing them. Do not append overlapping exports. Cursor Agent and Vercel Gateway require explicit `--agent` selection because they can overlap Cursor billing exports or native agent logs. The CLI rejects selecting both `cursor` and `cursor-agent` in one report because the exports do not share native request identities. Selecting Vercel Gateway with overlapping native sources can still double count.
 
-`summary` defaults to the last 30 days. Undated SDK results, Antigravity captures and model-grouped Vercel reports need an all-history command such as `daily` or `model`. Dates and models absent from the source are not invented. Importers do not obtain credentials, make account requests or install capture hooks.
+`summary` defaults to the last 30 days. Undated SDK results, Antigravity captures and model-grouped Vercel reports need `summary --all-time` or an all-history command such as `daily` or `model`. Dates and models absent from the source are not invented. Importers do not obtain credentials, make account requests or install capture hooks.
 
 `agents --json` includes `status`, `coverage` and `explicit_only`. Its `installed` field means a configured readable source path was found, not that an application installation was checked. Source-limited entries do not probe application stores.
 

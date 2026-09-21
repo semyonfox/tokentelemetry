@@ -151,7 +151,10 @@ func (c *Claude) Scan(ctx context.Context, emit func(model.Turn)) error {
 		}
 	}
 	turns := mapFiles(ctx, paths, func(path string) []model.Turn {
-		return c.scanFile(path, strings.Contains(filepath.ToSlash(path), "/subagents/"))
+		subagent := strings.Contains(filepath.ToSlash(path), "/subagents/")
+		return cachedParsedFile(ctx, path, "claude-jsonl-v1", func() []model.Turn {
+			return c.scanFile(path, subagent)
+		})
 	})
 	for _, t := range turns {
 		emit(t)

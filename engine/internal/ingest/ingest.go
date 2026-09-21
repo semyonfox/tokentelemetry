@@ -41,6 +41,10 @@ type Scanner interface {
 // Result is a completed scan.
 type Result struct {
 	Turns []model.Turn
+	// CacheHits and CacheMisses count provider-level parsed scan cache lookups.
+	// File-level reuse inside Claude and Codex is intentionally not included.
+	CacheHits   int `json:"-"`
+	CacheMisses int `json:"-"`
 	// Duplicates counts calls dropped because an identical call had already
 	// been seen — replayed history from resumed and forked transcripts.
 	Duplicates int
@@ -134,17 +138,32 @@ func Selected(s Scanner, agents []string) bool {
 // of small files; on the audited machine that is 317 Claude transcripts and
 // 2,113 Codex rollouts.
 func Run(ctx context.Context, scanners []Scanner) (*Result, error) {
+	return run(ctx, scanners, "")
+}
+
+// RunCached executes scanners with a persistent parsed-result cache. An empty
+// cacheDir preserves Run's uncached behavior.
+func RunCached(ctx context.Context, scanners []Scanner, cacheDir string) (*Result, error) {
+	if cacheDir == "" {
+		return Run(ctx, scanners)
+	}
+	return run(ctx, scanners, cacheDir)
+}
+
+type scanBatch struct {
+	turns []model.Turn
+	err   error
+	agent model.Agent
+	hit   bool
+	miss  bool
+}
+
+func run(ctx context.Context, scanners []Scanner, cacheDir string) (*Result, error) {
 	scanners, sourceWarnings := distinctPiSources(scanners)
 	if len(scanners) == 0 {
 		return &Result{Errors: sourceWarnings}, nil
 	}
-
-	type batch struct {
-		turns []model.Turn
-		err   error
-		agent model.Agent
-	}
-	out := make([]batch, len(scanners))
+	out := make([]scanBatch, len(scanners))
 
 	sem := make(chan struct{}, max(1, runtime.NumCPU()))
 	var wg sync.WaitGroup
@@ -164,14 +183,7 @@ func Run(ctx context.Context, scanners []Scanner) (*Result, error) {
 				}
 			}()
 
-			var turns []model.Turn
-			err := s.Scan(ctx, func(t model.Turn) {
-				if t.Agent == "" {
-					t.Agent = s.Agent()
-				}
-				turns = append(turns, t)
-			})
-			out[i] = batch{turns: turns, err: err, agent: s.Agent()}
+			out[i] = scanScanner(ctx, s, cacheDir)
 		}(i, s)
 	}
 	wg.Wait()
@@ -183,6 +195,12 @@ func Run(ctx context.Context, scanners []Scanner) (*Result, error) {
 	res := &Result{Errors: sourceWarnings}
 	seen := make(map[string]int, 1<<16)
 	for _, b := range out {
+		if b.hit {
+			res.CacheHits++
+		}
+		if b.miss {
+			res.CacheMisses++
+		}
 		if b.err != nil && !errors.Is(b.err, os.ErrNotExist) {
 			res.Errors = append(res.Errors, b.err)
 		}
@@ -213,6 +231,64 @@ func Run(ctx context.Context, scanners []Scanner) (*Result, error) {
 		return res.Turns[i].Timestamp.Before(res.Turns[j].Timestamp)
 	})
 	return res, nil
+}
+
+func scanScanner(ctx context.Context, scanner Scanner, cacheDir string) scanBatch {
+	batch := scanBatch{agent: scanner.Agent()}
+	if cacheDir == "" {
+		batch.turns, batch.err = scanFresh(ctx, scanner)
+		return batch
+	}
+	inputs, cacheable := cacheInputsForScanner(scanner)
+	if !cacheable || len(inputs) == 0 {
+		batch.turns, batch.err = scanFresh(ctx, scanner)
+		return batch
+	}
+	batch.miss = true
+	namespace := cacheNamespace(scanner)
+	before, stable, err := sourceFingerprint(inputs)
+	if err != nil || !stable {
+		batch.turns, batch.err = scanFresh(ctx, scanner)
+		return batch
+	}
+	cachePath := scannerCachePath(cacheDir, scanner, inputs)
+	if turns, hit := loadScanCache(cachePath, namespace, before); hit {
+		after, afterStable, statErr := sourceFingerprint(inputs)
+		currentInputs, currentCacheable := cacheInputsForScanner(scanner)
+		if statErr == nil && afterStable && after == before && currentCacheable && sameCacheInputs(inputs, currentInputs) {
+			batch.turns = turns
+			batch.hit = true
+			batch.miss = false
+			return batch
+		}
+	}
+	scanCtx := withFileCache(ctx, cacheDir, namespace, scanner.Agent())
+	turns, scanErr := scanFresh(scanCtx, scanner)
+	safeTurns, safe := sanitizeCachedTurns(turns)
+	if safe {
+		// Return the same endpoint form on cold and warm runs. The host, and
+		// therefore billing classification, is unchanged.
+		turns = safeTurns
+	}
+	batch.turns, batch.err = turns, scanErr
+	after, afterStable, statErr := sourceFingerprint(inputs)
+	currentInputs, currentCacheable := cacheInputsForScanner(scanner)
+	if scanErr == nil && safe && statErr == nil && afterStable && after == before && currentCacheable &&
+		sameCacheInputs(inputs, currentInputs) && ctx.Err() == nil {
+		_ = writeScanCache(cachePath, namespace, before, turns)
+	}
+	return batch
+}
+
+func scanFresh(ctx context.Context, scanner Scanner) ([]model.Turn, error) {
+	var turns []model.Turn
+	err := scanner.Scan(ctx, func(turn model.Turn) {
+		if turn.Agent == "" {
+			turn.Agent = scanner.Agent()
+		}
+		turns = append(turns, turn)
+	})
+	return turns, err
 }
 
 // Runtime mirrors cannot be added to their executor's own ledger. A stored

@@ -18,6 +18,7 @@ Requires Go 1.26 or newer.
 ```sh
 make build
 ./dist/tokentelemetry
+./dist/tokentelemetry -a  # all-time summary
 ./dist/tokentelemetry summary --since 2026-09-01
 ./dist/tokentelemetry daily --group-by agent,model
 ./dist/tokentelemetry model --json
@@ -39,8 +40,15 @@ limits. Bars also disappear when `COLUMNS` is set below 72. `--no-color` and
 `NO_COLOR` disable colours. Reports print once and exit; there is no interactive
 terminal UI to manage.
 
-Explicit date filters replace the summary's default window. Detailed commands
-such as `daily` and `model` include all history unless filtered.
+Use `--all-time` or `-a` for all available history, including undated records.
+`tokentelemetry -a` runs an all-time summary without typing the command name.
+Explicit date filters replace the summary's default window and cannot be combined
+with `--all-time`. Detailed commands such as `daily` and `model` already include
+all history unless filtered.
+
+Repeated reports reuse a local cache of parsed usage for supported readers.
+`--no-cache` forces a fresh scan; `--verbose` shows cache hits and misses.
+See [cache coverage and invalidation](engine/README.md#scan-cache).
 
 ## Accounting
 

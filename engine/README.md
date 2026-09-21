@@ -15,8 +15,13 @@ version                      build version
 ```
 
 `summary` defaults to the last 30 local calendar days, including today. An explicit
-`--since` or `--until` replaces that default. Other report commands default to all
-available history. Usage logs stay local.
+`--since` or `--until` replaces that default. `--all-time`, abbreviated `-a`,
+includes all available history, including undated records. It works on every
+report command and cannot be combined with date bounds. Other report commands
+already default to all available history. Usage logs stay local.
+
+Report flags can be used without a command name: `tokentelemetry -a` is an
+all-time summary, and `tokentelemetry --plain` is a summary without charts.
 
 See the [complete 42-adapter inventory](../docs/provider-inventory.md) for local
 readers, explicit imports, credits-only sources and unsupported source limits.
@@ -25,6 +30,7 @@ readers, explicit imports, credits-only sources and unsupported source limits.
 ## Filters and output
 
 ```
+--all-time / -a          all available history; incompatible with date bounds
 --since / --until DATE   inclusive local-day bounds, YYYY-MM-DD
 --agent NAME            repeatable, or comma-separated
 --model NAME            repeatable, or comma-separated
@@ -33,7 +39,8 @@ readers, explicit imports, credits-only sources and unsupported source limits.
 --group-by DIMS         nested detailed reports: day, week, month, agent,
                         model, provider, project, session; "none" for flat
 --compact               abbreviated counts in detailed tables
---verbose               scan and deduplication diagnostics
+--verbose               scan, cache and deduplication diagnostics
+--no-cache               read source logs without using or updating the scan cache
 --json                  machine-readable output
 --limit N               detailed report row limit; 0 means all
 --no-color              disable colour; also honours NO_COLOR
@@ -57,11 +64,35 @@ separate rather than being guessed together. JSON project rows retain their
 recorded CWDs in `project_paths`.
 
 ```sh
-./dist/tokentelemetry summary --agent claude,codex
+./dist/tokentelemetry -a
+./dist/tokentelemetry summary --all-time --agent claude,codex
 ./dist/tokentelemetry summary --since 2026-08-01 --until 2026-08-31 --json
 ./dist/tokentelemetry daily --group-by agent,model
 ./dist/tokentelemetry session --project tokentelemetry --limit 10
 ```
+
+## Scan cache
+
+Reports cache parsed usage under the operating system's user cache directory,
+in `tokentelemetry/scans`. On Linux this is normally
+`~/.cache/tokentelemetry/scans`, or `$XDG_CACHE_HOME/tokentelemetry/scans`.
+
+Caching currently covers Claude Code, Codex, Antigravity, Cursor IDE/SDK,
+OpenCode, Hermes and Gemini. Other providers continue to read their sources.
+Claude and Codex also reuse individual unchanged files when another session is
+active. Scans with warnings or errors are read again so diagnostics stay visible.
+
+The cache stores normalized accounting records rather than transcripts. Prices,
+report filters, project grouping, duplicate detection and runtime overlap checks
+are recomputed on each run. `--no-cache` reads the sources directly without
+reading or updating this cache. `--verbose` reports provider cache hits and misses;
+individual file reuse inside a changed provider is not included in those counts.
+
+Cache reuse checks source file metadata and directory membership, including
+SQLite WAL changes. Sources changed during a scan are not saved as a stable
+result. Missing, corrupt or unwritable cache files fall back to a fresh scan.
+A new executable invalidates previous parsed results. Use `--no-cache` after a
+manual edit that preserves both file size and modification time.
 
 ## Cursor usage
 

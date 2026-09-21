@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Cache parsed usage locally to avoid repeatedly decoding unchanged histories;
+  add `--no-cache` and cache diagnostics in `--verbose` reports.
+
+- Add `--all-time` and `-a` to report commands, including `tokentelemetry -a`
+  for an all-time summary. Reject combinations with explicit date bounds.
+
 - Expand the provider catalog to 42 entries with 40 readers/importers. Mark
   Crush and Grokbot as source-limited instead of estimating their usage.
 - Discover Cursor IDE and SDK SQLite stores locally, disclose missing counters,

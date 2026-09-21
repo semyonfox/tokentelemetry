@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -38,6 +39,7 @@ COMMANDS
   version    print the version
 
 FILTERS (every report command)
+  --all-time, -a         include all available history; cannot combine with dates
   --since, --from DATE   include usage on or after DATE (YYYY-MM-DD)
   --until, --to DATE     include usage on or before DATE
   --agent NAME           repeatable; e.g. --agent claude --agent codex
@@ -55,9 +57,12 @@ OUTPUT
   --compact              abbreviate counts (1.2M) instead of full digits
   --limit N              show at most N rows (0 = all; summary defaults to 7)
   --verbose              add scan diagnostics (dedup counts, turns scanned)
+  --no-cache             scan source logs without reading or writing the cache
   --no-color             disable colour (also honours NO_COLOR)
 
 EXAMPLES
+  tokentelemetry -a
+  tokentelemetry summary --all-time
   tokentelemetry daily --since 2026-08-01
   tokentelemetry daily --group-by agent,model
   tokentelemetry monthly --group-by provider
@@ -87,6 +92,9 @@ func Main(args []string) int {
 	case "summary", "daily", "weekly", "monthly", "session", "model", "project":
 		return cmdReport(cmd, rest)
 	default:
+		if strings.HasPrefix(cmd, "-") {
+			return cmdReport("summary", args[1:])
+		}
 		fmt.Fprintf(os.Stderr, "tokentelemetry: unknown command %q\n\n", cmd)
 		fmt.Fprint(os.Stderr, usage)
 		return 2
@@ -122,6 +130,9 @@ func cmdReport(cmd string, args []string) int {
 	fs.SetOutput(io.Discard)
 
 	var agents, models, projects stringList
+	var allTime bool
+	fs.BoolVar(&allTime, "all-time", false, "")
+	fs.BoolVar(&allTime, "a", false, "")
 	since := fs.String("since", "", "")
 	from := fs.String("from", "", "")
 	until := fs.String("until", "", "")
@@ -133,6 +144,7 @@ func cmdReport(cmd string, args []string) int {
 	limit := fs.Int("limit", 0, "")
 	noColor := fs.Bool("no-color", false, "")
 	verbose := fs.Bool("verbose", false, "")
+	noCache := fs.Bool("no-cache", false, "")
 	compact := fs.Bool("compact", false, "")
 	groupBy := fs.String("group-by", "", "")
 	by := fs.String("by", "", "")
@@ -174,7 +186,11 @@ func cmdReport(cmd string, args []string) int {
 		Projects:  projects,
 		Subagents: *subagents,
 	}
-	if cmd == "summary" && f.From == "" && f.To == "" {
+	if allTime && (f.From != "" || f.To != "") {
+		fmt.Fprintln(os.Stderr, "tokentelemetry: --all-time cannot be combined with --since, --from, --until or --to")
+		return 2
+	}
+	if cmd == "summary" && !allTime && f.From == "" && f.To == "" {
 		now := time.Now()
 		f.From = now.AddDate(0, 0, -29).Format("2006-01-02")
 		f.To = now.Format("2006-01-02")
@@ -229,7 +245,13 @@ func cmdReport(cmd string, args []string) int {
 		return 1
 	}
 	progress.Update(fmt.Sprintf("Scanning logs from %d agents...", len(scanners)))
-	res, err := ingest.Run(ctx, scanners)
+	cacheDir := ""
+	if !*noCache {
+		if dir, err := os.UserCacheDir(); err == nil {
+			cacheDir = filepath.Join(dir, "tokentelemetry", "scans")
+		}
+	}
+	res, err := ingest.RunCached(ctx, scanners, cacheDir)
 	if err != nil {
 		progress.Stop()
 		fmt.Fprintf(os.Stderr, "tokentelemetry: %v\n", err)
@@ -252,6 +274,9 @@ func cmdReport(cmd string, args []string) int {
 	}
 	for _, e := range res.Errors {
 		fmt.Fprintf(os.Stderr, "tokentelemetry: warning: %v\n", e)
+	}
+	if *verbose && cacheDir != "" {
+		fmt.Fprintf(os.Stderr, "tokentelemetry: scan cache: %d hit(s), %d miss(es)\n", res.CacheHits, res.CacheMisses)
 	}
 
 	if *asJSON {
