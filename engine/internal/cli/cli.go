@@ -25,6 +25,7 @@ const usage = `tokentelemetry — local cost and token telemetry for AI coding a
 
 USAGE
   tokentelemetry [command] [flags]
+  tt [command] [flags]
 
 COMMANDS
   summary    overview with terminal charts (default: last 30 days)
@@ -61,7 +62,7 @@ OUTPUT
   --no-color             disable colour (also honours NO_COLOR)
 
 EXAMPLES
-  tokentelemetry -a
+  tt -a
   tokentelemetry summary --all-time
   tokentelemetry daily --since 2026-08-01
   tokentelemetry daily --group-by agent,model

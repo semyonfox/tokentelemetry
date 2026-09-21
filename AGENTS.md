@@ -5,7 +5,7 @@ The product is a local Go CLI. Source, tests and native packaging live in
 
 ## Commands
 
-- `make build`: compile `dist/tokentelemetry`.
+- `make build`: compile `dist/tokentelemetry` and `dist/tt`.
 - `make test`: run Go tests.
 - `make check`: run Go vet.
 - `make run ARGS='summary --plain'`: run from source.

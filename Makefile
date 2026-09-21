@@ -2,7 +2,7 @@
 .PHONY: build test check run packages
 
 build:
-	cd engine && go build -trimpath -o ../dist/tokentelemetry ./cmd/tokentelemetry
+	cd engine && go build -trimpath -o ../dist/ ./cmd/tokentelemetry ./cmd/tt
 
 test:
 	cd engine && go test ./...

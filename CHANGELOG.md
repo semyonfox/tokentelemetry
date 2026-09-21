@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add `tt` as a short command name alongside `tokentelemetry` in native builds
+  and generated npm packages.
+
 - Cache parsed usage locally to avoid repeatedly decoding unchanged histories;
   add `--no-cache` and cache diagnostics in `--verbose` reports.
 

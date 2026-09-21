@@ -127,7 +127,10 @@ function build() {
         description:
           "Local token and cost telemetry for AI coding agents. Reads logs already on disk; makes no network calls.",
         keywords: ["ai", "agents", "claude", "codex", "tokens", "cost", "observability", "ccusage"],
-        bin: { tokentelemetry: "bin/tokentelemetry.js" },
+        bin: {
+          tokentelemetry: "bin/tokentelemetry.js",
+          tt: "bin/tokentelemetry.js",
+        },
         files: ["bin", "README.md"],
         optionalDependencies,
         engines: { node: ">=18" },

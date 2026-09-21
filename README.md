@@ -24,6 +24,10 @@ make build
 ./dist/tokentelemetry model --json
 ```
 
+`tt` is the short command name for TokenTelemetry. `make build` produces both
+`dist/tokentelemetry` and `dist/tt`; either accepts the same commands and flags.
+For example, `./dist/tt -a` shows the all-time summary.
+
 The default command is `summary`, covering the last 30 local calendar days.
 It shows accounting totals, daily token bars, and models and agents ranked by
 API list cost. Each chart shows up to seven rows. `--limit N` changes that

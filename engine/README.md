@@ -27,6 +27,16 @@ See the [complete 42-adapter inventory](../docs/provider-inventory.md) for local
 readers, explicit imports, credits-only sources and unsupported source limits.
 `agents --json` includes coverage status and whether explicit selection is required.
 
+## Short command
+
+`tt` accepts every command and flag supported by `tokentelemetry`, including
+`tt -a`, `tt daily` and `tt model --json`. Both use the same configuration and
+cache directories. The product name remains TokenTelemetry.
+
+`make build` from the repository root builds both executables. To install both
+with Go, run `go install ./cmd/tokentelemetry ./cmd/tt` from `engine/`.
+The generated npm launcher package also exposes both command names.
+
 ## Filters and output
 
 ```
