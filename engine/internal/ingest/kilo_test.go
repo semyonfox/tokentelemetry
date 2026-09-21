@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -218,7 +219,7 @@ func TestKiloReportsUnsupportedSchemaAndKeepsOtherDatabases(t *testing.T) {
 		`{"model":{"id":"kept","providerID":"p"},"tokens":{"input":8,"output":1,"reasoning":0,"cache":{"read":2,"write":0}}}`)
 
 	turns, scanErr := scanKiloFixture(t, badPath, goodPath)
-	if scanErr == nil || !strings.Contains(scanErr.Error(), "unsupported schema") || !strings.Contains(scanErr.Error(), badPath) {
+	if scanErr == nil || !strings.Contains(scanErr.Error(), "unsupported schema") || !strings.Contains(scanErr.Error(), strconv.Quote(badPath)) {
 		t.Fatalf("unsupported schema error = %v", scanErr)
 	}
 	if len(turns) != 1 || turns[0].Model != "kept" {
