@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"math"
@@ -12,28 +13,26 @@ import (
 )
 
 func cmdPrice(args []string) int {
-	var models []string
-	color := true
-	for _, a := range args {
-		switch a {
-		case "--no-color":
-			color = false
-		default:
-			if !strings.HasPrefix(a, "-") {
-				models = append(models, a)
-			}
-		}
+	fs := flag.NewFlagSet("price", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	noColor := fs.Bool("no-color", false, "")
+	models, err := parseFlags(fs, args)
+	if err == flag.ErrHelp {
+		printHelp("price")
+		return 0
+	}
+	if err != nil {
+		return commandError("price", err)
 	}
 	if len(models) == 0 {
-		fmt.Fprintln(os.Stderr, "tokentelemetry: price needs a model id, e.g. `tokentelemetry price gpt-5.6-luna`")
-		return 2
+		return commandError("price", fmt.Errorf("price needs a model id, e.g. `tt price gpt-5.6-luna`"))
 	}
 	tbl, err := pricing.Load()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "tokentelemetry: %v\n", err)
 		return 1
 	}
-	th := theme{on: colorEnabled(!color)}
+	th := theme{on: colorEnabled(*noColor)}
 
 	code := 0
 	for _, q := range models {

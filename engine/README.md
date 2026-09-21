@@ -5,14 +5,28 @@ accuracy limits, see the [project README](../README.md).
 
 ## Commands
 
+The command list is flat. `summary` is the default report, and `tt` is the
+short command name used below.
+
 ```
-summary                      overview with terminal charts; default command
- daily | weekly | monthly    usage over time
-session | model | project    usage by dimension
-price <model>                a model's rate history
-agents                       provider coverage and detected log paths
-version                      build version
+summary                 overview with terminal charts; default is the last 30 days
+daily | weekly | monthly usage over time
+session                 usage by session
+model                   usage by model
+project                 usage by project
+agents [NAME ...]       provider coverage and detected source paths
+price MODEL [MODEL ...] effective-dated API list rates
+version                 build version
 ```
+
+Use `tt help COMMAND` or `tt COMMAND --help` for a command's flags, defaults
+and examples. `sessions`, `models`, `projects` and `providers` are aliases for
+`session`, `model`, `project` and `agents`; existing commands keep working.
+
+`agents` accepts identifiers as well as flags. Flags may appear before or after
+names: `tt agents --installed` lists detected sources, and
+`tt agents cursor copilot --json` filters the catalog. Unknown names and flags
+are errors.
 
 `summary` defaults to the last 30 local calendar days, including today. An explicit
 `--since` or `--until` replaces that default. `--all-time`, abbreviated `-a`,
@@ -20,8 +34,8 @@ includes all available history, including undated records. It works on every
 report command and cannot be combined with date bounds. Other report commands
 already default to all available history. Usage logs stay local.
 
-Report flags can be used without a command name: `tokentelemetry -a` is an
-all-time summary, and `tokentelemetry --plain` is a summary without charts.
+Report flags can be used without a command name: `tt -a` is an all-time
+summary, and `tt --plain` is a summary without charts.
 
 See the [complete 42-adapter inventory](../docs/provider-inventory.md) for local
 readers, explicit imports, credits-only sources and unsupported source limits.
@@ -74,11 +88,11 @@ separate rather than being guessed together. JSON project rows retain their
 recorded CWDs in `project_paths`.
 
 ```sh
-./dist/tokentelemetry -a
-./dist/tokentelemetry summary --all-time --agent claude,codex
-./dist/tokentelemetry summary --since 2026-08-01 --until 2026-08-31 --json
-./dist/tokentelemetry daily --group-by agent,model
-./dist/tokentelemetry session --project tokentelemetry --limit 10
+./dist/tt -a
+./dist/tt summary --all-time --agent claude,codex
+./dist/tt summary --since 2026-08-01 --until 2026-08-31 --json
+./dist/tt daily --group-by agent,model
+./dist/tt session --project tokentelemetry --limit 10
 ```
 
 ## Scan cache
@@ -109,7 +123,7 @@ manual edit that preserves both file size and modification time.
 Cursor's IDE database is discovered automatically on Linux, macOS and Windows:
 
 ```sh
-./dist/tokentelemetry daily --agent cursor --plain
+./dist/tt daily --agent cursor --plain
 ```
 
 Only recorded token counters are included. Cursor often leaves those counters
@@ -121,7 +135,7 @@ For fuller history, `TT_CURSOR_CSV` optionally selects a usage export containing
 the request date, model, input, output, cache and total token columns:
 
 ```sh
-TT_CURSOR_CSV=/path/to/usage.csv ./dist/tokentelemetry daily --agent cursor --plain
+TT_CURSOR_CSV=/path/to/usage.csv ./dist/tt daily --agent cursor --plain
 ```
 
 The CSV replaces local database history entirely, preventing overlap. Replace
@@ -133,7 +147,7 @@ rows within one export remain separate requests. See the
 Local Cursor SDK stores are discovered under `~/.cursor/projects/` when selected:
 
 ```sh
-./dist/tokentelemetry daily --agent cursor-agent --plain
+./dist/tt daily --agent cursor-agent --plain
 ```
 
 This reads SDK runs, not ordinary Cursor CLI transcripts. Terminal runs provide
@@ -204,7 +218,8 @@ use the local binary to test this checkout. Distributed packages include the MIT
 licence notice.
 
 The [provider inventory](../docs/provider-inventory.md) describes all 42 audited adapters.
-The scanner interface and registration live in `internal/ingest/ingest.go`.
+The [contributor map](../docs/development.md) points to the CLI, ingest,
+reporting and pricing packages.
 
 ## GitHub Copilot
 
@@ -250,7 +265,7 @@ Copilot and TokenTelemetry:
 mkdir -p "$HOME/.copilot"
 export COPILOT_OTEL_FILE_EXPORTER_PATH="$HOME/.copilot/otel.jsonl"
 copilot
-tokentelemetry summary --agent copilot
+tt summary --agent copilot
 ```
 
 The scanner reads completed model-call spans with recorded token counts and a

@@ -1,380 +1,76 @@
-// Package cli implements the tokentelemetry command line.
+// Package cli implements the TokenTelemetry command line.
 package cli
 
 import (
-	"context"
-	"encoding/json"
-	"flag"
 	"fmt"
-	"io"
 	"os"
-	"path/filepath"
 	"strings"
-	"time"
-
-	"github.com/semyonfox/tokentelemetry/engine/internal/ingest"
-	"github.com/semyonfox/tokentelemetry/engine/internal/pricing"
-	"github.com/semyonfox/tokentelemetry/engine/internal/projectmeta"
-	"github.com/semyonfox/tokentelemetry/engine/internal/report"
 )
 
 // Version is stamped at build time with -ldflags.
 var Version = "dev"
 
-const usage = `tokentelemetry — local cost and token telemetry for AI coding agents
-
-USAGE
-  tokentelemetry [command] [flags]
-  tt [command] [flags]
-
-COMMANDS
-  summary    overview with terminal charts (default: last 30 days)
-  daily      usage per day
-  weekly     usage per ISO week
-  monthly    usage per month
-  session    usage per session, most expensive first
-  model      usage per model
-  project    usage per project
-  price      show a model's rate history
-  agents     list provider coverage and detected source paths
-  version    print the version
-
-FILTERS (every report command)
-  --all-time, -a         include all available history; cannot combine with dates
-  --since, --from DATE   include usage on or after DATE (YYYY-MM-DD)
-  --until, --to DATE     include usage on or before DATE
-  --agent NAME           repeatable; e.g. --agent claude --agent codex
-  --model NAME           repeatable; e.g. --model claude-opus-5
-  --project NAME         repeatable; full path or trailing folder name
-  --subagents MODE       include (default) | only | exclude
-
-OUTPUT
-  --plain                summary without bars or startup spinner
-  --json                 machine-readable output
-  --group-by DIMS        nest rows by dimensions (default: model; project is flat)
-                         day, week, month, agent, model, provider, project,
-                         session, or "none" for a flat table
-                         e.g. --group-by agent,model
-  --compact              abbreviate counts (1.2M) instead of full digits
-  --limit N              show at most N rows (0 = all; summary defaults to 7)
-  --verbose              add scan diagnostics (dedup counts, turns scanned)
-  --no-cache             scan source logs without reading or writing the cache
-  --no-color             disable colour (also honours NO_COLOR)
-
-EXAMPLES
-  tt -a
-  tokentelemetry summary --all-time
-  tokentelemetry daily --since 2026-08-01
-  tokentelemetry daily --group-by agent,model
-  tokentelemetry monthly --group-by provider
-  tokentelemetry session --project tokentelemetry --limit 10
-  tokentelemetry price gpt-5.6-luna
-`
-
 // Main runs the CLI and returns a process exit code.
 func Main(args []string) int {
 	if len(args) < 2 {
-		args = []string{"tokentelemetry", "summary"}
+		return cmdReport("summary", nil)
 	}
-	cmd := args[1]
-	rest := args[2:]
-
-	switch cmd {
-	case "-h", "--help", "help":
-		fmt.Print(usage)
-		return 0
-	case "version", "--version", "-v":
-		fmt.Printf("tokentelemetry %s\n", Version)
-		return 0
-	case "price":
-		return cmdPrice(rest)
-	case "agents":
-		return cmdAgents(rest)
-	case "summary", "daily", "weekly", "monthly", "session", "model", "project":
-		return cmdReport(cmd, rest)
-	default:
-		if strings.HasPrefix(cmd, "-") {
-			return cmdReport("summary", args[1:])
-		}
-		fmt.Fprintf(os.Stderr, "tokentelemetry: unknown command %q\n\n", cmd)
-		fmt.Fprint(os.Stderr, usage)
-		return 2
-	}
-}
-
-type stringList []string
-
-func (s *stringList) String() string { return strings.Join(*s, ",") }
-func (s *stringList) Set(v string) error {
-	// Accept both repeated flags and a single comma-separated value, because
-	// both spellings are what people reach for.
-	for _, part := range strings.Split(v, ",") {
-		if part = strings.TrimSpace(part); part != "" {
-			*s = append(*s, part)
-		}
-	}
-	return nil
-}
-
-func defaultDimensions(cmd, spec string, breakdown bool, dims []report.Dimension) []report.Dimension {
-	if len(dims) == 0 && breakdown {
-		return []report.Dimension{report.DimModel}
-	}
-	if spec == "" && !breakdown && cmd != "model" && cmd != "summary" && cmd != "project" {
-		return []report.Dimension{report.DimModel}
-	}
-	return dims
-}
-
-func cmdReport(cmd string, args []string) int {
-	fs := flag.NewFlagSet(cmd, flag.ContinueOnError)
-	fs.SetOutput(io.Discard)
-
-	var agents, models, projects stringList
-	var allTime bool
-	fs.BoolVar(&allTime, "all-time", false, "")
-	fs.BoolVar(&allTime, "a", false, "")
-	since := fs.String("since", "", "")
-	from := fs.String("from", "", "")
-	until := fs.String("until", "", "")
-	to := fs.String("to", "", "")
-	subagents := fs.String("subagents", "include", "")
-	plainOutput := fs.Bool("plain", false, "")
-	asJSON := fs.Bool("json", false, "")
-	breakdown := fs.Bool("breakdown", false, "")
-	limit := fs.Int("limit", 0, "")
-	noColor := fs.Bool("no-color", false, "")
-	verbose := fs.Bool("verbose", false, "")
-	noCache := fs.Bool("no-cache", false, "")
-	compact := fs.Bool("compact", false, "")
-	groupBy := fs.String("group-by", "", "")
-	by := fs.String("by", "", "")
-	fs.Var(&agents, "agent", "")
-	fs.Var(&models, "model", "")
-	fs.Var(&projects, "project", "")
-
-	if err := fs.Parse(args); err != nil {
-		if err == flag.ErrHelp {
-			fmt.Print(usage)
+	name, rest := args[1], args[2:]
+	switch name {
+	case "help", "--help", "-h":
+		if len(rest) == 0 {
+			printHelp("")
 			return 0
 		}
-		fmt.Fprintf(os.Stderr, "tokentelemetry: %v\n\n%s", err, usage)
-		return 2
-	}
-
-	if fs.NArg() > 0 || *limit < 0 {
-		fmt.Fprintln(os.Stderr, "tokentelemetry: unexpected arguments or negative --limit")
-		return 2
-	}
-	var cursorCSV, cursorSDK bool
-	for _, agent := range agents {
-		if reason := ingest.SourceLimitation(agent); reason != "" {
-			fmt.Fprintf(os.Stderr, "tokentelemetry: %s: %s\n", agent, reason)
-			return 2
+		if len(rest) != 1 {
+			return commandError("help", fmt.Errorf("help accepts one command name"))
 		}
-		cursorCSV = cursorCSV || strings.EqualFold(agent, "cursor")
-		cursorSDK = cursorSDK || strings.EqualFold(agent, "cursor-agent")
-	}
-	if cursorCSV && cursorSDK {
-		fmt.Fprintln(os.Stderr, "tokentelemetry: Cursor history and SDK results may contain the same usage without shared request IDs; select --agent cursor or --agent cursor-agent separately")
-		return 2
-	}
-	f := report.Filter{
-		From:      firstNonEmpty(*since, *from),
-		To:        firstNonEmpty(*until, *to),
-		Agents:    agents,
-		Models:    models,
-		Projects:  projects,
-		Subagents: *subagents,
-	}
-	if allTime && (f.From != "" || f.To != "") {
-		fmt.Fprintln(os.Stderr, "tokentelemetry: --all-time cannot be combined with --since, --from, --until or --to")
-		return 2
-	}
-	if cmd == "summary" && !allTime && f.From == "" && f.To == "" {
-		now := time.Now()
-		f.From = now.AddDate(0, 0, -29).Format("2006-01-02")
-		f.To = now.Format("2006-01-02")
-	}
-	if f.From != "" && f.To != "" && f.From > f.To {
-		fmt.Fprintln(os.Stderr, "tokentelemetry: --since must not be after --until")
-		return 2
-	}
-	for _, d := range []string{f.From, f.To} {
-		if d == "" {
-			continue
+		if rest[0] == "help" || rest[0] == "--help" || rest[0] == "-h" {
+			printHelp("")
+			return 0
 		}
-		if _, err := time.Parse("2006-01-02", d); err != nil {
-			fmt.Fprintf(os.Stderr, "tokentelemetry: bad date %q, expected YYYY-MM-DD\n", d)
-			return 2
+		command, ok := findCommand(rest[0])
+		if !ok {
+			return commandError("help", fmt.Errorf("unknown command %q", rest[0]))
 		}
-	}
-	switch f.Subagents {
-	case "include", "only", "exclude":
-	default:
-		fmt.Fprintf(os.Stderr, "tokentelemetry: --subagents must be include, only or exclude\n")
-		return 2
-	}
-
-	dims, err := report.ParseDimensions(firstNonEmpty(*groupBy, *by))
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "tokentelemetry: %v\n", err)
-		return 2
-	}
-	// Detailed timeline/session views default to model attribution. Projects are
-	// already the answer, so their default stays one compact row per project;
-	// --group-by model and --breakdown opt into the per-model detail.
-	dims = defaultDimensions(cmd, firstNonEmpty(*groupBy, *by), *breakdown, dims)
-
-	progress := startProgress(os.Stderr, progressEnabled(*asJSON || *plainOutput), "Checking for updated prices...")
-	defer progress.Stop()
-	pricing.Refresh()
-	tbl, err := pricing.Load()
-	if err != nil {
-		progress.Stop()
-		fmt.Fprintf(os.Stderr, "tokentelemetry: %v\n", err)
-		return 1
-	}
-
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	progress.Update("Finding agent logs...")
-	scanners := ingest.Available(agents...)
-	if len(scanners) == 0 {
-		progress.Stop()
-		fmt.Fprintln(os.Stderr, "tokentelemetry: no agent logs found on this machine (try `tokentelemetry agents`)")
-		return 1
-	}
-	progress.Update(fmt.Sprintf("Scanning logs from %d agents...", len(scanners)))
-	cacheDir := ""
-	if !*noCache {
-		if dir, err := os.UserCacheDir(); err == nil {
-			cacheDir = filepath.Join(dir, "tokentelemetry", "scans")
-		}
-	}
-	res, err := ingest.RunCached(ctx, scanners, cacheDir)
-	if err != nil {
-		progress.Stop()
-		fmt.Fprintf(os.Stderr, "tokentelemetry: %v\n", err)
-		return 1
-	}
-	lineage, lineageErr := projectmeta.LoadT3ProjectLineage(ctx)
-
-	g := report.Daily
-	switch cmd {
-	case "weekly":
-		g = report.Weekly
-	case "monthly":
-		g = report.Monthly
-	}
-	progress.Update("Calculating usage and costs...")
-	rep := report.BuildWithProjectLineage(res.Turns, tbl, f, g, res.Duplicates, dims, lineage)
-	progress.Stop()
-	if lineageErr != nil {
-		fmt.Fprintf(os.Stderr, "tokentelemetry: warning: %v\n", lineageErr)
-	}
-	for _, e := range res.Errors {
-		fmt.Fprintf(os.Stderr, "tokentelemetry: warning: %v\n", e)
-	}
-	if *verbose && cacheDir != "" {
-		fmt.Fprintf(os.Stderr, "tokentelemetry: scan cache: %d hit(s), %d miss(es)\n", res.CacheHits, res.CacheMisses)
-	}
-
-	if *asJSON {
-		enc := json.NewEncoder(os.Stdout)
-		enc.SetIndent("", "  ")
-		if err := enc.Encode(view(cmd, rep)); err != nil {
-			fmt.Fprintf(os.Stderr, "tokentelemetry: %v\n", err)
-			return 1
-		}
+		printHelp(command.name)
 		return 0
 	}
-	if cmd == "summary" {
-		renderOverview(os.Stdout, rep, *limit, colorEnabled(*noColor), *verbose, !*plainOutput, agents)
+	command, ok := findCommand(name)
+	if !ok {
+		if strings.HasPrefix(name, "-") {
+			return cmdReport("summary", args[1:])
+		}
+		return commandError("", fmt.Errorf("unknown command %q", name))
+	}
+	if command.report {
+		return cmdReport(command.name, rest)
+	}
+	switch command.name {
+	case "agents":
+		return cmdAgents(rest)
+	case "price":
+		return cmdPrice(rest)
+	case "version":
+		if len(rest) == 1 && (rest[0] == "--help" || rest[0] == "-h") {
+			printHelp("version")
+			return 0
+		}
+		if len(rest) != 0 {
+			return commandError("version", fmt.Errorf("version accepts no arguments"))
+		}
+		fmt.Printf("tokentelemetry %s\n", Version)
 		return 0
 	}
-	render(os.Stdout, cmd, rep, *limit, colorEnabled(*noColor), *verbose, *compact, agents)
-	return 0
+	return commandError("", fmt.Errorf("unknown command %q", name))
 }
 
-// view narrows the report to the rows the chosen command is about, so `--json`
-// output does not carry four aggregates the caller did not ask for.
-func view(cmd string, rep *report.Report) any {
-	if cmd == "summary" {
-		return rep
+func commandError(command string, err error) int {
+	fmt.Fprintf(os.Stderr, "tokentelemetry: %v\n", err)
+	hint := "tt help"
+	if command != "" && command != "help" {
+		hint += " " + command
 	}
-	type out struct {
-		Command string          `json:"command"`
-		Rows    []report.Bucket `json:"rows"`
-		*report.Report
-	}
-	o := out{Command: cmd, Report: rep}
-	switch cmd {
-	case "session":
-		o.Rows = rep.Sessions
-	case "model":
-		o.Rows = rep.ByModel
-	case "project":
-		o.Rows = rep.ByProject
-	default:
-		o.Rows = rep.Series
-	}
-	// Rows are the answer; the per-dimension aggregates stay available but are
-	// not duplicated into Rows.
-	o.Report.Series = nil
-	if cmd != "model" {
-		o.Report.ByModel = nil
-	}
-	if cmd != "project" {
-		o.Report.ByProject = nil
-	}
-	if cmd != "session" {
-		o.Report.Sessions = nil
-	}
-	return o
-}
-
-func cmdAgents(args []string) int {
-	asJSON := len(args) > 0 && args[0] == "--json"
-	rows := ingest.Catalog()
-	if asJSON {
-		enc := json.NewEncoder(os.Stdout)
-		enc.SetIndent("", "  ")
-		_ = enc.Encode(rows)
-		return 0
-	}
-	for _, r := range rows {
-		mark := "—"
-		if r.Installed {
-			mark = "✓"
-		}
-		fmt.Printf(" %s  %-16s %-14s %s\n", mark, r.Agent, r.Status, strings.Join(r.Roots, ", "))
-		if r.Coverage != "" {
-			fmt.Printf("      %s\n", r.Coverage)
-		}
-		if r.ExplicitOnly {
-			fmt.Printf("      Requires --agent %s; may overlap other usage sources\n", r.Agent)
-		}
-	}
-	return 0
-}
-
-func firstNonEmpty(vals ...string) string {
-	for _, v := range vals {
-		if v != "" {
-			return v
-		}
-	}
-	return ""
-}
-
-func colorEnabled(noColor bool) bool {
-	if noColor || os.Getenv("NO_COLOR") != "" || os.Getenv("TERM") == "dumb" {
-		return false
-	}
-	fi, err := os.Stdout.Stat()
-	if err != nil {
-		return false
-	}
-	return fi.Mode()&os.ModeCharDevice != 0
+	fmt.Fprintf(os.Stderr, "Run `%s` for usage.\n", hint)
+	return 2
 }

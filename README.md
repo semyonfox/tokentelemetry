@@ -28,6 +28,12 @@ make build
 `dist/tokentelemetry` and `dist/tt`; either accepts the same commands and flags.
 For example, `./dist/tt -a` shows the all-time summary.
 
+Use `tt help` for the command overview and `tt help summary` or
+`tt daily --help` for command-specific flags. `tt agents --installed` lists
+detected sources; `tt agents cursor copilot` narrows the catalog to named agents.
+`sessions`, `models`, `projects` and `providers` are aliases for the existing
+singular report commands and `agents`.
+
 The default command is `summary`, covering the last 30 local calendar days.
 It shows accounting totals, daily token bars, and models and agents ranked by
 API list cost. Each chart shows up to seven rows. `--limit N` changes that
@@ -120,6 +126,8 @@ Accuracy has limits:
   version or billing arrangement.
 
 See [the command reference](engine/README.md) for filters, plans and pricing.
+The [documentation index](docs/README.md) links provider setup, accounting
+evidence, the porting plan and contributor guidance.
 
 ## Development
 

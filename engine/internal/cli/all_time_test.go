@@ -76,6 +76,13 @@ func TestAllTimeReportsIncludeOldAndUndatedUsage(t *testing.T) {
 			}
 		})
 	}
+	for alias, canonical := range map[string]string{"sessions": "session", "models": "model", "projects": "project"} {
+		aliasCode, aliasJSON, aliasErr := runCapturedCLI(t, alias, "-a", "--agent", "claude", "--json")
+		code, canonicalJSON, stderr := runCapturedCLI(t, canonical, "-a", "--agent", "claude", "--json")
+		if code != 0 || aliasCode != 0 || aliasErr != stderr || aliasJSON != canonicalJSON {
+			t.Fatalf("%s differs from %s: exit=%d/%d stderr=%q/%q", alias, canonical, aliasCode, code, aliasErr, stderr)
+		}
+	}
 }
 
 func TestAllTimeRejectsDateBoundsBeforeScanning(t *testing.T) {

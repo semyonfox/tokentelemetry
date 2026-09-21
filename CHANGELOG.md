@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- Group CLI help by task and add focused `tt help COMMAND` / `COMMAND --help`.
+  Add `agents --installed` and named catalog filters, plus compatible
+  `sessions`, `models`, `projects` and `providers` aliases. Reject invalid
+  flags and unknown agent identifiers before looking up prices or usage.
+- Separate command routing, option parsing and report execution; consolidate
+  provider registration and coverage in one registry. Add a documentation index
+  and contributor guide while preserving report JSON and accounting behavior.
+
 - Add `tt` as a short command name alongside `tokentelemetry` in native builds
   and generated npm packages.
 

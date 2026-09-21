@@ -20,7 +20,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"sort"
-	"strings"
 	"sync"
 
 	"github.com/semyonfox/tokentelemetry/engine/internal/model"
@@ -30,8 +29,8 @@ import (
 type Scanner interface {
 	// Agent identifies which agent this scanner handles.
 	Agent() model.Agent
-	// Roots lists the directories this scanner reads. Empty means the agent is
-	// not installed, and Run skips it without ceremony.
+	// Roots lists configured or detected source paths. Available skips scanners
+	// with no paths; that does not infer whether the application is installed.
 	Roots() []string
 	// Scan walks the logs, calling emit once per API call found. emit is safe
 	// to call from a single goroutine only; Run serialises it.
@@ -52,83 +51,6 @@ type Result struct {
 	// agent's numbers; it never fails the whole run, because a user with one
 	// unreadable log directory still deserves the rest of their data.
 	Errors []error
-}
-
-// All returns every scanner, whether or not the agent is installed.
-func All() []Scanner {
-	return []Scanner{
-		NewClaude(),
-		NewCodex(),
-		NewHermes(),
-		NewOpenCode(),
-		NewGemini(),
-		NewPi(),
-		NewCline(),
-		NewClineCLI(),
-		NewCopilot(),
-		NewKilo(),
-		NewRooCode(),
-		NewMux(),
-		NewZerostack(),
-		NewQuickdesk(),
-		NewAntigravity(),
-		NewVercelGateway(),
-		NewCursorAgent(),
-		NewQwen(),
-		NewKimi(),
-		NewKimiCode(),
-		NewVibe(),
-		NewZCode(),
-		NewForge(),
-		NewGoose(),
-		NewZed(),
-		NewOpenClaude(),
-		NewOpenClaw(),
-		NewOMP(),
-		NewDroid(),
-		NewIBMBob(),
-		NewKiro(),
-		NewCursor(),
-		NewGrok(),
-		NewCodeWhale(),
-		NewCodebuff(),
-		NewDevin(),
-		NewOpenDesign(),
-		NewLingTai(),
-		NewWarp(),
-		NewDSH(),
-	}
-}
-
-// Available returns only the scanners whose logs exist on this machine.
-func Available(agents ...string) []Scanner {
-	var out []Scanner
-	for _, s := range All() {
-		if !Selected(s, agents) {
-			continue
-		}
-		if len(s.Roots()) > 0 {
-			out = append(out, s)
-		}
-	}
-	return out
-}
-
-// Selected prevents an agent filter from reading every other provider's store.
-// Overlapping gateway snapshots require explicit selection even when configured.
-func Selected(s Scanner, agents []string) bool {
-	if len(agents) == 0 {
-		if e, ok := s.(interface{ ExplicitOnly() bool }); ok && e.ExplicitOnly() {
-			return false
-		}
-		return true
-	}
-	for _, agent := range agents {
-		if strings.EqualFold(string(s.Agent()), agent) {
-			return true
-		}
-	}
-	return false
 }
 
 // Run executes scanners concurrently and returns the deduplicated turns,
