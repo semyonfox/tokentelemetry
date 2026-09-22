@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-09-21",
+  "updated": "2026-09-22",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -3185,6 +3185,20 @@
           "cache_write": 3.75,
           "cache_write_1h": 6,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3.75,
+          "cache_write_1h": 6,
+          "tier_threshold": 200001,
+          "tier_in": 6,
+          "tier_out": 22.5,
+          "tier_cache_read": 0.6,
+          "tier_cache_write": 7.5,
+          "source": "vercel"
         }
       ]
     },
@@ -4782,6 +4796,14 @@
           "cache_read": 0.075,
           "cache_write": 0.25,
           "source": "digitalocean"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.5,
+          "out": 1.6,
+          "cache_read": 0.15,
+          "cache_write": 0.5,
+          "source": "digitalocean"
         }
       ]
     },
@@ -4794,6 +4816,14 @@
           "out": 0.168,
           "cache_read": 0.0168,
           "cache_write": 0.0679,
+          "source": "digitalocean"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.028,
+          "cache_write": 0.14,
           "source": "digitalocean"
         }
       ]
@@ -5548,6 +5578,14 @@
           "cache_read": 0.07,
           "cache_write": 0.28,
           "source": "merge-gateway"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.28,
+          "out": 1.4,
+          "cache_read": 0.07,
+          "cache_write": 0.28,
+          "source": "aihubmix"
         }
       ]
     },
@@ -5642,6 +5680,19 @@
           "cache_read": 0.01484,
           "cache_write": 0.4453,
           "source": "volcengine"
+        }
+      ]
+    },
+    "deepseek-v4-flash-speed": {
+      "id": "deepseek-v4-flash-speed",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.028,
+          "cache_write": 0.14,
+          "source": "neuralwatt"
         }
       ]
     },
@@ -5856,6 +5907,32 @@
           "cache_read": 0.007,
           "cache_write": 0.22,
           "source": "vercel"
+        }
+      ]
+    },
+    "deepseek-v4.1-flash-fast-fp4": {
+      "id": "deepseek-v4.1-flash-fast-fp4",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0,
+          "cache_write": 0.09,
+          "source": "coralbricks"
+        }
+      ]
+    },
+    "deepseek-v4.1-flash-flex": {
+      "id": "deepseek-v4.1-flash-flex",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.0975,
+          "out": 0.39,
+          "cache_read": 0.00975,
+          "cache_write": 0.0975,
+          "source": "neuralwatt"
         }
       ]
     },
@@ -7727,6 +7804,19 @@
           "cache_read": 0.5,
           "cache_write": 5,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 5,
+          "out": 30,
+          "cache_read": 0.5,
+          "cache_write": 5,
+          "tier_threshold": 272001,
+          "tier_in": 10,
+          "tier_out": 45,
+          "tier_cache_read": 1,
+          "tier_cache_write": 10,
+          "source": "vercel"
         }
       ]
     },
@@ -7815,6 +7905,19 @@
           "cache_read": 0.5,
           "cache_write": 5,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 5,
+          "out": 30,
+          "cache_read": 0.5,
+          "cache_write": 5,
+          "tier_threshold": 272001,
+          "tier_in": 10,
+          "tier_out": 45,
+          "tier_cache_read": 1,
+          "tier_cache_write": 10,
+          "source": "vercel"
         }
       ]
     },
@@ -10525,7 +10628,8 @@
           "cache_write": 0.3,
           "source": "huggingface"
         }
-      ]
+      ],
+      "first_party": true
     },
     "glm-4.6v-flash-free": {
       "id": "glm-4.6v-flash-free",
@@ -11357,6 +11461,19 @@
         }
       ]
     },
+    "glm-5.3-flash-flex": {
+      "id": "glm-5.3-flash-flex",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.0975,
+          "out": 0.325,
+          "cache_read": 0.0195,
+          "cache_write": 0.0975,
+          "source": "neuralwatt"
+        }
+      ]
+    },
     "glm-5.3-flash-fp4": {
       "id": "glm-5.3-flash-fp4",
       "rates": [
@@ -11366,6 +11483,14 @@
           "out": 0.5,
           "cache_read": 0,
           "cache_write": 0.15,
+          "source": "coralbricks"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0,
+          "cache_write": 0.23,
           "source": "coralbricks"
         }
       ]
@@ -11455,6 +11580,19 @@
       ],
       "first_party": true
     },
+    "glm-5.3-flex": {
+      "id": "glm-5.3-flex",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.9425,
+          "out": 2.925,
+          "cache_read": 0.09425,
+          "cache_write": 0.9425,
+          "source": "neuralwatt"
+        }
+      ]
+    },
     "glm-5.3-fp4": {
       "id": "glm-5.3-fp4",
       "rates": [
@@ -11464,6 +11602,14 @@
           "out": 4.4,
           "cache_read": 0,
           "cache_write": 1.12,
+          "source": "coralbricks"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.12,
+          "out": 4.4,
+          "cache_read": 0,
+          "cache_write": 1.68,
           "source": "coralbricks"
         }
       ]
@@ -13745,6 +13891,19 @@
           "cache_read": 0.04,
           "cache_write": 0.5,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.4,
+          "out": 2.4,
+          "cache_read": 0.04,
+          "cache_write": 0.5,
+          "tier_threshold": 272000,
+          "tier_in": 0.8,
+          "tier_out": 3.6,
+          "tier_cache_read": 0.08,
+          "tier_cache_write": 1,
+          "source": "vercel"
         }
       ]
     },
@@ -13856,6 +14015,19 @@
           "cache_read": 0.8,
           "cache_write": 10,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 8,
+          "out": 40,
+          "cache_read": 0.8,
+          "cache_write": 10,
+          "tier_threshold": 272000,
+          "tier_in": 16,
+          "tier_out": 60,
+          "tier_cache_read": 1.6,
+          "tier_cache_write": 20,
+          "source": "vercel"
         }
       ]
     },
@@ -13945,6 +14117,19 @@
           "out": 24,
           "cache_read": 0.4,
           "cache_write": 5,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 4,
+          "out": 24,
+          "cache_read": 0.4,
+          "cache_write": 5,
+          "tier_threshold": 272000,
+          "tier_in": 8,
+          "tier_out": 36,
+          "tier_cache_read": 0.8,
+          "tier_cache_write": 10,
           "source": "vercel"
         }
       ]
@@ -14045,6 +14230,19 @@
           "tier_out": 150,
           "tier_cache_read": 4,
           "tier_cache_write": 25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 20,
+          "out": 100,
+          "cache_read": 2,
+          "cache_write": 25,
+          "tier_threshold": 272001,
+          "tier_in": 40,
+          "tier_out": 150,
+          "tier_cache_read": 4,
+          "tier_cache_write": 50,
           "source": "vercel"
         }
       ]
@@ -14906,6 +15104,19 @@
         }
       ]
     },
+    "grok-4-7": {
+      "id": "grok-4-7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "source": "llmgateway"
+        }
+      ]
+    },
     "grok-4-fast": {
       "id": "grok-4-fast",
       "rates": [
@@ -15169,6 +15380,19 @@
           "cache_read": 0.2,
           "cache_write": 1.25,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200001,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
+          "source": "vercel"
         }
       ]
     },
@@ -15200,6 +15424,19 @@
           "out": 2.5,
           "cache_read": 0.2,
           "cache_write": 1.25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200001,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
           "source": "vercel"
         }
       ]
@@ -15254,6 +15491,19 @@
           "cache_read": 0.4,
           "cache_write": 1.25,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.4,
+          "cache_write": 1.25,
+          "tier_threshold": 200001,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
+          "source": "vercel"
         }
       ]
     },
@@ -15293,6 +15543,19 @@
           "out": 2.5,
           "cache_read": 0.2,
           "cache_write": 1.25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200001,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
           "source": "vercel"
         }
       ]
@@ -15340,6 +15603,25 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 1,
+          "tier_cache_write": 4,
+          "source": "xai"
+        }
+      ],
+      "first_party": true
+    },
+    "grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-22",
           "in": 2,
           "out": 6,
           "cache_read": 0.5,
@@ -15831,6 +16113,14 @@
           "out": 0.58,
           "cache_read": 0.035,
           "cache_write": 0.14,
+          "source": "deepinfra"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.13,
+          "out": 0.53,
+          "cache_read": 0.033,
+          "cache_write": 0.13,
           "source": "deepinfra"
         }
       ]
@@ -18802,6 +19092,14 @@
           "cache_read": 0.015,
           "cache_write": 0.75,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.7746,
+          "out": 3.0984,
+          "cache_read": 0.015492,
+          "cache_write": 0.7746,
+          "source": "aihubmix"
         }
       ]
     },
@@ -19511,6 +19809,45 @@
         }
       ]
     },
+    "mimo-v2-6-flash": {
+      "id": "mimo-v2-6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.7,
+          "out": 1.4,
+          "cache_read": 0.7,
+          "cache_write": 0.7,
+          "source": "empiriolabs"
+        }
+      ]
+    },
+    "mimo-v2-6-pro": {
+      "id": "mimo-v2-6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2.175,
+          "out": 4.35,
+          "cache_read": 2.175,
+          "cache_write": 2.175,
+          "source": "empiriolabs"
+        }
+      ]
+    },
+    "mimo-v2-6-pro-ultraspeed": {
+      "id": "mimo-v2-6-pro-ultraspeed",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 21.75,
+          "out": 43.5,
+          "cache_read": 21.75,
+          "cache_write": 21.75,
+          "source": "empiriolabs"
+        }
+      ]
+    },
     "mimo-v2-flash": {
       "id": "mimo-v2-flash",
       "rates": [
@@ -19711,6 +20048,61 @@
           "source": "xiaomi-token-plan-ams"
         }
       ]
+    },
+    "mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0.14,
+          "source": "xiaomi"
+        }
+      ],
+      "first_party": true
+    },
+    "mimo-v2.6-flash-free": {
+      "id": "mimo-v2.6-flash-free",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "opencode"
+        }
+      ]
+    },
+    "mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.0036,
+          "cache_write": 0.435,
+          "source": "xiaomi"
+        }
+      ],
+      "first_party": true
+    },
+    "mimo-v2.6-pro-ultraspeed": {
+      "id": "mimo-v2.6-pro-ultraspeed",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 4.35,
+          "out": 8.7,
+          "cache_read": 0.036,
+          "cache_write": 4.35,
+          "source": "xiaomi"
+        }
+      ],
+      "first_party": true
     },
     "mimo-v25": {
       "id": "mimo-v25",
@@ -20339,6 +20731,14 @@
           "out": 0.4584,
           "cache_read": 0,
           "cache_write": 0.3438,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.3447,
+          "out": 0.4596,
+          "cache_read": 0,
+          "cache_write": 0.3447,
           "source": "edenai"
         }
       ]
@@ -22430,6 +22830,14 @@
           "cache_read": 0.025,
           "cache_write": 0.25,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.5,
+          "out": 2.5,
+          "cache_read": 0.25,
+          "cache_write": 0.5,
+          "source": "siliconflow"
         }
       ]
     },
@@ -22443,6 +22851,14 @@
           "cache_read": 0,
           "cache_write": 0,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.025,
+          "out": 0.1,
+          "cache_read": 0.0025,
+          "cache_write": 0.025,
+          "source": "kilo"
         }
       ]
     },
@@ -22455,6 +22871,14 @@
           "out": 0,
           "cache_read": 0,
           "cache_write": 0,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.075,
+          "out": 0.25,
+          "cache_read": 0.015,
+          "cache_write": 0.075,
           "source": "kilo"
         }
       ]
@@ -23998,6 +24422,14 @@
           "cache_read": 0.02,
           "cache_write": 0.055,
           "source": "digitalocean"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.1,
+          "out": 0.7,
+          "cache_read": 0.02,
+          "cache_write": 0.1,
+          "source": "digitalocean"
         }
       ]
     },
@@ -24892,6 +25324,19 @@
           "cache_read": 0.13,
           "cache_write": 1.625,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.3,
+          "out": 7.8,
+          "cache_read": 0.13,
+          "cache_write": 1.625,
+          "tier_threshold": 128000,
+          "tier_in": 2,
+          "tier_out": 12,
+          "tier_cache_read": 0.2,
+          "tier_cache_write": 2.5,
+          "source": "vercel"
         }
       ]
     },
@@ -24923,6 +25368,19 @@
           "cache_read": 0,
           "cache_write": 0.99,
           "source": "cerebras"
+        }
+      ]
+    },
+    "qwen-3.8-27b-flex": {
+      "id": "qwen-3.8-27b-flex",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.2925,
+          "out": 2.08,
+          "cache_read": 0.1625,
+          "cache_write": 0.2925,
+          "source": "neuralwatt"
         }
       ]
     },
@@ -26393,6 +26851,19 @@
           "cache_read": 0.3,
           "cache_write": 1.5,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.5,
+          "out": 7.5,
+          "cache_read": 0.3,
+          "cache_write": 1.5,
+          "tier_threshold": 32001,
+          "tier_in": 2.7,
+          "tier_out": 13.5,
+          "tier_cache_read": 0.54,
+          "tier_cache_write": 2.7,
+          "source": "vercel"
         }
       ]
     },
@@ -26712,6 +27183,19 @@
           "cache_read": 0.24,
           "cache_write": 1.2,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.2,
+          "out": 6,
+          "cache_read": 0.24,
+          "cache_write": 1.2,
+          "tier_threshold": 32001,
+          "tier_in": 2.4,
+          "tier_out": 12,
+          "tier_cache_read": 0.48,
+          "tier_cache_write": 2.4,
+          "source": "vercel"
         }
       ]
     },
@@ -26724,6 +27208,19 @@
           "out": 6,
           "cache_read": 0.24,
           "cache_write": 1.2,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.2,
+          "out": 6,
+          "cache_read": 0.24,
+          "cache_write": 1.2,
+          "tier_threshold": 32001,
+          "tier_in": 2.4,
+          "tier_out": 12,
+          "tier_cache_read": 0.48,
+          "tier_cache_write": 2.4,
           "source": "vercel"
         }
       ]
@@ -27598,6 +28095,19 @@
         }
       ]
     },
+    "qwen3.6-35b-flex": {
+      "id": "qwen3.6-35b-flex",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.1885,
+          "out": 0.7475,
+          "cache_read": 0.01885,
+          "cache_write": 0.1885,
+          "source": "neuralwatt"
+        }
+      ]
+    },
     "qwen3.6-flash": {
       "id": "qwen3.6-flash",
       "rates": [
@@ -27680,6 +28190,19 @@
           "out": 0.13,
           "cache_read": 0.006,
           "cache_write": 0.038,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.03,
+          "out": 0.13,
+          "cache_read": 0.006,
+          "cache_write": 0.038,
+          "tier_threshold": 32000,
+          "tier_in": 0.1,
+          "tier_out": 0.4,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.125,
           "source": "vercel"
         }
       ]
@@ -28622,6 +29145,19 @@
           "cache_read": 0.05,
           "cache_write": 0.25,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.25,
+          "out": 2,
+          "cache_read": 0.05,
+          "cache_write": 0.25,
+          "tier_threshold": 128001,
+          "tier_in": 0.5,
+          "tier_out": 4,
+          "tier_cache_read": 0.05,
+          "tier_cache_write": 0.5,
+          "source": "vercel"
         }
       ]
     },
@@ -28647,6 +29183,19 @@
           "out": 2,
           "cache_read": 0.05,
           "cache_write": 0.25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.25,
+          "out": 2,
+          "cache_read": 0.05,
+          "cache_write": 0.25,
+          "tier_threshold": 128001,
+          "tier_in": 0.5,
+          "tier_out": 4,
+          "tier_cache_read": 0.05,
+          "tier_cache_write": 0.5,
           "source": "vercel"
         }
       ]
@@ -30442,6 +30991,19 @@
           "cache_read": 0,
           "cache_write": 1.05,
           "source": "vispark"
+        }
+      ]
+    },
+    "viv-fast": {
+      "id": "viv-fast",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.13,
+          "out": 0.4,
+          "cache_read": 0.05,
+          "cache_write": 0.13,
+          "source": "vivgrid"
         }
       ]
     },
@@ -35360,6 +35922,19 @@
         }
       ]
     },
+    "aihubmix\u0000deepseek-v4-flash-0731-fast": {
+      "id": "deepseek-v4-flash-0731-fast",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.28,
+          "out": 1.4,
+          "cache_read": 0.07,
+          "cache_write": 0.28,
+          "source": "aihubmix"
+        }
+      ]
+    },
     "aihubmix\u0000deepseek-v4-flash-vision-exp": {
       "id": "deepseek-v4-flash-vision-exp",
       "rates": [
@@ -35520,6 +36095,19 @@
         }
       ]
     },
+    "aihubmix\u0000gemini-3.1-flash-image": {
+      "id": "gemini-3.1-flash-image",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.5,
+          "out": 3,
+          "cache_read": 0,
+          "cache_write": 0.5,
+          "source": "aihubmix"
+        }
+      ]
+    },
     "aihubmix\u0000gemini-3.1-flash-lite": {
       "id": "gemini-3.1-flash-lite",
       "rates": [
@@ -35529,6 +36117,19 @@
           "out": 1.5,
           "cache_read": 0.025,
           "cache_write": 1,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000gemini-3.1-flash-lite-image": {
+      "id": "gemini-3.1-flash-lite-image",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.25,
+          "out": 1.5,
+          "cache_read": 0.025,
+          "cache_write": 0.25,
           "source": "aihubmix"
         }
       ]
@@ -35582,11 +36183,50 @@
         }
       ]
     },
+    "aihubmix\u0000gemini-3.5-flash-lite": {
+      "id": "gemini-3.5-flash-lite",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.3,
+          "out": 2.499999,
+          "cache_read": 0.03,
+          "cache_write": 0.3,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000gemini-3.6-flash": {
+      "id": "gemini-3.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.5,
+          "out": 7.5,
+          "cache_read": 0.15,
+          "cache_write": 1.5,
+          "source": "aihubmix"
+        }
+      ]
+    },
     "aihubmix\u0000gemini-3.7-flash": {
       "id": "gemini-3.7-flash",
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 0.75,
+          "out": 3.75,
+          "cache_read": 0.075,
+          "cache_write": 0.75,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000gemini-3.8-flash": {
+      "id": "gemini-3.8-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
           "in": 0.75,
           "out": 3.75,
           "cache_read": 0.075,
@@ -35813,6 +36453,24 @@
         }
       ]
     },
+    "aihubmix\u0000gpt-6-astra": {
+      "id": "gpt-6-astra",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 10,
+          "out": 50,
+          "cache_read": 1,
+          "cache_write": 12.5,
+          "tier_threshold": 272000,
+          "tier_in": 20,
+          "tier_out": 75,
+          "tier_cache_read": 2,
+          "tier_cache_write": 25,
+          "source": "aihubmix"
+        }
+      ]
+    },
     "aihubmix\u0000grok-4.3": {
       "id": "grok-4.3",
       "rates": [
@@ -35870,6 +36528,19 @@
         }
       ]
     },
+    "aihubmix\u0000hy3": {
+      "id": "hy3",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.1562,
+          "out": 0.6248,
+          "cache_read": 0.03905,
+          "cache_write": 0.1562,
+          "source": "aihubmix"
+        }
+      ]
+    },
     "aihubmix\u0000hy3-preview": {
       "id": "hy3-preview",
       "rates": [
@@ -35879,6 +36550,19 @@
           "out": 0.566661,
           "cache_read": 0.051,
           "cache_write": 0.17,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000hy4-preview": {
+      "id": "hy4-preview",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.845,
+          "out": 2.535,
+          "cache_read": 0.04225,
+          "cache_write": 0.845,
           "source": "aihubmix"
         }
       ]
@@ -35948,6 +36632,19 @@
         }
       ]
     },
+    "aihubmix\u0000longcat-2.0": {
+      "id": "longcat-2.0",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.7746,
+          "out": 3.0984,
+          "cache_read": 0.015492,
+          "cache_write": 0.7746,
+          "source": "aihubmix"
+        }
+      ]
+    },
     "aihubmix\u0000minimax-m2.7": {
       "id": "minimax-m2.7",
       "rates": [
@@ -35957,6 +36654,58 @@
           "out": 1.2,
           "cache_read": 0.06,
           "cache_write": 0.375,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000minimax-m3": {
+      "id": "minimax-m3",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.288,
+          "out": 1.152,
+          "cache_read": 0,
+          "cache_write": 0.288,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000muse-spark-1.1": {
+      "id": "muse-spark-1.1",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.375,
+          "out": 4.675,
+          "cache_read": 0,
+          "cache_write": 1.375,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000muse-spark-1.2": {
+      "id": "muse-spark-1.2",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.375,
+          "out": 4.675,
+          "cache_read": 0,
+          "cache_write": 1.375,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000muse-spark-1.3": {
+      "id": "muse-spark-1.3",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.375,
+          "out": 4.675,
+          "cache_read": 0.165,
+          "cache_write": 1.375,
           "source": "aihubmix"
         }
       ]
@@ -36102,6 +36851,32 @@
           "out": 5.07,
           "cache_read": 0.169,
           "cache_write": 2.1125,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000qwen3.8-omni-flash": {
+      "id": "qwen3.8-omni-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.1126,
+          "out": 0.380025,
+          "cache_read": 0.014075,
+          "cache_write": 0.175937,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000step-3.7-flash": {
+      "id": "step-3.7-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.22,
+          "out": 1.32,
+          "cache_read": 0.044,
+          "cache_write": 0.22,
           "source": "aihubmix"
         }
       ]
@@ -38021,6 +38796,18 @@
           "tier_out": 12.915,
           "tier_cache_write": 2.153,
           "source": "alibaba-cn"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.359,
+          "out": 1.434,
+          "cache_read": 0,
+          "cache_write": 0.359,
+          "tier_threshold": 32000,
+          "tier_in": 0.574,
+          "tier_out": 2.294,
+          "tier_cache_write": 0.574,
+          "source": "alibaba-cn"
         }
       ]
     },
@@ -38162,6 +38949,18 @@
           "tier_out": 4.133,
           "tier_cache_write": 0.689,
           "source": "alibaba-cn"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.029,
+          "out": 0.287,
+          "cache_read": 0,
+          "cache_write": 0.029,
+          "tier_threshold": 128000,
+          "tier_in": 0.115,
+          "tier_out": 1.147,
+          "tier_cache_write": 0.115,
+          "source": "alibaba-cn"
         }
       ]
     },
@@ -38186,6 +38985,18 @@
           "tier_in": 1.148,
           "tier_out": 6.888,
           "tier_cache_write": 1.148,
+          "source": "alibaba-cn"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.115,
+          "out": 0.688,
+          "cache_read": 0,
+          "cache_write": 0.115,
+          "tier_threshold": 128000,
+          "tier_in": 0.287,
+          "tier_out": 1.72,
+          "tier_cache_write": 0.287,
           "source": "alibaba-cn"
         }
       ]
@@ -47284,6 +48095,19 @@
         }
       ]
     },
+    "coralbricks\u0000deepseek-v4.1-flash-fast-fp4": {
+      "id": "deepseek-v4.1-flash-fast-fp4",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0,
+          "cache_write": 0.09,
+          "source": "coralbricks"
+        }
+      ]
+    },
     "coralbricks\u0000glm-5.2-fp4": {
       "id": "glm-5.2-fp4",
       "rates": [
@@ -47307,6 +48131,14 @@
           "cache_read": 0,
           "cache_write": 0.15,
           "source": "coralbricks"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0,
+          "cache_write": 0.23,
+          "source": "coralbricks"
         }
       ]
     },
@@ -47320,6 +48152,14 @@
           "cache_read": 0,
           "cache_write": 1.12,
           "source": "coralbricks"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.12,
+          "out": 4.4,
+          "cache_read": 0,
+          "cache_write": 1.68,
+          "source": "coralbricks"
         }
       ]
     },
@@ -47332,6 +48172,14 @@
           "out": 0.6,
           "cache_read": 0,
           "cache_write": 0.12,
+          "source": "coralbricks"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.12,
+          "out": 0.6,
+          "cache_read": 0,
+          "cache_write": 0.18,
           "source": "coralbricks"
         }
       ]
@@ -50025,6 +50873,24 @@
         }
       ]
     },
+    "crossmodel\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 1,
+          "tier_cache_write": 4,
+          "source": "crossmodel"
+        }
+      ]
+    },
     "crossmodel\u0000grok-build-0.1": {
       "id": "grok-build-0.1",
       "rates": [
@@ -50139,6 +51005,32 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 0.47,
+          "out": 0.94,
+          "cache_read": 0.005,
+          "cache_write": 0.47,
+          "source": "crossmodel"
+        }
+      ]
+    },
+    "crossmodel\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.16,
+          "out": 0.32,
+          "cache_read": 0.004,
+          "cache_write": 0.16,
+          "source": "crossmodel"
+        }
+      ]
+    },
+    "crossmodel\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
           "in": 0.47,
           "out": 0.94,
           "cache_read": 0.005,
@@ -51401,6 +52293,14 @@
           "cache_read": 0.035,
           "cache_write": 0.14,
           "source": "deepinfra"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.13,
+          "out": 0.53,
+          "cache_read": 0.033,
+          "cache_write": 0.13,
+          "source": "deepinfra"
         }
       ]
     },
@@ -52375,6 +53275,14 @@
           "cache_read": 0.075,
           "cache_write": 0.25,
           "source": "digitalocean"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.5,
+          "out": 1.6,
+          "cache_read": 0.15,
+          "cache_write": 0.5,
+          "source": "digitalocean"
         }
       ]
     },
@@ -52387,6 +53295,14 @@
           "out": 0.168,
           "cache_read": 0.0168,
           "cache_write": 0.0679,
+          "source": "digitalocean"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.028,
+          "cache_write": 0.14,
           "source": "digitalocean"
         }
       ]
@@ -52414,6 +53330,14 @@
           "cache_read": 0.0252,
           "cache_write": 0.08,
           "source": "digitalocean"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.028,
+          "cache_write": 0.14,
+          "source": "digitalocean"
         }
       ]
     },
@@ -52426,6 +53350,14 @@
           "out": 1.74,
           "cache_read": 0.174,
           "cache_write": 0.87,
+          "source": "digitalocean"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.74,
+          "out": 3.48,
+          "cache_read": 0.348,
+          "cache_write": 1.74,
           "source": "digitalocean"
         }
       ]
@@ -52518,6 +53450,14 @@
           "cache_read": 0.105,
           "cache_write": 0.7,
           "source": "digitalocean"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.21,
+          "cache_write": 1.4,
+          "source": "digitalocean"
         }
       ]
     },
@@ -52538,6 +53478,14 @@
           "out": 3.4,
           "cache_read": 0.2,
           "cache_write": 0.95,
+          "source": "digitalocean"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.26,
+          "cache_write": 1.4,
           "source": "digitalocean"
         }
       ]
@@ -52612,6 +53560,14 @@
           "cache_read": 0.285,
           "cache_write": 2.55,
           "source": "digitalocean"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3,
+          "source": "digitalocean"
         }
       ]
     },
@@ -52671,6 +53627,14 @@
           "out": 1.5,
           "cache_read": 0.08,
           "cache_write": 0.4,
+          "source": "digitalocean"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.8,
+          "out": 3,
+          "cache_read": 0.16,
+          "cache_write": 0.8,
           "source": "digitalocean"
         }
       ]
@@ -53121,6 +54085,14 @@
           "out": 0.385,
           "cache_read": 0.02,
           "cache_write": 0.055,
+          "source": "digitalocean"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.1,
+          "out": 0.7,
+          "cache_read": 0.02,
+          "cache_write": 0.1,
           "source": "digitalocean"
         }
       ]
@@ -55502,6 +56474,24 @@
         }
       ]
     },
+    "edenai\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 3.2,
+          "tier_out": 9.6,
+          "tier_cache_read": 0.8,
+          "tier_cache_write": 3.2,
+          "source": "edenai"
+        }
+      ]
+    },
     "edenai\u0000grok-build-0.1": {
       "id": "grok-build-0.1",
       "rates": [
@@ -55529,6 +56519,14 @@
           "out": 0.58,
           "cache_read": 0.035,
           "cache_write": 0.14,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.13,
+          "out": 0.53,
+          "cache_read": 0.033,
+          "cache_write": 0.13,
           "source": "edenai"
         }
       ]
@@ -55748,6 +56746,14 @@
           "cache_read": 0,
           "cache_write": 1.0314,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.0341,
+          "out": 1.0341,
+          "cache_read": 0,
+          "cache_write": 1.0341,
+          "source": "edenai"
         }
       ]
     },
@@ -55912,6 +56918,14 @@
           "out": 0.4584,
           "cache_read": 0,
           "cache_write": 0.3438,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.3447,
+          "out": 0.4596,
+          "cache_read": 0,
+          "cache_write": 0.3447,
           "source": "edenai"
         }
       ]
@@ -57092,6 +58106,45 @@
         }
       ]
     },
+    "empiriolabs\u0000mimo-v2-6-flash": {
+      "id": "mimo-v2-6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.7,
+          "out": 1.4,
+          "cache_read": 0.7,
+          "cache_write": 0.7,
+          "source": "empiriolabs"
+        }
+      ]
+    },
+    "empiriolabs\u0000mimo-v2-6-pro": {
+      "id": "mimo-v2-6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2.175,
+          "out": 4.35,
+          "cache_read": 2.175,
+          "cache_write": 2.175,
+          "source": "empiriolabs"
+        }
+      ]
+    },
+    "empiriolabs\u0000mimo-v2-6-pro-ultraspeed": {
+      "id": "mimo-v2-6-pro-ultraspeed",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 21.75,
+          "out": 43.5,
+          "cache_read": 21.75,
+          "cache_write": 21.75,
+          "source": "empiriolabs"
+        }
+      ]
+    },
     "empiriolabs\u0000minimax-m2-7": {
       "id": "minimax-m2-7",
       "rates": [
@@ -57675,6 +58728,19 @@
           "out": 1.15,
           "cache_read": 0.04,
           "cache_write": 0.2,
+          "source": "empiriolabs"
+        }
+      ]
+    },
+    "empiriolabs\u0000step-5-preview": {
+      "id": "step-5-preview",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1,
+          "out": 2.7,
+          "cache_read": 0.05,
+          "cache_write": 1,
           "source": "empiriolabs"
         }
       ]
@@ -59982,6 +61048,24 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 1,
+          "tier_cache_write": 4,
+          "source": "github-copilot"
+        }
+      ]
+    },
+    "github-copilot\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-22",
           "in": 2,
           "out": 6,
           "cache_read": 0.5,
@@ -64199,6 +65283,19 @@
           "out": 0.58,
           "cache_read": 0,
           "cache_write": 0.14,
+          "source": "huggingface"
+        }
+      ]
+    },
+    "huggingface\u0000hy4-preview": {
+      "id": "hy4-preview",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.834,
+          "out": 2.501,
+          "cache_read": 0,
+          "cache_write": 0.834,
           "source": "huggingface"
         }
       ]
@@ -70124,6 +71221,14 @@
           "cache_read": 0.022,
           "cache_write": 0.66,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.624,
+          "out": 2.88,
+          "cache_read": 0.088,
+          "cache_write": 0.624,
+          "source": "kilo"
         }
       ]
     },
@@ -70278,6 +71383,14 @@
           "out": 0.16,
           "cache_read": 0.016,
           "cache_write": 0.04,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.03,
+          "out": 1,
+          "cache_read": 0.008,
+          "cache_write": 0.03,
           "source": "kilo"
         }
       ]
@@ -71071,6 +72184,14 @@
           "out": 2.431,
           "cache_read": 0.127075,
           "cache_write": 0.7735,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.6545,
+          "out": 2.057,
+          "cache_read": 0.107525,
+          "cache_write": 0.6545,
           "source": "kilo"
         }
       ]
@@ -72179,6 +73300,14 @@
           "cache_read": 0.5,
           "cache_write": 2,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.6,
+          "out": 4.8,
+          "cache_read": 0.4,
+          "cache_write": 1.6,
+          "source": "kilo"
         }
       ]
     },
@@ -72243,6 +73372,19 @@
           "out": 6,
           "cache_read": 0.5,
           "cache_write": 2,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.6,
+          "out": 4.8,
+          "cache_read": 0.4,
+          "cache_write": 1.6,
           "source": "kilo"
         }
       ]
@@ -72405,6 +73547,14 @@
           "out": 0.528,
           "cache_read": 0.033,
           "cache_write": 0.132,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.13,
+          "out": 0.53,
+          "cache_read": 0.033,
+          "cache_write": 0.13,
           "source": "kilo"
         }
       ]
@@ -72590,6 +73740,14 @@
           "cache_read": 0.17,
           "cache_write": 1.7,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.5,
+          "out": 7.5,
+          "cache_read": 0.15,
+          "cache_write": 1.5,
+          "source": "kilo"
         }
       ]
     },
@@ -72696,6 +73854,14 @@
           "out": 8.5,
           "cache_read": 0.17,
           "cache_write": 1.7,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3,
           "source": "kilo"
         }
       ]
@@ -73086,6 +74252,45 @@
           "tier_out": 6,
           "tier_cache_read": 0.4,
           "tier_cache_write": 2,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0.14,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.0036,
+          "cache_write": 0.435,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000mimo-v2.6-pro-ultraspeed": {
+      "id": "mimo-v2.6-pro-ultraspeed",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 4.35,
+          "out": 8.7,
+          "cache_read": 0.036,
+          "cache_write": 4.35,
           "source": "kilo"
         }
       ]
@@ -76457,6 +77662,14 @@
           "cache_read": 0.025,
           "cache_write": 0.088,
           "source": "llmgateway"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.07,
+          "out": 0.19,
+          "cache_read": 0.015,
+          "cache_write": 0.07,
+          "source": "llmgateway"
         }
       ]
     },
@@ -77082,6 +78295,19 @@
         }
       ]
     },
+    "llmgateway\u0000grok-4-7": {
+      "id": "grok-4-7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "source": "llmgateway"
+        }
+      ]
+    },
     "llmgateway\u0000grok-build-0-1": {
       "id": "grok-build-0-1",
       "rates": [
@@ -77474,6 +78700,32 @@
           "tier_out": 6,
           "tier_cache_read": 0.4,
           "tier_cache_write": 2,
+          "source": "llmgateway"
+        }
+      ]
+    },
+    "llmgateway\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0.14,
+          "source": "llmgateway"
+        }
+      ]
+    },
+    "llmgateway\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.0036,
+          "cache_write": 0.435,
           "source": "llmgateway"
         }
       ]
@@ -79927,6 +81179,19 @@
         }
       ]
     },
+    "llmgateway-providers\u0000grok-4-7": {
+      "id": "grok-4-7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
     "llmgateway-providers\u0000grok-build-0-1": {
       "id": "grok-build-0-1",
       "rates": [
@@ -80303,6 +81568,32 @@
           "tier_out": 6,
           "tier_cache_read": 0.4,
           "tier_cache_write": 2,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
+    "llmgateway-providers\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0.14,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
+    "llmgateway-providers\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.0036,
+          "cache_write": 0.435,
           "source": "llmgateway-providers"
         }
       ]
@@ -83922,6 +85213,19 @@
         }
       ]
     },
+    "merge-gateway\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "source": "merge-gateway"
+        }
+      ]
+    },
     "merge-gateway\u0000grok-build-0.1": {
       "id": "grok-build-0.1",
       "rates": [
@@ -86462,6 +87766,14 @@
           "cache_read": 0.3,
           "cache_write": 3,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1,
+          "out": 3,
+          "cache_read": 0.1,
+          "cache_write": 1,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -86475,6 +87787,14 @@
           "cache_read": 0.5,
           "cache_write": 5,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 3,
+          "out": 5,
+          "cache_read": 0.3,
+          "cache_write": 3,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -86487,6 +87807,14 @@
           "out": 5,
           "cache_read": 0.5,
           "cache_write": 5,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 3,
+          "out": 5,
+          "cache_read": 0.3,
+          "cache_write": 3,
           "source": "nano-gpt"
         }
       ]
@@ -90557,6 +91885,19 @@
         }
       ]
     },
+    "nano-gpt\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.6,
+          "out": 4.8,
+          "cache_read": 0.4,
+          "cache_write": 1.6,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000grok-build-0.1": {
       "id": "grok-build-0.1",
       "rates": [
@@ -91711,6 +93052,45 @@
           "out": 0.8,
           "cache_read": 0.003,
           "cache_write": 0.4,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.0036,
+          "cache_write": 0,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000mimo-v2.6-pro-ultraspeed": {
+      "id": "mimo-v2.6-pro-ultraspeed",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 4.35,
+          "out": 8.7,
+          "cache_read": 0.036,
+          "cache_write": 0,
           "source": "nano-gpt"
         }
       ]
@@ -96068,6 +97448,19 @@
         }
       ]
     },
+    "neuralwatt\u0000deepseek-v4-flash-speed": {
+      "id": "deepseek-v4-flash-speed",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.028,
+          "cache_write": 0.14,
+          "source": "neuralwatt"
+        }
+      ]
+    },
     "neuralwatt\u0000deepseek-v4-pro": {
       "id": "deepseek-v4-pro",
       "rates": [
@@ -96077,6 +97470,32 @@
           "out": 3,
           "cache_read": 0.1,
           "cache_write": 1,
+          "source": "neuralwatt"
+        }
+      ]
+    },
+    "neuralwatt\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.015,
+          "cache_write": 0.15,
+          "source": "neuralwatt"
+        }
+      ]
+    },
+    "neuralwatt\u0000deepseek-v4.1-flash-flex": {
+      "id": "deepseek-v4.1-flash-flex",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.0975,
+          "out": 0.39,
+          "cache_read": 0.00975,
+          "cache_write": 0.0975,
           "source": "neuralwatt"
         }
       ]
@@ -96262,6 +97681,45 @@
         }
       ]
     },
+    "neuralwatt\u0000glm-5.3-flash": {
+      "id": "glm-5.3-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0.03,
+          "cache_write": 0.15,
+          "source": "neuralwatt"
+        }
+      ]
+    },
+    "neuralwatt\u0000glm-5.3-flash-flex": {
+      "id": "glm-5.3-flash-flex",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.0975,
+          "out": 0.325,
+          "cache_read": 0.0195,
+          "cache_write": 0.0975,
+          "source": "neuralwatt"
+        }
+      ]
+    },
+    "neuralwatt\u0000glm-5.3-flex": {
+      "id": "glm-5.3-flex",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.9425,
+          "out": 2.925,
+          "cache_read": 0.09425,
+          "cache_write": 0.9425,
+          "source": "neuralwatt"
+        }
+      ]
+    },
     "neuralwatt\u0000kimi-k2.5": {
       "id": "kimi-k2.5",
       "rates": [
@@ -96434,6 +97892,19 @@
         }
       ]
     },
+    "neuralwatt\u0000qwen-3.8-27b-flex": {
+      "id": "qwen-3.8-27b-flex",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.2925,
+          "out": 2.08,
+          "cache_read": 0.1625,
+          "cache_write": 0.2925,
+          "source": "neuralwatt"
+        }
+      ]
+    },
     "neuralwatt\u0000qwen3.5-397b-a17b-fp8": {
       "id": "qwen3.5-397b-a17b-fp8",
       "rates": [
@@ -96503,6 +97974,19 @@
           "out": 1.15,
           "cache_read": 0.029,
           "cache_write": 0.29,
+          "source": "neuralwatt"
+        }
+      ]
+    },
+    "neuralwatt\u0000qwen3.6-35b-flex": {
+      "id": "qwen3.6-35b-flex",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.1885,
+          "out": 0.7475,
+          "cache_read": 0.01885,
+          "cache_write": 0.1885,
           "source": "neuralwatt"
         }
       ]
@@ -103331,6 +104815,19 @@
         }
       ]
     },
+    "opencode\u0000mimo-v2.6-flash-free": {
+      "id": "mimo-v2.6-flash-free",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "opencode"
+        }
+      ]
+    },
     "opencode\u0000minimax-m2.1": {
       "id": "minimax-m2.1",
       "rates": [
@@ -103851,6 +105348,24 @@
         }
       ]
     },
+    "opencode-go\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 1,
+          "tier_cache_write": 4,
+          "source": "opencode-go"
+        }
+      ]
+    },
     "opencode-go\u0000hy3": {
       "id": "hy3",
       "rates": [
@@ -103999,6 +105514,32 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.003625,
+          "cache_write": 0.435,
+          "source": "opencode-go"
+        }
+      ]
+    },
+    "opencode-go\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0.14,
+          "source": "opencode-go"
+        }
+      ]
+    },
+    "opencode-go\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
           "in": 0.435,
           "out": 0.87,
           "cache_read": 0.003625,
@@ -104889,6 +106430,14 @@
           "cache_read": 0.022,
           "cache_write": 0.66,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.624,
+          "out": 2.88,
+          "cache_read": 0.088,
+          "cache_write": 0.624,
+          "source": "openrouter"
         }
       ]
     },
@@ -105052,6 +106601,14 @@
           "cache_read": 0.016,
           "cache_write": 0.04,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.03,
+          "out": 1,
+          "cache_read": 0.008,
+          "cache_write": 0.03,
+          "source": "openrouter"
         }
       ]
     },
@@ -105110,6 +106667,14 @@
           "from": "2026-09-21",
           "in": 0.04,
           "out": 0.16,
+          "cache_read": 0.016,
+          "cache_write": 0.04,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.04,
+          "out": 0.64,
           "cache_read": 0.016,
           "cache_write": 0.04,
           "source": "openrouter"
@@ -105939,6 +107504,14 @@
           "cache_read": 0.127075,
           "cache_write": 0.7735,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.6545,
+          "out": 2.057,
+          "cache_read": 0.107525,
+          "cache_write": 0.6545,
+          "source": "openrouter"
         }
       ]
     },
@@ -106223,6 +107796,14 @@
           "cache_read": 0.169,
           "cache_write": 0.91,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.84,
+          "out": 2.64,
+          "cache_read": 0.156,
+          "cache_write": 0.84,
+          "source": "openrouter"
         }
       ]
     },
@@ -106275,6 +107856,14 @@
           "out": 0.3,
           "cache_read": 0.018,
           "cache_write": 0.09,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0.05,
+          "cache_write": 0.15,
           "source": "openrouter"
         }
       ]
@@ -107223,6 +108812,14 @@
           "cache_read": 0.05,
           "cache_write": 0.1,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.06,
+          "out": 0.25,
+          "cache_read": 0.015,
+          "cache_write": 0.06,
+          "source": "openrouter"
         }
       ]
     },
@@ -107240,6 +108837,19 @@
           "tier_out": 12,
           "tier_cache_read": 1,
           "tier_cache_write": 4,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.6,
+          "out": 4.8,
+          "cache_read": 0.4,
+          "cache_write": 1.6,
+          "tier_threshold": 200000,
+          "tier_in": 3.2,
+          "tier_out": 9.6,
+          "tier_cache_read": 0.8,
+          "tier_cache_write": 3.2,
           "source": "openrouter"
         }
       ]
@@ -107330,6 +108940,24 @@
           "tier_out": 12,
           "tier_cache_read": 1,
           "tier_cache_write": 4,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.6,
+          "out": 4.8,
+          "cache_read": 0.4,
+          "cache_write": 1.6,
+          "tier_threshold": 200000,
+          "tier_in": 3.2,
+          "tier_out": 9.6,
+          "tier_cache_read": 0.8,
+          "tier_cache_write": 3.2,
           "source": "openrouter"
         }
       ]
@@ -107650,6 +109278,14 @@
           "cache_read": 0.17,
           "cache_write": 1.7,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.5,
+          "out": 7.5,
+          "cache_read": 0.15,
+          "cache_write": 1.5,
+          "source": "openrouter"
         }
       ]
     },
@@ -107792,6 +109428,14 @@
           "cache_read": 0.18,
           "cache_write": 0.7062,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.7062,
+          "out": 3.3,
+          "cache_read": 0.18,
+          "cache_write": 0.7062,
+          "source": "openrouter"
         }
       ]
     },
@@ -107852,6 +109496,14 @@
           "out": 8.5,
           "cache_read": 0.17,
           "cache_write": 1.7,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3,
           "source": "openrouter"
         }
       ]
@@ -108020,6 +109672,14 @@
           "cache_read": 0,
           "cache_write": 0.72,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.4,
+          "out": 0.4,
+          "cache_read": 0,
+          "cache_write": 0.4,
+          "source": "openrouter"
         }
       ]
     },
@@ -108116,6 +109776,14 @@
           "out": 0.8,
           "cache_read": 0,
           "cache_write": 0.2,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.1875,
+          "out": 0.6525,
+          "cache_read": 0,
+          "cache_write": 0.1875,
           "source": "openrouter"
         }
       ]
@@ -108275,6 +109943,45 @@
           "out": 0.87,
           "cache_read": 0.0036,
           "cache_write": 0.435,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0.14,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.0036,
+          "cache_write": 0.435,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000mimo-v2.6-pro-ultraspeed": {
+      "id": "mimo-v2.6-pro-ultraspeed",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 4.35,
+          "out": 8.7,
+          "cache_read": 0.036,
+          "cache_write": 4.35,
           "source": "openrouter"
         }
       ]
@@ -108850,6 +110557,14 @@
           "out": 0.24,
           "cache_read": 0,
           "cache_write": 0.06,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.05,
+          "out": 0.2,
+          "cache_read": 0.03,
+          "cache_write": 0.05,
           "source": "openrouter"
         }
       ]
@@ -110668,6 +112383,20 @@
         }
       ]
     },
+    "opper\u0000claude-fable-5-1": {
+      "id": "claude-fable-5-1",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 10,
+          "out": 50,
+          "cache_read": 0.25,
+          "cache_write": 12.5,
+          "cache_write_1h": 20,
+          "source": "opper"
+        }
+      ]
+    },
     "opper\u0000claude-haiku-4-5": {
       "id": "claude-haiku-4-5",
       "rates": [
@@ -110678,6 +112407,15 @@
           "cache_read": 0.1,
           "cache_write": 1.25,
           "cache_write_1h": 2,
+          "source": "opper"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.1,
+          "out": 5.5,
+          "cache_read": 0.11,
+          "cache_write": 1.375,
+          "cache_write_1h": 2.2,
           "source": "opper"
         }
       ]
@@ -110721,6 +112459,15 @@
           "cache_write": 6.25,
           "cache_write_1h": 10,
           "source": "opper"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 5.5,
+          "out": 27.5,
+          "cache_read": 0.55,
+          "cache_write": 6.875,
+          "cache_write_1h": 11,
+          "source": "opper"
         }
       ]
     },
@@ -110749,6 +112496,15 @@
           "cache_write": 6.25,
           "cache_write_1h": 10,
           "source": "opper"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 5.5,
+          "out": 27.5,
+          "cache_read": 0.55,
+          "cache_write": 6.875,
+          "cache_write_1h": 11,
+          "source": "opper"
         }
       ]
     },
@@ -110762,6 +112518,20 @@
           "cache_read": 0.3,
           "cache_write": 3.75,
           "cache_write_1h": 6,
+          "source": "opper"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 3.3,
+          "out": 16.5,
+          "cache_read": 0.33,
+          "cache_write": 4.125,
+          "cache_write_1h": 6.6,
+          "tier_threshold": 200000,
+          "tier_in": 6.6,
+          "tier_out": 24.75,
+          "tier_cache_read": 0.66,
+          "tier_cache_write": 8.25,
           "source": "opper"
         }
       ]
@@ -110777,6 +112547,15 @@
           "cache_write": 3.75,
           "cache_write_1h": 6,
           "source": "opper"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 3.3,
+          "out": 16.5,
+          "cache_read": 0.33,
+          "cache_write": 4.125,
+          "cache_write_1h": 6.6,
+          "source": "opper"
         }
       ]
     },
@@ -110790,6 +112569,41 @@
           "cache_read": 0.2,
           "cache_write": 2.5,
           "cache_write_1h": 4,
+          "source": "opper"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 2.2,
+          "out": 11,
+          "cache_read": 0.22,
+          "cache_write": 2.75,
+          "cache_write_1h": 4.4,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000deepseek-v4-flash": {
+      "id": "deepseek-v4-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.25,
+          "out": 0.66,
+          "cache_read": 0,
+          "cache_write": 0.25,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000deepseek-v4-pro": {
+      "id": "deepseek-v4-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.78812,
+          "out": 3.57624,
+          "cache_read": 0,
+          "cache_write": 1.78812,
           "source": "opper"
         }
       ]
@@ -110886,6 +112700,71 @@
           "out": 3.75,
           "cache_read": 0.075,
           "cache_write": 0.75,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000gemini-3.8-flash": {
+      "id": "gemini-3.8-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.825,
+          "out": 4.125,
+          "cache_read": 0.0825,
+          "cache_write": 0.825,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000gemma-4-31b-it": {
+      "id": "gemma-4-31b-it",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.46488,
+          "out": 2.44062,
+          "cache_read": 0,
+          "cache_write": 0.46488,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000glm-5.2": {
+      "id": "glm-5.2",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.62708,
+          "out": 5.811,
+          "cache_read": 0,
+          "cache_write": 1.62708,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000glm-5.3": {
+      "id": "glm-5.3",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.75,
+          "out": 4.6488,
+          "cache_read": 0.44,
+          "cache_write": 1.75,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000glm-5.3-flash": {
+      "id": "glm-5.3-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.2,
+          "out": 0.5,
+          "cache_read": 0.07,
+          "cache_write": 0.2,
           "source": "opper"
         }
       ]
@@ -111009,6 +112888,14 @@
           "tier_out": 270,
           "tier_cache_write": 60,
           "source": "opper"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 30,
+          "out": 180,
+          "cache_read": 0,
+          "cache_write": 30,
+          "source": "opper"
         }
       ]
     },
@@ -111066,6 +112953,50 @@
         }
       ]
     },
+    "opper\u0000gpt-6-astra": {
+      "id": "gpt-6-astra",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 10,
+          "out": 50,
+          "cache_read": 1,
+          "cache_write": 12.5,
+          "tier_threshold": 272000,
+          "tier_in": 20,
+          "tier_out": 75,
+          "tier_cache_read": 2,
+          "tier_cache_write": 25,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000gpt-oss-120b": {
+      "id": "gpt-oss-120b",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.1622,
+          "out": 4.88124,
+          "cache_read": 0,
+          "cache_write": 1.1622,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000gpt-oss-20b": {
+      "id": "gpt-oss-20b",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.11622,
+          "out": 0.488124,
+          "cache_read": 0,
+          "cache_write": 0.11622,
+          "source": "opper"
+        }
+      ]
+    },
     "opper\u0000grok-4.3": {
       "id": "grok-4.3",
       "rates": [
@@ -111080,6 +113011,14 @@
           "tier_out": 5,
           "tier_cache_read": 0.4,
           "tier_cache_write": 2.5,
+          "source": "opper"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
           "source": "opper"
         }
       ]
@@ -111098,6 +113037,14 @@
           "tier_out": 12,
           "tier_cache_read": 0.6,
           "tier_cache_write": 4,
+          "source": "opper"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
           "source": "opper"
         }
       ]
@@ -111135,6 +113082,14 @@
           "tier_cache_read": 0.4,
           "tier_cache_write": 2,
           "source": "opper"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1,
+          "out": 2,
+          "cache_read": 0.2,
+          "cache_write": 1,
+          "source": "opper"
         }
       ]
     },
@@ -111148,6 +113103,14 @@
           "cache_read": 0.3,
           "cache_write": 3,
           "source": "opper"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0,
+          "cache_write": 3,
+          "source": "opper"
         }
       ]
     },
@@ -111156,6 +113119,37 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 0.6,
+          "out": 2.4,
+          "cache_read": 0.12,
+          "cache_write": 0.6,
+          "tier_threshold": 524288,
+          "tier_in": 1.2,
+          "tier_out": 4.8,
+          "tier_cache_read": 0.24,
+          "tier_cache_write": 1.2,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000minimax-m2.7": {
+      "id": "minimax-m2.7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.69732,
+          "out": 2.78928,
+          "cache_read": 0,
+          "cache_write": 0.69732,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000minimax-m3": {
+      "id": "minimax-m3",
+      "rates": [
+        {
+          "from": "2026-09-22",
           "in": 0.6,
           "out": 2.4,
           "cache_read": 0.12,
@@ -111192,6 +113186,14 @@
           "cache_read": 0,
           "cache_write": 0.15,
           "source": "opper"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.5811,
+          "out": 2.44062,
+          "cache_read": 0,
+          "cache_write": 0.5811,
+          "source": "opper"
         }
       ]
     },
@@ -111204,6 +113206,84 @@
           "out": 4.25,
           "cache_read": 0.15,
           "cache_write": 1.25,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000muse-spark-1.3": {
+      "id": "muse-spark-1.3",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.25,
+          "out": 4.25,
+          "cache_read": 0.15,
+          "cache_write": 1.25,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000qwen3-coder-next": {
+      "id": "qwen3-coder-next",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.5811,
+          "out": 2.3244,
+          "cache_read": 0,
+          "cache_write": 0.5811,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000qwen3.6-35b-a3b": {
+      "id": "qwen3.6-35b-a3b",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.248,
+          "out": 1.485,
+          "cache_read": 0,
+          "cache_write": 0.248,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000qwen3.8-2.4t-a95b": {
+      "id": "qwen3.8-2.4t-a95b",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2.5,
+          "out": 6,
+          "cache_read": 0.63,
+          "cache_write": 2.5,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000qwen3.8-27b": {
+      "id": "qwen3.8-27b",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.5811,
+          "out": 3,
+          "cache_read": 0,
+          "cache_write": 0.5811,
+          "source": "opper"
+        }
+      ]
+    },
+    "opper\u0000qwen3.8-max": {
+      "id": "qwen3.8-max",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.25,
+          "cache_write": 2,
           "source": "opper"
         }
       ]
@@ -121994,6 +124074,14 @@
           "cache_read": 0,
           "cache_write": 0.27,
           "source": "siliconflow"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.27,
+          "out": 0.42,
+          "cache_read": 0.135,
+          "cache_write": 0.27,
+          "source": "siliconflow"
         }
       ]
     },
@@ -122020,6 +124108,40 @@
           "cache_read": 0.028,
           "cache_write": 0.14,
           "source": "siliconflow"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.13,
+          "out": 0.28,
+          "cache_read": 0.028,
+          "cache_write": 0.13,
+          "source": "siliconflow"
+        }
+      ]
+    },
+    "siliconflow\u0000deepseek-v4-flash-0731": {
+      "id": "deepseek-v4-flash-0731",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.22,
+          "out": 0.66,
+          "cache_read": 0.014,
+          "cache_write": 0.22,
+          "source": "siliconflow"
+        }
+      ]
+    },
+    "siliconflow\u0000deepseek-v4-flash-vision-exp": {
+      "id": "deepseek-v4-flash-vision-exp",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.44,
+          "out": 1.32,
+          "cache_read": 0.028,
+          "cache_write": 0.44,
+          "source": "siliconflow"
         }
       ]
     },
@@ -122033,6 +124155,27 @@
           "cache_read": 0.145,
           "cache_write": 1.74,
           "source": "siliconflow"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.50162,
+          "out": 3.135,
+          "cache_read": 0.135,
+          "cache_write": 1.50162,
+          "source": "siliconflow"
+        }
+      ]
+    },
+    "siliconflow\u0000deepseek-v4-pro-0813": {
+      "id": "deepseek-v4-pro-0813",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.32,
+          "out": 3.96,
+          "cache_read": 0.044,
+          "cache_write": 1.32,
+          "source": "siliconflow"
         }
       ]
     },
@@ -122045,6 +124188,19 @@
           "out": 1.1,
           "cache_read": 0,
           "cache_write": 0.28,
+          "source": "siliconflow"
+        }
+      ]
+    },
+    "siliconflow\u0000gemma-4-12b-it": {
+      "id": "gemma-4-12b-it",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.1,
+          "out": 0.3,
+          "cache_read": 0,
+          "cache_write": 0.1,
           "source": "siliconflow"
         }
       ]
@@ -122111,6 +124267,14 @@
           "cache_read": 0.26,
           "cache_write": 0,
           "source": "siliconflow"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.19,
+          "out": 3.74,
+          "cache_read": 0.6,
+          "cache_write": 0,
+          "source": "siliconflow"
         }
       ]
     },
@@ -122122,6 +124286,40 @@
           "in": 1.4,
           "out": 4.4,
           "cache_read": 0.26,
+          "cache_write": 0,
+          "source": "siliconflow"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.302,
+          "out": 4.092,
+          "cache_read": 0.26,
+          "cache_write": 0,
+          "source": "siliconflow"
+        }
+      ]
+    },
+    "siliconflow\u0000glm-5.3": {
+      "id": "glm-5.3",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.26,
+          "cache_write": 0,
+          "source": "siliconflow"
+        }
+      ]
+    },
+    "siliconflow\u0000glm-5.3-flash": {
+      "id": "glm-5.3-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0.03,
           "cache_write": 0,
           "source": "siliconflow"
         }
@@ -122179,6 +124377,19 @@
         }
       ]
     },
+    "siliconflow\u0000hy3": {
+      "id": "hy3",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.132,
+          "out": 0.528,
+          "cache_read": 0.033,
+          "cache_write": 0.132,
+          "source": "siliconflow"
+        }
+      ]
+    },
     "siliconflow\u0000hy3-preview": {
       "id": "hy3-preview",
       "rates": [
@@ -122215,6 +124426,40 @@
           "cache_read": 0.2,
           "cache_write": 0.77,
           "source": "siliconflow"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.77,
+          "out": 3.4,
+          "cache_read": 0.14,
+          "cache_write": 0.77,
+          "source": "siliconflow"
+        }
+      ]
+    },
+    "siliconflow\u0000kimi-k2.7-code": {
+      "id": "kimi-k2.7-code",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.85916,
+          "out": 3.8,
+          "cache_read": 0.17993,
+          "cache_write": 0.85916,
+          "source": "siliconflow"
+        }
+      ]
+    },
+    "siliconflow\u0000kimi-k3": {
+      "id": "kimi-k3",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2.7,
+          "out": 13.5,
+          "cache_read": 0.27,
+          "cache_write": 2.7,
+          "source": "siliconflow"
         }
       ]
     },
@@ -122231,6 +124476,19 @@
         }
       ]
     },
+    "siliconflow\u0000longcat-2.0": {
+      "id": "longcat-2.0",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.75,
+          "out": 2.95,
+          "cache_read": 0.015,
+          "cache_write": 0.75,
+          "source": "siliconflow"
+        }
+      ]
+    },
     "siliconflow\u0000minimax-m2.5": {
       "id": "minimax-m2.5",
       "rates": [
@@ -122240,6 +124498,32 @@
           "out": 1.2,
           "cache_read": 0.03,
           "cache_write": 0.3,
+          "source": "siliconflow"
+        }
+      ]
+    },
+    "siliconflow\u0000minimax-m3": {
+      "id": "minimax-m3",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.06,
+          "cache_write": 0.3,
+          "source": "siliconflow"
+        }
+      ]
+    },
+    "siliconflow\u0000nex-n2-pro": {
+      "id": "nex-n2-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.5,
+          "out": 2.5,
+          "cache_read": 0.25,
+          "cache_write": 0.5,
           "source": "siliconflow"
         }
       ]
@@ -122539,6 +124823,19 @@
           "out": 1.6,
           "cache_read": 0,
           "cache_write": 0.2,
+          "source": "siliconflow"
+        }
+      ]
+    },
+    "siliconflow\u0000qwen3.8-2.4t-a95b": {
+      "id": "qwen3.8-2.4t-a95b",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.25,
+          "cache_write": 2,
           "source": "siliconflow"
         }
       ]
@@ -123375,6 +125672,19 @@
         }
       ]
     },
+    "stepfun-ai\u0000step-5-preview": {
+      "id": "step-5-preview",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1,
+          "out": 2.7,
+          "cache_read": 0.05,
+          "cache_write": 1,
+          "source": "stepfun-ai"
+        }
+      ]
+    },
     "subconscious\u0000glm-5.2": {
       "id": "glm-5.2",
       "rates": [
@@ -123645,6 +125955,381 @@
           "cache_read": 0.45,
           "cache_write": 0.45,
           "source": "synthetic"
+        }
+      ]
+    },
+    "tempr\u0000claude-fable-5": {
+      "id": "claude-fable-5",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 10,
+          "out": 50,
+          "cache_read": 1,
+          "cache_write": 12.5,
+          "cache_write_1h": 20,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000claude-fable-5-1": {
+      "id": "claude-fable-5-1",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 10,
+          "out": 50,
+          "cache_read": 0.25,
+          "cache_write": 12.5,
+          "cache_write_1h": 20,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000claude-haiku-4-5": {
+      "id": "claude-haiku-4-5",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1,
+          "out": 5,
+          "cache_read": 0.1,
+          "cache_write": 1.25,
+          "cache_write_1h": 2,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000claude-haiku-4-5-20251001": {
+      "id": "claude-haiku-4-5-20251001",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1,
+          "out": 5,
+          "cache_read": 0.1,
+          "cache_write": 1.25,
+          "cache_write_1h": 2,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000claude-opus-4-5": {
+      "id": "claude-opus-4-5",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 5,
+          "out": 25,
+          "cache_read": 0.5,
+          "cache_write": 6.25,
+          "cache_write_1h": 10,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000claude-opus-4-5-20251101": {
+      "id": "claude-opus-4-5-20251101",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 5,
+          "out": 25,
+          "cache_read": 0.5,
+          "cache_write": 6.25,
+          "cache_write_1h": 10,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000claude-opus-4-6": {
+      "id": "claude-opus-4-6",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 5,
+          "out": 25,
+          "cache_read": 0.5,
+          "cache_write": 6.25,
+          "cache_write_1h": 10,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000claude-opus-4-7": {
+      "id": "claude-opus-4-7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 5,
+          "out": 25,
+          "cache_read": 0.5,
+          "cache_write": 6.25,
+          "cache_write_1h": 10,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000claude-opus-4-8": {
+      "id": "claude-opus-4-8",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 5,
+          "out": 25,
+          "cache_read": 0.5,
+          "cache_write": 6.25,
+          "cache_write_1h": 10,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000claude-opus-5": {
+      "id": "claude-opus-5",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 5,
+          "out": 25,
+          "cache_read": 0.5,
+          "cache_write": 6.25,
+          "cache_write_1h": 10,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000claude-sonnet-4-5": {
+      "id": "claude-sonnet-4-5",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3.75,
+          "cache_write_1h": 6,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000claude-sonnet-4-5-20250929": {
+      "id": "claude-sonnet-4-5-20250929",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3.75,
+          "cache_write_1h": 6,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000claude-sonnet-4-6": {
+      "id": "claude-sonnet-4-6",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3.75,
+          "cache_write_1h": 6,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000claude-sonnet-5": {
+      "id": "claude-sonnet-5",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "cache_write_1h": 4,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000gemini-3-flash-preview": {
+      "id": "gemini-3-flash-preview",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.5,
+          "out": 3,
+          "cache_read": 0.05,
+          "cache_write": 0.5,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000gemini-3.1-flash-lite": {
+      "id": "gemini-3.1-flash-lite",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.25,
+          "out": 1.5,
+          "cache_read": 0.025,
+          "cache_write": 0.25,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000gemini-3.1-pro-preview": {
+      "id": "gemini-3.1-pro-preview",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 12,
+          "cache_read": 0.2,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 4,
+          "tier_out": 18,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 4,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000gemini-3.1-pro-preview-customtools": {
+      "id": "gemini-3.1-pro-preview-customtools",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 12,
+          "cache_read": 0.2,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 4,
+          "tier_out": 18,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 4,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000gemini-3.5-flash": {
+      "id": "gemini-3.5-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.5,
+          "out": 9,
+          "cache_read": 0.15,
+          "cache_write": 1.5,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000gemini-3.5-flash-lite": {
+      "id": "gemini-3.5-flash-lite",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.3,
+          "out": 2.5,
+          "cache_read": 0.03,
+          "cache_write": 0.3,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000gemini-3.6-flash": {
+      "id": "gemini-3.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.75,
+          "out": 3.75,
+          "cache_read": 0.075,
+          "cache_write": 0.75,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000gemini-3.7-flash": {
+      "id": "gemini-3.7-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.75,
+          "out": 3.75,
+          "cache_read": 0.075,
+          "cache_write": 0.75,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000gemini-3.8-flash": {
+      "id": "gemini-3.8-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.75,
+          "out": 3.75,
+          "cache_read": 0.075,
+          "cache_write": 0.75,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000gemini-embedding-001": {
+      "id": "gemini-embedding-001",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.15,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0.15,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000gemini-embedding-2": {
+      "id": "gemini-embedding-2",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.2,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0.2,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000gemini-flash": {
+      "id": "gemini-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.75,
+          "out": 3.75,
+          "cache_read": 0.075,
+          "cache_write": 0.75,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000gemini-flash-lite": {
+      "id": "gemini-flash-lite",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.3,
+          "out": 2.5,
+          "cache_read": 0.03,
+          "cache_write": 0.3,
+          "source": "tempr"
         }
       ]
     },
@@ -126305,6 +128990,24 @@
         }
       ]
     },
+    "venice\u0000grok-4-7": {
+      "id": "grok-4-7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2.27,
+          "out": 6.8,
+          "cache_read": 0.57,
+          "cache_write": 2.27,
+          "tier_threshold": 200000,
+          "tier_in": 4.53,
+          "tier_out": 13.6,
+          "tier_cache_read": 1.13,
+          "tier_cache_write": 4.53,
+          "source": "venice"
+        }
+      ]
+    },
     "venice\u0000grok-build-0-1": {
       "id": "grok-build-0-1",
       "rates": [
@@ -127581,6 +130284,20 @@
           "cache_write": 3.75,
           "cache_write_1h": 6,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3.75,
+          "cache_write_1h": 6,
+          "tier_threshold": 200001,
+          "tier_in": 6,
+          "tier_out": 22.5,
+          "tier_cache_read": 0.6,
+          "tier_cache_write": 7.5,
+          "source": "vercel"
         }
       ]
     },
@@ -127842,6 +130559,14 @@
           "cache_read": 0.03,
           "cache_write": 0.3,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.007,
+          "cache_write": 0.3,
+          "source": "vercel"
         }
       ]
     },
@@ -127907,6 +130632,19 @@
           "cache_read": 0.5,
           "cache_write": 5,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 5,
+          "out": 30,
+          "cache_read": 0.5,
+          "cache_write": 5,
+          "tier_threshold": 272001,
+          "tier_in": 10,
+          "tier_out": 45,
+          "tier_cache_read": 1,
+          "tier_cache_write": 10,
+          "source": "vercel"
         }
       ]
     },
@@ -127919,6 +130657,19 @@
           "out": 30,
           "cache_read": 0.5,
           "cache_write": 5,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 5,
+          "out": 30,
+          "cache_read": 0.5,
+          "cache_write": 5,
+          "tier_threshold": 272001,
+          "tier_in": 10,
+          "tier_out": 45,
+          "tier_cache_read": 1,
+          "tier_cache_write": 10,
           "source": "vercel"
         }
       ]
@@ -128067,6 +130818,19 @@
           "out": 12,
           "cache_read": 0.2,
           "cache_write": 2,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 12,
+          "cache_read": 0.2,
+          "cache_write": 2,
+          "tier_threshold": 200001,
+          "tier_in": 4,
+          "tier_out": 18,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 4,
           "source": "vercel"
         }
       ]
@@ -128890,6 +131654,19 @@
           "cache_read": 0.25,
           "cache_write": 2.5,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 2.5,
+          "out": 15,
+          "cache_read": 0.25,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 5,
+          "tier_out": 22.5,
+          "tier_cache_read": 0.5,
+          "tier_cache_write": 5,
+          "source": "vercel"
         }
       ]
     },
@@ -128955,6 +131732,18 @@
           "cache_read": 0,
           "cache_write": 30,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 30,
+          "out": 180,
+          "cache_read": 0,
+          "cache_write": 30,
+          "tier_threshold": 272000,
+          "tier_in": 60,
+          "tier_out": 270,
+          "tier_cache_write": 60,
+          "source": "vercel"
         }
       ]
     },
@@ -128967,6 +131756,19 @@
           "out": 30,
           "cache_read": 0.5,
           "cache_write": 5,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 5,
+          "out": 30,
+          "cache_read": 0.5,
+          "cache_write": 5,
+          "tier_threshold": 272000,
+          "tier_in": 10,
+          "tier_out": 45,
+          "tier_cache_read": 1,
+          "tier_cache_write": 10,
           "source": "vercel"
         }
       ]
@@ -128994,6 +131796,18 @@
           "cache_read": 0,
           "cache_write": 30,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 30,
+          "out": 180,
+          "cache_read": 0,
+          "cache_write": 30,
+          "tier_threshold": 272000,
+          "tier_in": 60,
+          "tier_out": 270,
+          "tier_cache_write": 60,
+          "source": "vercel"
         }
       ]
     },
@@ -129006,6 +131820,19 @@
           "out": 1.2,
           "cache_read": 0.02,
           "cache_write": 0.25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.2,
+          "out": 1.2,
+          "cache_read": 0.02,
+          "cache_write": 0.25,
+          "tier_threshold": 272000,
+          "tier_in": 0.4,
+          "tier_out": 1.8,
+          "tier_cache_read": 0.04,
+          "tier_cache_write": 0.5,
           "source": "vercel"
         }
       ]
@@ -129028,6 +131855,19 @@
           "cache_read": 0.04,
           "cache_write": 0.5,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.4,
+          "out": 2.4,
+          "cache_read": 0.04,
+          "cache_write": 0.5,
+          "tier_threshold": 272000,
+          "tier_in": 0.8,
+          "tier_out": 3.6,
+          "tier_cache_read": 0.08,
+          "tier_cache_write": 1,
+          "source": "vercel"
         }
       ]
     },
@@ -129048,6 +131888,19 @@
           "out": 20,
           "cache_read": 0.4,
           "cache_write": 5,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.4,
+          "cache_write": 5,
+          "tier_threshold": 272000,
+          "tier_in": 8,
+          "tier_out": 30,
+          "tier_cache_read": 0.8,
+          "tier_cache_write": 10,
           "source": "vercel"
         }
       ]
@@ -129078,6 +131931,19 @@
           "cache_read": 0.8,
           "cache_write": 10,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 8,
+          "out": 40,
+          "cache_read": 0.8,
+          "cache_write": 10,
+          "tier_threshold": 272000,
+          "tier_in": 16,
+          "tier_out": 60,
+          "tier_cache_read": 1.6,
+          "tier_cache_write": 20,
+          "source": "vercel"
         }
       ]
     },
@@ -129090,6 +131956,19 @@
           "out": 12,
           "cache_read": 0.2,
           "cache_write": 2.5,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 12,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 18,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
           "source": "vercel"
         }
       ]
@@ -129111,6 +131990,19 @@
           "out": 24,
           "cache_read": 0.4,
           "cache_write": 5,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 4,
+          "out": 24,
+          "cache_read": 0.4,
+          "cache_write": 5,
+          "tier_threshold": 272000,
+          "tier_in": 8,
+          "tier_out": 36,
+          "tier_cache_read": 0.8,
+          "tier_cache_write": 10,
           "source": "vercel"
         }
       ]
@@ -129147,6 +132039,19 @@
           "tier_out": 150,
           "tier_cache_read": 4,
           "tier_cache_write": 25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 20,
+          "out": 100,
+          "cache_read": 2,
+          "cache_write": 25,
+          "tier_threshold": 272001,
+          "tier_in": 40,
+          "tier_out": 150,
+          "tier_cache_read": 4,
+          "tier_cache_write": 50,
           "source": "vercel"
         }
       ]
@@ -129377,6 +132282,19 @@
           "cache_read": 0.2,
           "cache_write": 1.25,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200001,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
+          "source": "vercel"
         }
       ]
     },
@@ -129389,6 +132307,19 @@
           "out": 2.5,
           "cache_read": 0.2,
           "cache_write": 1.25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200001,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
           "source": "vercel"
         }
       ]
@@ -129403,6 +132334,19 @@
           "cache_read": 0.2,
           "cache_write": 1.25,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200001,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
+          "source": "vercel"
         }
       ]
     },
@@ -129415,6 +132359,19 @@
           "out": 2.5,
           "cache_read": 0.4,
           "cache_write": 1.25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.4,
+          "cache_write": 1.25,
+          "tier_threshold": 200001,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
           "source": "vercel"
         }
       ]
@@ -129429,6 +132386,19 @@
           "cache_read": 0.2,
           "cache_write": 1.25,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200001,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
+          "source": "vercel"
         }
       ]
     },
@@ -129441,6 +132411,19 @@
           "out": 2.5,
           "cache_read": 0.2,
           "cache_write": 1.25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200001,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
           "source": "vercel"
         }
       ]
@@ -129455,6 +132438,19 @@
           "cache_read": 0.2,
           "cache_write": 1.25,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.25,
+          "out": 2.5,
+          "cache_read": 0.2,
+          "cache_write": 1.25,
+          "tier_threshold": 200001,
+          "tier_in": 2.5,
+          "tier_out": 5,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2.5,
+          "source": "vercel"
         }
       ]
     },
@@ -129467,6 +132463,19 @@
           "out": 6,
           "cache_read": 0.3,
           "cache_write": 2,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.3,
+          "cache_write": 2,
+          "tier_threshold": 200001,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 0.6,
+          "tier_cache_write": 4,
           "source": "vercel"
         }
       ]
@@ -129481,6 +132490,37 @@
           "cache_read": 0.5,
           "cache_write": 2,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "tier_threshold": 200001,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 1,
+          "tier_cache_write": 4,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 1.2,
+          "out": 3.6,
+          "cache_read": 0.3,
+          "cache_write": 1.2,
+          "tier_threshold": 200001,
+          "tier_in": 2.4,
+          "tier_out": 7.2,
+          "tier_cache_read": 0.6,
+          "tier_cache_write": 2.4,
+          "source": "vercel"
         }
       ]
     },
@@ -129493,6 +132533,19 @@
           "out": 2,
           "cache_read": 0.2,
           "cache_write": 1,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1,
+          "out": 2,
+          "cache_read": 0.2,
+          "cache_write": 1,
+          "tier_threshold": 200001,
+          "tier_in": 2,
+          "tier_out": 4,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 2,
           "source": "vercel"
         }
       ]
@@ -130058,6 +133111,45 @@
           "out": 2.61,
           "cache_read": 0.0108,
           "cache_write": 1.305,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0.14,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.0036,
+          "cache_write": 0.435,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000mimo-v2.6-pro-ultraspeed": {
+      "id": "mimo-v2.6-pro-ultraspeed",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 4.35,
+          "out": 8.7,
+          "cache_read": 0.036,
+          "cache_write": 4.35,
           "source": "vercel"
         }
       ]
@@ -130773,6 +133865,19 @@
           "cache_read": 0.13,
           "cache_write": 1.625,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.3,
+          "out": 7.8,
+          "cache_read": 0.13,
+          "cache_write": 1.625,
+          "tier_threshold": 128000,
+          "tier_in": 2,
+          "tier_out": 12,
+          "tier_cache_read": 0.2,
+          "tier_cache_write": 2.5,
+          "source": "vercel"
         }
       ]
     },
@@ -130798,6 +133903,19 @@
           "out": 7.5,
           "cache_read": 0.3,
           "cache_write": 1.5,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.5,
+          "out": 7.5,
+          "cache_read": 0.3,
+          "cache_write": 1.5,
+          "tier_threshold": 32001,
+          "tier_in": 2.7,
+          "tier_out": 13.5,
+          "tier_cache_read": 0.54,
+          "tier_cache_write": 2.7,
           "source": "vercel"
         }
       ]
@@ -130838,6 +133956,19 @@
           "cache_read": 0.2,
           "cache_write": 1,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1,
+          "out": 5,
+          "cache_read": 0.2,
+          "cache_write": 1,
+          "tier_threshold": 32001,
+          "tier_in": 1.8,
+          "tier_out": 9,
+          "tier_cache_read": 0.36,
+          "tier_cache_write": 1.8,
+          "source": "vercel"
         }
       ]
     },
@@ -130850,6 +133981,19 @@
           "out": 6,
           "cache_read": 0.24,
           "cache_write": 1.2,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.2,
+          "out": 6,
+          "cache_read": 0.24,
+          "cache_write": 1.2,
+          "tier_threshold": 32001,
+          "tier_in": 2.4,
+          "tier_out": 12,
+          "tier_cache_read": 0.48,
+          "tier_cache_write": 2.4,
           "source": "vercel"
         }
       ]
@@ -130864,6 +134008,19 @@
           "cache_read": 0.24,
           "cache_write": 1.2,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.2,
+          "out": 6,
+          "cache_read": 0.24,
+          "cache_write": 1.2,
+          "tier_threshold": 32001,
+          "tier_in": 2.4,
+          "tier_out": 12,
+          "tier_cache_read": 0.48,
+          "tier_cache_write": 2.4,
+          "source": "vercel"
         }
       ]
     },
@@ -130876,6 +134033,19 @@
           "out": 6,
           "cache_read": 0.24,
           "cache_write": 1.2,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 1.2,
+          "out": 6,
+          "cache_read": 0.24,
+          "cache_write": 1.2,
+          "tier_threshold": 32001,
+          "tier_in": 2.4,
+          "tier_out": 12,
+          "tier_cache_read": 0.48,
+          "tier_cache_write": 2.4,
           "source": "vercel"
         }
       ]
@@ -130984,6 +134154,19 @@
           "cache_read": 0.04,
           "cache_write": 0.5,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.4,
+          "out": 2.5,
+          "cache_read": 0.04,
+          "cache_write": 0.5,
+          "tier_threshold": 256001,
+          "tier_in": 0.5,
+          "tier_out": 3,
+          "tier_cache_read": 0.05,
+          "tier_cache_write": 0.625,
+          "source": "vercel"
         }
       ]
     },
@@ -131018,6 +134201,19 @@
           "cache_read": 0.05,
           "cache_write": 0.625,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.5,
+          "out": 3,
+          "cache_read": 0.05,
+          "cache_write": 0.625,
+          "tier_threshold": 256000,
+          "tier_in": 2,
+          "tier_out": 6,
+          "tier_cache_read": 0.2,
+          "tier_cache_write": 2.5,
+          "source": "vercel"
         }
       ]
     },
@@ -131030,6 +134226,19 @@
           "out": 0.13,
           "cache_read": 0.006,
           "cache_write": 0.038,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.03,
+          "out": 0.13,
+          "cache_read": 0.006,
+          "cache_write": 0.038,
+          "tier_threshold": 32000,
+          "tier_in": 0.1,
+          "tier_out": 0.4,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.125,
           "source": "vercel"
         }
       ]
@@ -131056,6 +134265,19 @@
           "out": 1.6,
           "cache_read": 0.08,
           "cache_write": 0.5,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.4,
+          "out": 1.6,
+          "cache_read": 0.08,
+          "cache_write": 0.5,
+          "tier_threshold": 256000,
+          "tier_in": 1.2,
+          "tier_out": 4.8,
+          "tier_cache_read": 0.24,
+          "tier_cache_write": 1.5,
           "source": "vercel"
         }
       ]
@@ -131219,6 +134441,19 @@
           "cache_read": 0.05,
           "cache_write": 0.25,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.25,
+          "out": 2,
+          "cache_read": 0.05,
+          "cache_write": 0.25,
+          "tier_threshold": 128001,
+          "tier_in": 0.5,
+          "tier_out": 4,
+          "tier_cache_read": 0.05,
+          "tier_cache_write": 0.5,
+          "source": "vercel"
         }
       ]
     },
@@ -131231,6 +134466,19 @@
           "out": 2,
           "cache_read": 0.05,
           "cache_write": 0.25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-22",
+          "in": 0.25,
+          "out": 2,
+          "cache_read": 0.05,
+          "cache_write": 0.25,
+          "tier_threshold": 128001,
+          "tier_in": 0.5,
+          "tier_out": 4,
+          "tier_cache_read": 0.05,
+          "tier_cache_write": 0.5,
           "source": "vercel"
         }
       ]
@@ -131676,6 +134924,19 @@
         }
       ]
     },
+    "vivgrid\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.31,
+          "out": 1.23,
+          "cache_read": 0.01,
+          "cache_write": 0.31,
+          "source": "vivgrid"
+        }
+      ]
+    },
     "vivgrid\u0000gemini-3.1-flash-lite-preview": {
       "id": "gemini-3.1-flash-lite-preview",
       "rates": [
@@ -131973,6 +135234,19 @@
           "out": 15,
           "cache_read": 0.3,
           "cache_write": 3,
+          "source": "vivgrid"
+        }
+      ]
+    },
+    "vivgrid\u0000viv-fast": {
+      "id": "viv-fast",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.13,
+          "out": 0.4,
+          "cache_read": 0.05,
+          "cache_write": 0.13,
           "source": "vivgrid"
         }
       ]
@@ -132637,6 +135911,19 @@
         }
       ]
     },
+    "wandb\u0000deepseek-v4.1-flash": {
+      "id": "deepseek-v4.1-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.2,
+          "out": 0.65,
+          "cache_read": 0.03,
+          "cache_write": 0.2,
+          "source": "wandb"
+        }
+      ]
+    },
     "wandb\u0000gemma-4-31b-it": {
       "id": "gemma-4-31b-it",
       "rates": [
@@ -133125,6 +136412,24 @@
         }
       ]
     },
+    "xai\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 1,
+          "tier_cache_write": 4,
+          "source": "xai"
+        }
+      ]
+    },
     "xai\u0000grok-build-0.1": {
       "id": "grok-build-0.1",
       "rates": [
@@ -133221,6 +136526,45 @@
         }
       ]
     },
+    "xiaomi\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0.14,
+          "source": "xiaomi"
+        }
+      ]
+    },
+    "xiaomi\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.0036,
+          "cache_write": 0.435,
+          "source": "xiaomi"
+        }
+      ]
+    },
+    "xiaomi\u0000mimo-v2.6-pro-ultraspeed": {
+      "id": "mimo-v2.6-pro-ultraspeed",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 4.35,
+          "out": 8.7,
+          "cache_read": 0.036,
+          "cache_write": 4.35,
+          "source": "xiaomi"
+        }
+      ]
+    },
     "xiaomi-token-plan-ams\u0000mimo-v2-pro": {
       "id": "mimo-v2-pro",
       "rates": [
@@ -133304,6 +136648,32 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "xiaomi-token-plan-ams"
+        }
+      ]
+    },
+    "xiaomi-token-plan-ams\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "xiaomi-token-plan-ams"
+        }
+      ]
+    },
+    "xiaomi-token-plan-ams\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
           "in": 0,
           "out": 0,
           "cache_read": 0,
@@ -133403,6 +136773,32 @@
         }
       ]
     },
+    "xiaomi-token-plan-cn\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "xiaomi-token-plan-cn"
+        }
+      ]
+    },
+    "xiaomi-token-plan-cn\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "xiaomi-token-plan-cn"
+        }
+      ]
+    },
     "xiaomi-token-plan-sgp\u0000mimo-v2-pro": {
       "id": "mimo-v2-pro",
       "rates": [
@@ -133486,6 +136882,32 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "xiaomi-token-plan-sgp"
+        }
+      ]
+    },
+    "xiaomi-token-plan-sgp\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "xiaomi-token-plan-sgp"
+        }
+      ]
+    },
+    "xiaomi-token-plan-sgp\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-22",
           "in": 0,
           "out": 0,
           "cache_read": 0,
@@ -133745,6 +137167,19 @@
         }
       ]
     },
+    "z.ai\u0000glm-4.6v-flash": {
+      "id": "glm-4.6v-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "zhipuai"
+        }
+      ]
+    },
     "z.ai\u0000glm-4.7": {
       "id": "glm-4.7",
       "rates": [
@@ -133957,6 +137392,19 @@
           "out": 0.9,
           "cache_read": 0,
           "cache_write": 0.3,
+          "source": "zai"
+        }
+      ]
+    },
+    "zai\u0000glm-4.6v-flash": {
+      "id": "glm-4.6v-flash",
+      "rates": [
+        {
+          "from": "2026-09-22",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
           "source": "zai"
         }
       ]
@@ -136813,6 +140261,8 @@
     "deepseek-v3p2-thinking": "deepseek-v3.2-thinking",
     "deepseek-v4-1-flash": "deepseek-v4.1-flash",
     "deepseek-v4-1-flash-beta": "deepseek-v4.1-flash-beta",
+    "deepseek-v4-1-flash-fast-fp4": "deepseek-v4.1-flash-fast-fp4",
+    "deepseek-v4-1-flash-flex": "deepseek-v4.1-flash-flex",
     "deepseek-v4-1-flash-latest": "deepseek-v4-1-flash",
     "deepseek-v4-1-flash@eu": "deepseek-v4.1-flash@eu",
     "deepseek-v4-flash-0423-latest": "deepseek-v4-flash-0423",
@@ -136826,6 +140276,7 @@
     "deepseek-v4-flash-free-latest": "deepseek-v4-flash-free",
     "deepseek-v4-flash-ga-260731-latest": "deepseek-v4-flash-ga-260731",
     "deepseek-v4-flash-latest": "deepseek-v4-flash",
+    "deepseek-v4-flash-speed-latest": "deepseek-v4-flash-speed",
     "deepseek-v4-flash-vision-exp-latest": "deepseek-v4-flash-vision-exp",
     "deepseek-v4-flash-vision-exp-uncensored-latest": "deepseek-v4-flash-vision-exp-uncensored",
     "deepseek-v4-pro-0423-latest": "deepseek-v4-pro-0423",
@@ -136836,10 +140287,14 @@
     "deepseek-v4-pro-latest": "deepseek-v4-pro",
     "deepseek-v4-pro@eu-latest": "deepseek-v4-pro@eu",
     "deepseek-v4.1-flash-beta-latest": "deepseek-v4.1-flash-beta",
+    "deepseek-v4.1-flash-fast-fp4-latest": "deepseek-v4.1-flash-fast-fp4",
+    "deepseek-v4.1-flash-flex-latest": "deepseek-v4.1-flash-flex",
     "deepseek-v4.1-flash-latest": "deepseek-v4.1-flash",
     "deepseek-v4.1-flash@eu-latest": "deepseek-v4.1-flash@eu",
     "deepseek-v4p1-flash": "deepseek-v4.1-flash",
     "deepseek-v4p1-flash-beta": "deepseek-v4.1-flash-beta",
+    "deepseek-v4p1-flash-fast-fp4": "deepseek-v4.1-flash-fast-fp4",
+    "deepseek-v4p1-flash-flex": "deepseek-v4.1-flash-flex",
     "deepseek-v4p1-flash-latest": "deepseek-v4p1-flash",
     "deepseek-v4p1-flash@eu": "deepseek-v4.1-flash@eu",
     "deepseek.r1-v1-latest": "deepseek.r1-v1",
@@ -137477,12 +140932,14 @@
     "glm-5-3-fast": "glm-5.3-fast",
     "glm-5-3-flash-260828-latest": "glm-5-3-flash-260828",
     "glm-5-3-flash-cybersecurity": "glm-5.3-flash-cybersecurity",
+    "glm-5-3-flash-flex": "glm-5.3-flash-flex",
     "glm-5-3-flash-fp4": "glm-5.3-flash-fp4",
     "glm-5-3-flash-free": "glm-5.3-flash-free",
     "glm-5-3-flash-latest": "glm-5-3-flash",
     "glm-5-3-flash-uncensored": "glm-5.3-flash-uncensored",
     "glm-5-3-flash@eu": "glm-5.3-flash@eu",
     "glm-5-3-flashx": "glm-5.3-flashx",
+    "glm-5-3-flex": "glm-5.3-flex",
     "glm-5-3-fp4": "glm-5.3-fp4",
     "glm-5-3-free": "glm-5.3-free",
     "glm-5-3-highspeed": "glm-5.3-highspeed",
@@ -137525,12 +140982,14 @@
     "glm-5.2@eu-latest": "glm-5.2@eu",
     "glm-5.3-fast-latest": "glm-5.3-fast",
     "glm-5.3-flash-cybersecurity-latest": "glm-5.3-flash-cybersecurity",
+    "glm-5.3-flash-flex-latest": "glm-5.3-flash-flex",
     "glm-5.3-flash-fp4-latest": "glm-5.3-flash-fp4",
     "glm-5.3-flash-free-latest": "glm-5.3-flash-free",
     "glm-5.3-flash-latest": "glm-5.3-flash",
     "glm-5.3-flash-uncensored-latest": "glm-5.3-flash-uncensored",
     "glm-5.3-flash@eu-latest": "glm-5.3-flash@eu",
     "glm-5.3-flashx-latest": "glm-5.3-flashx",
+    "glm-5.3-flex-latest": "glm-5.3-flex",
     "glm-5.3-fp4-latest": "glm-5.3-fp4",
     "glm-5.3-free-latest": "glm-5.3-free",
     "glm-5.3-highspeed-latest": "glm-5.3-highspeed",
@@ -137567,12 +141026,14 @@
     "glm-5p2@eu": "glm-5.2@eu",
     "glm-5p3-fast-latest": "glm-5p3-fast",
     "glm-5p3-flash-cybersecurity": "glm-5.3-flash-cybersecurity",
+    "glm-5p3-flash-flex": "glm-5.3-flash-flex",
     "glm-5p3-flash-fp4": "glm-5.3-flash-fp4",
     "glm-5p3-flash-free": "glm-5.3-flash-free",
     "glm-5p3-flash-latest": "glm-5p3-flash",
     "glm-5p3-flash-uncensored": "glm-5.3-flash-uncensored",
     "glm-5p3-flash@eu": "glm-5.3-flash@eu",
     "glm-5p3-flashx": "glm-5.3-flashx",
+    "glm-5p3-flex": "glm-5.3-flex",
     "glm-5p3-fp4": "glm-5.3-fp4",
     "glm-5p3-free": "glm-5.3-free",
     "glm-5p3-highspeed": "glm-5.3-highspeed",
@@ -138012,6 +141473,7 @@
     "grok-4-3-latest": "grok-4-3",
     "grok-4-5-latest": "grok-4-5",
     "grok-4-6-latest": "grok-4-6",
+    "grok-4-7-latest": "grok-4-7",
     "grok-4-fast-latest": "grok-4-fast",
     "grok-4-fast-non-reasoning-latest": "grok-4-fast-non-reasoning",
     "grok-4-fast-reasoning-latest": "grok-4-fast-reasoning",
@@ -138039,6 +141501,7 @@
     "grok-4.3-latest": "grok-4.3",
     "grok-4.5-latest": "grok-4.5",
     "grok-4.6-latest": "grok-4.6",
+    "grok-4.7-latest": "grok-4.7",
     "grok-4p1": "grok-4.1",
     "grok-4p1-fast": "grok-4.1-fast",
     "grok-4p1-fast-non-reasoning": "grok-4.1-fast-non-reasoning",
@@ -138062,6 +141525,7 @@
     "grok-4p3": "grok-4.3",
     "grok-4p5": "grok-4.5",
     "grok-4p6": "grok-4.6",
+    "grok-4p7": "grok-4.7",
     "grok-build-0-1-latest": "grok-build-0-1",
     "grok-build-0.1-latest": "grok-build-0.1",
     "grok-build-0p1": "grok-build-0.1",
@@ -138599,6 +142063,10 @@
     "mimo-v2-5-tts": "mimo-v2.5-tts",
     "mimo-v2-5-tts-voiceclone": "mimo-v2.5-tts-voiceclone",
     "mimo-v2-5-tts-voicedesign": "mimo-v2.5-tts-voicedesign",
+    "mimo-v2-6-flash-free": "mimo-v2.6-flash-free",
+    "mimo-v2-6-flash-latest": "mimo-v2-6-flash",
+    "mimo-v2-6-pro-latest": "mimo-v2-6-pro",
+    "mimo-v2-6-pro-ultraspeed-latest": "mimo-v2-6-pro-ultraspeed",
     "mimo-v2-flash-free-latest": "mimo-v2-flash-free",
     "mimo-v2-flash-latest": "mimo-v2-flash",
     "mimo-v2-omni-free-latest": "mimo-v2-omni-free",
@@ -138614,6 +142082,10 @@
     "mimo-v2.5-tts-latest": "mimo-v2.5-tts",
     "mimo-v2.5-tts-voiceclone-latest": "mimo-v2.5-tts-voiceclone",
     "mimo-v2.5-tts-voicedesign-latest": "mimo-v2.5-tts-voicedesign",
+    "mimo-v2.6-flash-free-latest": "mimo-v2.6-flash-free",
+    "mimo-v2.6-flash-latest": "mimo-v2.6-flash",
+    "mimo-v2.6-pro-latest": "mimo-v2.6-pro",
+    "mimo-v2.6-pro-ultraspeed-latest": "mimo-v2.6-pro-ultraspeed",
     "mimo-v25-latest": "mimo-v25",
     "mimo-v2p5": "mimo-v2.5",
     "mimo-v2p5-free": "mimo-v2.5-free",
@@ -138623,6 +142095,10 @@
     "mimo-v2p5-tts": "mimo-v2.5-tts",
     "mimo-v2p5-tts-voiceclone": "mimo-v2.5-tts-voiceclone",
     "mimo-v2p5-tts-voicedesign": "mimo-v2.5-tts-voicedesign",
+    "mimo-v2p6-flash": "mimo-v2.6-flash",
+    "mimo-v2p6-flash-free": "mimo-v2.6-flash-free",
+    "mimo-v2p6-pro": "mimo-v2.6-pro",
+    "mimo-v2p6-pro-ultraspeed": "mimo-v2.6-pro-ultraspeed",
     "mini_lm_l12_v2-latest": "mini_lm_l12_v2",
     "minicpm-v-4-5": "minicpm-v-4.5",
     "minicpm-v-4.5-latest": "minicpm-v-4.5",
@@ -139150,15 +142626,18 @@
     "qwen-3-7-max-latest": "qwen-3-7-max",
     "qwen-3-7-plus-latest": "qwen-3-7-plus",
     "qwen-3-8-2-4t-a95b-latest": "qwen-3-8-2-4t-a95b",
+    "qwen-3-8-27b-flex": "qwen-3.8-27b-flex",
     "qwen-3-8-27b-latest": "qwen-3-8-27b",
     "qwen-3-8-flash-latest": "qwen-3-8-flash",
     "qwen-3-8-max-latest": "qwen-3-8-max",
     "qwen-3.6-max-preview-latest": "qwen-3.6-max-preview",
     "qwen-3.6-plus-latest": "qwen-3.6-plus",
+    "qwen-3.8-27b-flex-latest": "qwen-3.8-27b-flex",
     "qwen-3.8-27b-latest": "qwen-3.8-27b",
     "qwen-3p6-max-preview": "qwen-3.6-max-preview",
     "qwen-3p6-plus": "qwen-3.6-plus",
     "qwen-3p8-27b": "qwen-3.8-27b",
+    "qwen-3p8-27b-flex": "qwen-3.8-27b-flex",
     "qwen-coder-plus-latest": "qwen-coder-plus",
     "qwen-deep-research-latest": "qwen-deep-research",
     "qwen-doc-turbo-latest": "qwen-doc-turbo",
@@ -139296,6 +142775,7 @@
     "qwen3-6-35b-a3b-latest": "qwen3-6-35b-a3b",
     "qwen3-6-35b-a3b-uncensored": "qwen3.6-35b-a3b-uncensored",
     "qwen3-6-35b-fast": "qwen3.6-35b-fast",
+    "qwen3-6-35b-flex": "qwen3.6-35b-flex",
     "qwen3-6-35b-latest": "qwen3-6-35b",
     "qwen3-6-flash-latest": "qwen3-6-flash",
     "qwen3-6-max": "qwen3.6-max",
@@ -139416,6 +142896,7 @@
     "qwen3.6-35b-a3b-latest": "qwen3.6-35b-a3b",
     "qwen3.6-35b-a3b-uncensored-latest": "qwen3.6-35b-a3b-uncensored",
     "qwen3.6-35b-fast-latest": "qwen3.6-35b-fast",
+    "qwen3.6-35b-flex-latest": "qwen3.6-35b-flex",
     "qwen3.6-35b-latest": "qwen3.6-35b",
     "qwen3.6-flash-latest": "qwen3.6-flash",
     "qwen3.6-latest": "qwen3.6",
@@ -139490,6 +142971,7 @@
     "qwen3p6-35b-a3b-fp8-no-thinking": "qwen3.6-35b-a3b-fp8-no-thinking",
     "qwen3p6-35b-a3b-uncensored": "qwen3.6-35b-a3b-uncensored",
     "qwen3p6-35b-fast": "qwen3.6-35b-fast",
+    "qwen3p6-35b-flex": "qwen3.6-35b-flex",
     "qwen3p6-flash": "qwen3.6-flash",
     "qwen3p6-max": "qwen3.6-max",
     "qwen3p6-max-preview": "qwen3.6-max-preview",
@@ -139807,6 +143289,7 @@
     "vision-large-latest": "vision-large",
     "vision-medium-latest": "vision-medium",
     "vision-small-latest": "vision-small",
+    "viv-fast-latest": "viv-fast",
     "voxtral-mini-3b-latest": "voxtral-mini-3b",
     "voxtral-small-24b-2507-latest": "voxtral-small-24b-2507",
     "voxtral-small-2507-latest": "voxtral-small-2507",
