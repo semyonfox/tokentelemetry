@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-09-22",
+  "updated": "2026-09-23",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -882,6 +882,24 @@
         }
       ]
     },
+    "anthropic-claude-opus-5.5": {
+      "id": "anthropic-claude-opus-5.5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "tier_threshold": 200000,
+          "tier_in": 8,
+          "tier_out": 30,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 10,
+          "source": "digitalocean"
+        }
+      ]
+    },
     "anthropic-claude-sonnet-4": {
       "id": "anthropic-claude-sonnet-4",
       "rates": [
@@ -1021,6 +1039,19 @@
           "out": 25,
           "cache_read": 0.5,
           "cache_write": 6.25,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "anthropic.claude-opus-5-5": {
+      "id": "anthropic.claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
           "source": "amazon-bedrock"
         }
       ]
@@ -1373,6 +1404,19 @@
           "out": 27.5,
           "cache_read": 0.55,
           "cache_write": 6.875,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "au.anthropic.claude-opus-5-5": {
+      "id": "au.anthropic.claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4.4,
+          "out": 22,
+          "cache_read": 0.22,
+          "cache_write": 5.5,
           "source": "amazon-bedrock"
         }
       ]
@@ -2996,6 +3040,50 @@
       ],
       "first_party": true
     },
+    "claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "anthropic"
+        }
+      ],
+      "first_party": true
+    },
+    "claude-opus-5-5@default": {
+      "id": "claude-opus-5-5@default",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "google-vertex"
+        }
+      ],
+      "first_party": true
+    },
+    "claude-opus-5-5@eu": {
+      "id": "claude-opus-5-5@eu",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 5.5,
+          "out": 27.5,
+          "cache_read": 0.55,
+          "cache_write": 6.875,
+          "cache_write_1h": 11,
+          "source": "requesty"
+        }
+      ]
+    },
     "claude-opus-5-fast": {
       "id": "claude-opus-5-fast",
       "rates": [
@@ -3021,6 +3109,34 @@
           "cache_write": 6.25,
           "cache_write_1h": 10,
           "source": "302ai"
+        }
+      ]
+    },
+    "claude-opus-5.5": {
+      "id": "claude-opus-5.5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "vercel"
+        }
+      ]
+    },
+    "claude-opus-5.5-fast": {
+      "id": "claude-opus-5.5-fast",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 8,
+          "out": 40,
+          "cache_read": 0.4,
+          "cache_write": 10,
+          "cache_write_1h": 16,
+          "source": "vercel"
         }
       ]
     },
@@ -3955,6 +4071,19 @@
       ],
       "first_party": true
     },
+    "command-a-plus": {
+      "id": "command-a-plus",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.3,
+          "out": 1.5,
+          "cache_read": 0.15,
+          "cache_write": 0.3,
+          "source": "kilo"
+        }
+      ]
+    },
     "command-a-plus-05-2026": {
       "id": "command-a-plus-05-2026",
       "rates": [
@@ -4315,6 +4444,14 @@
           "cache_read": 0.028,
           "cache_write": 0.14,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.014,
+          "cache_write": 0.14,
+          "source": "edenai"
         }
       ]
     },
@@ -4326,6 +4463,14 @@
           "in": 1.31999,
           "out": 3.95997,
           "cache_read": 0.13202,
+          "cache_write": 1.31999,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 1.32,
+          "out": 3.959999,
+          "cache_read": 0.132,
           "cache_write": 1.31999,
           "source": "edenai"
         }
@@ -4678,6 +4823,14 @@
           "in": 1.00002,
           "out": 4.04999,
           "cache_read": 0.17003,
+          "cache_write": 1.00002,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 1,
+          "out": 4.05,
+          "cache_read": 0.1,
           "cache_write": 1.00002,
           "source": "edenai"
         }
@@ -7138,6 +7291,19 @@
         }
       ]
     },
+    "duo-chat-opus-5-5": {
+      "id": "duo-chat-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "gitlab"
+        }
+      ]
+    },
     "duo-chat-sonnet-4-5": {
       "id": "duo-chat-sonnet-4-5",
       "rates": [
@@ -7526,6 +7692,19 @@
           "out": 27.5,
           "cache_read": 0.55,
           "cache_write": 6.875,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "eu.anthropic.claude-opus-5-5": {
+      "id": "eu.anthropic.claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4.4,
+          "out": 22,
+          "cache_read": 0.22,
+          "cache_write": 5.5,
           "source": "amazon-bedrock"
         }
       ]
@@ -10067,6 +10246,19 @@
         }
       ]
     },
+    "gliguard-pii-multi": {
+      "id": "gliguard-pii-multi",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.15,
+          "out": 0.15,
+          "cache_read": 0.15,
+          "cache_write": 0.15,
+          "source": "pioneer"
+        }
+      ]
+    },
     "gliner-pii": {
       "id": "gliner-pii",
       "rates": [
@@ -10138,6 +10330,19 @@
       "rates": [
         {
           "from": "2026-07-14",
+          "in": 0.15,
+          "out": 0.15,
+          "cache_read": 0.15,
+          "cache_write": 0.15,
+          "source": "pioneer"
+        }
+      ]
+    },
+    "gliner2.5-multi-v1": {
+      "id": "gliner2.5-multi-v1",
+      "rates": [
+        {
+          "from": "2026-09-23",
           "in": 0.15,
           "out": 0.15,
           "cache_read": 0.15,
@@ -12034,6 +12239,19 @@
         }
       ]
     },
+    "global.anthropic.claude-opus-5-5": {
+      "id": "global.anthropic.claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
     "global.anthropic.claude-sonnet-4-20250514-v1": {
       "id": "global.anthropic.claude-sonnet-4-20250514-v1",
       "rates": [
@@ -12082,6 +12300,19 @@
           "out": 10,
           "cache_read": 0.2,
           "cache_write": 2.5,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "global.moonshotai.kimi-k3": {
+      "id": "global.moonshotai.kimi-k3",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3.75,
           "source": "amazon-bedrock"
         }
       ]
@@ -12154,6 +12385,42 @@
           "tier_out": 75,
           "tier_cache_read": 2,
           "tier_cache_write": 25,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "global.openai.gpt-6-luna": {
+      "id": "global.openai.gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "global.openai.gpt-6-sol": {
+      "id": "global.openai.gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
           "source": "amazon-bedrock"
         }
       ]
@@ -14260,6 +14527,142 @@
         }
       ]
     },
+    "gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "openai"
+        }
+      ],
+      "first_party": true
+    },
+    "gpt-6-luna-fast": {
+      "id": "gpt-6-luna-fast",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.2,
+          "out": 1,
+          "cache_read": 0.02,
+          "cache_write": 0.25,
+          "tier_threshold": 272001,
+          "tier_in": 0.4,
+          "tier_out": 1.5,
+          "tier_cache_read": 0.04,
+          "tier_cache_write": 0.5,
+          "source": "vercel"
+        }
+      ]
+    },
+    "gpt-6-luna-pro": {
+      "id": "gpt-6-luna-pro",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "source": "kilo"
+        }
+      ]
+    },
+    "gpt-6-luna@eu": {
+      "id": "gpt-6-luna@eu",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.12,
+          "out": 0.6,
+          "cache_read": 0.012,
+          "cache_write": 0.12,
+          "tier_threshold": 272000,
+          "tier_in": 0.24,
+          "tier_out": 0.9,
+          "tier_cache_read": 0.024,
+          "tier_cache_write": 0.24,
+          "source": "requesty"
+        }
+      ]
+    },
+    "gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
+          "source": "openai"
+        }
+      ],
+      "first_party": true
+    },
+    "gpt-6-sol-fast": {
+      "id": "gpt-6-sol-fast",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.4,
+          "cache_write": 5,
+          "tier_threshold": 272001,
+          "tier_in": 8,
+          "tier_out": 30,
+          "tier_cache_read": 0.8,
+          "tier_cache_write": 10,
+          "source": "vercel"
+        }
+      ]
+    },
+    "gpt-6-sol-pro": {
+      "id": "gpt-6-sol-pro",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "source": "kilo"
+        }
+      ]
+    },
+    "gpt-6-sol@eu": {
+      "id": "gpt-6-sol@eu",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2.4,
+          "out": 12,
+          "cache_read": 0.24,
+          "cache_write": 2.4,
+          "tier_threshold": 272000,
+          "tier_in": 4.8,
+          "tier_out": 18,
+          "tier_cache_read": 0.48,
+          "tier_cache_write": 4.8,
+          "source": "requesty"
+        }
+      ]
+    },
     "gpt-astra": {
       "id": "gpt-astra",
       "rates": [
@@ -14400,6 +14803,14 @@
           "out": 1.2,
           "cache_read": 0.02,
           "cache_write": 0.25,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
           "source": "kilo"
         }
       ]
@@ -16552,6 +16963,19 @@
           "out": 27.5,
           "cache_read": 0.55,
           "cache_write": 6.875,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "jp.anthropic.claude-opus-5-5": {
+      "id": "jp.anthropic.claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4.4,
+          "out": 22,
+          "cache_read": 0.22,
+          "cache_write": 5.5,
           "source": "amazon-bedrock"
         }
       ]
@@ -19168,6 +19592,19 @@
         }
       ]
     },
+    "lumen-stealth": {
+      "id": "lumen-stealth",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.05,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "lumimaid-v0.2-70b": {
       "id": "lumimaid-v0.2-70b",
       "rates": [
@@ -20739,6 +21176,14 @@
           "out": 0.4596,
           "cache_read": 0,
           "cache_write": 0.3447,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.34389,
+          "out": 0.45852,
+          "cache_read": 0,
+          "cache_write": 0.34389,
           "source": "edenai"
         }
       ]
@@ -24370,6 +24815,42 @@
           "tier_cache_read": 2.5,
           "tier_cache_write": 31.25,
           "source": "venice"
+        }
+      ]
+    },
+    "openai-gpt-6-luna": {
+      "id": "openai-gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.1,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.2,
+          "source": "digitalocean"
+        }
+      ]
+    },
+    "openai-gpt-6-sol": {
+      "id": "openai-gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 4,
+          "source": "digitalocean"
         }
       ]
     },
@@ -29484,6 +29965,19 @@
         }
       ]
     },
+    "solar-mini4": {
+      "id": "solar-mini4",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.05,
+          "out": 0.2,
+          "cache_read": 0.005,
+          "cache_write": 0.05,
+          "source": "openrouter"
+        }
+      ]
+    },
     "solar-pro-3": {
       "id": "solar-pro-3",
       "rates": [
@@ -29816,8 +30310,17 @@
           "cache_read": 0.05,
           "cache_write": 1,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.959,
+          "out": 2.741,
+          "cache_read": 0.048,
+          "cache_write": 0.959,
+          "source": "stepfun"
         }
-      ]
+      ],
+      "first_party": true
     },
     "step-r1-v-mini": {
       "id": "step-r1-v-mini",
@@ -30545,6 +31048,19 @@
         }
       ]
     },
+    "us.anthropic.claude-opus-5-5": {
+      "id": "us.anthropic.claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4.4,
+          "out": 22,
+          "cache_read": 0.22,
+          "cache_write": 5.5,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
     "us.anthropic.claude-sonnet-4-20250514-v1": {
       "id": "us.anthropic.claude-sonnet-4-20250514-v1",
       "rates": [
@@ -30712,6 +31228,19 @@
         }
       ]
     },
+    "us.moonshotai.kimi-k3": {
+      "id": "us.moonshotai.kimi-k3",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 3.3,
+          "out": 16.5,
+          "cache_read": 0.33,
+          "cache_write": 4.125,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
     "us.openai.gpt-5.6-luna": {
       "id": "us.openai.gpt-5.6-luna",
       "rates": [
@@ -30780,6 +31309,42 @@
           "tier_out": 82.5,
           "tier_cache_read": 2.2,
           "tier_cache_write": 27.5,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "us.openai.gpt-6-luna": {
+      "id": "us.openai.gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.11,
+          "out": 0.55,
+          "cache_read": 0.011,
+          "cache_write": 0.1375,
+          "tier_threshold": 272000,
+          "tier_in": 0.22,
+          "tier_out": 0.825,
+          "tier_cache_read": 0.022,
+          "tier_cache_write": 0.275,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "us.openai.gpt-6-sol": {
+      "id": "us.openai.gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2.2,
+          "out": 11,
+          "cache_read": 0.22,
+          "cache_write": 2.75,
+          "tier_threshold": 272000,
+          "tier_in": 4.4,
+          "tier_out": 16.5,
+          "tier_cache_read": 0.44,
+          "tier_cache_write": 5.5,
           "source": "amazon-bedrock"
         }
       ]
@@ -40384,6 +40949,19 @@
         }
       ]
     },
+    "amazon-bedrock\u0000anthropic.claude-opus-5-5": {
+      "id": "anthropic.claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
     "amazon-bedrock\u0000anthropic.claude-sonnet-4-5-20250929-v1": {
       "id": "anthropic.claude-sonnet-4-5-20250929-v1",
       "rates": [
@@ -40576,6 +41154,19 @@
           "out": 27.5,
           "cache_read": 0.55,
           "cache_write": 6.875,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000au.anthropic.claude-opus-5-5": {
+      "id": "au.anthropic.claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4.4,
+          "out": 22,
+          "cache_read": 0.22,
+          "cache_write": 5.5,
           "source": "amazon-bedrock"
         }
       ]
@@ -40830,6 +41421,19 @@
         }
       ]
     },
+    "amazon-bedrock\u0000eu.anthropic.claude-opus-5-5": {
+      "id": "eu.anthropic.claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4.4,
+          "out": 22,
+          "cache_read": 0.22,
+          "cache_write": 5.5,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
     "amazon-bedrock\u0000eu.anthropic.claude-sonnet-4-20250514-v1": {
       "id": "eu.anthropic.claude-sonnet-4-20250514-v1",
       "rates": [
@@ -41012,6 +41616,19 @@
         }
       ]
     },
+    "amazon-bedrock\u0000global.anthropic.claude-opus-5-5": {
+      "id": "global.anthropic.claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
     "amazon-bedrock\u0000global.anthropic.claude-sonnet-4-20250514-v1": {
       "id": "global.anthropic.claude-sonnet-4-20250514-v1",
       "rates": [
@@ -41060,6 +41677,19 @@
           "out": 10,
           "cache_read": 0.2,
           "cache_write": 2.5,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000global.moonshotai.kimi-k3": {
+      "id": "global.moonshotai.kimi-k3",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3.75,
           "source": "amazon-bedrock"
         }
       ]
@@ -41132,6 +41762,42 @@
           "tier_out": 75,
           "tier_cache_read": 2,
           "tier_cache_write": 25,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000global.openai.gpt-6-luna": {
+      "id": "global.openai.gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000global.openai.gpt-6-sol": {
+      "id": "global.openai.gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
           "source": "amazon-bedrock"
         }
       ]
@@ -41372,6 +42038,19 @@
           "out": 27.5,
           "cache_read": 0.55,
           "cache_write": 6.875,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000jp.anthropic.claude-opus-5-5": {
+      "id": "jp.anthropic.claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4.4,
+          "out": 22,
+          "cache_read": 0.22,
+          "cache_write": 5.5,
           "source": "amazon-bedrock"
         }
       ]
@@ -42309,6 +42988,19 @@
         }
       ]
     },
+    "amazon-bedrock\u0000us.anthropic.claude-opus-5-5": {
+      "id": "us.anthropic.claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4.4,
+          "out": 22,
+          "cache_read": 0.22,
+          "cache_write": 5.5,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
     "amazon-bedrock\u0000us.anthropic.claude-sonnet-4-20250514-v1": {
       "id": "us.anthropic.claude-sonnet-4-20250514-v1",
       "rates": [
@@ -42476,6 +43168,19 @@
         }
       ]
     },
+    "amazon-bedrock\u0000us.moonshotai.kimi-k3": {
+      "id": "us.moonshotai.kimi-k3",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 3.3,
+          "out": 16.5,
+          "cache_read": 0.33,
+          "cache_write": 4.125,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
     "amazon-bedrock\u0000us.openai.gpt-5.6-luna": {
       "id": "us.openai.gpt-5.6-luna",
       "rates": [
@@ -42544,6 +43249,42 @@
           "tier_out": 82.5,
           "tier_cache_read": 2.2,
           "tier_cache_write": 27.5,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000us.openai.gpt-6-luna": {
+      "id": "us.openai.gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.11,
+          "out": 0.55,
+          "cache_read": 0.011,
+          "cache_write": 0.1375,
+          "tier_threshold": 272000,
+          "tier_in": 0.22,
+          "tier_out": 0.825,
+          "tier_cache_read": 0.022,
+          "tier_cache_write": 0.275,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000us.openai.gpt-6-sol": {
+      "id": "us.openai.gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2.2,
+          "out": 11,
+          "cache_read": 0.22,
+          "cache_write": 2.75,
+          "tier_threshold": 272000,
+          "tier_in": 4.4,
+          "tier_out": 16.5,
+          "tier_cache_read": 0.44,
+          "tier_cache_write": 5.5,
           "source": "amazon-bedrock"
         }
       ]
@@ -43035,6 +43776,20 @@
           "cache_read": 0.5,
           "cache_write": 6.25,
           "cache_write_1h": 10,
+          "source": "anthropic"
+        }
+      ]
+    },
+    "anthropic\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
           "source": "anthropic"
         }
       ]
@@ -43615,6 +44370,20 @@
           "cache_read": 0.5,
           "cache_write": 6.25,
           "cache_write_1h": 10,
+          "source": "azure"
+        }
+      ]
+    },
+    "azure\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
           "source": "azure"
         }
       ]
@@ -44254,6 +45023,42 @@
         }
       ]
     },
+    "azure\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "azure"
+        }
+      ]
+    },
+    "azure\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
+          "source": "azure"
+        }
+      ]
+    },
     "azure\u0000gpt-chat": {
       "id": "gpt-chat",
       "rates": [
@@ -44829,6 +45634,20 @@
           "cache_read": 0.5,
           "cache_write": 6.25,
           "cache_write_1h": 10,
+          "source": "azure-cognitive-services"
+        }
+      ]
+    },
+    "azure-cognitive-services\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
           "source": "azure-cognitive-services"
         }
       ]
@@ -46839,6 +47658,32 @@
         }
       ]
     },
+    "cline-pass\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0.14,
+          "source": "cline-pass"
+        }
+      ]
+    },
+    "cline-pass\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.0036,
+          "cache_write": 0.435,
+          "source": "cline-pass"
+        }
+      ]
+    },
     "cline-pass\u0000minimax-m3": {
       "id": "minimax-m3",
       "rates": [
@@ -47458,6 +48303,24 @@
         },
         {
           "from": "2026-09-18",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 4,
+          "tier_out": 12,
+          "tier_cache_read": 1,
+          "tier_cache_write": 4,
+          "source": "cloudflare-ai-gateway"
+        }
+      ]
+    },
+    "cloudflare-ai-gateway\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-23",
           "in": 2,
           "out": 6,
           "cache_read": 0.5,
@@ -50279,6 +51142,20 @@
         }
       ]
     },
+    "crossmodel\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "crossmodel"
+        }
+      ]
+    },
     "crossmodel\u0000claude-sonnet-4-6": {
       "id": "claude-sonnet-4-6",
       "rates": [
@@ -50815,6 +51692,42 @@
           "tier_out": 75,
           "tier_cache_read": 2,
           "tier_cache_write": 25,
+          "source": "crossmodel"
+        }
+      ]
+    },
+    "crossmodel\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "crossmodel"
+        }
+      ]
+    },
+    "crossmodel\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
           "source": "crossmodel"
         }
       ]
@@ -53208,6 +54121,24 @@
         }
       ]
     },
+    "digitalocean\u0000anthropic-claude-opus-5.5": {
+      "id": "anthropic-claude-opus-5.5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "tier_threshold": 200000,
+          "tier_in": 8,
+          "tier_out": 30,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 10,
+          "source": "digitalocean"
+        }
+      ]
+    },
     "digitalocean\u0000anthropic-claude-sonnet-4": {
       "id": "anthropic-claude-sonnet-4",
       "rates": [
@@ -54037,6 +54968,42 @@
         }
       ]
     },
+    "digitalocean\u0000openai-gpt-6-luna": {
+      "id": "openai-gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.1,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.2,
+          "source": "digitalocean"
+        }
+      ]
+    },
+    "digitalocean\u0000openai-gpt-6-sol": {
+      "id": "openai-gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 4,
+          "source": "digitalocean"
+        }
+      ]
+    },
     "digitalocean\u0000openai-gpt-image-1": {
       "id": "openai-gpt-image-1",
       "rates": [
@@ -54621,6 +55588,20 @@
         }
       ]
     },
+    "edenai\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "edenai"
+        }
+      ]
+    },
     "edenai\u0000claude-sonnet": {
       "id": "claude-sonnet",
       "rates": [
@@ -54746,6 +55727,14 @@
           "cache_read": 0.028,
           "cache_write": 0.14,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.014,
+          "cache_write": 0.14,
+          "source": "edenai"
         }
       ]
     },
@@ -54757,6 +55746,14 @@
           "in": 1.31999,
           "out": 3.95997,
           "cache_read": 0.13202,
+          "cache_write": 1.31999,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 1.32,
+          "out": 3.959999,
+          "cache_read": 0.132,
           "cache_write": 1.31999,
           "source": "edenai"
         }
@@ -54838,6 +55835,14 @@
           "in": 1.00002,
           "out": 4.04999,
           "cache_read": 0.17003,
+          "cache_write": 1.00002,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 1,
+          "out": 4.05,
+          "cache_read": 0.1,
           "cache_write": 1.00002,
           "source": "edenai"
         }
@@ -56276,6 +57281,42 @@
         }
       ]
     },
+    "edenai\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
+          "source": "edenai"
+        }
+      ]
+    },
     "edenai\u0000gpt-mini": {
       "id": "gpt-mini",
       "rates": [
@@ -56754,6 +57795,14 @@
           "cache_read": 0,
           "cache_write": 1.0341,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 1.03167,
+          "out": 1.03167,
+          "cache_read": 0,
+          "cache_write": 1.03167,
+          "source": "edenai"
         }
       ]
     },
@@ -56926,6 +57975,14 @@
           "out": 0.4596,
           "cache_read": 0,
           "cache_write": 0.3447,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.34389,
+          "out": 0.45852,
+          "cache_read": 0,
+          "cache_write": 0.34389,
           "source": "edenai"
         }
       ]
@@ -60653,6 +61710,20 @@
         }
       ]
     },
+    "github-copilot\u0000claude-opus-5.5": {
+      "id": "claude-opus-5.5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "github-copilot"
+        }
+      ]
+    },
     "github-copilot\u0000claude-sonnet-4": {
       "id": "claude-sonnet-4",
       "rates": [
@@ -61021,6 +62092,42 @@
           "tier_out": 75,
           "tier_cache_read": 2,
           "tier_cache_write": 25,
+          "source": "github-copilot"
+        }
+      ]
+    },
+    "github-copilot\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "github-copilot"
+        }
+      ]
+    },
+    "github-copilot\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
           "source": "github-copilot"
         }
       ]
@@ -61409,6 +62516,19 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "gitlab"
+        }
+      ]
+    },
+    "gitlab\u0000duo-chat-opus-5-5": {
+      "id": "duo-chat-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
           "in": 0,
           "out": 0,
           "cache_read": 0,
@@ -62281,6 +63401,20 @@
           "cache_read": 1.5,
           "cache_write": 18.75,
           "cache_write_1h": 30,
+          "source": "google-vertex"
+        }
+      ]
+    },
+    "google-vertex\u0000claude-opus-5-5@default": {
+      "id": "claude-opus-5-5@default",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
           "source": "google-vertex"
         }
       ]
@@ -69979,6 +71113,19 @@
         }
       ]
     },
+    "kenari\u0000deepseek-v4-1-flash": {
+      "id": "deepseek-v4-1-flash",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "kenari"
+        }
+      ]
+    },
     "kenari\u0000deepseek-v4-flash": {
       "id": "deepseek-v4-flash",
       "rates": [
@@ -70772,6 +71919,15 @@
           "cache_write": 6.25,
           "cache_write_1h": 10,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "kilo"
         }
       ]
     },
@@ -70915,6 +72071,20 @@
         }
       ]
     },
+    "kilo\u0000claude-opus-5.5": {
+      "id": "claude-opus-5.5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "kilo"
+        }
+      ]
+    },
     "kilo\u0000claude-sonnet": {
       "id": "claude-sonnet",
       "rates": [
@@ -71007,6 +72177,19 @@
           "out": 10,
           "cache_read": 0,
           "cache_write": 2.5,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000command-a-plus": {
+      "id": "command-a-plus",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.3,
+          "out": 1.5,
+          "cache_read": 0.15,
+          "cache_write": 0.3,
           "source": "kilo"
         }
       ]
@@ -71184,6 +72367,14 @@
           "cache_read": 0.0036,
           "cache_write": 0.12,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.1,
+          "source": "kilo"
         }
       ]
     },
@@ -71228,6 +72419,14 @@
           "out": 2.88,
           "cache_read": 0.088,
           "cache_write": 0.624,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.4,
+          "out": 4.3,
+          "cache_read": 0.033,
+          "cache_write": 0.4,
           "source": "kilo"
         }
       ]
@@ -71391,6 +72590,14 @@
           "out": 1,
           "cache_read": 0.008,
           "cache_write": 0.03,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.038,
+          "out": 0.55,
+          "cache_read": 0.0228,
+          "cache_write": 0.038,
           "source": "kilo"
         }
       ]
@@ -72192,6 +73399,14 @@
           "out": 2.057,
           "cache_read": 0.107525,
           "cache_write": 0.6545,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.5625,
+          "out": 2.5,
+          "cache_read": 0.125,
+          "cache_write": 0.5625,
           "source": "kilo"
         }
       ]
@@ -73100,6 +74315,58 @@
         }
       ]
     },
+    "kilo\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000gpt-6-luna-pro": {
+      "id": "gpt-6-luna-pro",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000gpt-6-sol-pro": {
+      "id": "gpt-6-sol-pro",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "source": "kilo"
+        }
+      ]
+    },
     "kilo\u0000gpt-astra": {
       "id": "gpt-astra",
       "rates": [
@@ -73161,6 +74428,14 @@
           "out": 1.2,
           "cache_read": 0.02,
           "cache_write": 0.25,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
           "source": "kilo"
         }
       ]
@@ -73747,6 +75022,14 @@
           "out": 7.5,
           "cache_read": 0.15,
           "cache_write": 1.5,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 1.4989,
+          "out": 10.758,
+          "cache_read": 0.3,
+          "cache_write": 1.4989,
           "source": "kilo"
         }
       ]
@@ -75907,6 +77190,19 @@
         }
       ]
     },
+    "kilo\u0000qwen3.8-omni-flash": {
+      "id": "qwen3.8-omni-flash",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.15,
+          "out": 0.47,
+          "cache_read": 0.016,
+          "cache_write": 0.15,
+          "source": "kilo"
+        }
+      ]
+    },
     "kilo\u0000reka-edge": {
       "id": "reka-edge",
       "rates": [
@@ -76928,6 +78224,20 @@
           "cache_read": 0.5,
           "cache_write": 6.25,
           "cache_write_1h": 10,
+          "source": "llmgateway"
+        }
+      ]
+    },
+    "llmgateway\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
           "source": "llmgateway"
         }
       ]
@@ -78106,6 +79416,32 @@
         }
       ]
     },
+    "llmgateway\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "source": "llmgateway"
+        }
+      ]
+    },
+    "llmgateway\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "source": "llmgateway"
+        }
+      ]
+    },
     "llmgateway\u0000gpt-oss-120b": {
       "id": "gpt-oss-120b",
       "rates": [
@@ -78395,6 +79731,32 @@
           "out": 2.501,
           "cache_read": 0.042,
           "cache_write": 0.834,
+          "source": "llmgateway"
+        }
+      ]
+    },
+    "llmgateway\u0000inkling": {
+      "id": "inkling",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.95,
+          "out": 4.05,
+          "cache_read": 0.16,
+          "cache_write": 0.95,
+          "source": "llmgateway"
+        }
+      ]
+    },
+    "llmgateway\u0000inkling-small": {
+      "id": "inkling-small",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.45,
+          "out": 1.2,
+          "cache_read": 0.1,
+          "cache_write": 0.45,
           "source": "llmgateway"
         }
       ]
@@ -78938,6 +80300,19 @@
         }
       ]
     },
+    "llmgateway\u0000muse-glimmer-30b": {
+      "id": "muse-glimmer-30b",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.04,
+          "cache_write": 0.3,
+          "source": "llmgateway"
+        }
+      ]
+    },
     "llmgateway\u0000muse-spark-1.1": {
       "id": "muse-spark-1.1",
       "rates": [
@@ -79051,6 +80426,19 @@
           "out": 2.2,
           "cache_read": 0.1,
           "cache_write": 0.5,
+          "source": "llmgateway"
+        }
+      ]
+    },
+    "llmgateway\u0000nemotron-3.5-lightning": {
+      "id": "nemotron-3.5-lightning",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.08,
+          "out": 0.2,
+          "cache_read": 0,
+          "cache_write": 0.08,
           "source": "llmgateway"
         }
       ]
@@ -79536,6 +80924,19 @@
         }
       ]
     },
+    "llmgateway\u0000qwen3.8-2.4t-a95b": {
+      "id": "qwen3.8-2.4t-a95b",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.25,
+          "cache_write": 2,
+          "source": "llmgateway"
+        }
+      ]
+    },
     "llmgateway\u0000qwen3.8-27b": {
       "id": "qwen3.8-27b",
       "rates": [
@@ -79703,6 +81104,19 @@
         }
       ]
     },
+    "llmgateway\u0000step-3.7-flash": {
+      "id": "step-3.7-flash",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.2,
+          "out": 1.15,
+          "cache_read": 0.04,
+          "cache_write": 0.2,
+          "source": "llmgateway"
+        }
+      ]
+    },
     "llmgateway-providers\u0000atria-dawn-preview": {
       "id": "atria-dawn-preview",
       "rates": [
@@ -79852,6 +81266,20 @@
           "cache_read": 0.5,
           "cache_write": 6.25,
           "cache_write_1h": 10,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
+    "llmgateway-providers\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
           "source": "llmgateway-providers"
         }
       ]
@@ -80990,6 +82418,32 @@
         }
       ]
     },
+    "llmgateway-providers\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
+    "llmgateway-providers\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
     "llmgateway-providers\u0000gpt-oss-120b": {
       "id": "gpt-oss-120b",
       "rates": [
@@ -81279,6 +82733,32 @@
           "out": 2.501,
           "cache_read": 0.042,
           "cache_write": 0.834,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
+    "llmgateway-providers\u0000inkling": {
+      "id": "inkling",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 1,
+          "out": 4.05,
+          "cache_read": 0.17,
+          "cache_write": 1,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
+    "llmgateway-providers\u0000inkling-small": {
+      "id": "inkling-small",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.45,
+          "out": 1.2,
+          "cache_read": 0.1,
+          "cache_write": 0.45,
           "source": "llmgateway-providers"
         }
       ]
@@ -81814,6 +83294,19 @@
         }
       ]
     },
+    "llmgateway-providers\u0000muse-glimmer-30b": {
+      "id": "muse-glimmer-30b",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.35,
+          "out": 1.5,
+          "cache_read": 0.04,
+          "cache_write": 0.35,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
     "llmgateway-providers\u0000muse-spark-1.1": {
       "id": "muse-spark-1.1",
       "rates": [
@@ -81935,6 +83428,19 @@
           "out": 2.2,
           "cache_read": 0.1,
           "cache_write": 0.5,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
+    "llmgateway-providers\u0000nemotron-3.5-lightning": {
+      "id": "nemotron-3.5-lightning",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.08,
+          "out": 0.2,
+          "cache_read": 0,
+          "cache_write": 0.08,
           "source": "llmgateway-providers"
         }
       ]
@@ -82412,6 +83918,19 @@
         }
       ]
     },
+    "llmgateway-providers\u0000qwen3.8-2.4t-a95b": {
+      "id": "qwen3.8-2.4t-a95b",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.25,
+          "cache_write": 2,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
     "llmgateway-providers\u0000qwen3.8-27b": {
       "id": "qwen3.8-27b",
       "rates": [
@@ -82559,6 +84078,19 @@
           "out": 8,
           "cache_read": 0,
           "cache_write": 2,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
+    "llmgateway-providers\u0000step-3.7-flash": {
+      "id": "step-3.7-flash",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.2,
+          "out": 1.15,
+          "cache_read": 0.04,
+          "cache_write": 0.2,
           "source": "llmgateway-providers"
         }
       ]
@@ -83701,6 +85233,20 @@
           "cache_read": 0.5,
           "cache_write": 6.25,
           "cache_write_1h": 10,
+          "source": "merge-gateway"
+        }
+      ]
+    },
+    "merge-gateway\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
           "source": "merge-gateway"
         }
       ]
@@ -85074,6 +86620,40 @@
           "out": 50,
           "cache_read": 1,
           "cache_write": 10,
+          "source": "merge-gateway"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 10,
+          "out": 50,
+          "cache_read": 1,
+          "cache_write": 12.5,
+          "source": "merge-gateway"
+        }
+      ]
+    },
+    "merge-gateway\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "source": "merge-gateway"
+        }
+      ]
+    },
+    "merge-gateway\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
           "source": "merge-gateway"
         }
       ]
@@ -88446,6 +90026,20 @@
         }
       ]
     },
+    "nano-gpt\u0000claude-opus-5.5": {
+      "id": "claude-opus-5.5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000claude-sonnet": {
       "id": "claude-sonnet",
       "rates": [
@@ -91638,6 +93232,58 @@
         }
       ]
     },
+    "nano-gpt\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.05,
+          "out": 0.25,
+          "cache_read": 0.005,
+          "cache_write": 0.0625,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000gpt-6-luna-pro": {
+      "id": "gpt-6-luna-pro",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.05,
+          "out": 0.25,
+          "cache_read": 0.005,
+          "cache_write": 0.0625,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000gpt-6-sol-pro": {
+      "id": "gpt-6-sol-pro",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000gpt-astra": {
       "id": "gpt-astra",
       "rates": [
@@ -92857,6 +94503,19 @@
           "out": 3,
           "cache_read": 0.015,
           "cache_write": 0.75,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000lumen-stealth": {
+      "id": "lumen-stealth",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.05,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0.05,
           "source": "nano-gpt"
         }
       ]
@@ -101032,6 +102691,20 @@
         }
       ]
     },
+    "ofox\u0000claude-opus-5.5": {
+      "id": "claude-opus-5.5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "ofox"
+        }
+      ]
+    },
     "ofox\u0000claude-sonnet-4.5": {
       "id": "claude-sonnet-4.5",
       "rates": [
@@ -102146,6 +103819,32 @@
         }
       ]
     },
+    "ofox\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.08,
+          "out": 0.4,
+          "cache_read": 0.008,
+          "cache_write": 0.1,
+          "source": "ofox"
+        }
+      ]
+    },
+    "ofox\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 1.6,
+          "out": 8,
+          "cache_read": 0.16,
+          "cache_write": 2,
+          "source": "ofox"
+        }
+      ]
+    },
     "ofox\u0000grok-4.1-fast": {
       "id": "grok-4.1-fast",
       "rates": [
@@ -102203,6 +103902,19 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "source": "ofox"
+        }
+      ]
+    },
+    "ofox\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-23",
           "in": 2,
           "out": 6,
           "cache_read": 0.5,
@@ -103493,6 +105205,42 @@
         }
       ]
     },
+    "openai\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "openai"
+        }
+      ]
+    },
+    "openai\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
+          "source": "openai"
+        }
+      ]
+    },
     "openai\u0000gpt-image-2": {
       "id": "gpt-image-2",
       "rates": [
@@ -103785,6 +105533,20 @@
           "cache_read": 0.5,
           "cache_write": 6.25,
           "cache_write_1h": 10,
+          "source": "opencode"
+        }
+      ]
+    },
+    "opencode\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
           "source": "opencode"
         }
       ]
@@ -104467,6 +106229,42 @@
         }
       ]
     },
+    "opencode\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "opencode"
+        }
+      ]
+    },
+    "opencode\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
+          "source": "opencode"
+        }
+      ]
+    },
     "opencode\u0000grok-4.5": {
       "id": "grok-4.5",
       "rates": [
@@ -104499,6 +106297,24 @@
           "tier_out": 12,
           "tier_cache_read": 1,
           "tier_cache_write": 4,
+          "source": "opencode"
+        }
+      ]
+    },
+    "opencode\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 1.4,
+          "out": 4.2,
+          "cache_read": 0.35,
+          "cache_write": 1.4,
+          "tier_threshold": 200000,
+          "tier_in": 2.8,
+          "tier_out": 8.4,
+          "tier_cache_read": 0.7,
+          "tier_cache_write": 2.8,
           "source": "opencode"
         }
       ]
@@ -105956,6 +107772,15 @@
           "cache_write": 6.25,
           "cache_write_1h": 10,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "openrouter"
         }
       ]
     },
@@ -106109,6 +107934,20 @@
         }
       ]
     },
+    "openrouter\u0000claude-opus-5.5": {
+      "id": "claude-opus-5.5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "openrouter"
+        }
+      ]
+    },
     "openrouter\u0000claude-sonnet": {
       "id": "claude-sonnet",
       "rates": [
@@ -106216,6 +108055,19 @@
           "out": 10,
           "cache_read": 0,
           "cache_write": 2.5,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000command-a-plus": {
+      "id": "command-a-plus",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.3,
+          "out": 1.5,
+          "cache_read": 0.15,
+          "cache_write": 0.3,
           "source": "openrouter"
         }
       ]
@@ -106393,6 +108245,14 @@
           "cache_read": 0.0036,
           "cache_write": 0.12,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.1,
+          "source": "openrouter"
         }
       ]
     },
@@ -106437,6 +108297,14 @@
           "out": 2.88,
           "cache_read": 0.088,
           "cache_write": 0.624,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.4,
+          "out": 4.3,
+          "cache_read": 0.033,
+          "cache_write": 0.4,
           "source": "openrouter"
         }
       ]
@@ -106608,6 +108476,14 @@
           "out": 1,
           "cache_read": 0.008,
           "cache_write": 0.03,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.038,
+          "out": 0.55,
+          "cache_read": 0.0228,
+          "cache_write": 0.038,
           "source": "openrouter"
         }
       ]
@@ -106844,6 +108720,14 @@
           "out": 1.98,
           "cache_read": 0.022,
           "cache_write": 0.66,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.498696,
+          "out": 1.496088,
+          "cache_read": 0.016623,
+          "cache_write": 0.498696,
           "source": "openrouter"
         }
       ]
@@ -107511,6 +109395,14 @@
           "out": 2.057,
           "cache_read": 0.107525,
           "cache_write": 0.6545,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.5625,
+          "out": 2.5,
+          "cache_read": 0.125,
+          "cache_write": 0.5625,
           "source": "openrouter"
         }
       ]
@@ -108589,6 +110481,78 @@
         }
       ]
     },
+    "openrouter\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000gpt-6-luna-pro": {
+      "id": "gpt-6-luna-pro",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000gpt-6-sol-pro": {
+      "id": "gpt-6-sol-pro",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
+          "source": "openrouter"
+        }
+      ]
+    },
     "openrouter\u0000gpt-astra": {
       "id": "gpt-astra",
       "rates": [
@@ -108661,6 +110625,19 @@
           "tier_cache_read": 0.04,
           "tier_cache_write": 0.5,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "openrouter"
         }
       ]
     },
@@ -108707,6 +110684,14 @@
           "out": 0.13,
           "cache_read": 0.03,
           "cache_write": 0.03,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.018,
+          "out": 0.09,
+          "cache_read": 0,
+          "cache_write": 0.018,
           "source": "openrouter"
         }
       ]
@@ -109285,6 +111270,14 @@
           "out": 7.5,
           "cache_read": 0.15,
           "cache_write": 1.5,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 1.4989,
+          "out": 10.758,
+          "cache_read": 0.3,
+          "cache_write": 1.4989,
           "source": "openrouter"
         }
       ]
@@ -111638,6 +113631,14 @@
           "cache_read": 0.03,
           "cache_write": 0.3,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-23",
+          "in": 0.32,
+          "out": 2.7,
+          "cache_read": 0.15,
+          "cache_write": 0.32,
+          "source": "openrouter"
         }
       ]
     },
@@ -111855,6 +113856,19 @@
           "out": 6,
           "cache_read": 0.25,
           "cache_write": 2.5,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000qwen3.8-omni-flash": {
+      "id": "qwen3.8-omni-flash",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.15,
+          "out": 0.47,
+          "cache_read": 0.016,
+          "cache_write": 0.15,
           "source": "openrouter"
         }
       ]
@@ -112107,6 +114121,19 @@
           "out": 0.8,
           "cache_read": 0.25,
           "cache_write": 0.55,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000solar-mini4": {
+      "id": "solar-mini4",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.05,
+          "out": 0.2,
+          "cache_read": 0.005,
+          "cache_write": 0.05,
           "source": "openrouter"
         }
       ]
@@ -116218,6 +118245,19 @@
         }
       ]
     },
+    "pioneer\u0000gliguard-pii-multi": {
+      "id": "gliguard-pii-multi",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.15,
+          "out": 0.15,
+          "cache_read": 0.15,
+          "cache_write": 0.15,
+          "source": "pioneer"
+        }
+      ]
+    },
     "pioneer\u0000gliner2-base-v1": {
       "id": "gliner2-base-v1",
       "rates": [
@@ -116275,6 +118315,19 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 0.15,
+          "out": 0.15,
+          "cache_read": 0.15,
+          "cache_write": 0.15,
+          "source": "pioneer"
+        }
+      ]
+    },
+    "pioneer\u0000gliner2.5-multi-v1": {
+      "id": "gliner2.5-multi-v1",
+      "rates": [
+        {
+          "from": "2026-09-23",
           "in": 0.15,
           "out": 0.15,
           "cache_read": 0.15,
@@ -119480,6 +121533,34 @@
         }
       ]
     },
+    "requesty\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 5,
+          "out": 25,
+          "cache_read": 0.5,
+          "cache_write": 6.25,
+          "cache_write_1h": 10,
+          "source": "requesty"
+        }
+      ]
+    },
+    "requesty\u0000claude-opus-5-5@eu": {
+      "id": "claude-opus-5-5@eu",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 5.5,
+          "out": 27.5,
+          "cache_read": 0.55,
+          "cache_write": 6.875,
+          "cache_write_1h": 11,
+          "source": "requesty"
+        }
+      ]
+    },
     "requesty\u0000claude-opus-5@eu": {
       "id": "claude-opus-5@eu",
       "rates": [
@@ -121106,6 +123187,78 @@
           "tier_out": 75,
           "tier_cache_read": 2,
           "tier_cache_write": 20,
+          "source": "requesty"
+        }
+      ]
+    },
+    "requesty\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.1,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.2,
+          "source": "requesty"
+        }
+      ]
+    },
+    "requesty\u0000gpt-6-luna@eu": {
+      "id": "gpt-6-luna@eu",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.12,
+          "out": 0.6,
+          "cache_read": 0.012,
+          "cache_write": 0.12,
+          "tier_threshold": 272000,
+          "tier_in": 0.24,
+          "tier_out": 0.9,
+          "tier_cache_read": 0.024,
+          "tier_cache_write": 0.24,
+          "source": "requesty"
+        }
+      ]
+    },
+    "requesty\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 4,
+          "source": "requesty"
+        }
+      ]
+    },
+    "requesty\u0000gpt-6-sol@eu": {
+      "id": "gpt-6-sol@eu",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2.4,
+          "out": 12,
+          "cache_read": 0.24,
+          "cache_write": 2.4,
+          "tier_threshold": 272000,
+          "tier_in": 4.8,
+          "tier_out": 18,
+          "tier_cache_read": 0.48,
+          "tier_cache_write": 4.8,
           "source": "requesty"
         }
       ]
@@ -125607,6 +127760,19 @@
         }
       ]
     },
+    "stepfun\u0000step-5-preview": {
+      "id": "step-5-preview",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.959,
+          "out": 2.741,
+          "cache_read": 0.048,
+          "cache_write": 0.959,
+          "source": "stepfun"
+        }
+      ]
+    },
     "stepfun-ai\u0000step-1-32k": {
       "id": "step-1-32k",
       "rates": [
@@ -128596,6 +130762,20 @@
         }
       ]
     },
+    "venice\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4.8,
+          "out": 24,
+          "cache_read": 0.24,
+          "cache_write": 6,
+          "cache_write_1h": 9.6,
+          "source": "venice"
+        }
+      ]
+    },
     "venice\u0000claude-opus-5-fast": {
       "id": "claude-opus-5-fast",
       "rates": [
@@ -129645,6 +131825,42 @@
         }
       ]
     },
+    "venice\u0000openai-gpt-6-luna": {
+      "id": "openai-gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.125,
+          "out": 0.625,
+          "cache_read": 0.0125,
+          "cache_write": 0.15625,
+          "tier_threshold": 272000,
+          "tier_in": 0.25,
+          "tier_out": 0.9375,
+          "tier_cache_read": 0.025,
+          "tier_cache_write": 0.3125,
+          "source": "venice"
+        }
+      ]
+    },
+    "venice\u0000openai-gpt-6-sol": {
+      "id": "openai-gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2.5,
+          "out": 12.5,
+          "cache_read": 0.25,
+          "cache_write": 3.125,
+          "tier_threshold": 272000,
+          "tier_in": 5,
+          "tier_out": 18.75,
+          "tier_cache_read": 0.5,
+          "tier_cache_write": 6.25,
+          "source": "venice"
+        }
+      ]
+    },
     "venice\u0000openai-gpt-oss-120b": {
       "id": "openai-gpt-oss-120b",
       "rates": [
@@ -130269,6 +132485,34 @@
           "cache_read": 1,
           "cache_write": 12.5,
           "cache_write_1h": 20,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000claude-opus-5.5": {
+      "id": "claude-opus-5.5",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000claude-opus-5.5-fast": {
+      "id": "claude-opus-5.5-fast",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 8,
+          "out": 40,
+          "cache_read": 0.4,
+          "cache_write": 10,
+          "cache_write_1h": 16,
           "source": "vercel"
         }
       ]
@@ -132052,6 +134296,78 @@
           "tier_out": 150,
           "tier_cache_read": 4,
           "tier_cache_write": 50,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272001,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000gpt-6-luna-fast": {
+      "id": "gpt-6-luna-fast",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.2,
+          "out": 1,
+          "cache_read": 0.02,
+          "cache_write": 0.25,
+          "tier_threshold": 272001,
+          "tier_in": 0.4,
+          "tier_out": 1.5,
+          "tier_cache_read": 0.04,
+          "tier_cache_write": 0.5,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272001,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000gpt-6-sol-fast": {
+      "id": "gpt-6-sol-fast",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.4,
+          "cache_write": 5,
+          "tier_threshold": 272001,
+          "tier_in": 8,
+          "tier_out": 30,
+          "tier_cache_read": 0.8,
+          "tier_cache_write": 10,
           "source": "vercel"
         }
       ]
@@ -134702,6 +137018,20 @@
         }
       ]
     },
+    "vertex-anthropic\u0000claude-opus-5-5@default": {
+      "id": "claude-opus-5-5@default",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "google-vertex-anthropic"
+        }
+      ]
+    },
     "vertex-anthropic\u0000claude-opus-5@default": {
       "id": "claude-opus-5@default",
       "rates": [
@@ -135920,6 +138250,19 @@
           "out": 0.65,
           "cache_read": 0.03,
           "cache_write": 0.2,
+          "source": "wandb"
+        }
+      ]
+    },
+    "wandb\u0000gemma-4-26b-a4b-it": {
+      "id": "gemma-4-26b-a4b-it",
+      "rates": [
+        {
+          "from": "2026-09-23",
+          "in": 0.1,
+          "out": 0.3,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
           "source": "wandb"
         }
       ]
@@ -139833,7 +142176,10 @@
     "anthropic-claude-opus-4p6": "anthropic-claude-opus-4.6",
     "anthropic-claude-opus-4p7": "anthropic-claude-opus-4.7",
     "anthropic-claude-opus-4p8": "anthropic-claude-opus-4.8",
+    "anthropic-claude-opus-5-5": "anthropic-claude-opus-5.5",
     "anthropic-claude-opus-5-latest": "anthropic-claude-opus-5",
+    "anthropic-claude-opus-5.5-latest": "anthropic-claude-opus-5.5",
+    "anthropic-claude-opus-5p5": "anthropic-claude-opus-5.5",
     "anthropic-claude-sonnet-4-5-20250929-v1": "anthropic.claude-sonnet-4-5-20250929-v1",
     "anthropic-claude-sonnet-4-6": "anthropic.claude-sonnet-4-6",
     "anthropic-claude-sonnet-4-latest": "anthropic-claude-sonnet-4",
@@ -139846,6 +142192,7 @@
     "anthropic.claude-opus-4-6-v1-latest": "anthropic.claude-opus-4-6-v1",
     "anthropic.claude-opus-4-7-latest": "anthropic.claude-opus-4-7",
     "anthropic.claude-opus-4-8-latest": "anthropic.claude-opus-4-8",
+    "anthropic.claude-opus-5-5-latest": "anthropic.claude-opus-5-5",
     "anthropic.claude-opus-5-latest": "anthropic.claude-opus-5",
     "anthropic.claude-sonnet-4-5-20250929-v1-latest": "anthropic.claude-sonnet-4-5-20250929-v1",
     "anthropic.claude-sonnet-4-6-latest": "anthropic.claude-sonnet-4-6",
@@ -139859,6 +142206,7 @@
     "anthropicpclaude-opus-4-7": "anthropic.claude-opus-4-7",
     "anthropicpclaude-opus-4-8": "anthropic.claude-opus-4-8",
     "anthropicpclaude-opus-5": "anthropic.claude-opus-5",
+    "anthropicpclaude-opus-5-5": "anthropic.claude-opus-5-5",
     "anthropicpclaude-sonnet-4-5-20250929-v1": "anthropic.claude-sonnet-4-5-20250929-v1",
     "anthropicpclaude-sonnet-4-6": "anthropic.claude-sonnet-4-6",
     "anthropicpclaude-sonnet-5": "anthropic.claude-sonnet-5",
@@ -139897,6 +142245,7 @@
     "au-anthropic-claude-opus-4-7": "au.anthropic.claude-opus-4-7",
     "au-anthropic-claude-opus-4-8": "au.anthropic.claude-opus-4-8",
     "au-anthropic-claude-opus-5": "au.anthropic.claude-opus-5",
+    "au-anthropic-claude-opus-5-5": "au.anthropic.claude-opus-5-5",
     "au-anthropic-claude-sonnet-4-5-20250929-v1": "au.anthropic.claude-sonnet-4-5-20250929-v1",
     "au-anthropic-claude-sonnet-4-6": "au.anthropic.claude-sonnet-4-6",
     "au-anthropic-claude-sonnet-5": "au.anthropic.claude-sonnet-5",
@@ -139904,6 +142253,7 @@
     "au.anthropic.claude-opus-4-6-v1-latest": "au.anthropic.claude-opus-4-6-v1",
     "au.anthropic.claude-opus-4-7-latest": "au.anthropic.claude-opus-4-7",
     "au.anthropic.claude-opus-4-8-latest": "au.anthropic.claude-opus-4-8",
+    "au.anthropic.claude-opus-5-5-latest": "au.anthropic.claude-opus-5-5",
     "au.anthropic.claude-opus-5-latest": "au.anthropic.claude-opus-5",
     "au.anthropic.claude-sonnet-4-5-20250929-v1-latest": "au.anthropic.claude-sonnet-4-5-20250929-v1",
     "au.anthropic.claude-sonnet-4-6-latest": "au.anthropic.claude-sonnet-4-6",
@@ -139913,6 +142263,7 @@
     "aupanthropicpclaude-opus-4-7": "au.anthropic.claude-opus-4-7",
     "aupanthropicpclaude-opus-4-8": "au.anthropic.claude-opus-4-8",
     "aupanthropicpclaude-opus-5": "au.anthropic.claude-opus-5",
+    "aupanthropicpclaude-opus-5-5": "au.anthropic.claude-opus-5-5",
     "aupanthropicpclaude-sonnet-4-5-20250929-v1": "au.anthropic.claude-sonnet-4-5-20250929-v1",
     "aupanthropicpclaude-sonnet-4-6": "au.anthropic.claude-sonnet-4-6",
     "aupanthropicpclaude-sonnet-5": "au.anthropic.claude-sonnet-5",
@@ -140042,11 +142393,19 @@
     "claude-opus-4p7": "claude-opus-4.7",
     "claude-opus-4p8": "claude-opus-4.8",
     "claude-opus-4p8-fast": "claude-opus-4.8-fast",
+    "claude-opus-5-5-fast": "claude-opus-5.5-fast",
+    "claude-opus-5-5-latest": "claude-opus-5-5",
+    "claude-opus-5-5@default-latest": "claude-opus-5-5@default",
+    "claude-opus-5-5@eu-latest": "claude-opus-5-5@eu",
     "claude-opus-5-fast-latest": "claude-opus-5-fast",
     "claude-opus-5-latest": "claude-opus-5",
     "claude-opus-5-thinking-latest": "claude-opus-5-thinking",
+    "claude-opus-5.5-fast-latest": "claude-opus-5.5-fast",
+    "claude-opus-5.5-latest": "claude-opus-5.5",
     "claude-opus-5@default-latest": "claude-opus-5@default",
     "claude-opus-5@eu-latest": "claude-opus-5@eu",
+    "claude-opus-5p5": "claude-opus-5.5",
+    "claude-opus-5p5-fast": "claude-opus-5.5-fast",
     "claude-opus-latest": "claude-opus",
     "claude-opus4-5-latest": "claude-opus4-5",
     "claude-opus4-6-latest": "claude-opus4-6",
@@ -140129,6 +142488,7 @@
     "command-a-03-2025-latest": "command-a-03-2025",
     "command-a-latest": "command-a",
     "command-a-plus-05-2026-latest": "command-a-plus-05-2026",
+    "command-a-plus-latest": "command-a-plus",
     "command-a-reasoning-08-2025-latest": "command-a-reasoning-08-2025",
     "command-a-translate-08-2025-latest": "command-a-translate-08-2025",
     "command-a-vision-07-2025-latest": "command-a-vision-07-2025",
@@ -140413,6 +142773,7 @@
     "duo-chat-opus-4-6-latest": "duo-chat-opus-4-6",
     "duo-chat-opus-4-7-latest": "duo-chat-opus-4-7",
     "duo-chat-opus-4-8-latest": "duo-chat-opus-4-8",
+    "duo-chat-opus-5-5-latest": "duo-chat-opus-5-5",
     "duo-chat-opus-5-latest": "duo-chat-opus-5",
     "duo-chat-sonnet-4-5-latest": "duo-chat-sonnet-4-5",
     "duo-chat-sonnet-4-6-latest": "duo-chat-sonnet-4-6",
@@ -140464,6 +142825,7 @@
     "eu-anthropic-claude-opus-4-7": "eu.anthropic.claude-opus-4-7",
     "eu-anthropic-claude-opus-4-8": "eu.anthropic.claude-opus-4-8",
     "eu-anthropic-claude-opus-5": "eu.anthropic.claude-opus-5",
+    "eu-anthropic-claude-opus-5-5": "eu.anthropic.claude-opus-5-5",
     "eu-anthropic-claude-sonnet-4-20250514-v1": "eu.anthropic.claude-sonnet-4-20250514-v1",
     "eu-anthropic-claude-sonnet-4-5-20250929-v1": "eu.anthropic.claude-sonnet-4-5-20250929-v1",
     "eu-anthropic-claude-sonnet-4-6": "eu.anthropic.claude-sonnet-4-6",
@@ -140479,6 +142841,7 @@
     "eu.anthropic.claude-opus-4-6-v1-latest": "eu.anthropic.claude-opus-4-6-v1",
     "eu.anthropic.claude-opus-4-7-latest": "eu.anthropic.claude-opus-4-7",
     "eu.anthropic.claude-opus-4-8-latest": "eu.anthropic.claude-opus-4-8",
+    "eu.anthropic.claude-opus-5-5-latest": "eu.anthropic.claude-opus-5-5",
     "eu.anthropic.claude-opus-5-latest": "eu.anthropic.claude-opus-5",
     "eu.anthropic.claude-sonnet-4-20250514-v1-latest": "eu.anthropic.claude-sonnet-4-20250514-v1",
     "eu.anthropic.claude-sonnet-4-5-20250929-v1-latest": "eu.anthropic.claude-sonnet-4-5-20250929-v1",
@@ -140496,6 +142859,7 @@
     "eupanthropicpclaude-opus-4-7": "eu.anthropic.claude-opus-4-7",
     "eupanthropicpclaude-opus-4-8": "eu.anthropic.claude-opus-4-8",
     "eupanthropicpclaude-opus-5": "eu.anthropic.claude-opus-5",
+    "eupanthropicpclaude-opus-5-5": "eu.anthropic.claude-opus-5-5",
     "eupanthropicpclaude-sonnet-4-20250514-v1": "eu.anthropic.claude-sonnet-4-20250514-v1",
     "eupanthropicpclaude-sonnet-4-5-20250929-v1": "eu.anthropic.claude-sonnet-4-5-20250929-v1",
     "eupanthropicpclaude-sonnet-4-6": "eu.anthropic.claude-sonnet-4-6",
@@ -140810,12 +143174,16 @@
     "gemma4-31b-splituntied-latest": "gemma4-31b-splituntied",
     "gemma4-latest": "gemma4",
     "gliguard-llmguardrails-300m-latest": "gliguard-llmguardrails-300m",
+    "gliguard-pii-multi-latest": "gliguard-pii-multi",
     "gliner-pii-latest": "gliner-pii",
+    "gliner2-5-multi-v1": "gliner2.5-multi-v1",
     "gliner2-base-v1-latest": "gliner2-base-v1",
     "gliner2-large-v1-latest": "gliner2-large-v1",
     "gliner2-multi-large-v1-latest": "gliner2-multi-large-v1",
     "gliner2-multi-v1-latest": "gliner2-multi-v1",
     "gliner2-privacy-filter-pii-multi-latest": "gliner2-privacy-filter-pii-multi",
+    "gliner2.5-multi-v1-latest": "gliner2.5-multi-v1",
+    "gliner2p5-multi-v1": "gliner2.5-multi-v1",
     "glm-4-1v-thinking-flash": "glm-4.1v-thinking-flash",
     "glm-4-1v-thinking-flashx": "glm-4.1v-thinking-flashx",
     "glm-4-32b-0414-128k-latest": "glm-4-32b-0414-128k",
@@ -141071,14 +143439,18 @@
     "global-anthropic-claude-opus-4-7": "global.anthropic.claude-opus-4-7",
     "global-anthropic-claude-opus-4-8": "global.anthropic.claude-opus-4-8",
     "global-anthropic-claude-opus-5": "global.anthropic.claude-opus-5",
+    "global-anthropic-claude-opus-5-5": "global.anthropic.claude-opus-5-5",
     "global-anthropic-claude-sonnet-4-20250514-v1": "global.anthropic.claude-sonnet-4-20250514-v1",
     "global-anthropic-claude-sonnet-4-5-20250929-v1": "global.anthropic.claude-sonnet-4-5-20250929-v1",
     "global-anthropic-claude-sonnet-4-6": "global.anthropic.claude-sonnet-4-6",
     "global-anthropic-claude-sonnet-5": "global.anthropic.claude-sonnet-5",
+    "global-moonshotai-kimi-k3": "global.moonshotai.kimi-k3",
     "global-openai-gpt-5-6-luna": "global.openai.gpt-5.6-luna",
     "global-openai-gpt-5-6-sol": "global.openai.gpt-5.6-sol",
     "global-openai-gpt-5-6-terra": "global.openai.gpt-5.6-terra",
     "global-openai-gpt-6-astra": "global.openai.gpt-6-astra",
+    "global-openai-gpt-6-luna": "global.openai.gpt-6-luna",
+    "global-openai-gpt-6-sol": "global.openai.gpt-6-sol",
     "global-xai-grok-4-6": "global.xai.grok-4.6",
     "global.amazon.nova-2-lite-v1-latest": "global.amazon.nova-2-lite-v1",
     "global.anthropic.claude-fable-5-1-latest": "global.anthropic.claude-fable-5-1",
@@ -141088,15 +143460,19 @@
     "global.anthropic.claude-opus-4-6-v1-latest": "global.anthropic.claude-opus-4-6-v1",
     "global.anthropic.claude-opus-4-7-latest": "global.anthropic.claude-opus-4-7",
     "global.anthropic.claude-opus-4-8-latest": "global.anthropic.claude-opus-4-8",
+    "global.anthropic.claude-opus-5-5-latest": "global.anthropic.claude-opus-5-5",
     "global.anthropic.claude-opus-5-latest": "global.anthropic.claude-opus-5",
     "global.anthropic.claude-sonnet-4-20250514-v1-latest": "global.anthropic.claude-sonnet-4-20250514-v1",
     "global.anthropic.claude-sonnet-4-5-20250929-v1-latest": "global.anthropic.claude-sonnet-4-5-20250929-v1",
     "global.anthropic.claude-sonnet-4-6-latest": "global.anthropic.claude-sonnet-4-6",
     "global.anthropic.claude-sonnet-5-latest": "global.anthropic.claude-sonnet-5",
+    "global.moonshotai.kimi-k3-latest": "global.moonshotai.kimi-k3",
     "global.openai.gpt-5.6-luna-latest": "global.openai.gpt-5.6-luna",
     "global.openai.gpt-5.6-sol-latest": "global.openai.gpt-5.6-sol",
     "global.openai.gpt-5.6-terra-latest": "global.openai.gpt-5.6-terra",
     "global.openai.gpt-6-astra-latest": "global.openai.gpt-6-astra",
+    "global.openai.gpt-6-luna-latest": "global.openai.gpt-6-luna",
+    "global.openai.gpt-6-sol-latest": "global.openai.gpt-6-sol",
     "global.xai.grok-4.6-latest": "global.xai.grok-4.6",
     "globalpamazonpnova-2-lite-v1": "global.amazon.nova-2-lite-v1",
     "globalpanthropicpclaude-fable-5": "global.anthropic.claude-fable-5",
@@ -141107,14 +143483,18 @@
     "globalpanthropicpclaude-opus-4-7": "global.anthropic.claude-opus-4-7",
     "globalpanthropicpclaude-opus-4-8": "global.anthropic.claude-opus-4-8",
     "globalpanthropicpclaude-opus-5": "global.anthropic.claude-opus-5",
+    "globalpanthropicpclaude-opus-5-5": "global.anthropic.claude-opus-5-5",
     "globalpanthropicpclaude-sonnet-4-20250514-v1": "global.anthropic.claude-sonnet-4-20250514-v1",
     "globalpanthropicpclaude-sonnet-4-5-20250929-v1": "global.anthropic.claude-sonnet-4-5-20250929-v1",
     "globalpanthropicpclaude-sonnet-4-6": "global.anthropic.claude-sonnet-4-6",
     "globalpanthropicpclaude-sonnet-5": "global.anthropic.claude-sonnet-5",
+    "globalpmoonshotaipkimi-k3": "global.moonshotai.kimi-k3",
     "globalpopenaipgpt-5p6-luna": "global.openai.gpt-5.6-luna",
     "globalpopenaipgpt-5p6-sol": "global.openai.gpt-5.6-sol",
     "globalpopenaipgpt-5p6-terra": "global.openai.gpt-5.6-terra",
     "globalpopenaipgpt-6-astra": "global.openai.gpt-6-astra",
+    "globalpopenaipgpt-6-luna": "global.openai.gpt-6-luna",
+    "globalpopenaipgpt-6-sol": "global.openai.gpt-6-sol",
     "globalpxaipgrok-4p6": "global.xai.grok-4.6",
     "google-gemma-3-12b-it": "google.gemma-3-12b-it",
     "google-gemma-3-12b-it@us": "google.gemma-3-12b-it@us",
@@ -141387,6 +143767,14 @@
     "gpt-6-astra-fast-latest": "gpt-6-astra-fast",
     "gpt-6-astra-latest": "gpt-6-astra",
     "gpt-6-astra-pro-latest": "gpt-6-astra-pro",
+    "gpt-6-luna-fast-latest": "gpt-6-luna-fast",
+    "gpt-6-luna-latest": "gpt-6-luna",
+    "gpt-6-luna-pro-latest": "gpt-6-luna-pro",
+    "gpt-6-luna@eu-latest": "gpt-6-luna@eu",
+    "gpt-6-sol-fast-latest": "gpt-6-sol-fast",
+    "gpt-6-sol-latest": "gpt-6-sol",
+    "gpt-6-sol-pro-latest": "gpt-6-sol-pro",
+    "gpt-6-sol@eu-latest": "gpt-6-sol@eu",
     "gpt-astra-latest": "gpt-astra",
     "gpt-audio-latest": "gpt-audio",
     "gpt-audio-mini-latest": "gpt-audio-mini",
@@ -141608,6 +143996,7 @@
     "jp-anthropic-claude-opus-4-7": "jp.anthropic.claude-opus-4-7",
     "jp-anthropic-claude-opus-4-8": "jp.anthropic.claude-opus-4-8",
     "jp-anthropic-claude-opus-5": "jp.anthropic.claude-opus-5",
+    "jp-anthropic-claude-opus-5-5": "jp.anthropic.claude-opus-5-5",
     "jp-anthropic-claude-sonnet-4-5-20250929-v1": "jp.anthropic.claude-sonnet-4-5-20250929-v1",
     "jp-anthropic-claude-sonnet-4-6": "jp.anthropic.claude-sonnet-4-6",
     "jp-anthropic-claude-sonnet-5": "jp.anthropic.claude-sonnet-5",
@@ -141615,6 +144004,7 @@
     "jp.anthropic.claude-haiku-4-5-20251001-v1-latest": "jp.anthropic.claude-haiku-4-5-20251001-v1",
     "jp.anthropic.claude-opus-4-7-latest": "jp.anthropic.claude-opus-4-7",
     "jp.anthropic.claude-opus-4-8-latest": "jp.anthropic.claude-opus-4-8",
+    "jp.anthropic.claude-opus-5-5-latest": "jp.anthropic.claude-opus-5-5",
     "jp.anthropic.claude-opus-5-latest": "jp.anthropic.claude-opus-5",
     "jp.anthropic.claude-sonnet-4-5-20250929-v1-latest": "jp.anthropic.claude-sonnet-4-5-20250929-v1",
     "jp.anthropic.claude-sonnet-4-6-latest": "jp.anthropic.claude-sonnet-4-6",
@@ -141624,6 +144014,7 @@
     "jppanthropicpclaude-opus-4-7": "jp.anthropic.claude-opus-4-7",
     "jppanthropicpclaude-opus-4-8": "jp.anthropic.claude-opus-4-8",
     "jppanthropicpclaude-opus-5": "jp.anthropic.claude-opus-5",
+    "jppanthropicpclaude-opus-5-5": "jp.anthropic.claude-opus-5-5",
     "jppanthropicpclaude-sonnet-4-5-20250929-v1": "jp.anthropic.claude-sonnet-4-5-20250929-v1",
     "jppanthropicpclaude-sonnet-4-6": "jp.anthropic.claude-sonnet-4-6",
     "jppanthropicpclaude-sonnet-5": "jp.anthropic.claude-sonnet-5",
@@ -141972,6 +144363,7 @@
     "lucidquery-agi-01-frontier-latest": "lucidquery-agi-01-frontier",
     "lucidquery-agi-01-swift-latest": "lucidquery-agi-01-swift",
     "lucidquery-nexus-coder-latest": "lucidquery-nexus-coder",
+    "lumen-stealth-latest": "lumen-stealth",
     "lumimaid-v0-2-70b": "lumimaid-v0.2-70b",
     "lumimaid-v0.2-70b-latest": "lumimaid-v0.2-70b",
     "lumimaid-v0p2-70b": "lumimaid-v0.2-70b",
@@ -142522,6 +144914,8 @@
     "openai-gpt-5p6-terra": "openai-gpt-5.6-terra",
     "openai-gpt-6-astra-latest": "openai-gpt-6-astra",
     "openai-gpt-6-astra-pro-latest": "openai-gpt-6-astra-pro",
+    "openai-gpt-6-luna-latest": "openai-gpt-6-luna",
+    "openai-gpt-6-sol-latest": "openai-gpt-6-sol",
     "openai-gpt-image-1-5": "openai-gpt-image-1.5",
     "openai-gpt-image-1-latest": "openai-gpt-image-1",
     "openai-gpt-image-1.5-latest": "openai-gpt-image-1.5",
@@ -143086,6 +145480,7 @@
     "solar-10.7b-instruct-latest": "solar-10.7b-instruct",
     "solar-10p7b-instruct": "solar-10.7b-instruct",
     "solar-mini-latest": "solar-mini",
+    "solar-mini4-latest": "solar-mini4",
     "solar-pro-3-latest": "solar-pro-3",
     "solar-pro2-latest": "solar-pro2",
     "solar-pro3-latest": "solar-pro3",
@@ -143183,6 +145578,7 @@
     "us-anthropic-claude-opus-4-7": "us.anthropic.claude-opus-4-7",
     "us-anthropic-claude-opus-4-8": "us.anthropic.claude-opus-4-8",
     "us-anthropic-claude-opus-5": "us.anthropic.claude-opus-5",
+    "us-anthropic-claude-opus-5-5": "us.anthropic.claude-opus-5-5",
     "us-anthropic-claude-sonnet-4-20250514-v1": "us.anthropic.claude-sonnet-4-20250514-v1",
     "us-anthropic-claude-sonnet-4-5-20250929-v1": "us.anthropic.claude-sonnet-4-5-20250929-v1",
     "us-anthropic-claude-sonnet-4-6": "us.anthropic.claude-sonnet-4-6",
@@ -143200,10 +145596,13 @@
     "us-meta-llama4-maverick-17b-instruct-v1": "us.meta.llama4-maverick-17b-instruct-v1",
     "us-meta-llama4-scout-17b-instruct-v1": "us.meta.llama4-scout-17b-instruct-v1",
     "us-mistral-pixtral-large-2502-v1": "us.mistral.pixtral-large-2502-v1",
+    "us-moonshotai-kimi-k3": "us.moonshotai.kimi-k3",
     "us-openai-gpt-5-6-luna": "us.openai.gpt-5.6-luna",
     "us-openai-gpt-5-6-sol": "us.openai.gpt-5.6-sol",
     "us-openai-gpt-5-6-terra": "us.openai.gpt-5.6-terra",
     "us-openai-gpt-6-astra": "us.openai.gpt-6-astra",
+    "us-openai-gpt-6-luna": "us.openai.gpt-6-luna",
+    "us-openai-gpt-6-sol": "us.openai.gpt-6-sol",
     "us-writer-palmyra-x4-v1": "us.writer.palmyra-x4-v1",
     "us-writer-palmyra-x5-v1": "us.writer.palmyra-x5-v1",
     "us-xai-grok-4-6": "us.xai.grok-4.6",
@@ -143220,6 +145619,7 @@
     "us.anthropic.claude-opus-4-6-v1-latest": "us.anthropic.claude-opus-4-6-v1",
     "us.anthropic.claude-opus-4-7-latest": "us.anthropic.claude-opus-4-7",
     "us.anthropic.claude-opus-4-8-latest": "us.anthropic.claude-opus-4-8",
+    "us.anthropic.claude-opus-5-5-latest": "us.anthropic.claude-opus-5-5",
     "us.anthropic.claude-opus-5-latest": "us.anthropic.claude-opus-5",
     "us.anthropic.claude-sonnet-4-20250514-v1-latest": "us.anthropic.claude-sonnet-4-20250514-v1",
     "us.anthropic.claude-sonnet-4-5-20250929-v1-latest": "us.anthropic.claude-sonnet-4-5-20250929-v1",
@@ -143232,10 +145632,13 @@
     "us.meta.llama4-maverick-17b-instruct-v1-latest": "us.meta.llama4-maverick-17b-instruct-v1",
     "us.meta.llama4-scout-17b-instruct-v1-latest": "us.meta.llama4-scout-17b-instruct-v1",
     "us.mistral.pixtral-large-2502-v1-latest": "us.mistral.pixtral-large-2502-v1",
+    "us.moonshotai.kimi-k3-latest": "us.moonshotai.kimi-k3",
     "us.openai.gpt-5.6-luna-latest": "us.openai.gpt-5.6-luna",
     "us.openai.gpt-5.6-sol-latest": "us.openai.gpt-5.6-sol",
     "us.openai.gpt-5.6-terra-latest": "us.openai.gpt-5.6-terra",
     "us.openai.gpt-6-astra-latest": "us.openai.gpt-6-astra",
+    "us.openai.gpt-6-luna-latest": "us.openai.gpt-6-luna",
+    "us.openai.gpt-6-sol-latest": "us.openai.gpt-6-sol",
     "us.writer.palmyra-x4-v1-latest": "us.writer.palmyra-x4-v1",
     "us.writer.palmyra-x5-v1-latest": "us.writer.palmyra-x5-v1",
     "us.xai.grok-4.6-latest": "us.xai.grok-4.6",
@@ -143255,6 +145658,7 @@
     "uspanthropicpclaude-opus-4-7": "us.anthropic.claude-opus-4-7",
     "uspanthropicpclaude-opus-4-8": "us.anthropic.claude-opus-4-8",
     "uspanthropicpclaude-opus-5": "us.anthropic.claude-opus-5",
+    "uspanthropicpclaude-opus-5-5": "us.anthropic.claude-opus-5-5",
     "uspanthropicpclaude-sonnet-4-20250514-v1": "us.anthropic.claude-sonnet-4-20250514-v1",
     "uspanthropicpclaude-sonnet-4-5-20250929-v1": "us.anthropic.claude-sonnet-4-5-20250929-v1",
     "uspanthropicpclaude-sonnet-4-6": "us.anthropic.claude-sonnet-4-6",
@@ -143266,10 +145670,13 @@
     "uspmetapllama4-maverick-17b-instruct-v1": "us.meta.llama4-maverick-17b-instruct-v1",
     "uspmetapllama4-scout-17b-instruct-v1": "us.meta.llama4-scout-17b-instruct-v1",
     "uspmistralppixtral-large-2502-v1": "us.mistral.pixtral-large-2502-v1",
+    "uspmoonshotaipkimi-k3": "us.moonshotai.kimi-k3",
     "uspopenaipgpt-5p6-luna": "us.openai.gpt-5.6-luna",
     "uspopenaipgpt-5p6-sol": "us.openai.gpt-5.6-sol",
     "uspopenaipgpt-5p6-terra": "us.openai.gpt-5.6-terra",
     "uspopenaipgpt-6-astra": "us.openai.gpt-6-astra",
+    "uspopenaipgpt-6-luna": "us.openai.gpt-6-luna",
+    "uspopenaipgpt-6-sol": "us.openai.gpt-6-sol",
     "uspwriterppalmyra-x4-v1": "us.writer.palmyra-x4-v1",
     "uspwriterppalmyra-x5-v1": "us.writer.palmyra-x5-v1",
     "uspxaipgrok-4p6": "us.xai.grok-4.6",
