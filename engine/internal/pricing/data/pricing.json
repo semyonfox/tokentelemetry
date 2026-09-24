@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-09-23",
+  "updated": "2026-09-24",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -209,6 +209,32 @@
         }
       ]
     },
+    "aion-3.5": {
+      "id": "aion-3.5",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 3,
+          "out": 6,
+          "cache_read": 0.75,
+          "cache_write": 3,
+          "source": "kilo"
+        }
+      ]
+    },
+    "aion-3.5-mini": {
+      "id": "aion-3.5-mini",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.7,
+          "out": 1.4,
+          "cache_read": 0.18,
+          "cache_write": 0.7,
+          "source": "kilo"
+        }
+      ]
+    },
     "aion-labs-aion-3-0": {
       "id": "aion-labs-aion-3-0",
       "rates": [
@@ -227,6 +253,32 @@
       "rates": [
         {
           "from": "2026-07-14",
+          "in": 0.875,
+          "out": 1.75,
+          "cache_read": 0.225,
+          "cache_write": 0.875,
+          "source": "venice"
+        }
+      ]
+    },
+    "aion-labs-aion-3-5": {
+      "id": "aion-labs-aion-3-5",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 3.75,
+          "out": 7.5,
+          "cache_read": 0.9375,
+          "cache_write": 3.75,
+          "source": "venice"
+        }
+      ]
+    },
+    "aion-labs-aion-3-5-mini": {
+      "id": "aion-labs-aion-3-5-mini",
+      "rates": [
+        {
+          "from": "2026-09-24",
           "in": 0.875,
           "out": 1.75,
           "cache_read": 0.225,
@@ -2446,6 +2498,15 @@
           "cache_write": 6.25,
           "cache_write_1h": 10,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "edenai"
         }
       ]
     },
@@ -3761,6 +3822,19 @@
           "out": 3.2,
           "cache_read": 0.2,
           "cache_write": 1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "clover-1-150b": {
+      "id": "clover-1-150b",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.15,
+          "out": 0.8,
+          "cache_read": 0,
+          "cache_write": 0.15,
           "source": "nano-gpt"
         }
       ]
@@ -7213,6 +7287,32 @@
         }
       ]
     },
+    "duo-chat-gpt-6-luna": {
+      "id": "duo-chat-gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "gitlab"
+        }
+      ]
+    },
+    "duo-chat-gpt-6-sol": {
+      "id": "duo-chat-gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "gitlab"
+        }
+      ]
+    },
     "duo-chat-haiku-4-5": {
       "id": "duo-chat-haiku-4-5",
       "rates": [
@@ -7392,6 +7492,19 @@
           "cache_read": 0.0325,
           "cache_write": 0.40625,
           "source": "kilo"
+        }
+      ]
+    },
+    "ember-1": {
+      "id": "ember-1",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3,
+          "source": "fireworks-ai"
         }
       ]
     },
@@ -9284,6 +9397,32 @@
         }
       ],
       "first_party": true
+    },
+    "gemini-3.8-flash-lite-tts": {
+      "id": "gemini-3.8-flash-lite-tts",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.5,
+          "out": 6,
+          "cache_read": 0.125,
+          "cache_write": 0.5,
+          "source": "vercel"
+        }
+      ]
+    },
+    "gemini-3.8-flash-tts": {
+      "id": "gemini-3.8-flash-tts",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.5,
+          "out": 9,
+          "cache_read": 0.125,
+          "cache_write": 0.5,
+          "source": "vercel"
+        }
+      ]
     },
     "gemini-3.8-flash@eu": {
       "id": "gemini-3.8-flash@eu",
@@ -11842,6 +11981,19 @@
           "cache_read": 0,
           "cache_write": 0,
           "source": "zai-coding-plan"
+        }
+      ]
+    },
+    "glm-5.3-prime": {
+      "id": "glm-5.3-prime",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 2.8,
+          "out": 8.8,
+          "cache_read": 0.56,
+          "cache_write": 2.8,
+          "source": "kilo"
         }
       ]
     },
@@ -15297,6 +15449,19 @@
           "tier_cache_read": 1,
           "tier_cache_write": 4,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 3.2,
+          "tier_out": 9.6,
+          "tier_cache_read": 0.8,
+          "tier_cache_write": 3.2,
+          "source": "edenai"
         }
       ]
     },
@@ -18600,6 +18765,14 @@
           "cache_read": 0.012,
           "cache_write": 0.06,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.075,
+          "out": 0.22,
+          "cache_read": 0.015,
+          "cache_write": 0.075,
+          "source": "vercel"
         }
       ]
     },
@@ -20256,6 +20429,14 @@
           "cache_read": 0.7,
           "cache_write": 0.7,
           "source": "empiriolabs"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.14,
+          "cache_write": 0.14,
+          "source": "empiriolabs"
         }
       ]
     },
@@ -20269,6 +20450,14 @@
           "cache_read": 2.175,
           "cache_write": 2.175,
           "source": "empiriolabs"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.435,
+          "cache_write": 0.435,
+          "source": "empiriolabs"
         }
       ]
     },
@@ -20281,6 +20470,14 @@
           "out": 43.5,
           "cache_read": 21.75,
           "cache_write": 21.75,
+          "source": "empiriolabs"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 4.35,
+          "out": 8.7,
+          "cache_read": 4.35,
+          "cache_write": 4.35,
           "source": "empiriolabs"
         }
       ]
@@ -21184,6 +21381,14 @@
           "out": 0.45852,
           "cache_read": 0,
           "cache_write": 0.34389,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.34233,
+          "out": 0.45644,
+          "cache_read": 0,
+          "cache_write": 0.34233,
           "source": "edenai"
         }
       ]
@@ -25060,6 +25265,42 @@
           "tier_out": 82.5,
           "tier_cache_read": 2.2,
           "tier_cache_write": 27.5,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "openai.gpt-6-luna": {
+      "id": "openai.gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.11,
+          "out": 0.55,
+          "cache_read": 0.011,
+          "cache_write": 0.1375,
+          "tier_threshold": 272000,
+          "tier_in": 0.22,
+          "tier_out": 0.825,
+          "tier_cache_read": 0.022,
+          "tier_cache_write": 0.275,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "openai.gpt-6-sol": {
+      "id": "openai.gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 2.2,
+          "out": 11,
+          "cache_read": 0.22,
+          "cache_write": 2.75,
+          "tier_threshold": 272000,
+          "tier_in": 4.4,
+          "tier_out": 16.5,
+          "tier_cache_read": 0.44,
+          "tier_cache_write": 5.5,
           "source": "amazon-bedrock"
         }
       ]
@@ -29068,6 +29309,19 @@
         }
       ]
     },
+    "qwen3.8-max-prime": {
+      "id": "qwen3.8-max-prime",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 4,
+          "out": 12,
+          "cache_read": 0.5,
+          "cache_write": 4,
+          "source": "vercel"
+        }
+      ]
+    },
     "qwen3.8-omni-flash": {
       "id": "qwen3.8-omni-flash",
       "rates": [
@@ -29975,6 +30229,14 @@
           "cache_read": 0.005,
           "cache_write": 0.05,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.1,
+          "out": 0.4,
+          "cache_read": 0.01,
+          "cache_write": 0.1,
+          "source": "kilo"
         }
       ]
     },
@@ -30111,6 +30373,32 @@
         }
       ],
       "first_party": true
+    },
+    "space-bunny-alpha": {
+      "id": "space-bunny-alpha",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "kilo"
+        }
+      ]
+    },
+    "space-bunny-free": {
+      "id": "space-bunny-free",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "opencode"
+        }
+      ]
     },
     "sparsedrive": {
       "id": "sparsedrive",
@@ -30575,6 +30863,14 @@
           "from": "2026-08-27",
           "in": 0.25,
           "out": 0.8999999999999999,
+          "cache_read": 0,
+          "cache_write": 0.25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.25,
+          "out": 0.9,
           "cache_read": 0,
           "cache_write": 0.25,
           "source": "vercel"
@@ -35760,6 +36056,45 @@
         }
       ]
     },
+    "above\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.1692,
+          "out": 0.3385,
+          "cache_read": 0.0034,
+          "cache_write": 0.1692,
+          "source": "above"
+        }
+      ]
+    },
+    "above\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.5077,
+          "out": 1.0154,
+          "cache_read": 0.0042,
+          "cache_write": 0.5077,
+          "source": "above"
+        }
+      ]
+    },
+    "above\u0000mimo-v2.6-pro-ultraspeed": {
+      "id": "mimo-v2.6-pro-ultraspeed",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 5.0769,
+          "out": 10.1538,
+          "cache_read": 0.0423,
+          "cache_write": 5.0769,
+          "source": "above"
+        }
+      ]
+    },
     "above\u0000qwen3.8-max": {
       "id": "qwen3.8-max",
       "rates": [
@@ -36291,6 +36626,20 @@
           "cache_read": 0.5,
           "cache_write": 6.25,
           "cache_write_1h": 10,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
           "source": "aihubmix"
         }
       ]
@@ -37036,6 +37385,42 @@
         }
       ]
     },
+    "aihubmix\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
+          "source": "aihubmix"
+        }
+      ]
+    },
     "aihubmix\u0000grok-4.3": {
       "id": "grok-4.3",
       "rates": [
@@ -37076,6 +37461,24 @@
           "out": 6,
           "cache_read": 0.5,
           "cache_write": 2,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000grok-4.7": {
+      "id": "grok-4.7",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 2.2,
+          "out": 6.6,
+          "cache_read": 0.55,
+          "cache_write": 2.2,
+          "tier_threshold": 200000,
+          "tier_in": 4.4,
+          "tier_out": 13.2,
+          "tier_cache_read": 1.1,
+          "tier_cache_write": 4.4,
           "source": "aihubmix"
         }
       ]
@@ -37206,6 +37609,45 @@
           "out": 3.0984,
           "cache_read": 0.015492,
           "cache_write": 0.7746,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.155,
+          "out": 0.31,
+          "cache_read": 0.0031,
+          "cache_write": 0.155,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.48,
+          "out": 0.96,
+          "cache_read": 0.00384,
+          "cache_write": 0.48,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000mimo-v2.6-pro-ultraspeed": {
+      "id": "mimo-v2.6-pro-ultraspeed",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 4.8,
+          "out": 9.6,
+          "cache_read": 0.0384,
+          "cache_write": 4.8,
           "source": "aihubmix"
         }
       ]
@@ -37442,6 +37884,19 @@
           "out": 1.32,
           "cache_read": 0.044,
           "cache_write": 0.22,
+          "source": "aihubmix"
+        }
+      ]
+    },
+    "aihubmix\u0000step-5-preview": {
+      "id": "step-5-preview",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 1.08,
+          "out": 3.0888,
+          "cache_read": 0.054,
+          "cache_write": 1.08,
           "source": "aihubmix"
         }
       ]
@@ -42519,6 +42974,42 @@
           "tier_out": 82.5,
           "tier_cache_read": 2.2,
           "tier_cache_write": 27.5,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000openai.gpt-6-luna": {
+      "id": "openai.gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.11,
+          "out": 0.55,
+          "cache_read": 0.011,
+          "cache_write": 0.1375,
+          "tier_threshold": 272000,
+          "tier_in": 0.22,
+          "tier_out": 0.825,
+          "tier_cache_read": 0.022,
+          "tier_cache_write": 0.275,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000openai.gpt-6-sol": {
+      "id": "openai.gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 2.2,
+          "out": 11,
+          "cache_read": 0.22,
+          "cache_write": 2.75,
+          "tier_threshold": 272000,
+          "tier_in": 4.4,
+          "tier_out": 16.5,
+          "tier_cache_read": 0.44,
+          "tier_cache_write": 5.5,
           "source": "amazon-bedrock"
         }
       ]
@@ -47918,6 +48409,20 @@
         }
       ]
     },
+    "cloudflare-ai-gateway\u0000claude-opus-5.5": {
+      "id": "claude-opus-5.5",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "cloudflare-ai-gateway"
+        }
+      ]
+    },
     "cloudflare-ai-gateway\u0000claude-sonnet-4.5": {
       "id": "claude-sonnet-4.5",
       "rates": [
@@ -48221,6 +48726,42 @@
           "tier_out": 75,
           "tier_cache_read": 2,
           "tier_cache_write": 25,
+          "source": "cloudflare-ai-gateway"
+        }
+      ]
+    },
+    "cloudflare-ai-gateway\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "cloudflare-ai-gateway"
+        }
+      ]
+    },
+    "cloudflare-ai-gateway\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
           "source": "cloudflare-ai-gateway"
         }
       ]
@@ -49129,6 +49670,20 @@
         }
       ]
     },
+    "cortecs\u0000claude-opus-5.5": {
+      "id": "claude-opus-5.5",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 4.399,
+          "out": 21.998,
+          "cache_read": 0.219,
+          "cache_write": 5.5,
+          "cache_write_1h": 8.798,
+          "source": "cortecs"
+        }
+      ]
+    },
     "cortecs\u0000claude-opus4-5": {
       "id": "claude-opus4-5",
       "rates": [
@@ -49298,6 +49853,14 @@
           "out": 0.174,
           "cache_read": 0.009,
           "cache_write": 0.055,
+          "source": "cortecs"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.09,
+          "out": 0.17,
+          "cache_read": 0.014,
+          "cache_write": 0.09,
           "source": "cortecs"
         }
       ]
@@ -49588,6 +50151,14 @@
           "cache_read": 0.18,
           "cache_write": 1.1,
           "source": "cortecs"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.9,
+          "out": 3.24,
+          "cache_read": 0.189,
+          "cache_write": 0.9,
+          "source": "cortecs"
         }
       ]
     },
@@ -49600,6 +50171,14 @@
           "out": 3.899,
           "cache_read": 0.279,
           "cache_write": 1.114,
+          "source": "cortecs"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.873,
+          "out": 3.306,
+          "cache_read": 0.221,
+          "cache_write": 0.873,
           "source": "cortecs"
         }
       ]
@@ -49791,6 +50370,14 @@
           "cache_read": 0.55,
           "cache_write": 6.879,
           "source": "cortecs"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 4.399,
+          "out": 21.998,
+          "cache_read": 0.44,
+          "cache_write": 5.5,
+          "source": "cortecs"
         }
       ]
     },
@@ -49803,6 +50390,32 @@
           "out": 13.199,
           "cache_read": 0.219,
           "cache_write": 2.749,
+          "source": "cortecs"
+        }
+      ]
+    },
+    "cortecs\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.12,
+          "out": 0.6,
+          "cache_read": 0.012,
+          "cache_write": 0.15,
+          "source": "cortecs"
+        }
+      ]
+    },
+    "cortecs\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 2.4,
+          "out": 11.999,
+          "cache_read": 0.24,
+          "cache_write": 3,
           "source": "cortecs"
         }
       ]
@@ -49903,6 +50516,14 @@
           "cache_read": 0.115,
           "cache_write": 0.516,
           "source": "cortecs"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.475,
+          "out": 2.97,
+          "cache_read": 0.1,
+          "cache_write": 0.475,
+          "source": "cortecs"
         }
       ]
     },
@@ -49923,6 +50544,14 @@
           "out": 3.208,
           "cache_read": 0.18,
           "cache_write": 0.706,
+          "source": "cortecs"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.656,
+          "out": 3.3,
+          "cache_read": 0.18,
+          "cache_write": 0.656,
           "source": "cortecs"
         }
       ]
@@ -53154,6 +53783,14 @@
           "cache_read": 0.2,
           "cache_write": 1.2,
           "source": "deepinfra"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.9,
+          "out": 4,
+          "cache_read": 0.2,
+          "cache_write": 0.9,
+          "source": "deepinfra"
         }
       ]
     },
@@ -53377,6 +54014,32 @@
           "out": 3,
           "cache_read": 0.2,
           "cache_write": 1,
+          "source": "deepinfra"
+        }
+      ]
+    },
+    "deepinfra\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0.14,
+          "source": "deepinfra"
+        }
+      ]
+    },
+    "deepinfra\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.0036,
+          "cache_write": 0.435,
           "source": "deepinfra"
         }
       ]
@@ -55501,6 +56164,15 @@
           "cache_write": 6.25,
           "cache_write_1h": 10,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "edenai"
         }
       ]
     },
@@ -55844,6 +56516,32 @@
           "out": 4.05,
           "cache_read": 0.1,
           "cache_write": 1.00002,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000deep-research-max-preview-04-2026": {
+      "id": "deep-research-max-preview-04-2026",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 2,
+          "out": 12,
+          "cache_read": 0,
+          "cache_write": 2,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000deep-research-preview-04-2026": {
+      "id": "deep-research-preview-04-2026",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 2,
+          "out": 12,
+          "cache_read": 0,
+          "cache_write": 2,
           "source": "edenai"
         }
       ]
@@ -57422,6 +58120,19 @@
           "tier_cache_read": 1,
           "tier_cache_write": 4,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.5,
+          "cache_write": 2,
+          "tier_threshold": 200000,
+          "tier_in": 3.2,
+          "tier_out": 9.6,
+          "tier_cache_read": 0.8,
+          "tier_cache_write": 3.2,
+          "source": "edenai"
         }
       ]
     },
@@ -57803,6 +58514,14 @@
           "cache_read": 0,
           "cache_write": 1.03167,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 1.02699,
+          "out": 1.02699,
+          "cache_read": 0,
+          "cache_write": 1.02699,
+          "source": "edenai"
         }
       ]
     },
@@ -57983,6 +58702,14 @@
           "out": 0.45852,
           "cache_read": 0,
           "cache_write": 0.34389,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.34233,
+          "out": 0.45644,
+          "cache_read": 0,
+          "cache_write": 0.34233,
           "source": "edenai"
         }
       ]
@@ -58781,6 +59508,14 @@
           "cache_read": 0,
           "cache_write": 0.2,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.2,
+          "out": 1.15,
+          "cache_read": 0.03,
+          "cache_write": 0.2,
+          "source": "edenai"
         }
       ]
     },
@@ -59173,6 +59908,14 @@
           "cache_read": 0.7,
           "cache_write": 0.7,
           "source": "empiriolabs"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.14,
+          "cache_write": 0.14,
+          "source": "empiriolabs"
         }
       ]
     },
@@ -59186,6 +59929,14 @@
           "cache_read": 2.175,
           "cache_write": 2.175,
           "source": "empiriolabs"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.435,
+          "cache_write": 0.435,
+          "source": "empiriolabs"
         }
       ]
     },
@@ -59198,6 +59949,14 @@
           "out": 43.5,
           "cache_read": 21.75,
           "cache_write": 21.75,
+          "source": "empiriolabs"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 4.35,
+          "out": 8.7,
+          "cache_read": 4.35,
+          "cache_write": 4.35,
           "source": "empiriolabs"
         }
       ]
@@ -60611,6 +61370,19 @@
           "out": 0.66,
           "cache_read": 0.007,
           "cache_write": 0.22,
+          "source": "fireworks-ai"
+        }
+      ]
+    },
+    "fireworks\u0000ember-1": {
+      "id": "ember-1",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3,
           "source": "fireworks-ai"
         }
       ]
@@ -62438,6 +63210,32 @@
       "rates": [
         {
           "from": "2026-09-07",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "gitlab"
+        }
+      ]
+    },
+    "gitlab\u0000duo-chat-gpt-6-luna": {
+      "id": "duo-chat-gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "gitlab"
+        }
+      ]
+    },
+    "gitlab\u0000duo-chat-gpt-6-sol": {
+      "id": "duo-chat-gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-24",
           "in": 0,
           "out": 0,
           "cache_read": 0,
@@ -71763,6 +72561,32 @@
         }
       ]
     },
+    "kilo\u0000aion-3.5": {
+      "id": "aion-3.5",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 3,
+          "out": 6,
+          "cache_read": 0.75,
+          "cache_write": 3,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000aion-3.5-mini": {
+      "id": "aion-3.5-mini",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.7,
+          "out": 1.4,
+          "cache_read": 0.18,
+          "cache_write": 0.7,
+          "source": "kilo"
+        }
+      ]
+    },
     "kilo\u0000aion-rp-llama-3.1-8b": {
       "id": "aion-rp-llama-3.1-8b",
       "rates": [
@@ -72375,6 +73199,14 @@
           "cache_read": 0.01,
           "cache_write": 0.1,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.04,
+          "out": 1,
+          "cache_read": 0.01,
+          "cache_write": 0.04,
+          "source": "kilo"
         }
       ]
     },
@@ -72427,6 +73259,14 @@
           "out": 4.3,
           "cache_read": 0.033,
           "cache_write": 0.4,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.39,
+          "out": 2.9,
+          "cache_read": 0.25,
+          "cache_write": 0.39,
           "source": "kilo"
         }
       ]
@@ -72599,6 +73439,14 @@
           "cache_read": 0.0228,
           "cache_write": 0.038,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.03,
+          "out": 0.32,
+          "cache_read": 0.016,
+          "cache_write": 0.03,
+          "source": "kilo"
         }
       ]
     },
@@ -72747,6 +73595,19 @@
           "out": 1.95,
           "cache_read": 0.0325,
           "cache_write": 0.40625,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000ember-1": {
+      "id": "ember-1",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3,
           "source": "kilo"
         }
       ]
@@ -73646,6 +74507,27 @@
           "cache_read": 0.075,
           "cache_write": 0.37,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.37,
+          "out": 1.25,
+          "cache_read": 0.09,
+          "cache_write": 0.37,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000glm-5.3-prime": {
+      "id": "glm-5.3-prime",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 2.8,
+          "out": 8.8,
+          "cache_read": 0.56,
+          "cache_write": 2.8,
+          "source": "kilo"
         }
       ]
     },
@@ -73679,6 +74561,14 @@
           "out": 0.25,
           "cache_read": 0.015,
           "cache_write": 0.075,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.045,
+          "out": 0.14,
+          "cache_read": 0.01,
+          "cache_write": 0.045,
           "source": "kilo"
         }
       ]
@@ -75031,6 +75921,14 @@
           "cache_read": 0.3,
           "cache_write": 1.4989,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 1.4,
+          "out": 10.75,
+          "cache_read": 0.3,
+          "cache_write": 1.4,
+          "source": "kilo"
         }
       ]
     },
@@ -75083,6 +75981,14 @@
           "cache_read": 0.1,
           "cache_write": 0.6,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.6,
+          "out": 3,
+          "cache_read": 0,
+          "cache_write": 0.6,
+          "source": "kilo"
         }
       ]
     },
@@ -75096,6 +76002,14 @@
           "cache_read": 0.16,
           "cache_write": 0.8,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.95,
+          "out": 4,
+          "cache_read": 0.16,
+          "cache_write": 0.95,
+          "source": "kilo"
         }
       ]
     },
@@ -75108,6 +76022,14 @@
           "out": 4,
           "cache_read": 0.19,
           "cache_write": 0.95,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.6562,
+          "out": 3.3,
+          "cache_read": 0.18,
+          "cache_write": 0.6562,
           "source": "kilo"
         }
       ]
@@ -75275,6 +76197,14 @@
           "out": 0,
           "cache_read": 0,
           "cache_write": 0,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.075,
+          "out": 0.22,
+          "cache_read": 0.015,
+          "cache_write": 0.075,
           "source": "kilo"
         }
       ]
@@ -77190,6 +78120,19 @@
         }
       ]
     },
+    "kilo\u0000qwen3.8-max-prime": {
+      "id": "qwen3.8-max-prime",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 4,
+          "out": 12,
+          "cache_read": 0.5,
+          "cache_write": 4,
+          "source": "kilo"
+        }
+      ]
+    },
     "kilo\u0000qwen3.8-omni-flash": {
       "id": "qwen3.8-omni-flash",
       "rates": [
@@ -77448,6 +78391,19 @@
         }
       ]
     },
+    "kilo\u0000solar-mini4": {
+      "id": "solar-mini4",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.1,
+          "out": 0.4,
+          "cache_read": 0.01,
+          "cache_write": 0.1,
+          "source": "kilo"
+        }
+      ]
+    },
     "kilo\u0000solar-pro-3": {
       "id": "solar-pro-3",
       "rates": [
@@ -77535,6 +78491,19 @@
           "out": 8,
           "cache_read": 0,
           "cache_write": 2,
+          "source": "kilo"
+        }
+      ]
+    },
+    "kilo\u0000space-bunny-alpha": {
+      "id": "space-bunny-alpha",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
           "source": "kilo"
         }
       ]
@@ -78979,6 +79948,14 @@
           "out": 0.19,
           "cache_read": 0.015,
           "cache_write": 0.07,
+          "source": "llmgateway"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.088,
+          "out": 0.25,
+          "cache_read": 0.025,
+          "cache_write": 0.088,
           "source": "llmgateway"
         }
       ]
@@ -89451,6 +90428,32 @@
         }
       ]
     },
+    "nano-gpt\u0000aion-3.5": {
+      "id": "aion-3.5",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 3,
+          "out": 6,
+          "cache_read": 0.75,
+          "cache_write": 3,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000aion-3.5-mini": {
+      "id": "aion-3.5-mini",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.7,
+          "out": 1.4,
+          "cache_read": 0.18,
+          "cache_write": 0.7,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000aion-rp-llama-3.1-8b": {
       "id": "aion-rp-llama-3.1-8b",
       "rates": [
@@ -90225,6 +91228,19 @@
           "out": 3.2,
           "cache_read": 0.2,
           "cache_write": 1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000clover-1-150b": {
+      "id": "clover-1-150b",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.15,
+          "out": 0.8,
+          "cache_read": 0,
+          "cache_write": 0.15,
           "source": "nano-gpt"
         }
       ]
@@ -93242,6 +94258,14 @@
           "cache_read": 0.005,
           "cache_write": 0.0625,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -93254,6 +94278,14 @@
           "out": 0.25,
           "cache_read": 0.005,
           "cache_write": 0.0625,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
           "source": "nano-gpt"
         }
       ]
@@ -96740,6 +97772,19 @@
         }
       ]
     },
+    "nano-gpt\u0000qwen3.8-max-prime": {
+      "id": "qwen3.8-max-prime",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 4,
+          "out": 12,
+          "cache_read": 0.5,
+          "cache_write": 4,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000qwen3.8-omni-flash": {
       "id": "qwen3.8-omni-flash",
       "rates": [
@@ -96943,6 +97988,19 @@
         }
       ]
     },
+    "nano-gpt\u0000solar-mini4": {
+      "id": "solar-mini4",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.05,
+          "out": 0.2,
+          "cache_read": 0.005,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000solar-pro-3": {
       "id": "solar-pro-3",
       "rates": [
@@ -97017,6 +98075,19 @@
           "out": 8,
           "cache_read": 1,
           "cache_write": 2,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000space-bunny-alpha": {
+      "id": "space-bunny-alpha",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.05,
+          "out": 0.15,
+          "cache_read": 0,
+          "cache_write": 0.05,
           "source": "nano-gpt"
         }
       ]
@@ -106917,6 +107988,19 @@
         }
       ]
     },
+    "opencode\u0000space-bunny-free": {
+      "id": "space-bunny-free",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "opencode"
+        }
+      ]
+    },
     "opencode\u0000trinity-large-preview-free": {
       "id": "trinity-large-preview-free",
       "rates": [
@@ -107124,6 +108208,24 @@
           "tier_out": 1.8,
           "tier_cache_read": 0.04,
           "tier_cache_write": 0.5,
+          "source": "opencode-go"
+        }
+      ]
+    },
+    "opencode-go\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
           "source": "opencode-go"
         }
       ]
@@ -107564,6 +108666,19 @@
         }
       ]
     },
+    "opencode-go\u0000space-bunny-free": {
+      "id": "space-bunny-free",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "opencode-go"
+        }
+      ]
+    },
     "opencode-go\u0000union-alpha": {
       "id": "union-alpha",
       "rates": [
@@ -107647,6 +108762,32 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 0.7,
+          "out": 1.4,
+          "cache_read": 0.18,
+          "cache_write": 0.7,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000aion-3.5": {
+      "id": "aion-3.5",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 3,
+          "out": 6,
+          "cache_read": 0.75,
+          "cache_write": 3,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000aion-3.5-mini": {
+      "id": "aion-3.5-mini",
+      "rates": [
+        {
+          "from": "2026-09-24",
           "in": 0.7,
           "out": 1.4,
           "cache_read": 0.18,
@@ -108253,6 +109394,14 @@
           "cache_read": 0.01,
           "cache_write": 0.1,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.04,
+          "out": 1,
+          "cache_read": 0.01,
+          "cache_write": 0.04,
+          "source": "openrouter"
         }
       ]
     },
@@ -108305,6 +109454,14 @@
           "out": 4.3,
           "cache_read": 0.033,
           "cache_write": 0.4,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.39,
+          "out": 2.9,
+          "cache_read": 0.25,
+          "cache_write": 0.39,
           "source": "openrouter"
         }
       ]
@@ -108485,6 +109642,14 @@
           "cache_read": 0.0228,
           "cache_write": 0.038,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.03,
+          "out": 0.32,
+          "cache_read": 0.016,
+          "cache_write": 0.03,
+          "source": "openrouter"
         }
       ]
     },
@@ -108553,6 +109718,14 @@
           "out": 0.64,
           "cache_read": 0.016,
           "cache_write": 0.04,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.03,
+          "out": 0.32,
+          "cache_read": 0.016,
+          "cache_write": 0.03,
           "source": "openrouter"
         }
       ]
@@ -108644,6 +109817,14 @@
           "cache_read": 0.079605,
           "cache_write": 0.95526,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.9396,
+          "out": 1.8792,
+          "cache_read": 0.0783,
+          "cache_write": 0.9396,
+          "source": "openrouter"
         }
       ]
     },
@@ -108729,6 +109910,14 @@
           "cache_read": 0.016623,
           "cache_write": 0.498696,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.462,
+          "out": 1.386,
+          "cache_read": 0.0154,
+          "cache_write": 0.462,
+          "source": "openrouter"
         }
       ]
     },
@@ -108741,6 +109930,14 @@
           "out": 0.6,
           "cache_read": 0.003,
           "cache_write": 0.15,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.14,
+          "out": 0.42,
+          "cache_read": 0.0042,
+          "cache_write": 0.14,
           "source": "openrouter"
         }
       ]
@@ -108788,6 +109985,19 @@
           "out": 0,
           "cache_read": 0,
           "cache_write": 0,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000ember-1": {
+      "id": "ember-1",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3,
           "source": "openrouter"
         }
       ]
@@ -109770,6 +110980,27 @@
           "cache_read": 0.075,
           "cache_write": 0.37,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.37,
+          "out": 1.25,
+          "cache_read": 0.09,
+          "cache_write": 0.37,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000glm-5.3-prime": {
+      "id": "glm-5.3-prime",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 2.8,
+          "out": 8.8,
+          "cache_read": 0.56,
+          "cache_write": 2.8,
+          "source": "openrouter"
         }
       ]
     },
@@ -109803,6 +111034,14 @@
           "out": 0.25,
           "cache_read": 0.015,
           "cache_write": 0.075,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.045,
+          "out": 0.14,
+          "cache_read": 0.01,
+          "cache_write": 0.045,
           "source": "openrouter"
         }
       ]
@@ -111279,6 +112518,14 @@
           "cache_read": 0.3,
           "cache_write": 1.4989,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 1.4,
+          "out": 10.75,
+          "cache_read": 0.3,
+          "cache_write": 1.4,
+          "source": "openrouter"
         }
       ]
     },
@@ -111428,6 +112675,14 @@
           "out": 3.3,
           "cache_read": 0.18,
           "cache_write": 0.7062,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.6562,
+          "out": 3.3,
+          "cache_read": 0.18,
+          "cache_write": 0.6562,
           "source": "openrouter"
         }
       ]
@@ -111627,6 +112882,14 @@
           "out": 0,
           "cache_read": 0,
           "cache_write": 0,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.06,
+          "out": 0.18,
+          "cache_read": 0.012,
+          "cache_write": 0.06,
           "source": "openrouter"
         }
       ]
@@ -112038,6 +113301,14 @@
           "out": 1.02,
           "cache_read": 0,
           "cache_write": 0.255,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0,
+          "cache_write": 0.3,
           "source": "openrouter"
         }
       ]
@@ -113144,6 +114415,14 @@
           "cache_read": 0,
           "cache_write": 0.04815,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.1,
+          "out": 0.3,
+          "cache_read": 0,
+          "cache_write": 0.1,
+          "source": "openrouter"
         }
       ]
     },
@@ -113313,6 +114592,14 @@
           "out": 1.1,
           "cache_read": 0,
           "cache_write": 0.09,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.1,
+          "out": 1.1,
+          "cache_read": 0.07,
+          "cache_write": 0.1,
           "source": "openrouter"
         }
       ]
@@ -113860,6 +115147,19 @@
         }
       ]
     },
+    "openrouter\u0000qwen3.8-max-prime": {
+      "id": "qwen3.8-max-prime",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 4,
+          "out": 12,
+          "cache_read": 0.5,
+          "cache_write": 4,
+          "source": "openrouter"
+        }
+      ]
+    },
     "openrouter\u0000qwen3.8-omni-flash": {
       "id": "qwen3.8-omni-flash",
       "rates": [
@@ -114233,6 +115533,19 @@
           "out": 8,
           "cache_read": 0,
           "cache_write": 2,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000space-bunny-alpha": {
+      "id": "space-bunny-alpha",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
           "source": "openrouter"
         }
       ]
@@ -128499,6 +129812,136 @@
         }
       ]
     },
+    "tempr\u0000mistral-embed": {
+      "id": "mistral-embed",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.1,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0.1,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000mistral-large": {
+      "id": "mistral-large",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.5,
+          "out": 1.5,
+          "cache_read": 0,
+          "cache_write": 0.5,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000mistral-large-2512": {
+      "id": "mistral-large-2512",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.5,
+          "out": 1.5,
+          "cache_read": 0,
+          "cache_write": 0.5,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000mistral-medium": {
+      "id": "mistral-medium",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 1.5,
+          "out": 7.5,
+          "cache_read": 0,
+          "cache_write": 1.5,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000mistral-medium-2604": {
+      "id": "mistral-medium-2604",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 1.5,
+          "out": 7.5,
+          "cache_read": 0,
+          "cache_write": 1.5,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000mistral-small": {
+      "id": "mistral-small",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0,
+          "cache_write": 0.15,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000mistral-small-2603": {
+      "id": "mistral-small-2603",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0,
+          "cache_write": 0.15,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000voxtral-small": {
+      "id": "voxtral-small",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.1,
+          "out": 0.3,
+          "cache_read": 0,
+          "cache_write": 0.1,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000zai-glm-5-2": {
+      "id": "zai-glm-5-2",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.14,
+          "cache_write": 1.4,
+          "source": "tempr"
+        }
+      ]
+    },
+    "tempr\u0000zai-glm-5-3": {
+      "id": "zai-glm-5-3",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.14,
+          "cache_write": 1.4,
+          "source": "tempr"
+        }
+      ]
+    },
     "tencent-coding-plan\u0000glm-5": {
       "id": "glm-5",
       "rates": [
@@ -130642,6 +132085,32 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 0.875,
+          "out": 1.75,
+          "cache_read": 0.225,
+          "cache_write": 0.875,
+          "source": "venice"
+        }
+      ]
+    },
+    "venice\u0000aion-labs-aion-3-5": {
+      "id": "aion-labs-aion-3-5",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 3.75,
+          "out": 7.5,
+          "cache_read": 0.9375,
+          "cache_write": 3.75,
+          "source": "venice"
+        }
+      ]
+    },
+    "venice\u0000aion-labs-aion-3-5-mini": {
+      "id": "aion-labs-aion-3-5-mini",
+      "rates": [
+        {
+          "from": "2026-09-24",
           "in": 0.875,
           "out": 1.75,
           "cache_read": 0.225,
@@ -133157,6 +134626,32 @@
         }
       ]
     },
+    "vercel\u0000gemini-3.8-flash-lite-tts": {
+      "id": "gemini-3.8-flash-lite-tts",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.5,
+          "out": 6,
+          "cache_read": 0.125,
+          "cache_write": 0.5,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000gemini-3.8-flash-tts": {
+      "id": "gemini-3.8-flash-tts",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.5,
+          "out": 9,
+          "cache_read": 0.125,
+          "cache_write": 0.5,
+          "source": "vercel"
+        }
+      ]
+    },
     "vercel\u0000gemini-3.8-live": {
       "id": "gemini-3.8-live",
       "rates": [
@@ -134460,6 +135955,14 @@
           "cache_read": 0,
           "cache_write": 0.1,
           "source": "vercel"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.1,
+          "cache_write": 0.1,
+          "source": "vercel"
         }
       ]
     },
@@ -135271,6 +136774,14 @@
           "out": 0,
           "cache_read": 0,
           "cache_write": 0,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.075,
+          "out": 0.22,
+          "cache_read": 0.015,
+          "cache_write": 0.075,
           "source": "vercel"
         }
       ]
@@ -136708,6 +138219,19 @@
         }
       ]
     },
+    "vercel\u0000qwen3.8-max-prime": {
+      "id": "qwen3.8-max-prime",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 4,
+          "out": 12,
+          "cache_read": 0.5,
+          "cache_write": 4,
+          "source": "vercel"
+        }
+      ]
+    },
     "vercel\u0000qwen3.8-omni-flash": {
       "id": "qwen3.8-omni-flash",
       "rates": [
@@ -136871,6 +138395,14 @@
           "from": "2026-08-27",
           "in": 0.25,
           "out": 0.8999999999999999,
+          "cache_read": 0,
+          "cache_write": 0.25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-09-24",
+          "in": 0.25,
+          "out": 0.9,
           "cache_read": 0,
           "cache_write": 0.25,
           "source": "vercel"
@@ -137184,6 +138716,20 @@
           "cache_read": 0.5,
           "cache_write": 6.25,
           "cache_write_1h": 10,
+          "source": "vivgrid"
+        }
+      ]
+    },
+    "vivgrid\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
           "source": "vivgrid"
         }
       ]
@@ -137538,6 +139084,42 @@
           "tier_out": 75,
           "tier_cache_read": 2,
           "tier_cache_write": 25,
+          "source": "vivgrid"
+        }
+      ]
+    },
+    "vivgrid\u0000gpt-6-luna": {
+      "id": "gpt-6-luna",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "tier_threshold": 272000,
+          "tier_in": 0.2,
+          "tier_out": 0.75,
+          "tier_cache_read": 0.02,
+          "tier_cache_write": 0.25,
+          "source": "vivgrid"
+        }
+      ]
+    },
+    "vivgrid\u0000gpt-6-sol": {
+      "id": "gpt-6-sol",
+      "rates": [
+        {
+          "from": "2026-09-24",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "tier_threshold": 272000,
+          "tier_in": 4,
+          "tier_out": 15,
+          "tier_cache_read": 0.4,
+          "tier_cache_write": 5,
           "source": "vivgrid"
         }
       ]
@@ -142063,12 +143645,20 @@
     "aion-2p0": "aion-2.0",
     "aion-3-0": "aion-3.0",
     "aion-3-0-mini": "aion-3.0-mini",
+    "aion-3-5": "aion-3.5",
+    "aion-3-5-mini": "aion-3.5-mini",
     "aion-3.0-latest": "aion-3.0",
     "aion-3.0-mini-latest": "aion-3.0-mini",
+    "aion-3.5-latest": "aion-3.5",
+    "aion-3.5-mini-latest": "aion-3.5-mini",
     "aion-3p0": "aion-3.0",
     "aion-3p0-mini": "aion-3.0-mini",
+    "aion-3p5": "aion-3.5",
+    "aion-3p5-mini": "aion-3.5-mini",
     "aion-labs-aion-3-0-latest": "aion-labs-aion-3-0",
     "aion-labs-aion-3-0-mini-latest": "aion-labs-aion-3-0-mini",
+    "aion-labs-aion-3-5-latest": "aion-labs-aion-3-5",
+    "aion-labs-aion-3-5-mini-latest": "aion-labs-aion-3-5-mini",
     "aion-rp-llama-3-1-8b": "aion-rp-llama-3.1-8b",
     "aion-rp-llama-3.1-8b-latest": "aion-rp-llama-3.1-8b",
     "aion-rp-llama-3p1-8b": "aion-rp-llama-3.1-8b",
@@ -142449,6 +144039,7 @@
     "claw-high-latest": "claw-high",
     "claw-low-latest": "claw-low",
     "claw-medium-latest": "claw-medium",
+    "clover-1-150b-latest": "clover-1-150b",
     "codestral-22b-v0-1": "codestral-22b-v0.1",
     "codestral-22b-v0.1-latest": "codestral-22b-v0.1",
     "codestral-22b-v0p1": "codestral-22b-v0.1",
@@ -142768,6 +144359,8 @@
     "duo-chat-gpt-5-codex-latest": "duo-chat-gpt-5-codex",
     "duo-chat-gpt-5-mini-latest": "duo-chat-gpt-5-mini",
     "duo-chat-gpt-6-astra-latest": "duo-chat-gpt-6-astra",
+    "duo-chat-gpt-6-luna-latest": "duo-chat-gpt-6-luna",
+    "duo-chat-gpt-6-sol-latest": "duo-chat-gpt-6-sol",
     "duo-chat-haiku-4-5-latest": "duo-chat-haiku-4-5",
     "duo-chat-opus-4-5-latest": "duo-chat-opus-4-5",
     "duo-chat-opus-4-6-latest": "duo-chat-opus-4-6",
@@ -142782,6 +144375,7 @@
     "e5-mistral-7b-instruct-latest": "e5-mistral-7b-instruct",
     "echo-latest": "echo",
     "efficient-latest": "efficient",
+    "ember-1-latest": "ember-1",
     "ernie-4-5-21b-a3b": "ernie-4.5-21b-a3b",
     "ernie-4-5-21b-a3b-thinking": "ernie-4.5-21b-a3b-thinking",
     "ernie-4-5-300b-a47b": "ernie-4.5-300b-a47b",
@@ -143024,6 +144618,8 @@
     "gemini-3-7-flash@eu": "gemini-3.7-flash@eu",
     "gemini-3-7-flash@us": "gemini-3.7-flash@us",
     "gemini-3-8-flash-latest": "gemini-3-8-flash",
+    "gemini-3-8-flash-lite-tts": "gemini-3.8-flash-lite-tts",
+    "gemini-3-8-flash-tts": "gemini-3.8-flash-tts",
     "gemini-3-8-flash@eu": "gemini-3.8-flash@eu",
     "gemini-3-8-flash@us": "gemini-3.8-flash@us",
     "gemini-3-8-live": "gemini-3.8-live",
@@ -143066,6 +144662,8 @@
     "gemini-3.7-flash@eu-latest": "gemini-3.7-flash@eu",
     "gemini-3.7-flash@us-latest": "gemini-3.7-flash@us",
     "gemini-3.8-flash-latest": "gemini-3.8-flash",
+    "gemini-3.8-flash-lite-tts-latest": "gemini-3.8-flash-lite-tts",
+    "gemini-3.8-flash-tts-latest": "gemini-3.8-flash-tts",
     "gemini-3.8-flash@eu-latest": "gemini-3.8-flash@eu",
     "gemini-3.8-flash@us-latest": "gemini-3.8-flash@us",
     "gemini-3.8-live-extended-thinking-latest": "gemini-3.8-live-extended-thinking",
@@ -143101,6 +144699,8 @@
     "gemini-3p7-flash@eu": "gemini-3.7-flash@eu",
     "gemini-3p7-flash@us": "gemini-3.7-flash@us",
     "gemini-3p8-flash": "gemini-3.8-flash",
+    "gemini-3p8-flash-lite-tts": "gemini-3.8-flash-lite-tts",
+    "gemini-3p8-flash-tts": "gemini-3.8-flash-tts",
     "gemini-3p8-flash@eu": "gemini-3.8-flash@eu",
     "gemini-3p8-flash@us": "gemini-3.8-flash@us",
     "gemini-3p8-live": "gemini-3.8-live",
@@ -143312,6 +144912,7 @@
     "glm-5-3-free": "glm-5.3-free",
     "glm-5-3-highspeed": "glm-5.3-highspeed",
     "glm-5-3-latest": "glm-5-3",
+    "glm-5-3-prime": "glm-5.3-prime",
     "glm-5-3-promo-50": "glm-5.3-promo-50",
     "glm-5-3@eu": "glm-5.3@eu",
     "glm-5-fp8-latest": "glm-5-fp8",
@@ -143362,6 +144963,7 @@
     "glm-5.3-free-latest": "glm-5.3-free",
     "glm-5.3-highspeed-latest": "glm-5.3-highspeed",
     "glm-5.3-latest": "glm-5.3",
+    "glm-5.3-prime-latest": "glm-5.3-prime",
     "glm-5.3-promo-50-latest": "glm-5.3-promo-50",
     "glm-5.3@eu-latest": "glm-5.3@eu",
     "glm-5p1": "glm-5.1",
@@ -143406,6 +145008,7 @@
     "glm-5p3-free": "glm-5.3-free",
     "glm-5p3-highspeed": "glm-5.3-highspeed",
     "glm-5p3-latest": "glm-5p3",
+    "glm-5p3-prime": "glm-5.3-prime",
     "glm-5p3-promo-50": "glm-5.3-promo-50",
     "glm-5p3@eu": "glm-5.3@eu",
     "glm-5v-turbo-latest": "glm-5v-turbo",
@@ -144937,6 +146540,8 @@
     "openai.gpt-5.6-sol-latest": "openai.gpt-5.6-sol",
     "openai.gpt-5.6-terra-latest": "openai.gpt-5.6-terra",
     "openai.gpt-6-astra-latest": "openai.gpt-6-astra",
+    "openai.gpt-6-luna-latest": "openai.gpt-6-luna",
+    "openai.gpt-6-sol-latest": "openai.gpt-6-sol",
     "openai.gpt-oss-120b-1-latest": "openai.gpt-oss-120b-1",
     "openai.gpt-oss-120b-latest": "openai.gpt-oss-120b",
     "openai.gpt-oss-20b-1-latest": "openai.gpt-oss-20b-1",
@@ -144950,6 +146555,8 @@
     "openaipgpt-5p6-sol": "openai.gpt-5.6-sol",
     "openaipgpt-5p6-terra": "openai.gpt-5.6-terra",
     "openaipgpt-6-astra": "openai.gpt-6-astra",
+    "openaipgpt-6-luna": "openai.gpt-6-luna",
+    "openaipgpt-6-sol": "openai.gpt-6-sol",
     "openaipgpt-oss-120b": "openai.gpt-oss-120b",
     "openaipgpt-oss-120b-1": "openai.gpt-oss-120b-1",
     "openaipgpt-oss-20b": "openai.gpt-oss-20b",
@@ -145200,6 +146807,7 @@
     "qwen3-8-max-0902-latest": "qwen3-8-max-0902",
     "qwen3-8-max-latest": "qwen3-8-max",
     "qwen3-8-max-preview": "qwen3.8-max-preview",
+    "qwen3-8-max-prime": "qwen3.8-max-prime",
     "qwen3-8-omni-flash-latest": "qwen3-8-omni-flash",
     "qwen3-8b-fp8-latest": "qwen3-8b-fp8",
     "qwen3-8b-latest": "qwen3-8b",
@@ -145322,6 +146930,7 @@
     "qwen3.8-max-0902-latest": "qwen3.8-max-0902",
     "qwen3.8-max-latest": "qwen3.8-max",
     "qwen3.8-max-preview-latest": "qwen3.8-max-preview",
+    "qwen3.8-max-prime-latest": "qwen3.8-max-prime",
     "qwen3.8-omni-flash-latest": "qwen3.8-omni-flash",
     "qwen35-122b-a10b-latest": "qwen35-122b-a10b",
     "qwen35-397b-a17b-latest": "qwen35-397b-a17b",
@@ -145395,6 +147004,7 @@
     "qwen3p8-max-0902": "qwen3.8-max-0902",
     "qwen3p8-max-latest": "qwen3p8-max",
     "qwen3p8-max-preview": "qwen3.8-max-preview",
+    "qwen3p8-max-prime": "qwen3.8-max-prime",
     "qwen3p8-omni-flash": "qwen3.8-omni-flash",
     "qwenpqwen3-235b-a22b-2507-v1": "qwen.qwen3-235b-a22b-2507-v1",
     "qwenpqwen3-32b-v1": "qwen.qwen3-32b-v1",
@@ -145491,6 +147101,8 @@
     "sonar-pro-search-latest": "sonar-pro-search",
     "sonar-reasoning-latest": "sonar-reasoning",
     "sonar-reasoning-pro-latest": "sonar-reasoning-pro",
+    "space-bunny-alpha-latest": "space-bunny-alpha",
+    "space-bunny-free-latest": "space-bunny-free",
     "sparsedrive-latest": "sparsedrive",
     "stable-diffusion-3-5-large": "stable-diffusion-3.5-large",
     "stable-diffusion-3.5-large-latest": "stable-diffusion-3.5-large",
