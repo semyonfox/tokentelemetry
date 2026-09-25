@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-09-24",
+  "updated": "2026-09-25",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -20710,6 +20710,19 @@
         }
       ]
     },
+    "mimo-v2.6-flash-uncensored": {
+      "id": "mimo-v2.6-flash-uncensored",
+      "rates": [
+        {
+          "from": "2026-09-25",
+          "in": 0.5,
+          "out": 1.5,
+          "cache_read": 0.275,
+          "cache_write": 0.5,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "mimo-v2.6-pro": {
       "id": "mimo-v2.6-pro",
       "rates": [
@@ -21389,6 +21402,14 @@
           "out": 0.45644,
           "cache_read": 0,
           "cache_write": 0.34233,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.34101,
+          "out": 0.45468,
+          "cache_read": 0,
+          "cache_write": 0.34101,
           "source": "edenai"
         }
       ]
@@ -22125,6 +22146,14 @@
           "out": 0.25,
           "cache_read": 0,
           "cache_write": 0.09375,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.1,
+          "out": 0.3,
+          "cache_read": 0.01,
+          "cache_write": 0.1,
           "source": "kilo"
         }
       ]
@@ -49875,6 +49904,14 @@
           "cache_read": 0.432,
           "cache_write": 1.73,
           "source": "cortecs"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 1.7,
+          "out": 3.4,
+          "cache_read": 0.15,
+          "cache_write": 1.7,
+          "source": "cortecs"
         }
       ]
     },
@@ -49900,6 +49937,14 @@
           "out": 1.499,
           "cache_read": 0.13,
           "cache_write": 0.5,
+          "source": "cortecs"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.075,
+          "cache_write": 0.3,
           "source": "cortecs"
         }
       ]
@@ -50703,6 +50748,14 @@
           "out": 1.977,
           "cache_read": 0.099,
           "cache_write": 0.395,
+          "source": "cortecs"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.06,
+          "cache_write": 0.3,
           "source": "cortecs"
         }
       ]
@@ -58522,6 +58575,14 @@
           "cache_read": 0,
           "cache_write": 1.02699,
           "source": "edenai"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 1.02303,
+          "out": 1.02303,
+          "cache_read": 0,
+          "cache_write": 1.02303,
+          "source": "edenai"
         }
       ]
     },
@@ -58710,6 +58771,14 @@
           "out": 0.45644,
           "cache_read": 0,
           "cache_write": 0.34233,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.34101,
+          "out": 0.45468,
+          "cache_read": 0,
+          "cache_write": 0.34101,
           "source": "edenai"
         }
       ]
@@ -73207,6 +73276,14 @@
           "cache_read": 0.01,
           "cache_write": 0.04,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.04,
+          "out": 0.49,
+          "cache_read": 0.01,
+          "cache_write": 0.04,
+          "source": "kilo"
         }
       ]
     },
@@ -73267,6 +73344,14 @@
           "out": 2.9,
           "cache_read": 0.25,
           "cache_write": 0.39,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.2528,
+          "out": 2.88,
+          "cache_read": 0.08832,
+          "cache_write": 0.2528,
           "source": "kilo"
         }
       ]
@@ -74269,6 +74354,14 @@
           "cache_read": 0.125,
           "cache_write": 0.5625,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.5614,
+          "out": 1.7644,
+          "cache_read": 0.10426,
+          "cache_write": 0.5614,
+          "source": "kilo"
         }
       ]
     },
@@ -74386,6 +74479,14 @@
           "out": 1.75,
           "cache_read": 0.08,
           "cache_write": 0.4,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.6,
+          "out": 2.2,
+          "cache_read": 0.11,
+          "cache_write": 0.6,
           "source": "kilo"
         }
       ]
@@ -75929,6 +76030,14 @@
           "cache_read": 0.3,
           "cache_write": 1.4,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.8845,
+          "out": 10.5346,
+          "cache_read": 0.33,
+          "cache_write": 0.8845,
+          "source": "kilo"
         }
       ]
     },
@@ -76776,6 +76885,14 @@
           "cache_read": 0,
           "cache_write": 0.019,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.15,
+          "out": 0.15,
+          "cache_read": 0.015,
+          "cache_write": 0.15,
+          "source": "kilo"
         }
       ]
     },
@@ -76856,6 +76973,14 @@
           "out": 0.25,
           "cache_read": 0,
           "cache_write": 0.09375,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.1,
+          "out": 0.3,
+          "cache_read": 0.01,
+          "cache_write": 0.1,
           "source": "kilo"
         }
       ]
@@ -90858,6 +90983,15 @@
           "cache_write": 6.25,
           "cache_write_1h": 10,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -94352,6 +94486,14 @@
           "cache_read": 0.02,
           "cache_write": 0.25,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.1,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -94494,6 +94636,14 @@
           "out": 6,
           "cache_read": 0.5,
           "cache_write": 2,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 1.6,
+          "out": 4.8,
+          "cache_read": 0.4,
+          "cache_write": 1.6,
           "source": "nano-gpt"
         }
       ]
@@ -95756,6 +95906,19 @@
           "out": 0.28,
           "cache_read": 0.0028,
           "cache_write": 0,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000mimo-v2.6-flash-uncensored": {
+      "id": "mimo-v2.6-flash-uncensored",
+      "rates": [
+        {
+          "from": "2026-09-25",
+          "in": 0.5,
+          "out": 1.5,
+          "cache_read": 0.275,
+          "cache_write": 0.5,
           "source": "nano-gpt"
         }
       ]
@@ -107975,6 +108138,19 @@
         }
       ]
     },
+    "opencode\u0000qwen3.8-max": {
+      "id": "qwen3.8-max",
+      "rates": [
+        {
+          "from": "2026-09-25",
+          "in": 2,
+          "out": 6,
+          "cache_read": 0.25,
+          "cache_write": 2.5,
+          "source": "opencode"
+        }
+      ]
+    },
     "opencode\u0000ring-2.6-1t-free": {
       "id": "ring-2.6-1t-free",
       "rates": [
@@ -109402,6 +109578,14 @@
           "cache_read": 0.01,
           "cache_write": 0.04,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.04,
+          "out": 0.49,
+          "cache_read": 0.01,
+          "cache_write": 0.04,
+          "source": "openrouter"
         }
       ]
     },
@@ -109462,6 +109646,14 @@
           "out": 2.9,
           "cache_read": 0.25,
           "cache_write": 0.39,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.2528,
+          "out": 2.88,
+          "cache_read": 0.08832,
+          "cache_write": 0.2528,
           "source": "openrouter"
         }
       ]
@@ -109825,6 +110017,14 @@
           "cache_read": 0.0783,
           "cache_write": 0.9396,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.783,
+          "out": 1.566,
+          "cache_read": 0.06525,
+          "cache_write": 0.783,
+          "source": "openrouter"
         }
       ]
     },
@@ -109938,6 +110138,14 @@
           "out": 0.42,
           "cache_read": 0.0042,
           "cache_write": 0.14,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.003,
+          "cache_write": 0.15,
           "source": "openrouter"
         }
       ]
@@ -110614,6 +110822,14 @@
           "cache_read": 0.125,
           "cache_write": 0.5625,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.5614,
+          "out": 1.7644,
+          "cache_read": 0.10426,
+          "cache_write": 0.5614,
+          "source": "openrouter"
         }
       ]
     },
@@ -110732,6 +110948,14 @@
           "cache_read": 0.08,
           "cache_write": 0.4,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.6,
+          "out": 2.2,
+          "cache_read": 0.11,
+          "cache_write": 0.6,
+          "source": "openrouter"
         }
       ]
     },
@@ -110799,6 +111023,14 @@
           "out": 3.036,
           "cache_read": 0.1794,
           "cache_write": 0.966,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.9646,
+          "out": 3.0316,
+          "cache_read": 0.17914,
+          "cache_write": 0.9646,
           "source": "openrouter"
         }
       ]
@@ -110906,6 +111138,14 @@
           "cache_read": 0.156,
           "cache_write": 0.84,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.26,
+          "cache_write": 1.4,
+          "source": "openrouter"
         }
       ]
     },
@@ -110966,6 +111206,14 @@
           "out": 0.5,
           "cache_read": 0.05,
           "cache_write": 0.15,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.045,
+          "out": 0.14,
+          "cache_read": 0.01,
+          "cache_write": 0.045,
           "source": "openrouter"
         }
       ]
@@ -112525,6 +112773,14 @@
           "out": 10.75,
           "cache_read": 0.3,
           "cache_write": 1.4,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.8845,
+          "out": 10.5346,
+          "cache_read": 0.33,
+          "cache_write": 0.8845,
           "source": "openrouter"
         }
       ]
@@ -114684,6 +114940,14 @@
           "out": 0.52,
           "cache_read": 0,
           "cache_write": 0.13,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-25",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0,
+          "cache_write": 0.15,
           "source": "openrouter"
         }
       ]
@@ -146060,6 +146324,7 @@
     "mimo-v2-5-tts-voicedesign": "mimo-v2.5-tts-voicedesign",
     "mimo-v2-6-flash-free": "mimo-v2.6-flash-free",
     "mimo-v2-6-flash-latest": "mimo-v2-6-flash",
+    "mimo-v2-6-flash-uncensored": "mimo-v2.6-flash-uncensored",
     "mimo-v2-6-pro-latest": "mimo-v2-6-pro",
     "mimo-v2-6-pro-ultraspeed-latest": "mimo-v2-6-pro-ultraspeed",
     "mimo-v2-flash-free-latest": "mimo-v2-flash-free",
@@ -146079,6 +146344,7 @@
     "mimo-v2.5-tts-voicedesign-latest": "mimo-v2.5-tts-voicedesign",
     "mimo-v2.6-flash-free-latest": "mimo-v2.6-flash-free",
     "mimo-v2.6-flash-latest": "mimo-v2.6-flash",
+    "mimo-v2.6-flash-uncensored-latest": "mimo-v2.6-flash-uncensored",
     "mimo-v2.6-pro-latest": "mimo-v2.6-pro",
     "mimo-v2.6-pro-ultraspeed-latest": "mimo-v2.6-pro-ultraspeed",
     "mimo-v25-latest": "mimo-v25",
@@ -146092,6 +146358,7 @@
     "mimo-v2p5-tts-voicedesign": "mimo-v2.5-tts-voicedesign",
     "mimo-v2p6-flash": "mimo-v2.6-flash",
     "mimo-v2p6-flash-free": "mimo-v2.6-flash-free",
+    "mimo-v2p6-flash-uncensored": "mimo-v2.6-flash-uncensored",
     "mimo-v2p6-pro": "mimo-v2.6-pro",
     "mimo-v2p6-pro-ultraspeed": "mimo-v2.6-pro-ultraspeed",
     "mini_lm_l12_v2-latest": "mini_lm_l12_v2",
