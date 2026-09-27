@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-09-26",
+  "updated": "2026-09-27",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -5234,6 +5234,14 @@
           "out": 0.74844,
           "cache_read": 0.007938,
           "cache_write": 0.24948,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.2442,
+          "out": 0.7326,
+          "cache_read": 0.00777,
+          "cache_write": 0.2442,
           "source": "kilo"
         }
       ]
@@ -11916,6 +11924,14 @@
           "cache_read": 0.1,
           "cache_write": 0.2,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.2,
+          "out": 0.8,
+          "cache_read": 0.07,
+          "cache_write": 0.2,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -12037,6 +12053,19 @@
           "cache_read": 0.13,
           "cache_write": 0.7,
           "source": "vercel"
+        }
+      ]
+    },
+    "glm-5.3-uncensored": {
+      "id": "glm-5.3-uncensored",
+      "rates": [
+        {
+          "from": "2026-09-27",
+          "in": 1.25,
+          "out": 2.25,
+          "cache_read": 0.3,
+          "cache_write": 1.25,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -19743,6 +19772,19 @@
         }
       ]
     },
+    "longcat-2.5-preview-free": {
+      "id": "longcat-2.5-preview-free",
+      "rates": [
+        {
+          "from": "2026-09-27",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "opencode"
+        }
+      ]
+    },
     "lucidnova-rf1-100b": {
       "id": "lucidnova-rf1-100b",
       "rates": [
@@ -20748,6 +20790,14 @@
           "in": 0.5,
           "out": 1.5,
           "cache_read": 0.275,
+          "cache_write": 0.5,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.5,
+          "out": 1.5,
+          "cache_read": 0.1995,
           "cache_write": 0.5,
           "source": "nano-gpt"
         }
@@ -73483,6 +73533,14 @@
           "cache_read": 0.007938,
           "cache_write": 0.24948,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.2442,
+          "out": 0.7326,
+          "cache_read": 0.00777,
+          "cache_write": 0.2442,
+          "source": "kilo"
         }
       ]
     },
@@ -74375,6 +74433,14 @@
           "cache_read": 0.05,
           "cache_write": 0.09,
           "source": "kilo"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.08,
+          "out": 0.3,
+          "cache_read": 0.05,
+          "cache_write": 0.08,
+          "source": "kilo"
         }
       ]
     },
@@ -74507,6 +74573,14 @@
           "out": 1.1924,
           "cache_read": 0.07046,
           "cache_write": 0.3794,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.2737,
+          "out": 2.574,
+          "cache_read": 0.044965,
+          "cache_write": 0.2737,
           "source": "kilo"
         }
       ]
@@ -74824,6 +74898,14 @@
           "out": 0.5,
           "cache_read": 0.015,
           "cache_write": 0.04,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.045,
+          "out": 0.14,
+          "cache_read": 0.01,
+          "cache_write": 0.045,
           "source": "kilo"
         }
       ]
@@ -76199,6 +76281,14 @@
           "out": 9.043,
           "cache_read": 0.3,
           "cache_write": 1.0301,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.9875,
+          "out": 5.53,
+          "cache_read": 0.11455,
+          "cache_write": 0.9875,
           "source": "kilo"
         }
       ]
@@ -93963,6 +94053,27 @@
           "cache_read": 0.1,
           "cache_write": 0.2,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.2,
+          "out": 0.8,
+          "cache_read": 0.07,
+          "cache_write": 0.2,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000glm-5.3-uncensored": {
+      "id": "glm-5.3-uncensored",
+      "rates": [
+        {
+          "from": "2026-09-27",
+          "in": 1.25,
+          "out": 2.25,
+          "cache_read": 0.3,
+          "cache_write": 1.25,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -96101,6 +96212,14 @@
           "in": 0.5,
           "out": 1.5,
           "cache_read": 0.275,
+          "cache_write": 0.5,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.5,
+          "out": 1.5,
+          "cache_read": 0.1995,
           "cache_write": 0.5,
           "source": "nano-gpt"
         }
@@ -108009,6 +108128,19 @@
         }
       ]
     },
+    "opencode\u0000longcat-2.5-preview-free": {
+      "id": "longcat-2.5-preview-free",
+      "rates": [
+        {
+          "from": "2026-09-27",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "opencode"
+        }
+      ]
+    },
     "opencode\u0000mimo-v2-flash-free": {
       "id": "mimo-v2-flash-free",
       "rates": [
@@ -108751,6 +108883,19 @@
           "out": 1.2,
           "cache_read": 0.006,
           "cache_write": 0.3,
+          "source": "opencode-go"
+        }
+      ]
+    },
+    "opencode-go\u0000longcat-2.5-preview-free": {
+      "id": "longcat-2.5-preview-free",
+      "rates": [
+        {
+          "from": "2026-09-27",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
           "source": "opencode-go"
         }
       ]
@@ -109867,6 +110012,14 @@
           "cache_read": 0.007938,
           "cache_write": 0.24948,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.2442,
+          "out": 0.7326,
+          "cache_read": 0.00777,
+          "cache_write": 0.2442,
+          "source": "openrouter"
         }
       ]
     },
@@ -110176,6 +110329,14 @@
           "cache_read": 0.007,
           "cache_write": 0.22,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.2156,
+          "out": 0.6468,
+          "cache_read": 0.00686,
+          "cache_write": 0.2156,
+          "source": "openrouter"
         }
       ]
     },
@@ -110260,6 +110421,14 @@
           "out": 0.736368,
           "cache_read": 0.030682,
           "cache_write": 0.368184,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.348,
+          "out": 0.696,
+          "cache_read": 0.029,
+          "cache_write": 0.348,
           "source": "openrouter"
         }
       ]
@@ -110362,6 +110531,14 @@
           "cache_read": 0.0088,
           "cache_write": 0.264,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.24502,
+          "out": 3.5,
+          "cache_read": 0.24452,
+          "cache_write": 0.24502,
+          "source": "openrouter"
         }
       ]
     },
@@ -110398,6 +110575,14 @@
           "out": 1.2,
           "cache_read": 0.006,
           "cache_write": 0.3,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.035,
+          "out": 0.29,
+          "cache_read": 0.001,
+          "cache_write": 0.035,
           "source": "openrouter"
         }
       ]
@@ -111090,6 +111275,14 @@
           "cache_read": 0.07046,
           "cache_write": 0.3794,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.2737,
+          "out": 2.574,
+          "cache_read": 0.044965,
+          "cache_write": 0.2737,
+          "source": "openrouter"
         }
       ]
     },
@@ -111422,6 +111615,14 @@
           "cache_read": 0.07046,
           "cache_write": 0.3794,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.26,
+          "cache_write": 1.4,
+          "source": "openrouter"
         }
       ]
     },
@@ -111498,6 +111699,14 @@
           "out": 0.5,
           "cache_read": 0.015,
           "cache_write": 0.04,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.045,
+          "out": 0.14,
+          "cache_read": 0.01,
+          "cache_write": 0.045,
           "source": "openrouter"
         }
       ]
@@ -111582,6 +111791,14 @@
           "out": 0.5,
           "cache_read": 0.015,
           "cache_write": 0.04,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.045,
+          "out": 0.14,
+          "cache_read": 0.01,
+          "cache_write": 0.045,
           "source": "openrouter"
         }
       ]
@@ -113082,6 +113299,14 @@
           "cache_read": 0.3,
           "cache_write": 1.0301,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.9875,
+          "out": 5.53,
+          "cache_read": 0.11455,
+          "cache_write": 0.9875,
+          "source": "openrouter"
         }
       ]
     },
@@ -113874,6 +114099,14 @@
           "cache_read": 0,
           "cache_write": 0.3,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.255,
+          "out": 1.02,
+          "cache_read": 0,
+          "cache_write": 0.255,
+          "source": "openrouter"
         }
       ]
     },
@@ -113949,6 +114182,14 @@
           "out": 1.2,
           "cache_read": 0.06,
           "cache_write": 0.3,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-09-27",
+          "in": 0.21,
+          "out": 0.84,
+          "cache_read": 0.042,
+          "cache_write": 0.21,
           "source": "openrouter"
         }
       ]
@@ -145629,6 +145870,7 @@
     "glm-5-3-latest": "glm-5-3",
     "glm-5-3-prime": "glm-5.3-prime",
     "glm-5-3-promo-50": "glm-5.3-promo-50",
+    "glm-5-3-uncensored": "glm-5.3-uncensored",
     "glm-5-3@eu": "glm-5.3@eu",
     "glm-5-fp8-latest": "glm-5-fp8",
     "glm-5-free-latest": "glm-5-free",
@@ -145680,15 +145922,18 @@
     "glm-5.3-latest": "glm-5.3",
     "glm-5.3-prime-latest": "glm-5.3-prime",
     "glm-5.3-promo-50-latest": "glm-5.3-promo-50",
+    "glm-5.3-uncensored-latest": "glm-5.3-uncensored",
     "glm-5.3@eu-latest": "glm-5.3@eu",
     "glm-5p1": "glm-5.1",
     "glm-5p1-fp8": "glm-5.1-fp8",
     "glm-5p1-tee": "glm-5.1-tee",
     "glm-5p1-thinking": "glm-5.1-thinking",
     "glm-5p1@eu": "glm-5.1@eu",
+    "glm-5p2": "glm-5.2",
     "glm-5p2-caveman": "glm-5.2-caveman",
     "glm-5p2-caveman-lite": "glm-5.2-caveman-lite",
     "glm-5p2-caveman-ultra": "glm-5.2-caveman-ultra",
+    "glm-5p2-fast": "glm-5.2-fast",
     "glm-5p2-fast-latest": "glm-5p2-fast",
     "glm-5p2-flex": "glm-5.2-flex",
     "glm-5p2-fp8": "glm-5.2-fp8",
@@ -145725,6 +145970,7 @@
     "glm-5p3-latest": "glm-5p3",
     "glm-5p3-prime": "glm-5.3-prime",
     "glm-5p3-promo-50": "glm-5.3-promo-50",
+    "glm-5p3-uncensored": "glm-5.3-uncensored",
     "glm-5p3@eu": "glm-5.3@eu",
     "glm-5v-turbo-latest": "glm-5v-turbo",
     "glm-fast-latest": "glm-fast",
@@ -146402,11 +146648,13 @@
     "kimi-k2p5": "kimi-k2.5",
     "kimi-k2p5-free": "kimi-k2.5-free",
     "kimi-k2p5-fw": "kimi-k2.5-fw",
+    "kimi-k2p6": "kimi-k2.6",
     "kimi-k2p6-fast": "kimi-k2.6-fast",
     "kimi-k2p6-latest": "kimi-k2p6",
     "kimi-k2p6-nitro": "kimi-k2.6-nitro",
     "kimi-k2p6-tee": "kimi-k2.6-tee",
     "kimi-k2p6@eu": "kimi-k2.6@eu",
+    "kimi-k2p7-code": "kimi-k2.7-code",
     "kimi-k2p7-code-1100b": "kimi-k2.7-code-1100b",
     "kimi-k2p7-code-fast": "kimi-k2.7-code-fast",
     "kimi-k2p7-code-flex": "kimi-k2.7-code-flex",
@@ -146673,10 +146921,13 @@
     "llama3p3-70b-instruct": "llama3.3-70b-instruct",
     "longcat-2-0": "longcat-2.0",
     "longcat-2-0-free": "longcat-2.0-free",
+    "longcat-2-5-preview-free": "longcat-2.5-preview-free",
     "longcat-2.0-free-latest": "longcat-2.0-free",
     "longcat-2.0-latest": "longcat-2.0",
+    "longcat-2.5-preview-free-latest": "longcat-2.5-preview-free",
     "longcat-2p0": "longcat-2.0",
     "longcat-2p0-free": "longcat-2.0-free",
+    "longcat-2p5-preview-free": "longcat-2.5-preview-free",
     "lucidnova-rf1-100b-latest": "lucidnova-rf1-100b",
     "lucidquery-agi-01-frontier-latest": "lucidquery-agi-01-frontier",
     "lucidquery-agi-01-swift-latest": "lucidquery-agi-01-swift",
@@ -147704,6 +147955,7 @@
     "qwen3p7-flash": "qwen3.7-flash",
     "qwen3p7-max": "qwen3.7-max",
     "qwen3p7-max-2026-06-08": "qwen3.7-max-2026-06-08",
+    "qwen3p7-plus": "qwen3.7-plus",
     "qwen3p7-plus-latest": "qwen3p7-plus",
     "qwen3p8-27b": "qwen3.8-27b",
     "qwen3p8-27b-cybersecurity": "qwen3.8-27b-cybersecurity",
