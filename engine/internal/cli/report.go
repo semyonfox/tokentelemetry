@@ -27,7 +27,6 @@ func cmdReport(cmd string, args []string) int {
 
 	progress := startProgress(os.Stderr, progressEnabled(opts.asJSON || opts.plainOutput), "Checking for updated prices...")
 	defer progress.Stop()
-	pricing.Refresh()
 	tbl, err := pricing.Load()
 	if err != nil {
 		progress.Stop()

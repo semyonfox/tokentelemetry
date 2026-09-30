@@ -35,10 +35,11 @@ var (
 	loadErr error
 )
 
-// Load returns the pricing table, reading the embedded dataset once and then
-// overlaying the user's own file if they have one.
+// Load checks for updated prices once per day, then loads the cached or bundled
+// dataset and applies the user's overrides once per process.
 func Load() (*Table, error) {
 	once.Do(func() {
+		Refresh()
 		loaded, loadErr = load()
 	})
 	return loaded, loadErr

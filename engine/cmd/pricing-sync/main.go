@@ -1,6 +1,6 @@
 // Command pricing-sync regenerates the embedded pricing dataset from
-// models.dev. It is a maintainer/CI tool and is never shipped to users — the
-// tokentelemetry binary performs no network I/O at all.
+// models.dev. It is a maintainer/CI tool; the CLI downloads the published
+// dataset automatically when loading prices.
 //
 // The behaviour that matters here is provider ranking. models.dev publishes the
 // same model under every provider that resells it, and the Python sync this

@@ -377,8 +377,9 @@ and Hermes `869228cab4a8276d3b4c78da9d9939670c47bd0f`. Synthetic regression test
 cover response replay, upgrades, cache normalization, task/route separation,
 rotated and incomplete logs, and independently calculated daily costs.
 
-Prices refresh through daily CI. Reports check the published dataset at most once
-per day, with a three-second timeout and a cached or bundled fallback. Set
-`TT_OFFLINE=1` to skip network checks. Your pricing overrides still take priority.
+Models and prices update automatically when you run a report or `price`.
+The CLI checks the dataset published by daily CI at most once per day, with a
+three-second timeout and a cached or bundled fallback. No manual sync is needed.
+Set `TT_OFFLINE=1` to skip network checks. Your pricing overrides still take priority.
 Updates preserve recorded rate history; newly observed changes take effect on
 the sync date. Paid-to-zero changes are retained at their previous rates for review.
