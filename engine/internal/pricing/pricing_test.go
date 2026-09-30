@@ -2,6 +2,7 @@ package pricing
 
 import (
 	"os"
+	"path/filepath"
 	"testing"
 	"time"
 )
@@ -164,6 +165,11 @@ func TestNormalize(t *testing.T) {
 // rates rather than a reseller's. This is the regression guard for the
 // alphabetical-provider bug.
 func TestEmbeddedDatasetIsFirstParty(t *testing.T) {
+	t.Setenv("TT_OFFLINE", "1")
+	t.Setenv("XDG_CACHE_HOME", t.TempDir())
+	t.Setenv("LOCALAPPDATA", t.TempDir())
+	t.Setenv("HOME", t.TempDir())
+	t.Setenv("TT_PRICING_FILE", filepath.Join(t.TempDir(), "missing.json"))
 	tbl, err := Load()
 	if err != nil {
 		t.Fatalf("Load: %v", err)
