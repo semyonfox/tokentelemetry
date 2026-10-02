@@ -1,9 +1,14 @@
 name: Go checks
 on:
   push:
+    branches: [main]
   pull_request:
+  workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   test:
     strategy:
@@ -15,10 +20,52 @@ jobs:
         working-directory: engine
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - id: select
+        shell: python
+        working-directory: .
+        continue-on-error: true
+        run: |
+          import os
+          import re
+          import subprocess
+
+          def git(*args):
+              return subprocess.check_output(["git", *args], stderr=subprocess.DEVNULL)
+
+          run_go = True
+          if os.environ.get("GITHUB_EVENT_NAME") == "pull_request":
+              try:
+                  # compare the tested merge against its base; missing history runs all checks
+                  if not re.fullmatch(r"refs/pull/\d+/merge", os.environ.get("GITHUB_REF", "")):
+                      raise ValueError("not a pull request merge ref")
+                  if git("rev-parse", "HEAD").decode().strip() != os.environ.get("GITHUB_SHA"):
+                      raise ValueError("checkout does not match the event")
+                  git("rev-parse", "--verify", "HEAD^2")
+                  paths = git("diff", "--name-only", "--no-renames", "-z", "HEAD^1", "HEAD").split(b"\0")
+                  paths = [path for path in paths if path]
+                  run_go = not paths or any(
+                      not (path.endswith(b".md") and (path.startswith(b"docs/") or b"/" not in path))
+                      for path in paths
+                  )
+              except (OSError, ValueError, subprocess.CalledProcessError):
+                  print("Could not determine changed files; running all Go checks")
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write(f"go={str(run_go).lower()}\n")
+          print(f"Run Go checks: {run_go}")
+          if not run_go:
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+                  summary.write("Skipped Go setup, tests, vet and build: only documentation changed.\n")
       - uses: actions/setup-go@v5
+        if: steps.select.outcome != 'success' || steps.select.outputs.go != 'false'
         with:
           go-version-file: engine/go.mod
           cache-dependency-path: engine/go.sum
       - run: go test ./...
+        if: steps.select.outcome != 'success' || steps.select.outputs.go != 'false'
       - run: go vet ./...
+        if: steps.select.outcome != 'success' || steps.select.outputs.go != 'false'
       - run: go build ./cmd/tokentelemetry ./cmd/tt
+        if: steps.select.outcome != 'success' || steps.select.outputs.go != 'false'
