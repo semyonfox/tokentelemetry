@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-10-03",
+  "updated": "2026-10-04",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -5405,6 +5405,14 @@
           "cache_read": 0.11,
           "cache_write": 0.29,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.25,
+          "out": 1,
+          "cache_read": 0,
+          "cache_write": 0.25,
+          "source": "kilo"
         }
       ]
     },
@@ -5558,6 +5566,14 @@
           "out": 4.2,
           "cache_read": 0.1,
           "cache_write": 0.12,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.1901,
+          "out": 4.2,
+          "cache_read": 0.19,
+          "cache_write": 0.1901,
           "source": "kilo"
         }
       ]
@@ -6510,6 +6526,14 @@
           "cache_read": 0,
           "cache_write": 0.6,
           "source": "baseten"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.006,
+          "cache_write": 0.3,
+          "source": "vercel"
         }
       ]
     },
@@ -8277,6 +8301,19 @@
       "rates": [
         {
           "from": "2026-07-14",
+          "in": 2.2,
+          "out": 11,
+          "cache_read": 0.22,
+          "cache_write": 2.75,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "eu.anthropic.claude-sonnet-5-5": {
+      "id": "eu.anthropic.claude-sonnet-5-5",
+      "rates": [
+        {
+          "from": "2026-10-04",
           "in": 2.2,
           "out": 11,
           "cache_read": 0.22,
@@ -32355,6 +32392,19 @@
         }
       ]
     },
+    "umans-glm-5.3": {
+      "id": "umans-glm-5.3",
+      "rates": [
+        {
+          "from": "2026-10-04",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.26,
+          "cache_write": 1.4,
+          "source": "umans-ai"
+        }
+      ]
+    },
     "umans-glm-5.3-flash": {
       "id": "umans-glm-5.3-flash",
       "rates": [
@@ -32804,6 +32854,19 @@
         },
         {
           "from": "2026-09-16",
+          "in": 2.2,
+          "out": 11,
+          "cache_read": 0.22,
+          "cache_write": 2.75,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "us.anthropic.claude-sonnet-5-5": {
+      "id": "us.anthropic.claude-sonnet-5-5",
+      "rates": [
+        {
+          "from": "2026-10-04",
           "in": 2.2,
           "out": 11,
           "cache_read": 0.22,
@@ -44022,6 +44085,19 @@
         }
       ]
     },
+    "amazon-bedrock\u0000eu.anthropic.claude-sonnet-5-5": {
+      "id": "eu.anthropic.claude-sonnet-5-5",
+      "rates": [
+        {
+          "from": "2026-10-04",
+          "in": 2.2,
+          "out": 11,
+          "cache_read": 0.22,
+          "cache_write": 2.75,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
     "amazon-bedrock\u0000eu.mistral.pixtral-large-2502-v1": {
       "id": "eu.mistral.pixtral-large-2502-v1",
       "rates": [
@@ -45742,6 +45818,19 @@
         },
         {
           "from": "2026-09-16",
+          "in": 2.2,
+          "out": 11,
+          "cache_read": 0.22,
+          "cache_write": 2.75,
+          "source": "amazon-bedrock"
+        }
+      ]
+    },
+    "amazon-bedrock\u0000us.anthropic.claude-sonnet-5-5": {
+      "id": "us.anthropic.claude-sonnet-5-5",
+      "rates": [
+        {
+          "from": "2026-10-04",
           "in": 2.2,
           "out": 11,
           "cache_read": 0.22,
@@ -62560,6 +62649,14 @@
           "cache_read": 0.04,
           "cache_write": 0.2,
           "source": "edenai"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.2,
+          "out": 1.15,
+          "cache_read": 0.03,
+          "cache_write": 0.2,
+          "source": "edenai"
         }
       ]
     },
@@ -76467,6 +76564,14 @@
           "cache_read": 0.11,
           "cache_write": 0.29,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.25,
+          "out": 1,
+          "cache_read": 0,
+          "cache_write": 0.25,
+          "source": "kilo"
         }
       ]
     },
@@ -76596,6 +76701,14 @@
           "out": 0.6,
           "cache_read": 0.01,
           "cache_write": 0.02,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.003,
+          "out": 2.4,
+          "cache_read": 0.003,
+          "cache_write": 0.003,
           "source": "kilo"
         }
       ]
@@ -76737,6 +76850,14 @@
           "out": 4.2,
           "cache_read": 0.1,
           "cache_write": 0.12,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.1901,
+          "out": 4.2,
+          "cache_read": 0.19,
+          "cache_write": 0.1901,
           "source": "kilo"
         }
       ]
@@ -76988,6 +77109,14 @@
           "out": 1.28,
           "cache_read": 0.0188,
           "cache_write": 0.0188,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.0152,
+          "out": 1.28,
+          "cache_read": 0.0152,
+          "cache_write": 0.0152,
           "source": "kilo"
         }
       ]
@@ -77915,6 +78044,14 @@
           "cache_read": 0.08,
           "cache_write": 0.12,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.05,
+          "out": 5,
+          "cache_read": 0.04,
+          "cache_write": 0.05,
+          "source": "kilo"
         }
       ]
     },
@@ -78303,6 +78440,14 @@
           "out": 0.5,
           "cache_read": 0.035,
           "cache_write": 0.035,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.0352,
+          "out": 0.5,
+          "cache_read": 0.0352,
+          "cache_write": 0.0352,
           "source": "kilo"
         }
       ]
@@ -79793,6 +79938,14 @@
           "cache_read": 0.45,
           "cache_write": 0.9895,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.6438,
+          "out": 13,
+          "cache_read": 0.45,
+          "cache_write": 0.6438,
+          "source": "kilo"
         }
       ]
     },
@@ -80003,6 +80156,14 @@
           "out": 13.5,
           "cache_read": 0.27,
           "cache_write": 2.7,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3.75,
           "source": "kilo"
         }
       ]
@@ -80475,6 +80636,14 @@
           "out": 0.28,
           "cache_read": 0.09,
           "cache_write": 0.12,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.115,
+          "out": 0.28,
+          "cache_read": 0.11,
+          "cache_write": 0.115,
           "source": "kilo"
         }
       ]
@@ -96200,6 +96369,14 @@
           "cache_read": 0.2,
           "cache_write": 0.4,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.5,
+          "out": 2.15,
+          "cache_read": 0.35,
+          "cache_write": 0.5,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -102776,6 +102953,19 @@
         }
       ]
     },
+    "nano-gpt\u0000sakana-namazu": {
+      "id": "sakana-namazu",
+      "rates": [
+        {
+          "from": "2026-10-04",
+          "in": 0.95,
+          "out": 4,
+          "cache_read": 0.15,
+          "cache_write": 0.95,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000sarvam-105b": {
       "id": "sarvam-105b",
       "rates": [
@@ -104449,6 +104639,20 @@
           "cache_read": 0.5,
           "cache_write": 6.25,
           "cache_write_1h": 10,
+          "source": "neon"
+        }
+      ]
+    },
+    "neon\u0000claude-opus-5-5": {
+      "id": "claude-opus-5-5",
+      "rates": [
+        {
+          "from": "2026-10-04",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 5,
+          "cache_write_1h": 8,
           "source": "neon"
         }
       ]
@@ -114548,6 +114752,14 @@
           "cache_read": 0.11,
           "cache_write": 0.29,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.25,
+          "out": 1,
+          "cache_read": 0,
+          "cache_write": 0.25,
+          "source": "openrouter"
         }
       ]
     },
@@ -114677,6 +114889,14 @@
           "out": 0.6,
           "cache_read": 0.01,
           "cache_write": 0.02,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.003,
+          "out": 2.4,
+          "cache_read": 0.003,
+          "cache_write": 0.003,
           "source": "openrouter"
         }
       ]
@@ -114818,6 +115038,14 @@
           "out": 4.2,
           "cache_read": 0.1,
           "cache_write": 0.12,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.1901,
+          "out": 4.2,
+          "cache_read": 0.19,
+          "cache_write": 0.1901,
           "source": "openrouter"
         }
       ]
@@ -115078,6 +115306,14 @@
           "cache_read": 0.0188,
           "cache_write": 0.0188,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.0152,
+          "out": 1.28,
+          "cache_read": 0.0152,
+          "cache_write": 0.0152,
+          "source": "openrouter"
         }
       ]
     },
@@ -115202,6 +115438,14 @@
           "out": 1.28,
           "cache_read": 0.0188,
           "cache_write": 0.0188,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.0152,
+          "out": 1.28,
+          "cache_read": 0.0152,
+          "cache_write": 0.0152,
           "source": "openrouter"
         }
       ]
@@ -115530,6 +115774,14 @@
           "cache_read": 0.022,
           "cache_write": 0.66,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.85,
+          "out": 5,
+          "cache_read": 0.7,
+          "cache_write": 0.85,
+          "source": "openrouter"
         }
       ]
     },
@@ -115606,6 +115858,14 @@
           "out": 1.2,
           "cache_read": 0.006,
           "cache_write": 0.3,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.003,
+          "out": 2.4,
+          "cache_read": 0.003,
+          "cache_write": 0.003,
           "source": "openrouter"
         }
       ]
@@ -116346,6 +116606,14 @@
           "cache_read": 0.08,
           "cache_write": 0.12,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.05,
+          "out": 5,
+          "cache_read": 0.04,
+          "cache_write": 0.05,
+          "source": "openrouter"
         }
       ]
     },
@@ -116689,6 +116957,14 @@
           "cache_read": 0.26,
           "cache_write": 0.41,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.38,
+          "out": 3.49,
+          "cache_read": 0.26,
+          "cache_write": 0.38,
+          "source": "openrouter"
         }
       ]
     },
@@ -117014,6 +117290,14 @@
           "out": 0.5,
           "cache_read": 0.035,
           "cache_write": 0.035,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.0352,
+          "out": 0.5,
+          "cache_read": 0.0352,
+          "cache_write": 0.0352,
           "source": "openrouter"
         }
       ]
@@ -118674,6 +118958,14 @@
           "cache_read": 0.45,
           "cache_write": 0.9895,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.6518,
+          "out": 13,
+          "cache_read": 0.45,
+          "cache_write": 0.6518,
+          "source": "openrouter"
         }
       ]
     },
@@ -118973,6 +119265,14 @@
           "cache_read": 0.27,
           "cache_write": 2.7,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.72,
+          "out": 13,
+          "cache_read": 0.7,
+          "cache_write": 0.72,
+          "source": "openrouter"
         }
       ]
     },
@@ -119252,6 +119552,14 @@
           "out": 0.32,
           "cache_read": 0,
           "cache_write": 0.1,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-04",
+          "in": 0.22,
+          "out": 0.5,
+          "cache_read": 0.11,
+          "cache_write": 0.22,
           "source": "openrouter"
         }
       ]
@@ -138874,6 +139182,19 @@
         }
       ]
     },
+    "umans-ai\u0000umans-glm-5.3": {
+      "id": "umans-glm-5.3",
+      "rates": [
+        {
+          "from": "2026-10-04",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.26,
+          "cache_write": 1.4,
+          "source": "umans-ai"
+        }
+      ]
+    },
     "umans-ai\u0000umans-glm-5.3-flash": {
       "id": "umans-glm-5.3-flash",
       "rates": [
@@ -138983,6 +139304,19 @@
       "rates": [
         {
           "from": "2026-08-27",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "umans-ai-coding-plan"
+        }
+      ]
+    },
+    "umans-ai-coding-plan\u0000umans-glm-5.3": {
+      "id": "umans-glm-5.3",
+      "rates": [
+        {
+          "from": "2026-10-04",
           "in": 0,
           "out": 0,
           "cache_read": 0,
@@ -141904,6 +142238,19 @@
           "out": 0.66,
           "cache_read": 0.007,
           "cache_write": 0.22,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000deepseek-v4.1-flash-fast": {
+      "id": "deepseek-v4.1-flash-fast",
+      "rates": [
+        {
+          "from": "2026-10-04",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.006,
+          "cache_write": 0.3,
           "source": "vercel"
         }
       ]
@@ -152629,6 +152976,7 @@
     "eu-anthropic-claude-sonnet-4-5-20250929-v1": "eu.anthropic.claude-sonnet-4-5-20250929-v1",
     "eu-anthropic-claude-sonnet-4-6": "eu.anthropic.claude-sonnet-4-6",
     "eu-anthropic-claude-sonnet-5": "eu.anthropic.claude-sonnet-5",
+    "eu-anthropic-claude-sonnet-5-5": "eu.anthropic.claude-sonnet-5-5",
     "eu-mistral-pixtral-large-2502-v1": "eu.mistral.pixtral-large-2502-v1",
     "eu.amazon.nova-2-lite-v1-latest": "eu.amazon.nova-2-lite-v1",
     "eu.amazon.nova-lite-v1-latest": "eu.amazon.nova-lite-v1",
@@ -152645,6 +152993,7 @@
     "eu.anthropic.claude-sonnet-4-20250514-v1-latest": "eu.anthropic.claude-sonnet-4-20250514-v1",
     "eu.anthropic.claude-sonnet-4-5-20250929-v1-latest": "eu.anthropic.claude-sonnet-4-5-20250929-v1",
     "eu.anthropic.claude-sonnet-4-6-latest": "eu.anthropic.claude-sonnet-4-6",
+    "eu.anthropic.claude-sonnet-5-5-latest": "eu.anthropic.claude-sonnet-5-5",
     "eu.anthropic.claude-sonnet-5-latest": "eu.anthropic.claude-sonnet-5",
     "eu.mistral.pixtral-large-2502-v1-latest": "eu.mistral.pixtral-large-2502-v1",
     "eupamazonpnova-2-lite-v1": "eu.amazon.nova-2-lite-v1",
@@ -152663,6 +153012,7 @@
     "eupanthropicpclaude-sonnet-4-5-20250929-v1": "eu.anthropic.claude-sonnet-4-5-20250929-v1",
     "eupanthropicpclaude-sonnet-4-6": "eu.anthropic.claude-sonnet-4-6",
     "eupanthropicpclaude-sonnet-5": "eu.anthropic.claude-sonnet-5",
+    "eupanthropicpclaude-sonnet-5-5": "eu.anthropic.claude-sonnet-5-5",
     "eupmistralppixtral-large-2502-v1": "eu.mistral.pixtral-large-2502-v1",
     "eva-llama-3-33-70b-v0-0": "eva-llama-3.33-70b-v0.0",
     "eva-llama-3-33-70b-v0-1": "eva-llama-3.33-70b-v0.1",
@@ -155462,10 +155812,13 @@
     "umans-deepseek-v4p1-flash": "umans-deepseek-v4.1-flash",
     "umans-flash-latest": "umans-flash",
     "umans-glm-5-2": "umans-glm-5.2",
+    "umans-glm-5-3": "umans-glm-5.3",
     "umans-glm-5-3-flash": "umans-glm-5.3-flash",
     "umans-glm-5.2-latest": "umans-glm-5.2",
     "umans-glm-5.3-flash-latest": "umans-glm-5.3-flash",
+    "umans-glm-5.3-latest": "umans-glm-5.3",
     "umans-glm-5p2": "umans-glm-5.2",
+    "umans-glm-5p3": "umans-glm-5.3",
     "umans-glm-5p3-flash": "umans-glm-5.3-flash",
     "umans-kimi-k2-7": "umans-kimi-k2.7",
     "umans-kimi-k2.7-latest": "umans-kimi-k2.7",
@@ -155499,6 +155852,7 @@
     "us-anthropic-claude-sonnet-4-5-20250929-v1": "us.anthropic.claude-sonnet-4-5-20250929-v1",
     "us-anthropic-claude-sonnet-4-6": "us.anthropic.claude-sonnet-4-6",
     "us-anthropic-claude-sonnet-5": "us.anthropic.claude-sonnet-5",
+    "us-anthropic-claude-sonnet-5-5": "us.anthropic.claude-sonnet-5-5",
     "us-deepseek-r1-v1": "us.deepseek.r1-v1",
     "us-gov-openai-gpt-oss-120b-1": "us-gov.openai.gpt-oss-120b-1",
     "us-gov-openai-gpt-oss-20b-1": "us-gov.openai.gpt-oss-20b-1",
@@ -155542,6 +155896,7 @@
     "us.anthropic.claude-sonnet-4-20250514-v1-latest": "us.anthropic.claude-sonnet-4-20250514-v1",
     "us.anthropic.claude-sonnet-4-5-20250929-v1-latest": "us.anthropic.claude-sonnet-4-5-20250929-v1",
     "us.anthropic.claude-sonnet-4-6-latest": "us.anthropic.claude-sonnet-4-6",
+    "us.anthropic.claude-sonnet-5-5-latest": "us.anthropic.claude-sonnet-5-5",
     "us.anthropic.claude-sonnet-5-latest": "us.anthropic.claude-sonnet-5",
     "us.deepseek.r1-v1-latest": "us.deepseek.r1-v1",
     "us.meta.llama3-1-70b-instruct-v1-latest": "us.meta.llama3-1-70b-instruct-v1",
@@ -155583,6 +155938,7 @@
     "uspanthropicpclaude-sonnet-4-5-20250929-v1": "us.anthropic.claude-sonnet-4-5-20250929-v1",
     "uspanthropicpclaude-sonnet-4-6": "us.anthropic.claude-sonnet-4-6",
     "uspanthropicpclaude-sonnet-5": "us.anthropic.claude-sonnet-5",
+    "uspanthropicpclaude-sonnet-5-5": "us.anthropic.claude-sonnet-5-5",
     "uspdeepseekpr1-v1": "us.deepseek.r1-v1",
     "uspmetapllama3-1-70b-instruct-v1": "us.meta.llama3-1-70b-instruct-v1",
     "uspmetapllama3-1-8b-instruct-v1": "us.meta.llama3-1-8b-instruct-v1",
