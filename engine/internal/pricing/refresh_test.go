@@ -159,3 +159,24 @@ func TestRefreshCachesAndThrottles(t *testing.T) {
 		t.Fatalf("got %d requests, want 1", calls)
 	}
 }
+
+func TestRefreshKeepsNewerDataAtRequestedPath(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "prices.json")
+	newer := []byte(`{"schema":2,"updated":"9999-12-31","models":{"x":{"rates":[{"from":"9999-12-31","in":1,"out":2}]}}}`)
+	if err := os.WriteFile(path, newer, 0600); err != nil {
+		t.Fatal(err)
+	}
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_, _ = w.Write(dataJSON)
+	}))
+	defer server.Close()
+
+	refresh(path, server.URL, server.Client())
+	got, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(got) != string(newer) {
+		t.Fatal("refresh replaced a newer dataset at the requested path")
+	}
+}
