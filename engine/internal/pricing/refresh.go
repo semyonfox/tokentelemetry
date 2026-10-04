@@ -52,7 +52,7 @@ func refresh(path, url string, client *http.Client) {
 	if err != nil || !validDataset(raw) {
 		return
 	}
-	current := cachedData(dataJSON)
+	current := cachedDataAt(dataJSON, path)
 	var old, next fileFormat
 	_ = json.Unmarshal(current, &old)
 	_ = json.Unmarshal(raw, &next)
