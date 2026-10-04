@@ -2,6 +2,11 @@ name: Go checks
 on:
   push:
   pull_request:
+  workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
 permissions:
   contents: read
 jobs:
@@ -15,6 +20,8 @@ jobs:
         working-directory: engine
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.sha }}
       - uses: actions/setup-go@v5
         with:
           go-version-file: engine/go.mod

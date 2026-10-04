@@ -125,7 +125,7 @@ function build() {
         name: "tokentelemetry",
         ...common,
         description:
-          "Local token and cost telemetry for AI coding agents. Reads logs already on disk; makes no network calls.",
+          "Local token and cost telemetry for AI coding agents. Reads logs already on disk and checks for pricing updates daily unless offline.",
         keywords: ["ai", "agents", "claude", "codex", "tokens", "cost", "observability", "ccusage"],
         bin: { tokentelemetry: "bin/tokentelemetry.js" },
         files: ["bin", "README.md"],
