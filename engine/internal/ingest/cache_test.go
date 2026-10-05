@@ -342,6 +342,59 @@ func TestRunCachedIgnoresSQLiteSHMButBypassesNestedSymlink(t *testing.T) {
 	}
 }
 
+type fileCacheTestScanner struct {
+	root   string
+	parses int
+}
+
+func (s *fileCacheTestScanner) Agent() model.Agent    { return "cache-test" }
+func (s *fileCacheTestScanner) Roots() []string       { return []string{s.root} }
+func (s *fileCacheTestScanner) cacheInputs() []string { return []string{s.root} }
+func (s *fileCacheTestScanner) Scan(ctx context.Context, emit func(model.Turn)) error {
+	entries, err := os.ReadDir(s.root)
+	if err != nil {
+		return err
+	}
+	for _, entry := range entries {
+		path := filepath.Join(s.root, entry.Name())
+		for _, turn := range cachedParsedFile(ctx, path, "test-v1", func() []model.Turn {
+			s.parses++
+			raw, _ := os.ReadFile(path)
+			return []model.Turn{cacheTestTurn(entry.Name(), int64(len(raw)))}
+		}) {
+			emit(turn)
+		}
+	}
+	return nil
+}
+
+// offloaded rollouts are symlinked per file, which rules out the provider
+// snapshot but must still hit the per-file cache and follow target changes
+func TestRunCachedNestedSymlinkKeepsFileCache(t *testing.T) {
+	root, cacheDir := t.TempDir(), t.TempDir()
+	target := filepath.Join(t.TempDir(), "rollout.jsonl")
+	writeFile(t, target, "one")
+	if err := os.Symlink(target, filepath.Join(root, "rollout.jsonl")); err != nil {
+		t.Skipf("symlink unavailable: %v", err)
+	}
+	scanner := &fileCacheTestScanner{root: root}
+	output := func() int64 {
+		t.Helper()
+		result, err := RunCached(context.Background(), []Scanner{scanner}, cacheDir)
+		if err != nil || result.CacheHits != 0 || len(result.Turns) != 1 {
+			t.Fatalf("result=%+v err=%v", result, err)
+		}
+		return result.Turns[0].Usage.Output
+	}
+	if cold, warm := output(), output(); cold != 4 || warm != 4 || scanner.parses != 1 {
+		t.Fatalf("cold=%d warm=%d parses=%d", cold, warm, scanner.parses)
+	}
+	writeFile(t, target, "one", "two")
+	if got := output(); got != 8 || scanner.parses != 2 {
+		t.Fatalf("retarget output=%d parses=%d", got, scanner.parses)
+	}
+}
+
 func TestRunCachedRootSymlinkTracksResolvedTarget(t *testing.T) {
 	target, cacheDir := t.TempDir(), t.TempDir()
 	writeFile(t, filepath.Join(target, "source"), "one")
