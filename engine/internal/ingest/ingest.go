@@ -169,8 +169,14 @@ func scanScanner(ctx context.Context, scanner Scanner, cacheDir string) scanBatc
 	batch.miss = true
 	namespace := cacheNamespace(scanner)
 	before, stable, err := sourceFingerprint(inputs)
-	if err != nil || !stable {
+	if err != nil {
 		batch.turns, batch.err = scanFresh(ctx, scanner)
+		return batch
+	}
+	if !stable {
+		// nested symlinks rule out a provider snapshot, but each parsed file
+		// still fingerprints its resolved target, so offloaded logs stay cached
+		batch.turns, batch.err = scanFresh(withFileCache(ctx, cacheDir, namespace, scanner.Agent()), scanner)
 		return batch
 	}
 	cachePath := scannerCachePath(cacheDir, scanner, inputs)
