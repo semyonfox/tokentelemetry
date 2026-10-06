@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-10-05",
+  "updated": "2026-10-06",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -5583,6 +5583,14 @@
           "cache_read": 0.19,
           "cache_write": 0.1901,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.152,
+          "out": 4.2,
+          "cache_read": 0.15,
+          "cache_write": 0.152,
+          "source": "kilo"
         }
       ]
     },
@@ -6510,6 +6518,19 @@
         }
       ],
       "first_party": true
+    },
+    "deepseek-v4.1-flash-552b": {
+      "id": "deepseek-v4.1-flash-552b",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.25,
+          "out": 1,
+          "cache_read": 0.1,
+          "cache_write": 0.25,
+          "source": "aki-io"
+        }
+      ]
     },
     "deepseek-v4.1-flash-beta": {
       "id": "deepseek-v4.1-flash-beta",
@@ -19411,6 +19432,14 @@
           "cache_read": 0.01,
           "cache_write": 0.1,
           "source": "vercel"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.09,
+          "out": 0.18,
+          "cache_read": 0.009,
+          "cache_write": 0.09,
+          "source": "vercel"
         }
       ]
     },
@@ -22522,6 +22551,14 @@
           "out": 0.449,
           "cache_read": 0,
           "cache_write": 0.33675,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.33612,
+          "out": 0.44816,
+          "cache_read": 0,
+          "cache_write": 0.33612,
           "source": "edenai"
         }
       ]
@@ -30413,11 +30450,37 @@
         }
       ]
     },
+    "qwen3.8-27b-antislop": {
+      "id": "qwen3.8-27b-antislop",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "qwen3.8-27b-cybersecurity": {
       "id": "qwen3.8-27b-cybersecurity",
       "rates": [
         {
           "from": "2026-09-20",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "qwen3.8-27b-darkidol": {
+      "id": "qwen3.8-27b-darkidol",
+      "rates": [
+        {
+          "from": "2026-10-06",
           "in": 0.1,
           "out": 0.6,
           "cache_read": 0.05,
@@ -30435,6 +30498,19 @@
           "out": 1.5,
           "cache_read": 0.125,
           "cache_write": 0.25,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "qwen3.8-27b-fimi": {
+      "id": "qwen3.8-27b-fimi",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
           "source": "nano-gpt"
         }
       ]
@@ -30474,6 +30550,45 @@
           "out": 1.5,
           "cache_read": 0.125,
           "cache_write": 0.25,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "qwen3.8-27b-kimiko": {
+      "id": "qwen3.8-27b-kimiko",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "qwen3.8-27b-kiwen": {
+      "id": "qwen3.8-27b-kiwen",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "qwen3.8-27b-novelist": {
+      "id": "qwen3.8-27b-novelist",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
           "source": "nano-gpt"
         }
       ]
@@ -30529,6 +30644,32 @@
           "out": 1.5,
           "cache_read": 0.125,
           "cache_write": 0.25,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "qwen3.8-27b-swift": {
+      "id": "qwen3.8-27b-swift",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "qwen3.8-27b-synthia": {
+      "id": "qwen3.8-27b-synthia",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
           "source": "nano-gpt"
         }
       ]
@@ -31837,6 +31978,19 @@
       ],
       "first_party": true
     },
+    "space-bunny": {
+      "id": "space-bunny",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.03,
+          "cache_write": 0,
+          "source": "opencode-go"
+        }
+      ]
+    },
     "space-bunny-alpha": {
       "id": "space-bunny-alpha",
       "rates": [
@@ -31847,6 +32001,14 @@
           "cache_read": 0,
           "cache_write": 0,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.05,
+          "out": 0.15,
+          "cache_read": 0,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -32342,6 +32504,14 @@
           "from": "2026-09-24",
           "in": 0.25,
           "out": 0.9,
+          "cache_read": 0,
+          "cache_write": 0.25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.25,
+          "out": 0.8,
           "cache_read": 0,
           "cache_write": 0.25,
           "source": "vercel"
@@ -40140,6 +40310,19 @@
           "out": 0.5,
           "cache_read": 0.1,
           "cache_write": 0.2,
+          "source": "aki-io"
+        }
+      ]
+    },
+    "aki-io\u0000deepseek-v4.1-flash-552b": {
+      "id": "deepseek-v4.1-flash-552b",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.25,
+          "out": 1,
+          "cache_read": 0.1,
+          "cache_write": 0.25,
           "source": "aki-io"
         }
       ]
@@ -61712,6 +61895,14 @@
           "cache_read": 0,
           "cache_write": 1.01025,
           "source": "edenai"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 1.00836,
+          "out": 1.00836,
+          "cache_read": 0,
+          "cache_write": 1.00836,
+          "source": "edenai"
         }
       ]
     },
@@ -61948,6 +62139,14 @@
           "out": 0.449,
           "cache_read": 0,
           "cache_write": 0.33675,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.33612,
+          "out": 0.44816,
+          "cache_read": 0,
+          "cache_write": 0.33612,
           "source": "edenai"
         }
       ]
@@ -76844,6 +77043,14 @@
           "cache_read": 0.003,
           "cache_write": 0.003,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.011421,
+          "out": 1.2,
+          "cache_read": 0.015,
+          "cache_write": 0.011421,
+          "source": "kilo"
         }
       ]
     },
@@ -76992,6 +77199,14 @@
           "out": 4.2,
           "cache_read": 0.19,
           "cache_write": 0.1901,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.152,
+          "out": 4.2,
+          "cache_read": 0.15,
+          "cache_write": 0.152,
           "source": "kilo"
         }
       ]
@@ -77251,6 +77466,14 @@
           "out": 1.28,
           "cache_read": 0.0152,
           "cache_write": 0.0152,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.0118,
+          "out": 1.28,
+          "cache_read": 0.0118,
+          "cache_write": 0.0118,
           "source": "kilo"
         }
       ]
@@ -78598,6 +78821,14 @@
           "out": 0.5,
           "cache_read": 0.0232,
           "cache_write": 0.0352,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.0244,
+          "out": 0.5,
+          "cache_read": 0.0244,
+          "cache_write": 0.0244,
           "source": "kilo"
         }
       ]
@@ -80103,6 +80334,14 @@
           "out": 13,
           "cache_read": 0.45,
           "cache_write": 0.66,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.83,
+          "out": 13,
+          "cache_read": 0.45,
+          "cache_write": 0.83,
           "source": "kilo"
         }
       ]
@@ -93491,6 +93730,14 @@
           "cache_read": 0,
           "cache_write": 0.289,
           "source": "merge-gateway"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.4126,
+          "out": 2.4754,
+          "cache_read": 0,
+          "cache_write": 0.4126,
+          "source": "merge-gateway"
         }
       ]
     },
@@ -102918,11 +103165,37 @@
         }
       ]
     },
+    "nano-gpt\u0000qwen3.8-27b-antislop": {
+      "id": "qwen3.8-27b-antislop",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000qwen3.8-27b-cybersecurity": {
       "id": "qwen3.8-27b-cybersecurity",
       "rates": [
         {
           "from": "2026-09-20",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000qwen3.8-27b-darkidol": {
+      "id": "qwen3.8-27b-darkidol",
+      "rates": [
+        {
+          "from": "2026-10-06",
           "in": 0.1,
           "out": 0.6,
           "cache_read": 0.05,
@@ -102944,6 +103217,19 @@
         }
       ]
     },
+    "nano-gpt\u0000qwen3.8-27b-fimi": {
+      "id": "qwen3.8-27b-fimi",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000qwen3.8-27b-hemmingway": {
       "id": "qwen3.8-27b-hemmingway",
       "rates": [
@@ -102953,6 +103239,45 @@
           "out": 1.5,
           "cache_read": 0.125,
           "cache_write": 0.25,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000qwen3.8-27b-kimiko": {
+      "id": "qwen3.8-27b-kimiko",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000qwen3.8-27b-kiwen": {
+      "id": "qwen3.8-27b-kiwen",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000qwen3.8-27b-novelist": {
+      "id": "qwen3.8-27b-novelist",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
           "source": "nano-gpt"
         }
       ]
@@ -102995,6 +103320,32 @@
           "out": 1.5,
           "cache_read": 0.125,
           "cache_write": 0.25,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000qwen3.8-27b-swift": {
+      "id": "qwen3.8-27b-swift",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000qwen3.8-27b-synthia": {
+      "id": "qwen3.8-27b-synthia",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.05,
+          "cache_write": 0.1,
           "source": "nano-gpt"
         }
       ]
@@ -114247,6 +114598,19 @@
         }
       ]
     },
+    "opencode-go\u0000space-bunny": {
+      "id": "space-bunny",
+      "rates": [
+        {
+          "from": "2026-10-06",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.03,
+          "cache_write": 0,
+          "source": "opencode-go"
+        }
+      ]
+    },
     "opencode-go\u0000space-bunny-free": {
       "id": "space-bunny-free",
       "rates": [
@@ -115106,6 +115470,14 @@
           "cache_read": 0.003,
           "cache_write": 0.003,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.019474,
+          "out": 1.2,
+          "cache_read": 0.015,
+          "cache_write": 0.019474,
+          "source": "openrouter"
         }
       ]
     },
@@ -115254,6 +115626,14 @@
           "out": 4.2,
           "cache_read": 0.19,
           "cache_write": 0.1901,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.152,
+          "out": 4.2,
+          "cache_read": 0.15,
+          "cache_write": 0.152,
           "source": "openrouter"
         }
       ]
@@ -115522,6 +115902,14 @@
           "cache_read": 0.0152,
           "cache_write": 0.0152,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.0134,
+          "out": 1.28,
+          "cache_read": 0.0134,
+          "cache_write": 0.0134,
+          "source": "openrouter"
         }
       ]
     },
@@ -115654,6 +116042,14 @@
           "out": 1.28,
           "cache_read": 0.0152,
           "cache_write": 0.0152,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.0134,
+          "out": 1.28,
+          "cache_read": 0.0134,
+          "cache_write": 0.0134,
           "source": "openrouter"
         }
       ]
@@ -115998,6 +116394,14 @@
           "cache_read": 0.36,
           "cache_write": 0.4,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.66,
+          "out": 1.98,
+          "cache_read": 0.022,
+          "cache_write": 0.66,
+          "source": "openrouter"
         }
       ]
     },
@@ -116090,6 +116494,14 @@
           "out": 1.2,
           "cache_read": 0.006,
           "cache_write": 0.3,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.021421,
+          "out": 1.32,
+          "cache_read": 0.0165,
+          "cache_write": 0.021421,
           "source": "openrouter"
         }
       ]
@@ -117205,6 +117617,14 @@
           "cache_read": 0.0192,
           "cache_write": 0.0192,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.152,
+          "out": 12,
+          "cache_read": 0.15,
+          "cache_write": 0.152,
+          "source": "openrouter"
         }
       ]
     },
@@ -117313,6 +117733,14 @@
           "out": 7,
           "cache_read": 0.045,
           "cache_write": 0.05,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.07,
+          "out": 7,
+          "cache_read": 0.065,
+          "cache_write": 0.07,
           "source": "openrouter"
         }
       ]
@@ -117554,6 +117982,14 @@
           "out": 0.5,
           "cache_read": 0.0232,
           "cache_write": 0.0352,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.0244,
+          "out": 0.5,
+          "cache_read": 0.0244,
+          "cache_write": 0.0244,
           "source": "openrouter"
         }
       ]
@@ -119243,6 +119679,14 @@
           "cache_read": 0.45,
           "cache_write": 0.66,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.83,
+          "out": 13,
+          "cache_read": 0.45,
+          "cache_write": 0.83,
+          "source": "openrouter"
         }
       ]
     },
@@ -119558,6 +120002,14 @@
           "cache_read": 0.22,
           "cache_write": 0.67,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.95,
+          "out": 14,
+          "cache_read": 0.31,
+          "cache_write": 0.95,
+          "source": "openrouter"
         }
       ]
     },
@@ -119853,6 +120305,14 @@
           "out": 0.32,
           "cache_read": 0,
           "cache_write": 0.1,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.22,
+          "out": 0.5,
+          "cache_read": 0.11,
+          "cache_write": 0.22,
           "source": "openrouter"
         }
       ]
@@ -120629,6 +121089,14 @@
           "cache_read": 0.04,
           "cache_write": 0.35,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.04,
+          "cache_write": 0.3,
+          "source": "openrouter"
         }
       ]
     },
@@ -121316,6 +121784,14 @@
           "cache_read": 0.0175,
           "cache_write": 0.0875,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.09,
+          "out": 0.55,
+          "cache_read": 0,
+          "cache_write": 0.09,
+          "source": "openrouter"
         }
       ]
     },
@@ -121418,6 +121894,14 @@
           "out": 0.19305,
           "cache_read": 0,
           "cache_write": 0.04815,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.1,
+          "out": 0.3,
+          "cache_read": 0,
+          "cache_write": 0.1,
           "source": "openrouter"
         }
       ]
@@ -121836,6 +122320,14 @@
           "cache_read": 0.05,
           "cache_write": 0.15,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.08,
+          "out": 0.75,
+          "cache_read": 0.04,
+          "cache_write": 0.08,
+          "source": "openrouter"
         }
       ]
     },
@@ -121856,6 +122348,14 @@
           "out": 3.5,
           "cache_read": 0.225,
           "cache_write": 0.55,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.45,
+          "out": 3,
+          "cache_read": 0.22,
+          "cache_write": 0.45,
           "source": "openrouter"
         }
       ]
@@ -122132,6 +122632,14 @@
           "out": 2.55,
           "cache_read": 0.15,
           "cache_write": 0.214,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.425,
+          "out": 2.55,
+          "cache_read": 0.085,
+          "cache_write": 0.53125,
           "source": "openrouter"
         }
       ]
@@ -145072,6 +145580,14 @@
           "cache_read": 0.01,
           "cache_write": 0.1,
           "source": "vercel"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.09,
+          "out": 0.18,
+          "cache_read": 0.009,
+          "cache_write": 0.09,
+          "source": "vercel"
         }
       ]
     },
@@ -146917,6 +147433,14 @@
           "from": "2026-09-24",
           "in": 0.25,
           "out": 0.9,
+          "cache_read": 0,
+          "cache_write": 0.25,
+          "source": "vercel"
+        },
+        {
+          "from": "2026-10-06",
+          "in": 0.25,
+          "out": 0.8,
           "cache_read": 0,
           "cache_write": 0.25,
           "source": "vercel"
@@ -153093,6 +153617,7 @@
     "deepseek-v3p2-tee": "deepseek-v3.2-tee",
     "deepseek-v3p2-thinking": "deepseek-v3.2-thinking",
     "deepseek-v4-1-flash": "deepseek-v4.1-flash",
+    "deepseek-v4-1-flash-552b": "deepseek-v4.1-flash-552b",
     "deepseek-v4-1-flash-beta": "deepseek-v4.1-flash-beta",
     "deepseek-v4-1-flash-fast": "deepseek-v4.1-flash-fast",
     "deepseek-v4-1-flash-fast-fp4": "deepseek-v4.1-flash-fast-fp4",
@@ -153121,6 +153646,7 @@
     "deepseek-v4-pro-ga-260813-latest": "deepseek-v4-pro-ga-260813",
     "deepseek-v4-pro-latest": "deepseek-v4-pro",
     "deepseek-v4-pro@eu-latest": "deepseek-v4-pro@eu",
+    "deepseek-v4.1-flash-552b-latest": "deepseek-v4.1-flash-552b",
     "deepseek-v4.1-flash-beta-latest": "deepseek-v4.1-flash-beta",
     "deepseek-v4.1-flash-fast-fp4-latest": "deepseek-v4.1-flash-fast-fp4",
     "deepseek-v4.1-flash-fast-latest": "deepseek-v4.1-flash-fast",
@@ -153129,6 +153655,7 @@
     "deepseek-v4.1-flash-marathon-latest": "deepseek-v4.1-flash-marathon",
     "deepseek-v4.1-flash@eu-latest": "deepseek-v4.1-flash@eu",
     "deepseek-v4p1-flash": "deepseek-v4.1-flash",
+    "deepseek-v4p1-flash-552b": "deepseek-v4.1-flash-552b",
     "deepseek-v4p1-flash-beta": "deepseek-v4.1-flash-beta",
     "deepseek-v4p1-flash-fast": "deepseek-v4.1-flash-fast",
     "deepseek-v4p1-flash-fast-fp4": "deepseek-v4.1-flash-fast-fp4",
@@ -155783,15 +156310,23 @@
     "qwen3-8-2-4t-a95b": "qwen3.8-2.4t-a95b",
     "qwen3-8-2-4t-a95b-nvfp4": "qwen3.8-2.4t-a95b-nvfp4",
     "qwen3-8-2-4t-a95b@eu": "qwen3.8-2.4t-a95b@eu",
+    "qwen3-8-27b-antislop": "qwen3.8-27b-antislop",
     "qwen3-8-27b-cybersecurity": "qwen3.8-27b-cybersecurity",
+    "qwen3-8-27b-darkidol": "qwen3.8-27b-darkidol",
     "qwen3-8-27b-fable": "qwen3.8-27b-fable",
+    "qwen3-8-27b-fimi": "qwen3.8-27b-fimi",
     "qwen3-8-27b-fp8": "qwen3.8-27b-fp8",
     "qwen3-8-27b-free": "qwen3.8-27b-free",
     "qwen3-8-27b-hemmingway": "qwen3.8-27b-hemmingway",
+    "qwen3-8-27b-kimiko": "qwen3.8-27b-kimiko",
+    "qwen3-8-27b-kiwen": "qwen3.8-27b-kiwen",
     "qwen3-8-27b-latest": "qwen3-8-27b",
+    "qwen3-8-27b-novelist": "qwen3.8-27b-novelist",
     "qwen3-8-27b-nvfp4": "qwen3.8-27b-nvfp4",
     "qwen3-8-27b-obliterated": "qwen3.8-27b-obliterated",
     "qwen3-8-27b-queen": "qwen3.8-27b-queen",
+    "qwen3-8-27b-swift": "qwen3.8-27b-swift",
+    "qwen3-8-27b-synthia": "qwen3.8-27b-synthia",
     "qwen3-8-27b-tee": "qwen3.8-27b-tee",
     "qwen3-8-27b-uncensored": "qwen3.8-27b-uncensored",
     "qwen3-8-flash-latest": "qwen3-8-flash",
@@ -155906,15 +156441,23 @@
     "qwen3.8-2.4t-a95b-latest": "qwen3.8-2.4t-a95b",
     "qwen3.8-2.4t-a95b-nvfp4-latest": "qwen3.8-2.4t-a95b-nvfp4",
     "qwen3.8-2.4t-a95b@eu-latest": "qwen3.8-2.4t-a95b@eu",
+    "qwen3.8-27b-antislop-latest": "qwen3.8-27b-antislop",
     "qwen3.8-27b-cybersecurity-latest": "qwen3.8-27b-cybersecurity",
+    "qwen3.8-27b-darkidol-latest": "qwen3.8-27b-darkidol",
     "qwen3.8-27b-fable-latest": "qwen3.8-27b-fable",
+    "qwen3.8-27b-fimi-latest": "qwen3.8-27b-fimi",
     "qwen3.8-27b-fp8-latest": "qwen3.8-27b-fp8",
     "qwen3.8-27b-free-latest": "qwen3.8-27b-free",
     "qwen3.8-27b-hemmingway-latest": "qwen3.8-27b-hemmingway",
+    "qwen3.8-27b-kimiko-latest": "qwen3.8-27b-kimiko",
+    "qwen3.8-27b-kiwen-latest": "qwen3.8-27b-kiwen",
     "qwen3.8-27b-latest": "qwen3.8-27b",
+    "qwen3.8-27b-novelist-latest": "qwen3.8-27b-novelist",
     "qwen3.8-27b-nvfp4-latest": "qwen3.8-27b-nvfp4",
     "qwen3.8-27b-obliterated-latest": "qwen3.8-27b-obliterated",
     "qwen3.8-27b-queen-latest": "qwen3.8-27b-queen",
+    "qwen3.8-27b-swift-latest": "qwen3.8-27b-swift",
+    "qwen3.8-27b-synthia-latest": "qwen3.8-27b-synthia",
     "qwen3.8-27b-tee-latest": "qwen3.8-27b-tee",
     "qwen3.8-27b-uncensored-latest": "qwen3.8-27b-uncensored",
     "qwen3.8-flash-latest": "qwen3.8-flash",
@@ -155979,14 +156522,22 @@
     "qwen3p7-plus": "qwen3.7-plus",
     "qwen3p7-plus-latest": "qwen3p7-plus",
     "qwen3p8-27b": "qwen3.8-27b",
+    "qwen3p8-27b-antislop": "qwen3.8-27b-antislop",
     "qwen3p8-27b-cybersecurity": "qwen3.8-27b-cybersecurity",
+    "qwen3p8-27b-darkidol": "qwen3.8-27b-darkidol",
     "qwen3p8-27b-fable": "qwen3.8-27b-fable",
+    "qwen3p8-27b-fimi": "qwen3.8-27b-fimi",
     "qwen3p8-27b-fp8": "qwen3.8-27b-fp8",
     "qwen3p8-27b-free": "qwen3.8-27b-free",
     "qwen3p8-27b-hemmingway": "qwen3.8-27b-hemmingway",
+    "qwen3p8-27b-kimiko": "qwen3.8-27b-kimiko",
+    "qwen3p8-27b-kiwen": "qwen3.8-27b-kiwen",
+    "qwen3p8-27b-novelist": "qwen3.8-27b-novelist",
     "qwen3p8-27b-nvfp4": "qwen3.8-27b-nvfp4",
     "qwen3p8-27b-obliterated": "qwen3.8-27b-obliterated",
     "qwen3p8-27b-queen": "qwen3.8-27b-queen",
+    "qwen3p8-27b-swift": "qwen3.8-27b-swift",
+    "qwen3p8-27b-synthia": "qwen3.8-27b-synthia",
     "qwen3p8-27b-tee": "qwen3.8-27b-tee",
     "qwen3p8-27b-uncensored": "qwen3.8-27b-uncensored",
     "qwen3p8-2p4t-a95b-latest": "qwen3p8-2p4t-a95b",
@@ -156101,6 +156652,7 @@
     "sonar-reasoning-pro-latest": "sonar-reasoning-pro",
     "space-bunny-alpha-latest": "space-bunny-alpha",
     "space-bunny-free-latest": "space-bunny-free",
+    "space-bunny-latest": "space-bunny",
     "sparsedrive-latest": "sparsedrive",
     "stable-diffusion-3-5-large": "stable-diffusion-3.5-large",
     "stable-diffusion-3.5-large-latest": "stable-diffusion-3.5-large",
