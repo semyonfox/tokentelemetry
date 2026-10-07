@@ -441,6 +441,9 @@ func buildAliases(ds *dataset) {
 		"claude-3.5-sonnet": "claude-3-5-sonnet",
 		"claude-3.5-haiku":  "claude-3-5-haiku",
 		"grok-code-fast":    "grok-code-fast-1",
+		// Ollama's size tags share the registry digests of its Instruct tags
+		"qwen2.5-coder:3b": "qwen2.5-coder-3b-instruct",
+		"qwen2.5-coder:7b": "qwen2-5-coder-7b-instruct",
 	} {
 		if _, ok := ds.Models[to]; ok {
 			add(from, to)

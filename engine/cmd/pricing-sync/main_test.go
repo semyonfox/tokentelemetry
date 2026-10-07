@@ -61,3 +61,22 @@ func TestAliasGenerationDeterministic(t *testing.T) {
 		}
 	}
 }
+
+func TestSyncKeepsSupplementalRatesAndLocalModelAliases(t *testing.T) {
+	id := "qwen2.5-coder-3b-instruct"
+	old := &dataset{
+		Models:  map[string]*pricing.Model{id: {ID: id, Rates: []pricing.Rate{{From: pricing.MustParseDate("2026-10-07"), In: 0.01, Out: 0.032, Source: "codelace"}}}},
+		Aliases: map[string]string{"qwen2.5-coder:3b": id},
+	}
+	next := &dataset{Models: map[string]*pricing.Model{"qwen2-5-coder-7b-instruct": {}}, Aliases: map[string]string{}}
+	buildAliases(next)
+	merge(old, next, pricing.MustParseDate("2026-10-08"))
+	for query, canonical := range map[string]string{"qwen2.5-coder:3b": id, "qwen2.5-coder:7b": "qwen2-5-coder-7b-instruct"} {
+		if next.Aliases[query] != canonical {
+			t.Fatalf("alias %s = %s, want %s", query, next.Aliases[query], canonical)
+		}
+	}
+	if r := next.Models[id].Rates[0]; r.From != pricing.MustParseDate("2026-10-07") || r.In != 0.01 || r.Out != 0.032 || r.Source != "codelace" {
+		t.Fatalf("supplemental price history changed: %+v", r)
+	}
+}
