@@ -28298,6 +28298,19 @@
       ],
       "first_party": true
     },
+    "qwen2.5-coder-3b-instruct": {
+      "id": "qwen2.5-coder-3b-instruct",
+      "rates": [
+        {
+          "from": "2026-10-07",
+          "in": 0.01,
+          "out": 0.032,
+          "cache_read": 0,
+          "cache_write": 0.01,
+          "source": "codelace"
+        }
+      ]
+    },
     "qwen2.5-coder-7b-fast": {
       "id": "qwen2.5-coder-7b-fast",
       "rates": [
@@ -156927,6 +156940,8 @@
     "qwen2.5-coder-0.5b-latest": "qwen2.5-coder-0.5b",
     "qwen2.5-coder-32b-instruct-latest": "qwen2.5-coder-32b-instruct",
     "qwen2.5-coder-7b-fast-latest": "qwen2.5-coder-7b-fast",
+    "qwen2.5-coder:3b": "qwen2.5-coder-3b-instruct",
+    "qwen2.5-coder:7b": "qwen2-5-coder-7b-instruct",
     "qwen2.5-vl-32b-instruct-latest": "qwen2.5-vl-32b-instruct",
     "qwen2.5-vl-72b-instruct-latest": "qwen2.5-vl-72b-instruct",
     "qwen25-vl-72b-instruct-latest": "qwen25-vl-72b-instruct",

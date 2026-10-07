@@ -170,6 +170,47 @@ func TestAntigravityUsesSameGenerationTextModel(t *testing.T) {
 	}
 }
 
+func TestAntigravityKeepsPrivateRoutingModelsUnresolved(t *testing.T) {
+	root := t.TempDir()
+	writeAntigravityDB(t, root, "session-default",
+		antigravityTestBlob(antigravityTestRecord{
+			model: "gemini-default", contextModelID: 1020, modelID: 1020,
+			responseID: "labelled", seconds: 1_800_000_021, input: 1, output: 1,
+		}),
+		antigravityTestBlob(antigravityTestRecord{
+			contextModelID: 1187, modelID: 1187,
+			responseID: "bare", seconds: 1_800_000_022, input: 1, output: 1,
+		}),
+		antigravityTestBlob(antigravityTestRecord{
+			model: "gemini-pro-default", contextModelID: 1016, modelID: 1016,
+			responseID: "unverified", seconds: 1_800_000_023, input: 1, output: 1,
+		}),
+		antigravityTestBlob(antigravityTestRecord{
+			model: "Gemini 3.5 Flash", contextModelID: 1187, modelID: 1020,
+			responseID: "mismatched", seconds: 1_800_000_024, input: 1, output: 1,
+		}),
+	)
+
+	got := map[string]string{}
+	for _, turn := range scan(t, &Antigravity{roots: []string{root}}) {
+		got[turn.Key] = turn.Model + "|" + turn.Provider
+	}
+	want := map[string]string{
+		identityKey("antigravity-response", "labelled"):   "gemini-default|google",
+		identityKey("antigravity-response", "bare"):       "antigravity-model-1187|",
+		identityKey("antigravity-response", "unverified"): "gemini-pro-default|google",
+		identityKey("antigravity-response", "mismatched"): "antigravity-model-1020|",
+	}
+	if len(got) != len(want) {
+		t.Fatalf("turn count = %d, want %d", len(got), len(want))
+	}
+	for key, model := range want {
+		if got[key] != model {
+			t.Fatalf("%s resolved to %q, want %q (all: %v)", key, got[key], model, got)
+		}
+	}
+}
+
 func TestAntigravityIgnoresUnverifiedModelField(t *testing.T) {
 	root := t.TempDir()
 	writeAntigravityDB(t, root, "session-unverified-model", antigravityTestBlob(antigravityTestRecord{

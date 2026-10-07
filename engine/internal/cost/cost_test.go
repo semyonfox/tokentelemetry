@@ -148,6 +148,24 @@ func TestAliasReportsItsCanonicalModel(t *testing.T) {
 	near(t, c.USD, 100)
 }
 
+func TestQuantisedModelReportsTheRateActuallyUsed(t *testing.T) {
+	tbl := table()
+	turn := model.Turn{Model: "m1-q4", Timestamp: at("2026-06-01"), Usage: model.Usage{Output: 1_000_000}}
+	base := Of(turn, tbl)
+	if base.Model != "m1" || base.Confidence != pricing.ConfidenceAlias {
+		t.Fatalf("base fallback = %+v", base)
+	}
+	near(t, base.USD, 100)
+
+	tbl.ByProvider["vendor\x00m1-q4"] = &pricing.Model{ID: "m1-q4", Rates: []pricing.Rate{{From: pricing.MustParseDate("2026-01-01"), Out: 9}}}
+	turn.Provider = "vendor"
+	exact := Of(turn, tbl)
+	if exact.Model != "m1-q4" || exact.Confidence != pricing.ConfidenceProvider {
+		t.Fatalf("provider rate = %+v", exact)
+	}
+	near(t, exact.USD, 9)
+}
+
 // Pricing a call with a rate that post-dates it is allowed but must be
 // reported, so a backlog repriced by a later cut is visible.
 func TestRateNewerThanCallIsFlagged(t *testing.T) {

@@ -17,6 +17,7 @@ package pricing
 
 import (
 	"fmt"
+	"regexp"
 	"sort"
 	"strings"
 	"time"
@@ -264,28 +265,56 @@ func Normalize(model string) string {
 	if i := strings.LastIndex(m, "/"); i >= 0 && i < len(m)-1 {
 		m = m[i+1:]
 	}
-	// Bedrock/Vertex deployment suffixes: "claude-opus-5-v1:0" -> "claude-opus-5".
+	// numeric deployment revisions and :latest do not identify model weights
 	if i := strings.Index(m, ":"); i > 0 {
-		m = m[:i]
+		tag := m[i+1:]
+		if tag == "latest" || (tag != "" && strings.Trim(tag, "0123456789") == "") {
+			m = m[:i]
+		}
 	}
 	m = strings.TrimSuffix(m, "-latest")
 	return m
 }
 
-// Canonical returns the normalized model id and, when configured, the explicit
-// alias target used for pricing. It deliberately follows the same one-hop alias
-// rule as Lookup: aliases are exact equivalences, not a rewrite language.
-func (tbl *Table) Canonical(model string) (string, bool) {
+// Canonical resolves aliases and local model tags without replacing an exact
+// model or provider entry. Aliases follow the same one-hop rule as Lookup.
+func (tbl *Table) Canonical(model, provider string) (string, bool) {
 	id := Normalize(model)
 	if canon, ok := tbl.Aliases[id]; ok {
 		return canon, true
 	}
+	known := func(candidate string) bool {
+		_, listed := tbl.Models[candidate]
+		_, providerListed := tbl.ByProvider[providerKey(provider, candidate)]
+		return listed || providerListed
+	}
+	if known(id) {
+		return id, false
+	}
+	candidate := id
+	if i := strings.IndexByte(id, ':'); i > 0 && localSizeTag.MatchString(id[i+1:]) {
+		candidate = id[:i] + "-" + id[i+1:]
+		if known(candidate) {
+			return candidate, true
+		}
+	}
+	// a recognised quantisation tag uses the base model's cloud rate
+	if loc := quantSuffix.FindStringIndex(candidate); loc != nil {
+		if base := candidate[:loc[0]]; known(base) {
+			return base, true
+		}
+	}
 	return id, false
 }
 
+var (
+	localSizeTag = regexp.MustCompile(`^[0-9]+(\.[0-9]+)?[bm](-|$)`)
+	quantSuffix  = regexp.MustCompile(`-(q[2-8](_[01]|_k(_[sml])?)?|iq[1-4]_(xxs|xs|s|m|nl)|f16|fp16|bf16)$`)
+)
+
 // Lookup resolves a model (and optional provider) to the rate in force at t.
 func (tbl *Table) Lookup(model, provider string, t time.Time) (Rate, Confidence, bool) {
-	lookupID, aliased := tbl.Canonical(model)
+	lookupID, aliased := tbl.Canonical(model, provider)
 	if lookupID == "" {
 		return Rate{}, ConfidenceUnpriced, false
 	}
@@ -317,12 +346,8 @@ func (tbl *Table) Find(query string) (*Model, string, bool) {
 	if id == "" {
 		return nil, "", false
 	}
-	if canon, ok := tbl.Aliases[id]; ok {
-		if m, ok := tbl.Models[canon]; ok {
-			return m, id, true
-		}
-	}
-	if m, ok := tbl.Models[id]; ok {
+	canonical, _ := tbl.Canonical(query, "")
+	if m, ok := tbl.Models[canonical]; ok {
 		return m, id, true
 	}
 	return nil, id, false

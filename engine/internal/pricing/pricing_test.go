@@ -118,6 +118,56 @@ func TestAliasResolves(t *testing.T) {
 	}
 }
 
+func TestQuantisedModelPricesAsBase(t *testing.T) {
+	tbl := testTable()
+	for _, id := range []string{"luna-q4", "luna-q4_k_m", "luna-iq4_xs", "luna-bf16"} {
+		r, conf, ok := tbl.Lookup(id, "", day("2026-08-27"))
+		if !ok || conf != ConfidenceAlias || r.In != 0.20 {
+			t.Errorf("%s = %v/%v/%v, want alias@0.20", id, r.In, conf, ok)
+		}
+		m, resolved, found := tbl.Find(id)
+		if !found || m.ID != "luna" || resolved != id {
+			t.Errorf("Find(%s) = %v/%s/%v, want luna/%s/true", id, m, resolved, found, id)
+		}
+	}
+	for _, id := range []string{"luna-q4x", "made-up-q4", "luna-4q", "luna-q4_madeup"} {
+		if _, _, ok := tbl.Lookup(id, "", day("2026-08-27")); ok {
+			t.Errorf("%s resolved, want unpriced", id)
+		}
+	}
+}
+
+func TestLocalModelFallbackPreservesExactRatesAndSizes(t *testing.T) {
+	base := &Model{ID: "local-model-7b", Rates: []Rate{{From: MustParseDate("2026-01-01"), In: 1}}}
+	quant := &Model{ID: "local-model-7b-q4", Rates: []Rate{{From: MustParseDate("2026-01-01"), In: 9}}}
+	for _, tc := range []struct {
+		name, query, provider, wantID string
+		models, byProvider            map[string]*Model
+		wantIn                        float64
+		wantConfidence                Confidence
+	}{
+		{name: "size tag", query: "local-model:7b", models: map[string]*Model{base.ID: base}, wantID: base.ID, wantIn: 1, wantConfidence: ConfidenceAlias},
+		{name: "size and quantisation", query: "local-model:7b-q4", models: map[string]*Model{base.ID: base}, wantID: base.ID, wantIn: 1, wantConfidence: ConfidenceAlias},
+		{name: "unknown size", query: "local-model:3b", models: map[string]*Model{"local-model": base, base.ID: base}, wantID: "local-model:3b", wantConfidence: ConfidenceUnpriced},
+		{name: "exact quantisation", query: quant.ID, models: map[string]*Model{base.ID: base, quant.ID: quant}, wantID: quant.ID, wantIn: 9, wantConfidence: ConfidenceExact},
+		{name: "exact tagged model", query: "local-model:7b", models: map[string]*Model{base.ID: base, "local-model:7b": quant}, wantID: "local-model:7b", wantIn: 9, wantConfidence: ConfidenceExact},
+		{name: "exact provider quantisation", query: quant.ID, provider: "vendor", models: map[string]*Model{base.ID: base}, byProvider: map[string]*Model{providerKey("vendor", quant.ID): quant}, wantID: quant.ID, wantIn: 9, wantConfidence: ConfidenceProvider},
+		{name: "provider only base", query: quant.ID, provider: "vendor", byProvider: map[string]*Model{providerKey("vendor", base.ID): base}, wantID: base.ID, wantIn: 1, wantConfidence: ConfidenceProvider},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			tbl := &Table{Models: tc.models, ByProvider: tc.byProvider}
+			r, confidence, priced := tbl.Lookup(tc.query, tc.provider, day("2026-08-27"))
+			if r.In != tc.wantIn || confidence != tc.wantConfidence || priced != (tc.wantConfidence != ConfidenceUnpriced) {
+				t.Fatalf("Lookup = %v/%v/%v, want %v/%v", r.In, confidence, priced, tc.wantIn, tc.wantConfidence)
+			}
+			id, _ := tbl.Canonical(tc.query, tc.provider)
+			if id != tc.wantID {
+				t.Fatalf("Canonical = %q, want %q", id, tc.wantID)
+			}
+		})
+	}
+}
+
 func TestAliasUsesCanonicalProviderRate(t *testing.T) {
 	tbl := testTable()
 	r, conf, ok := tbl.Lookup("luna-v2", "together", day("2026-08-27"))
@@ -154,6 +204,9 @@ func TestNormalize(t *testing.T) {
 		"moonshotai/kimi-k2":                 "kimi-k2",
 		"claude-opus-5-v1:0":                 "claude-opus-5-v1",
 		"grok-4.3-latest":                    "grok-4.3",
+		"qwen2.5-coder:3b":                   "qwen2.5-coder:3b",
+		"qwen2.5-coder:7b":                   "qwen2.5-coder:7b",
+		"qwen2.5-coder:latest":               "qwen2.5-coder",
 	} {
 		if got := Normalize(in); got != want {
 			t.Errorf("Normalize(%q) = %q, want %q", in, got, want)
@@ -176,6 +229,25 @@ func TestEmbeddedDatasetIsFirstParty(t *testing.T) {
 	}
 	if len(tbl.Models) < 100 {
 		t.Fatalf("dataset has only %d models, expected the full table", len(tbl.Models))
+	}
+	for _, id := range []string{"codex-auto-review", "gemini-default", "gemini-pro-default", "antigravity-model-1020"} {
+		if _, confidence, priced := tbl.Lookup(id, "", day("2026-10-07")); priced || confidence != ConfidenceUnpriced {
+			t.Errorf("%s resolved without a verified model or rate", id)
+		}
+	}
+	for query, want := range map[string]struct {
+		id, source string
+		in, out    float64
+	}{
+		"qwen2.5-coder:3b": {"qwen2.5-coder-3b-instruct", "codelace", 0.01, 0.032},
+		"qwen2.5-coder:7b": {"qwen2-5-coder-7b-instruct", "alibaba-cn", 0.144, 0.287},
+		"qwen3-30b-a3b-q4": {"qwen3-30b-a3b", "deepinfra", 0.12, 0.5},
+	} {
+		id, _ := tbl.Canonical(query, "")
+		r, confidence, priced := tbl.Lookup(query, "", day("2026-10-07"))
+		if !priced || confidence != ConfidenceAlias || id != want.id || r.Source != want.source || r.In != want.in || r.Out != want.out {
+			t.Errorf("%s = %s/%v/%v/%v, want %v", query, id, r, confidence, priced, want)
+		}
 	}
 	for _, id := range []string{"gpt-5.6-luna", "gpt-5.6-terra", "claude-opus-5"} {
 		m, ok := tbl.Models[id]
