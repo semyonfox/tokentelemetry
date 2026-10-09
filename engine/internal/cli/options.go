@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"cmp"
 	"flag"
 	"fmt"
 	"io"
@@ -33,13 +32,10 @@ func parseReportOptions(cmd string, args []string) (reportOptions, error) {
 	fs.BoolVar(&allTime, "all-time", false, "")
 	fs.BoolVar(&allTime, "a", false, "")
 	since := fs.String("since", "", "")
-	from := fs.String("from", "", "")
 	until := fs.String("until", "", "")
-	to := fs.String("to", "", "")
 	subagents := fs.String("subagents", "include", "")
 	breakdown := fs.Bool("breakdown", false, "")
 	groupBy := fs.String("group-by", "", "")
-	by := fs.String("by", "", "")
 	fs.BoolVar(&opts.plainOutput, "plain", false, "")
 	fs.BoolVar(&opts.asJSON, "json", false, "")
 	fs.IntVar(&opts.limit, "limit", 0, "")
@@ -60,6 +56,13 @@ func parseReportOptions(cmd string, args []string) (reportOptions, error) {
 	if opts.limit < 0 {
 		return opts, fmt.Errorf("--limit must not be negative")
 	}
+	// Summary charts default to seven rows and detailed tables to every row;
+	// an explicit --limit 0 lifts the cap on either.
+	limitSet := false
+	fs.Visit(func(f *flag.Flag) { limitSet = limitSet || f.Name == "limit" })
+	if cmd == "summary" && !limitSet {
+		opts.limit = 7
+	}
 	var cursorIDE, cursorSDK bool
 	for _, agent := range agents {
 		if !ingest.KnownAgent(agent) {
@@ -75,12 +78,12 @@ func parseReportOptions(cmd string, args []string) (reportOptions, error) {
 		return opts, fmt.Errorf("cursor history and SDK results may contain the same usage without shared request IDs; select --agent cursor or --agent cursor-agent separately")
 	}
 	opts.filter = report.Filter{
-		From: cmp.Or(*since, *from), To: cmp.Or(*until, *to),
+		From: *since, To: *until,
 		Agents: agents, Models: models, Projects: projects, Subagents: *subagents,
 	}
 	f := &opts.filter
 	if allTime && (f.From != "" || f.To != "") {
-		return opts, fmt.Errorf("--all-time cannot be combined with --since, --from, --until or --to")
+		return opts, fmt.Errorf("--all-time cannot be combined with --since or --until")
 	}
 	if cmd == "summary" && !allTime && f.From == "" && f.To == "" {
 		now := time.Now()
@@ -102,7 +105,10 @@ func parseReportOptions(cmd string, args []string) (reportOptions, error) {
 	default:
 		return opts, fmt.Errorf("--subagents must be include, only or exclude")
 	}
-	spec := cmp.Or(*groupBy, *by)
+	if *breakdown && *groupBy != "" {
+		return opts, fmt.Errorf("--breakdown is --group-by model; use one or the other")
+	}
+	spec := *groupBy
 	dims, err := report.ParseDimensions(spec)
 	if err != nil {
 		return opts, err

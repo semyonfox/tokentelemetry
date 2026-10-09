@@ -201,3 +201,38 @@ func TestMoneyAndTokenFormatting(t *testing.T) {
 
 // rateOf builds a minimal rate for change-description tests.
 func rateOf(out float64) pricing.Rate { return pricing.Rate{Out: out} }
+
+// A table wider than the terminal narrows its text columns rather than
+// wrapping, and never touches a date or a figure.
+func TestTableFitsTerminalWidth(t *testing.T) {
+	th := theme{on: false}
+	build := func() *table {
+		tbl := newTable(th,
+			column{title: "DATE", align: alignLeft},
+			column{title: "PROJECT", align: alignLeft},
+			column{title: "TOTAL", align: alignRight},
+		)
+		tbl.add(plain("2026-10-09"), plain("a-very-long-nested-project-directory-name"), plain("1,558,300"))
+		return tbl
+	}
+	t.Setenv("COLUMNS", "")
+	var full bytes.Buffer
+	build().render(&full)
+	if !strings.Contains(full.String(), "a-very-long-nested-project-directory-name") {
+		t.Fatalf("output to a buffer was fitted:\n%s", full.String())
+	}
+
+	t.Setenv("COLUMNS", "50")
+	var narrow bytes.Buffer
+	build().render(&narrow)
+	for _, ln := range strings.Split(strings.TrimRight(narrow.String(), "\n"), "\n") {
+		if displayWidth(ln) >= 50 {
+			t.Errorf("line exceeds the terminal at %d cells: %q", displayWidth(ln), ln)
+		}
+	}
+	for _, want := range []string{"2026-10-09", "1,558,300", "…"} {
+		if !strings.Contains(narrow.String(), want) {
+			t.Errorf("missing %q in fitted table:\n%s", want, narrow.String())
+		}
+	}
+}

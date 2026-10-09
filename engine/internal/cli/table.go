@@ -134,12 +134,46 @@ func (t *table) widths() []int {
 
 const colGap = "   "
 
+// minTextWidth is the narrowest a text column is squeezed to. Below this a
+// label is no longer recognisable, so past it the table wraps instead.
+const minTextWidth = 12
+
+// fit narrows text columns, widest first, until the table is at most width
+// cells wide. Figures are never touched: a shortened number is wrong, whereas
+// a shortened label is merely terse. A label cut this way may lose the segment
+// that distinguished two similar names; --json keeps every label whole.
+func (t *table) fit(w []int, width int) {
+	total := len(colGap) * (len(w) - 1)
+	for _, n := range w {
+		total += n
+	}
+	for total > width {
+		widest := -1
+		for i, c := range t.cols {
+			floor := max(minTextWidth, displayWidth(c.title))
+			if c.align == alignLeft && w[i] > floor && (widest < 0 || w[i] > w[widest]) {
+				widest = i
+			}
+		}
+		if widest < 0 {
+			return
+		}
+		w[widest]--
+		total--
+	}
+}
+
 // render writes the table: a header, a rule, the rows, and a closing rule.
 func (t *table) render(out io.Writer) {
 	if len(t.rows) == 0 {
 		return
 	}
 	w := t.widths()
+	if width := outputWidth(out); width > 0 {
+		// Leave the last cell free: some terminals wrap a line that exactly
+		// fills the row.
+		t.fit(w, width-1-displayWidth(t.indent))
+	}
 
 	// Header.
 	var head strings.Builder
@@ -183,10 +217,9 @@ func (t *table) writeLine(out io.Writer, w []int, r row, ln int) {
 		if i < len(r.cells) {
 			c = r.cells[i]
 		}
-		text := c.lineAt(ln)
-		if col.max > 0 {
-			text = truncate(text, col.max)
-		}
+		// A column is only narrower than its content when capped or fitted, so
+		// this is a no-op on the common path.
+		text := truncate(c.lineAt(ln), w[i])
 
 		// Pad the plain text, then style — never the other way round, or the
 		// escape sequences would be counted as visible width.
