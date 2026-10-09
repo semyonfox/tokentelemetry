@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/semyonfox/tokentelemetry/engine/internal/ingest"
 	"github.com/semyonfox/tokentelemetry/engine/internal/pricing"
@@ -67,6 +68,13 @@ func cmdReport(cmd string, args []string) int {
 	}
 	progress.Update("Calculating usage and costs...")
 	rep := report.BuildWithProjectLineage(res.Turns, tbl, f, g, res.Duplicates, opts.dimensions, lineage)
+	if cmd == "summary" {
+		// only the overview shows plan windows, so only it pays for the lookup;
+		// expired ones are dropped here so JSON and the table agree
+		windows, planErrs := ingest.PlanWindows(ctx, scanners)
+		rep.PlanWindows = ingest.LivePlanWindows(windows, time.Now())
+		res.Errors = append(res.Errors, planErrs...)
+	}
 	progress.Stop()
 	if lineageErr != nil {
 		fmt.Fprintf(os.Stderr, "tokentelemetry: warning: %v\n", lineageErr)

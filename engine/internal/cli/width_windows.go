@@ -17,3 +17,9 @@ func terminalWidth(f *os.File) int {
 	}
 	return int(info.Window.Right-info.Window.Left) + 1
 }
+
+// isTerminal reports whether f is a console at all, whatever its size.
+func isTerminal(f *os.File) bool {
+	var mode uint32
+	return windows.GetConsoleMode(windows.Handle(f.Fd()), &mode) == nil
+}

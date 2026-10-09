@@ -51,6 +51,8 @@ func Main(args []string) int {
 		return cmdAgents(rest)
 	case "price":
 		return cmdPrice(rest)
+	case "statusline":
+		return cmdStatusline(rest)
 	case "version":
 		if len(rest) == 1 && (rest[0] == "--help" || rest[0] == "-h") {
 			printHelp("version")

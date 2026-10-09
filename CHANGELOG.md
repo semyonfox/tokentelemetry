@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+- Colour the summary charts by agent: daily bars show list cost stacked per
+  agent with a legend, and model and agent bars take their agent's colour.
+  Agents use the nearest terminal colour to their own branding where it is
+  recognisable, grey for Codex and orange for Claude among them, as distinct
+  shades on a 256-colour terminal and the nearest basic colours otherwise,
+  and free colours for the rest, never sharing one within a report. Without colour the
+  bars stay plain. The daily chart reads cost with tokens
+  alongside instead of tokens alone. JSON buckets gain `cost_by_agent`.
+- Show each agent's own subscription windows in the summary: the five-hour and
+  weekly percentages with reset times, Codex from its session logs and Claude
+  Code through the new `tt statusline` hook. `--json` carries them as
+  `plan_windows`.
 - Fit detailed tables to the terminal: text columns narrow, widest first, until
   the rows fit, and figures are never shortened. Output to a pipe or file is
   left whole; `COLUMNS` overrides the detected width. Summary charts now drop
