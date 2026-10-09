@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"cmp"
 	"context"
 	"encoding/json"
 	"errors"
@@ -135,7 +136,7 @@ func scanCodebuffChat(root, fallbackProject, dir string) []model.Turn {
 	if stateRaw, err := os.ReadFile(filepath.Join(dir, "run-state.json")); err == nil {
 		var state codebuffRunState
 		if json.Unmarshal(stateRaw, &state) == nil {
-			project = firstNonEmpty(state.SessionState.ProjectContext.CWD, state.SessionState.FileContext.CWD, state.SessionState.CWD, state.CWD, project)
+			project = cmp.Or(state.SessionState.ProjectContext.CWD, state.SessionState.FileContext.CWD, state.SessionState.CWD, state.CWD, project)
 		}
 	}
 	chatID := filepath.Base(dir)
@@ -143,7 +144,7 @@ func scanCodebuffChat(root, fallbackProject, dir string) []model.Turn {
 	fallbackTime := codebuffChatTime(chatID)
 	var turns []model.Turn
 	for i, msg := range messages {
-		variant := firstNonEmpty(msg.Variant, msg.Role)
+		variant := cmp.Or(msg.Variant, msg.Role)
 		if variant != "ai" && variant != "agent" && variant != "assistant" {
 			continue
 		}
@@ -152,7 +153,7 @@ func scanCodebuffChat(root, fallbackProject, dir string) []model.Turn {
 		if usage.IsZero() && credits == nil {
 			continue
 		}
-		modelID := firstNonEmpty(msg.Metadata.Model, msg.Metadata.ModelID, msg.Metadata.Codebuff.Model)
+		modelID := cmp.Or(msg.Metadata.Model, msg.Metadata.ModelID, msg.Metadata.Codebuff.Model)
 		unpriced := ""
 		if modelID == "" {
 			modelID = "unknown"

@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"cmp"
 	"context"
 	"database/sql"
 	"encoding/json"
@@ -187,17 +188,17 @@ func parseOpenClawEvent(raw []byte, state *openClawState) (model.Turn, bool) {
 	}
 	switch r.Type {
 	case "session":
-		state.session = firstNonEmpty(r.ID, state.session)
-		state.project = firstNonEmpty(r.CWD, state.project)
+		state.session = cmp.Or(r.ID, state.session)
+		state.project = cmp.Or(r.CWD, state.project)
 		return model.Turn{}, false
 	case "model_change":
-		state.modelID = firstNonEmpty(r.ModelID, state.modelID)
-		state.provider = firstNonEmpty(r.Provider, state.provider)
+		state.modelID = cmp.Or(r.ModelID, state.modelID)
+		state.provider = cmp.Or(r.Provider, state.provider)
 		return model.Turn{}, false
 	case "custom":
 		if r.CustomType == "model-snapshot" {
-			state.modelID = firstNonEmpty(r.Data.ModelID, state.modelID)
-			state.provider = firstNonEmpty(r.Data.Provider, state.provider)
+			state.modelID = cmp.Or(r.Data.ModelID, state.modelID)
+			state.provider = cmp.Or(r.Data.Provider, state.provider)
 		}
 		return model.Turn{}, false
 	}
@@ -212,8 +213,8 @@ func parseOpenClawEvent(raw []byte, state *openClawState) (model.Turn, bool) {
 		return model.Turn{}, false
 	}
 	state.index++
-	modelID := firstNonEmpty(r.Message.Model, state.modelID)
-	provider := firstNonEmpty(r.Message.Provider, state.provider)
+	modelID := cmp.Or(r.Message.Model, state.modelID)
+	provider := cmp.Or(r.Message.Provider, state.provider)
 	unpriced := ""
 	if modelID == "" {
 		modelID = "unknown"

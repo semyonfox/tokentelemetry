@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"cmp"
 	"context"
 	"database/sql"
 	"encoding/json"
@@ -133,7 +134,7 @@ func scanDevinTranscript(path string, sessions map[string]devinSession) []model.
 		if !ok {
 			continue
 		}
-		modelID := firstNonEmpty(step.Metadata.GenerationModel, step.Extra.GenerationModel, step.ModelName, tr.Agent.ModelName)
+		modelID := cmp.Or(step.Metadata.GenerationModel, step.Extra.GenerationModel, step.ModelName, tr.Agent.ModelName)
 		unpriced := ""
 		if modelID == "" && meta.model != "" {
 			modelID = meta.model

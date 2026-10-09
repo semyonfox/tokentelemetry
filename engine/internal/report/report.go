@@ -1,4 +1,4 @@
-// Package report aggregates priced turns into the views the CLI and API serve.
+// Package report aggregates priced turns into the views the CLI renders.
 //
 // Aggregation runs over turns, so every dimension is exact: a turn contributes
 // to the day it actually happened on and the model that actually served it. The
@@ -11,7 +11,9 @@
 package report
 
 import (
+	"cmp"
 	"math"
+	"slices"
 	"sort"
 	"strings"
 	"time"
@@ -227,7 +229,7 @@ func (a *acc) add(t model.Turn, c cost.Cost, rawProject string) {
 		a.projectPaths[rawProject] = struct{}{}
 	}
 	if len(a.dims) > 0 {
-		key := a.dims[0].keyOf(t, c, Daily)
+		key := a.dims[0].keyOf(t, c)
 		if key == "" {
 			key = "(unknown)"
 		}
@@ -263,15 +265,7 @@ func (a *acc) bucket(key string) Bucket {
 	for k, s := range a.sub {
 		b.Breakdown = append(b.Breakdown, s.bucket(k))
 	}
-	sort.Slice(b.Breakdown, func(i, j int) bool {
-		if b.Breakdown[i].Cost != b.Breakdown[j].Cost {
-			return b.Breakdown[i].Cost > b.Breakdown[j].Cost
-		}
-		if b.Breakdown[i].Usage.Total() != b.Breakdown[j].Usage.Total() {
-			return b.Breakdown[i].Usage.Total() > b.Breakdown[j].Usage.Total()
-		}
-		return b.Breakdown[i].Key < b.Breakdown[j].Key
-	})
+	slices.SortFunc(b.Breakdown, compareBuckets)
 	return b
 }
 
@@ -366,11 +360,7 @@ func BuildWithProjectLineage(turns []model.Turn, tbl *pricing.Table, f Filter, g
 			rep.Totals.CreditsByAgent[string(t.Agent)] += *t.Credits
 		}
 		if t.Aggregate {
-			rep.Totals.AggregateRecords++
 			rep.Totals.AggregateTokens += t.Usage.Total()
-		}
-		if t.ReplayHeuristic {
-			rep.Totals.HeuristicRecords++
 		}
 		if d := dayKey(t.Timestamp); d != "" {
 			if rep.WindowFrom == "" || d < rep.WindowFrom {
@@ -413,6 +403,8 @@ func BuildWithProjectLineage(turns []model.Turn, tbl *pricing.Table, f Filter, g
 	rep.Totals.Turns = totals.turns
 	rep.Totals.Sessions = len(totals.sessions)
 	rep.Totals.UnpricedTurns = totals.unpriced
+	rep.Totals.AggregateRecords = totals.aggregates
+	rep.Totals.HeuristicRecords = totals.heuristic
 	rep.Totals.CostByBilling = billing
 	for m := range unpricedModels {
 		rep.Totals.UnpricedModels = append(rep.Totals.UnpricedModels, m)
@@ -433,7 +425,9 @@ func BuildWithProjectLineage(turns []model.Turn, tbl *pricing.Table, f Filter, g
 	projects.decorate(rep.ByModel, false, groupBy)
 	projects.decorate(rep.ByProject, true, groupBy)
 	projects.decorate(rep.Sessions, false, groupBy)
-	sortProjectBuckets(rep.ByProject)
+	// Re-sort now that labels exist, so equal-cost projects order by what the
+	// reader actually sees rather than by their full path.
+	slices.SortFunc(rep.ByProject, compareBuckets)
 	return rep
 }
 
@@ -467,16 +461,24 @@ func sortedByCost(m map[string]*acc) []Bucket {
 	for k, a := range m {
 		out = append(out, a.bucket(k))
 	}
-	sort.Slice(out, func(i, j int) bool {
-		if out[i].Cost != out[j].Cost {
-			return out[i].Cost > out[j].Cost
-		}
-		if out[i].Usage.Total() != out[j].Usage.Total() {
-			return out[i].Usage.Total() > out[j].Usage.Total()
-		}
-		return out[i].Key < out[j].Key
-	})
+	slices.SortFunc(out, compareBuckets)
 	return out
+}
+
+// compareBuckets orders rows most expensive first, then by tokens, then by
+// label and key so ties render in a stable order. Label is empty until a
+// project catalog decorates the row, at which point it is the visible name.
+func compareBuckets(a, b Bucket) int {
+	if c := cmp.Compare(b.Cost, a.Cost); c != 0 {
+		return c
+	}
+	if c := cmp.Compare(b.Usage.Total(), a.Usage.Total()); c != 0 {
+		return c
+	}
+	if c := strings.Compare(strings.ToLower(a.Label), strings.ToLower(b.Label)); c != 0 {
+		return c
+	}
+	return strings.Compare(a.Key, b.Key)
 }
 
 func displayModel(t model.Turn, c cost.Cost) string {
@@ -515,12 +517,7 @@ func dayKey(ts time.Time) string {
 }
 
 func containsFold(list []string, v string) bool {
-	for _, x := range list {
-		if strings.EqualFold(x, v) {
-			return true
-		}
-	}
-	return false
+	return slices.ContainsFunc(list, func(x string) bool { return strings.EqualFold(x, v) })
 }
 
 // matchProject accepts an exact recorded path, its normalized spelling, a
@@ -559,20 +556,4 @@ func (c *projectCatalog) decorateBucket(b *Bucket, topLevelProject bool, dims []
 	for i := range b.Breakdown {
 		c.decorateBucket(&b.Breakdown[i], false, dims, depth+1)
 	}
-}
-
-func sortProjectBuckets(rows []Bucket) {
-	sort.Slice(rows, func(i, j int) bool {
-		if rows[i].Cost != rows[j].Cost {
-			return rows[i].Cost > rows[j].Cost
-		}
-		if rows[i].Usage.Total() != rows[j].Usage.Total() {
-			return rows[i].Usage.Total() > rows[j].Usage.Total()
-		}
-		left, right := strings.ToLower(rows[i].Label), strings.ToLower(rows[j].Label)
-		if left != right {
-			return left < right
-		}
-		return rows[i].Key < rows[j].Key
-	})
 }

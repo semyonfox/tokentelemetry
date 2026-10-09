@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"cmp"
 	"context"
 	"encoding/json"
 	"errors"
@@ -101,20 +102,20 @@ func scanOpenClaudeFile(path string) []model.Turn {
 			continue
 		}
 		index++
-		session := firstNonEmpty(r.SessionID, fallbackSession)
-		modelID := firstNonEmpty(r.Message.ActualModel, r.Message.ActualModelLower, r.ActualModel, r.ActualModelLower, r.Message.Model)
+		session := cmp.Or(r.SessionID, fallbackSession)
+		modelID := cmp.Or(r.Message.ActualModel, r.Message.ActualModelLower, r.ActualModel, r.ActualModelLower, r.Message.Model)
 		unpriced := ""
 		if modelID == "" {
 			modelID = "unknown"
 			unpriced = "OpenClaude transcript does not record the request model"
 		}
-		id := firstNonEmpty(r.Message.ID, r.UUID)
+		id := cmp.Or(r.Message.ID, r.UUID)
 		key := identityKey("openclaude-session", session, strconv.Itoa(index))
 		if id != "" {
 			key = identityKey("openclaude-native", id)
 		}
 		turns = append(turns, model.Turn{Key: key, SessionID: session, Agent: model.Agent("openclaude"), Timestamp: parseTime(r.Timestamp), Model: modelID,
-			Provider: firstNonEmpty(r.Message.Provider, r.Provider), Endpoint: firstNonEmpty(r.Message.Endpoint, r.Endpoint), Project: r.CWD, Usage: usage,
+			Provider: cmp.Or(r.Message.Provider, r.Provider), Endpoint: cmp.Or(r.Message.Endpoint, r.Endpoint), Project: r.CWD, Usage: usage,
 			Subagent: r.IsSidechain, UnpricedReason: unpriced})
 	}
 	return turns

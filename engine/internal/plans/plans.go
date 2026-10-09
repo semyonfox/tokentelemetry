@@ -23,6 +23,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"time"
 )
@@ -159,10 +160,5 @@ func Total(charges []Charge) float64 {
 }
 
 func containsFold(list []string, v string) bool {
-	for _, x := range list {
-		if strings.EqualFold(x, v) {
-			return true
-		}
-	}
-	return false
+	return slices.ContainsFunc(list, func(x string) bool { return strings.EqualFold(x, v) })
 }

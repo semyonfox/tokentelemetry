@@ -21,7 +21,7 @@ func TestTableColumnsAlign(t *testing.T) {
 	)
 	tbl.add(plain("short"), plain("1"), plain("22"))
 	tbl.add(plain("a-much-longer-name"), plain("333333"), plain("4"))
-	tbl.addSub(plain("nested"), plain("55"), plain("6"))
+	tbl.add(plain("nested"), plain("55"), plain("6"))
 
 	var buf bytes.Buffer
 	tbl.render(&buf)
@@ -40,26 +40,6 @@ func TestTableColumnsAlign(t *testing.T) {
 		} else if w != width {
 			t.Errorf("line %d width %d, want %d\n%q", i, w, width, ln)
 		}
-	}
-}
-
-// An indented detail row consumes part of the first column, so its figures must
-// still land on the parent's grid.
-func TestSubRowStaysOnGrid(t *testing.T) {
-	th := theme{on: false}
-	tbl := newTable(th,
-		column{title: "DATE", align: alignLeft},
-		column{title: "COST", align: alignRight},
-	)
-	tbl.add(plain("2026-08-23"), plain("$44.56"))
-	tbl.addSub(plain("model-x"), plain("$42.63"))
-
-	var buf bytes.Buffer
-	tbl.render(&buf)
-	lines := strings.Split(strings.TrimRight(buf.String(), "\n"), "\n")
-	parent, sub := lines[2], lines[3]
-	if strings.Index(parent, "$44.56") != strings.Index(sub, "$42.63") {
-		t.Errorf("sub-row cost column misaligned:\n%q\n%q", parent, sub)
 	}
 }
 
@@ -98,15 +78,11 @@ func TestDisplayWidth(t *testing.T) {
 	}
 }
 
-// Paths truncate from the left because a path's tail identifies it.
 func TestTruncate(t *testing.T) {
-	if got := truncate("/home/user/code/project", 10, true); !strings.HasSuffix(got, "project") {
-		t.Errorf("left-truncate = %q, want the tail preserved", got)
+	if got := truncate("verylongmodelname-v2", 10); !strings.HasPrefix(got, "very") || displayWidth(got) != 10 {
+		t.Errorf("truncate = %q, want the head preserved at 10 cells", got)
 	}
-	if got := truncate("verylongmodelname-v2", 10, false); !strings.HasPrefix(got, "very") {
-		t.Errorf("right-truncate = %q, want the head preserved", got)
-	}
-	if got := truncate("short", 10, false); got != "short" {
+	if got := truncate("short", 10); got != "short" {
 		t.Errorf("truncate widened a short string to %q", got)
 	}
 }

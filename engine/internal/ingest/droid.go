@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"cmp"
 	"context"
 	"encoding/json"
 	"errors"
@@ -91,7 +92,7 @@ func (d *Droid) scanFile(path string) []model.Turn {
 			continue
 		}
 		if r.Type == "session_start" {
-			session = firstNonEmpty(r.ID, session)
+			session = cmp.Or(r.ID, session)
 			project = r.CWD
 		}
 		if t := parseTime(r.Timestamp); t.After(stamp) {

@@ -5,6 +5,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 
@@ -199,7 +200,8 @@ func (c *projectCatalog) label(key string) string {
 func (c *projectCatalog) buildLabels() {
 	byBase := make(map[string][]string)
 	for _, ref := range c.byTurn {
-		byBase[projectBaseLabel(ref.key, c.home)] = append(byBase[projectBaseLabel(ref.key, c.home)], ref.key)
+		base := projectBaseLabel(ref.key, c.home)
+		byBase[base] = append(byBase[base], ref.key)
 	}
 	for base, keys := range byBase {
 		keys = uniqueSorted(keys)
@@ -419,12 +421,6 @@ func projectPathSuffix(key string, depth int) string {
 }
 
 func uniqueSorted(items []string) []string {
-	sort.Strings(items)
-	out := items[:0]
-	for _, item := range items {
-		if len(out) == 0 || out[len(out)-1] != item {
-			out = append(out, item)
-		}
-	}
-	return out
+	slices.Sort(items)
+	return slices.Compact(items)
 }

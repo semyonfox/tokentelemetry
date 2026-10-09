@@ -103,7 +103,7 @@ func Of(t model.Turn, tbl *pricing.Table) Cost {
 	}
 	in, out, cacheRead, cacheWrite := rate.ForContext(ctx)
 
-	write1h := min64(u.CacheWrite1h, u.CacheWrite)
+	write1h := min(u.CacheWrite1h, u.CacheWrite)
 	write5m := u.CacheWrite - write1h
 	rate1h := rate.CacheWrite1h
 	if rate1h == 0 {
@@ -139,11 +139,4 @@ func perMillion(tokens int64, rate float64) float64 {
 		return 0
 	}
 	return float64(tokens) / 1_000_000 * rate
-}
-
-func min64(a, b int64) int64 {
-	if a < b {
-		return a
-	}
-	return b
 }

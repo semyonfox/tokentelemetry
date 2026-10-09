@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"path"
+	"slices"
 	"sort"
 	"strings"
 	"time"
@@ -54,7 +55,7 @@ func render(w io.Writer, cmd string, rep *report.Report, limit int, color, verbo
 	}
 
 	rows := rep.Series
-	label, colMax, truncLeft := "DATE", 0, false
+	label, colMax := "DATE", 0
 	switch cmd {
 	case "session":
 		rows, label, colMax = rep.Sessions, "SESSION", 26
@@ -67,7 +68,7 @@ func render(w io.Writer, cmd string, rep *report.Report, limit int, color, verbo
 		rows, label = rep.ByProject, "PROJECT"
 	}
 	if len(rows) == 0 {
-		io.WriteString(w, "\n  "+th.dim("No usage matched those filters.")+"\n\n")
+		noMatch(w, th)
 		return
 	}
 
@@ -82,7 +83,7 @@ func render(w io.Writer, cmd string, rep *report.Report, limit int, color, verbo
 	// One column per grouping level, rather than indentation alone: with the
 	// level in its own column the eye can scan a single agent down the page,
 	// which is not possible when the only cue is how far a label is inset.
-	cols := []column{{title: label, align: alignLeft, max: colMax, truncLeft: truncLeft}}
+	cols := []column{{title: label, align: alignLeft, max: colMax}}
 	for _, d := range rep.GroupBy {
 		col := column{title: d.Title(), align: alignLeft, max: 28}
 		if d == report.DimProject {
@@ -99,7 +100,7 @@ func render(w io.Writer, cmd string, rep *report.Report, limit int, color, verbo
 	// A flat project table is a ranked overview. Listing every model as a
 	// multi-line cell turns it back into the wall of detail the view avoids;
 	// --group-by model or --breakdown provides that attribution on demand.
-	showModels := !hasDim(rep.GroupBy, report.DimModel) && cmd != "model" && !(cmd == "project" && nDims == 0)
+	showModels := !slices.Contains(rep.GroupBy, report.DimModel) && cmd != "model" && !(cmd == "project" && nDims == 0)
 	if showModels {
 		cols = append(cols, column{title: "MODELS", align: alignLeft, max: 30})
 	}
@@ -217,13 +218,9 @@ func plural(n int, noun string) string {
 	return fmt.Sprintf("%d %ss", n, noun)
 }
 
-func hasDim(dims []report.Dimension, want report.Dimension) bool {
-	for _, d := range dims {
-		if d == want {
-			return true
-		}
-	}
-	return false
+// noMatch is the one empty-result message, shared by every report view.
+func noMatch(w io.Writer, th theme) {
+	io.WriteString(w, "\n  "+th.dim("No usage matched those filters.")+"\n\n")
 }
 
 func title(cmd string, rep *report.Report) string {

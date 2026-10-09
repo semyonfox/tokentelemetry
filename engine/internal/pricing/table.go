@@ -256,9 +256,7 @@ func Normalize(model string) string {
 	}
 	// "openrouter/anthropic/claude-opus-5" -> "claude-opus-5"
 	for _, prefix := range []string{"openrouter/", "fireworks/", "together/", "accounts/fireworks/models/", "models/"} {
-		if strings.HasPrefix(m, prefix) {
-			m = m[len(prefix):]
-		}
+		m = strings.TrimPrefix(m, prefix)
 	}
 	// Vendor-namespaced ids from aggregators: "moonshotai/kimi-k2" -> keep the
 	// tail, which is what the first-party table is keyed on.
@@ -351,26 +349,4 @@ func (tbl *Table) Find(query string) (*Model, string, bool) {
 		return m, id, true
 	}
 	return nil, id, false
-}
-
-// Describe renders a model's price history, for `tokentelemetry price`.
-func (tbl *Table) Describe(model string) (string, bool) {
-	m, _, ok := tbl.Find(model)
-	if !ok {
-		return "", false
-	}
-	var b strings.Builder
-	fmt.Fprintf(&b, "%s\n", m.ID)
-	for _, r := range m.Rates {
-		fmt.Fprintf(&b, "  from %s  in $%.4g  out $%.4g  cache-read $%.4g  cache-write $%.4g",
-			r.From, r.In, r.Out, r.CacheRead, r.CacheWrite)
-		if r.TierThreshold > 0 {
-			fmt.Fprintf(&b, "  (>%dk ctx: in $%.4g out $%.4g)", r.TierThreshold/1000, r.TierIn, r.TierOut)
-		}
-		if r.Source != "" {
-			fmt.Fprintf(&b, "  [%s]", r.Source)
-		}
-		b.WriteByte('\n')
-	}
-	return b.String(), true
 }

@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"cmp"
 	"context"
 	"encoding/json"
 	"errors"
@@ -87,7 +88,7 @@ func (o *OMP) scanFile(path string) []model.Turn {
 		}
 		switch r.Type {
 		case "session":
-			session = firstNonEmpty(r.ID, session)
+			session = cmp.Or(r.ID, session)
 			project = r.CWD
 			parentSession = r.ParentSession
 			continue
@@ -124,8 +125,8 @@ func (o *OMP) scanFile(path string) []model.Turn {
 			continue
 		}
 		index++
-		modelID = firstNonEmpty(modelID, currentModel)
-		provider = firstNonEmpty(provider, currentProvider)
+		modelID = cmp.Or(modelID, currentModel)
+		provider = cmp.Or(provider, currentProvider)
 		unpriced := ""
 		if modelID == "" {
 			modelID = "unknown"

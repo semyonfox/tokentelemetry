@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"cmp"
 	"context"
 	"encoding/json"
 	"errors"
@@ -145,14 +146,14 @@ func scanOpenDesignFile(path, project string) []model.Turn {
 			continue
 		}
 		if e.Event == "start" {
-			currentModel = firstNonEmpty(e.Data.Model, currentModel)
+			currentModel = cmp.Or(e.Data.Model, currentModel)
 			continue
 		}
 		if e.Event != "agent" {
 			continue
 		}
 		if e.Data.Type == "status" {
-			currentModel = firstNonEmpty(e.Data.Model, currentModel)
+			currentModel = cmp.Or(e.Data.Model, currentModel)
 			continue
 		}
 		if e.Data.Type != "usage" || e.Data.Usage == nil {

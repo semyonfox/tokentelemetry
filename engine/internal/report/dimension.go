@@ -1,6 +1,7 @@
 package report
 
 import (
+	"slices"
 	"strings"
 
 	"github.com/semyonfox/tokentelemetry/engine/internal/cost"
@@ -65,20 +66,13 @@ func (e *UnknownDimensionError) Error() string {
 	return "unknown grouping " + e.Name + " (valid: " + strings.Join(names, ", ") + ")"
 }
 
-func (d Dimension) valid() bool {
-	for _, x := range Dimensions {
-		if x == d {
-			return true
-		}
-	}
-	return false
-}
+func (d Dimension) valid() bool { return slices.Contains(Dimensions, d) }
 
 // Title is the column heading for this dimension.
 func (d Dimension) Title() string { return strings.ToUpper(string(d)) }
 
 // keyOf extracts a turn's value for this dimension.
-func (d Dimension) keyOf(t model.Turn, c cost.Cost, g Granularity) string {
+func (d Dimension) keyOf(t model.Turn, c cost.Cost) string {
 	switch d {
 	case DimDay:
 		return bucketKey(t.Timestamp, Daily)

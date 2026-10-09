@@ -17,7 +17,7 @@ import (
 func renderOverview(w io.Writer, rep *report.Report, limit int, color, verbose, bars bool, agents []string) {
 	th := theme{on: color}
 	if rep.MatchedTurns == 0 {
-		fmt.Fprintln(w, "No usage matched those filters.")
+		noMatch(w, th)
 		return
 	}
 	section(w, th, "TokenTelemetry · "+rep.WindowFrom+" to "+rep.WindowTo)
@@ -66,8 +66,7 @@ func overviewChart(w io.Writer, th theme, title string, rows []report.Bucket, wi
 		maxValue = math.Max(maxValue, value(b))
 	}
 	for _, b := range rows {
-		label := chartLabel(b.Key)
-		fmt.Fprintf(w, "  %-28s", label)
+		fmt.Fprintf(w, "  %s", chartLabel(b.Key))
 		if width > 0 {
 			n := 0
 			if maxValue > 0 && value(b) > 0 {
@@ -93,7 +92,12 @@ func overviewChart(w io.Writer, th theme, title string, rows []report.Bucket, wi
 	}
 }
 
-// Log-supplied names must not inject terminal control sequences or extra rows.
+// chartLabelWidth is the fixed label column every overview chart shares.
+const chartLabelWidth = 28
+
+// chartLabel fits a log-supplied name into the label column. Control
+// characters are blanked so a name cannot inject escape sequences or rows, and
+// the width is measured in terminal cells so wide runes still align.
 func chartLabel(s string) string {
 	s = strings.Map(func(r rune) rune {
 		if unicode.IsControl(r) {
@@ -101,9 +105,5 @@ func chartLabel(s string) string {
 		}
 		return r
 	}, s)
-	runes := []rune(s)
-	if len(runes) > 28 {
-		return string(runes[:25]) + "..."
-	}
-	return s
+	return pad(truncate(s, chartLabelWidth), chartLabelWidth, false)
 }

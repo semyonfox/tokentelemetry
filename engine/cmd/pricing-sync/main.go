@@ -30,6 +30,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 	"time"
@@ -178,32 +179,11 @@ func main() {
 		effective = d
 	}
 
-	// Backfill mode works purely on the committed dataset plus an old snapshot;
-	// it never touches the network and never introduces a rate.
 	if *backfillF != "" {
 		if *asOf == "" {
 			fatal("-backfill requires -as-of YYYY-MM-DD (the snapshot's date)")
 		}
-		ds := readExisting(*out)
-		if ds == nil {
-			fatal("could not read the existing dataset at %s", *out)
-		}
-		moved, rejected, ambiguous, err := backfill(ds, *backfillF, effective)
-		if err != nil {
-			fatal("%v", err)
-		}
-		fmt.Printf("backfill from %s (as of %s)\n", *backfillF, effective)
-		fmt.Printf("  %d rates dated back to %s (snapshot agrees with the current first-party rate)\n", moved, effective)
-		fmt.Printf("  %d rejected as reseller prices the old alphabetical sync mistakenly recorded\n", rejected)
-		fmt.Printf("  %d left alone as ambiguous\n", ambiguous)
-		if *dryRun {
-			fmt.Println("\n(dry run — nothing written)")
-			return
-		}
-		if err := write(*out, ds); err != nil {
-			fatal("write %s: %v", *out, err)
-		}
-		fmt.Printf("\nWrote %s\n", *out)
+		runBackfill(*out, *backfillF, effective, *dryRun)
 		return
 	}
 
@@ -237,6 +217,31 @@ func main() {
 	}
 	fmt.Printf("\nWrote %s — %d models, %d provider-keyed, %d aliases (effective %s)\n",
 		*out, len(next.Models), len(next.ByProvider), len(next.Aliases), effective)
+}
+
+// runBackfill works purely on the committed dataset plus an old snapshot; it
+// never touches the network and never introduces a rate.
+func runBackfill(out, snapshot string, asOf pricing.Date, dryRun bool) {
+	ds := readExisting(out)
+	if ds == nil {
+		fatal("could not read the existing dataset at %s", out)
+	}
+	moved, rejected, ambiguous, err := backfill(ds, snapshot, asOf)
+	if err != nil {
+		fatal("%v", err)
+	}
+	fmt.Printf("backfill from %s (as of %s)\n", snapshot, asOf)
+	fmt.Printf("  %d rates dated back to %s (snapshot agrees with the current first-party rate)\n", moved, asOf)
+	fmt.Printf("  %d rejected as reseller prices the old alphabetical sync mistakenly recorded\n", rejected)
+	fmt.Printf("  %d left alone as ambiguous\n", ambiguous)
+	if dryRun {
+		fmt.Println("\n(dry run — nothing written)")
+		return
+	}
+	if err := write(out, ds); err != nil {
+		fatal("write %s: %v", out, err)
+	}
+	fmt.Printf("\nWrote %s\n", out)
 }
 
 func fetch(src string) ([]byte, error) {
@@ -498,27 +503,14 @@ func merge(prev, next *dataset, effective pricing.Date) []change {
 			changes = append(changes, change{model: id, kind: "new"})
 			continue
 		}
-		latest := pm.Rates[len(pm.Rates)-1]
-		fresh := nm.Rates[0]
-		// A newly free route needs review before replacing a paid rate.
-		if (latest.In > 0 || latest.Out > 0) && fresh.In == 0 && fresh.Out == 0 {
-			fmt.Fprintf(os.Stderr, "Retaining paid rates for %s: upstream now reports zero; review required\n", nm.ID)
-			nm.Rates = pm.Rates
-			continue
+		latest, fresh := pm.Rates[len(pm.Rates)-1], nm.Rates[0]
+		if mergeRates(pm, nm, effective) {
+			changes = append(changes, change{
+				model: id, kind: "changed",
+				from: fmt.Sprintf("$%.4g/$%.4g", latest.In, latest.Out),
+				to:   fmt.Sprintf("$%.4g/$%.4g", fresh.In, fresh.Out),
+			})
 		}
-		if sameRate(latest, fresh) {
-			// Unchanged: keep the original history untouched, including the
-			// date the rate first took effect.
-			nm.Rates = pm.Rates
-			continue
-		}
-		fresh.From = effective
-		nm.Rates = append(append([]pricing.Rate{}, pm.Rates...), fresh)
-		changes = append(changes, change{
-			model: id, kind: "changed",
-			from: fmt.Sprintf("$%.4g/$%.4g", latest.In, latest.Out),
-			to:   fmt.Sprintf("$%.4g/$%.4g", fresh.In, fresh.Out),
-		})
 	}
 	// Models that vanished upstream keep their history so old usage stays
 	// priced; they simply stop receiving new rates.
@@ -536,30 +528,36 @@ func merge(prev, next *dataset, effective pricing.Date) []change {
 
 func mergeProviderRates(prev, next map[string]*pricing.Model, effective pricing.Date) {
 	for key, nm := range next {
-		pm, ok := prev[key]
-		if !ok || len(pm.Rates) == 0 || len(nm.Rates) == 0 {
-			continue
+		if pm, ok := prev[key]; ok && len(pm.Rates) > 0 && len(nm.Rates) > 0 {
+			mergeRates(pm, nm, effective)
 		}
-		latest := pm.Rates[len(pm.Rates)-1]
-		fresh := nm.Rates[0]
-		// A newly free route needs review before replacing a paid rate.
-		if (latest.In > 0 || latest.Out > 0) && fresh.In == 0 && fresh.Out == 0 {
-			fmt.Fprintf(os.Stderr, "Retaining paid rates for %s: upstream now reports zero; review required\n", nm.ID)
-			nm.Rates = pm.Rates
-			continue
-		}
-		if sameRate(latest, fresh) {
-			nm.Rates = pm.Rates
-			continue
-		}
-		fresh.From = effective
-		nm.Rates = append(append([]pricing.Rate{}, pm.Rates...), fresh)
 	}
 	for key, pm := range prev {
 		if _, ok := next[key]; !ok {
 			next[key] = pm
 		}
 	}
+}
+
+// mergeRates carries prev's rate history into next, whose single rate is the
+// one just fetched. It reports whether that rate differs from the latest one
+// on record. An unchanged rate keeps the original history untouched, including
+// the date it first took effect; a changed one is appended as a new entry.
+func mergeRates(prev, next *pricing.Model, effective pricing.Date) bool {
+	latest, fresh := prev.Rates[len(prev.Rates)-1], next.Rates[0]
+	// A newly free route needs review before replacing a paid rate.
+	if (latest.In > 0 || latest.Out > 0) && fresh.In == 0 && fresh.Out == 0 {
+		fmt.Fprintf(os.Stderr, "Retaining paid rates for %s: upstream now reports zero; review required\n", next.ID)
+		next.Rates = prev.Rates
+		return false
+	}
+	if sameRate(latest, fresh) {
+		next.Rates = prev.Rates
+		return false
+	}
+	fresh.From = effective
+	next.Rates = append(append([]pricing.Rate{}, prev.Rates...), fresh)
+	return true
 }
 
 func sameRate(a, b pricing.Rate) bool {
@@ -590,7 +588,7 @@ func report(changes []change) {
 }
 
 func write(path string, ds *dataset) error {
-	if err := os.MkdirAll(dirOf(path), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
 		return err
 	}
 	buf, err := json.MarshalIndent(ds, "", "  ")
@@ -598,13 +596,6 @@ func write(path string, ds *dataset) error {
 		return err
 	}
 	return os.WriteFile(path, append(buf, '\n'), 0o644)
-}
-
-func dirOf(p string) string {
-	if i := strings.LastIndexByte(p, '/'); i > 0 {
-		return p[:i]
-	}
-	return "."
 }
 
 func fatal(format string, args ...any) {
