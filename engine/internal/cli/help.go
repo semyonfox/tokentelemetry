@@ -53,6 +53,7 @@ REPORTS
 				fmt.Printf("  %-10s %s\n", command.name, command.description)
 			}
 		}
+		fmt.Print("  Timeline and session rows nest by model; model and project stay flat.\n")
 		fmt.Print("\nLOOKUP\n")
 		for _, command := range commands {
 			if !command.report && command.name != "version" {
@@ -61,14 +62,14 @@ REPORTS
 		}
 		fmt.Print(`
 HELP
-  help [command]       focused command help; also COMMAND --help
-  version              build version; also -v or --version
+  help [command]      focused command help; also COMMAND --help
+  version             build version; also -v or --version
 
 COMMON REPORT FLAGS
-  --all-time, -a        include all available history
-  --agent NAME         select agents; repeatable or comma-separated
-  --json               machine-readable output
-  --plain              omit summary charts and the startup spinner
+  --all-time, -a      include all available history
+  --agent NAME        select agents; repeatable or comma-separated
+  --json              machine-readable output
+  --plain             omit summary charts and the startup spinner
 
 EXAMPLES
   tt -a
@@ -104,9 +105,7 @@ Run tt help COMMAND for all flags, date defaults and examples.
 		}
 		fmt.Print(reportFlagsHelp)
 		if name == "summary" {
-			fmt.Print("  --limit N           chart rows; default 7, including when N is 0\n\nSummary JSON includes all rows regardless of the chart limit.\n")
-		} else {
-			fmt.Print("  --limit N           maximum displayed rows; 0 means all\n")
+			fmt.Print("\nSummary JSON includes all rows regardless of the chart limit.\n")
 		}
 		fmt.Printf("\nEXAMPLE\n  tt %s --all-time --agent claude,codex\n", name)
 		return
@@ -153,8 +152,8 @@ EXAMPLE
 const reportFlagsHelp = `
 FILTERS
   --all-time, -a      include all history, including undated records
-  --since, --from DATE include usage on or after DATE (YYYY-MM-DD)
-  --until, --to DATE  include usage on or before DATE
+  --since DATE        include usage on or after DATE (YYYY-MM-DD)
+  --until DATE        include usage on or before DATE
                       date bounds cannot be combined with --all-time
   --agent NAME        repeatable or comma-separated; use tt agents for names
   --model NAME        repeatable or comma-separated model filter
@@ -162,9 +161,9 @@ FILTERS
   --subagents MODE    include (default), only, or exclude
 
 GROUPING
-  --group-by, --by DIMS  comma-separated day, week, month, agent, model,
-                        provider, project, session; none for flat output
-  --breakdown           shorthand for a model breakdown
+  --group-by DIMS     comma-separated day, week, month, agent, model,
+                      provider, project, session; none for flat output
+  --breakdown         same as --group-by model
 
 OUTPUT
   --json              machine-readable output
@@ -178,4 +177,6 @@ SCANNING
   --verbose           show scan, cache and duplicate diagnostics
 
 ROWS
+  --limit N           cap on displayed rows; 0 means no cap
+                      summary charts default to 7, detailed tables to all rows
 `

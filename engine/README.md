@@ -66,15 +66,19 @@ The generated npm launcher package also exposes both command names.
 --verbose               scan, cache and deduplication diagnostics
 --no-cache               read source logs without using or updating the scan cache
 --json                  machine-readable output
---limit N               detailed report row limit; 0 means all
+--limit N               cap on displayed rows; 0 means no cap
 --no-color              disable colour; also honours NO_COLOR
 --plain                 omit summary bars
 ```
 
-Summary charts show seven rows by default, including with `--limit 0`; a positive
-limit changes that cap. The daily chart selects the latest recorded days; models
+Summary charts show seven rows by default; `--limit N` changes that cap and
+`--limit 0` lifts it. The daily chart selects the latest recorded days; models
 and agents are ranked by list cost. Chart limits never reduce the totals or JSON
 output. Summary JSON includes the daily series and all dimension aggregates.
+
+Detailed tables narrow their text columns to fit the terminal; figures are never
+shortened. Output to a pipe or file is left whole, and setting `COLUMNS` forces
+a width.
 `--group-by` adds nested data to JSON and detailed tables; summary charts stay flat.
 Detailed timeline and session views default to a model breakdown. `project` stays
 flat by default, ranked by list cost, so it remains a useful overview; add

@@ -87,7 +87,7 @@ func TestAllTimeReportsIncludeOldAndUndatedUsage(t *testing.T) {
 
 func TestAllTimeRejectsDateBoundsBeforeScanning(t *testing.T) {
 	for _, cmd := range []string{"summary", "daily"} {
-		for _, flag := range []string{"--since", "--from", "--until", "--to"} {
+		for _, flag := range []string{"--since", "--until"} {
 			for _, allTime := range []string{"--all-time", "-a"} {
 				code, stdout, stderr := runCapturedCLI(t, cmd, allTime, flag, "2026-01-01")
 				if code != 2 || stdout != "" || !strings.Contains(stderr, "--all-time cannot be combined") {

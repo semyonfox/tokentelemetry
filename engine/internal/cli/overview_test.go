@@ -30,6 +30,11 @@ func TestOverviewLimitsDoNotHideTotalsOrUnpricedUsage(t *testing.T) {
 	if strings.Contains(out.String(), "2026-08-01") {
 		t.Fatal("display limit ignored")
 	}
+	out.Reset()
+	renderOverview(&out, rep, 0, false, false, true, nil)
+	if !strings.Contains(out.String(), "2026-08-01") || !strings.Contains(out.String(), "latest 2 of 2") {
+		t.Fatalf("--limit 0 should show every row:\n%s", out.String())
+	}
 	data, err := json.Marshal(view("summary", rep))
 	if err != nil {
 		t.Fatal(err)

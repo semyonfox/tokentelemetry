@@ -49,6 +49,8 @@ func TestCommandValidationBeforeLookupOrScan(t *testing.T) {
 		{[]string{"summary", "--agent", "GROKBOT"}, "no measured usage"},
 		{[]string{"daily", "extra"}, "unexpected report arguments"},
 		{[]string{"daily", "--limit=-1"}, "must not be negative"},
+		{[]string{"daily", "--breakdown", "--group-by", "model"}, "one or the other"},
+		{[]string{"daily", "--from", "2026-01-01"}, "flag provided but not defined"},
 	} {
 		code, out, err := runCapturedCLI(t, tc.args...)
 		if code != 2 || out != "" || !strings.Contains(err, tc.want) || !strings.Contains(err, "Run `tt help") {

@@ -36,3 +36,24 @@ func TestDefaultDimensions(t *testing.T) {
 		})
 	}
 }
+
+// --limit is one knob: a cap on displayed rows, lifted by 0. Only the summary
+// charts fill in a default when it is omitted.
+func TestLimitDefaultsPerCommand(t *testing.T) {
+	for _, tc := range []struct {
+		cmd  string
+		args []string
+		want int
+	}{
+		{"summary", nil, 7},
+		{"summary", []string{"--limit", "0"}, 0},
+		{"summary", []string{"--limit", "3"}, 3},
+		{"daily", nil, 0},
+		{"daily", []string{"--limit", "3"}, 3},
+	} {
+		opts, err := parseReportOptions(tc.cmd, tc.args)
+		if err != nil || opts.limit != tc.want {
+			t.Errorf("%s %v: limit=%d err=%v, want %d", tc.cmd, tc.args, opts.limit, err, tc.want)
+		}
+	}
+}

@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+- Fit detailed tables to the terminal: text columns narrow, widest first, until
+  the rows fit, and figures are never shortened. Output to a pipe or file is
+  left whole; `COLUMNS` overrides the detected width. Summary charts now drop
+  their bars from the detected width too, not only from `COLUMNS`.
+- Give `--limit` one meaning: a cap on displayed rows, where 0 lifts the cap.
+  Summary charts still default to seven rows when `--limit` is omitted.
+- Remove the `--from`, `--to` and `--by` spellings in favour of `--since`,
+  `--until` and `--group-by`. `--breakdown` combined with `--group-by` is now
+  an error instead of silently winning. Help text columns line up.
 - Group CLI help by task and add focused `tt help COMMAND` / `COMMAND --help`.
   Add `agents --installed` and named catalog filters, plus compatible
   `sessions`, `models`, `projects` and `providers` aliases. Reject invalid

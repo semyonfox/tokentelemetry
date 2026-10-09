@@ -37,7 +37,8 @@ singular report commands and `agents`.
 The default command is `summary`, covering the last 30 local calendar days.
 It shows accounting totals, daily token bars, and models and agents ranked by
 API list cost. Each chart shows up to seven rows. `--limit N` changes that
-number without changing the headline totals. Daily bars show the latest recorded
+number and `--limit 0` shows every row, without changing the headline totals.
+Daily bars show the latest recorded
 days; missing days are not presented as verified zero usage. Each chart scales
 its bars independently.
 
