@@ -35,7 +35,7 @@ detected sources; `tt agents cursor copilot` narrows the catalog to named agents
 singular report commands and `agents`.
 
 The default command is `summary`, covering the last 30 local calendar days.
-It shows accounting totals, daily token bars, and models and agents ranked by
+It shows accounting totals, daily list-cost bars stacked by agent, and models and agents ranked by
 API list cost. Each chart shows up to seven rows. `--limit N` changes that
 number and `--limit 0` shows every row, without changing the headline totals.
 Daily bars show the latest recorded
@@ -75,7 +75,10 @@ The dollar total is API list value, not a provider invoice. Subscription and
 local usage are classified separately. Optional plan costs in
 `~/.tokentelemetry/plans.json` are prorated over the matched activity window.
 They do not establish actual invoiced spend or allocate a plan's cost to a
-particular model or project.
+particular model or project. The summary also shows the five-hour and weekly
+subscription windows an agent reports about itself: Codex from its session
+logs, Claude Code through the `tt statusline` hook described in the
+[engine README](engine/README.md#plan-windows).
 
 Accuracy has limits:
 

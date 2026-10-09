@@ -17,3 +17,9 @@ func terminalWidth(f *os.File) int {
 	}
 	return int(ws.Col)
 }
+
+// isTerminal reports whether f is a terminal at all, whatever its size.
+func isTerminal(f *os.File) bool {
+	_, err := unix.IoctlGetWinsize(int(f.Fd()), unix.TIOCGWINSZ)
+	return err == nil
+}

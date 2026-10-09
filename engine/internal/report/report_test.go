@@ -290,3 +290,30 @@ func TestAccountingQualificationsFollowFiltersAndBuckets(t *testing.T) {
 		t.Fatalf("qualifications ignored filters: %+v", filtered.Totals)
 	}
 }
+
+func TestCostByAgentSplitsPricedCost(t *testing.T) {
+	day := local(2026, 8, 10, 12, 0)
+	claude := turn("a", "dear", "", day, 1_000_000)
+	codex := turn("b", "cheap", "", day, 2_000_000)
+	codex.Agent = model.AgentCodex
+	unpriced := turn("c", "mystery", "", day, 500)
+	unpriced.Agent = model.AgentCodex
+	rep := Build([]model.Turn{claude, codex, unpriced}, tbl(), Filter{}, Daily, 0, nil)
+	if len(rep.Series) != 1 {
+		t.Fatalf("series = %+v", rep.Series)
+	}
+	b := rep.Series[0]
+	// dear costs 100x cheap per token and claude sent half the tokens, so claude
+	// pays 50x codex; the unpriced turn adds nothing to either
+	if len(b.CostByAgent) != 2 || b.CostByAgent["codex"] <= 0 || b.CostByAgent["claude"] != 50*b.CostByAgent["codex"] ||
+		b.CostByAgent["claude"]+b.CostByAgent["codex"] != b.Cost {
+		t.Fatalf("cost by agent = %v, total %v", b.CostByAgent, b.Cost)
+	}
+	m, ok := find(rep.ByModel, "dear")
+	if !ok || m.CostByAgent["claude"] != m.Cost || len(m.CostByAgent) != 1 {
+		t.Fatalf("model split = %v, cost %v", m.CostByAgent, m.Cost)
+	}
+	if u, ok := find(rep.ByModel, "mystery"); !ok || u.CostByAgent != nil {
+		t.Fatalf("unpriced model should have no split: %+v", u)
+	}
+}

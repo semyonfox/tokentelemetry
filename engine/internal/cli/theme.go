@@ -1,18 +1,42 @@
 package cli
 
-import "strings"
+import (
+	"fmt"
+	"os"
+	"strings"
+)
 
 // ANSI codes. Kept to the 16-colour basic set so the output looks right on a
 // default terminal, over SSH, and inside tmux without a 256-colour TERM.
 const (
-	ansiReset  = "\x1b[0m"
-	ansiBold   = "\x1b[1m"
-	ansiDim    = "\x1b[2m"
-	ansiGreen  = "\x1b[32m"
-	ansiYellow = "\x1b[33m"
-	ansiBlue   = "\x1b[34m"
-	ansiCyan   = "\x1b[36m"
+	ansiReset         = "\x1b[0m"
+	ansiBold          = "\x1b[1m"
+	ansiDim           = "\x1b[2m"
+	ansiRed           = "\x1b[31m"
+	ansiGreen         = "\x1b[32m"
+	ansiYellow        = "\x1b[33m"
+	ansiBlue          = "\x1b[34m"
+	ansiMagenta       = "\x1b[35m"
+	ansiCyan          = "\x1b[36m"
+	ansiWhite         = "\x1b[37m"
+	ansiGrey          = "\x1b[90m"
+	ansiBrightRed     = "\x1b[91m"
+	ansiBrightGreen   = "\x1b[92m"
+	ansiBrightBlue    = "\x1b[94m"
+	ansiBrightMagenta = "\x1b[95m"
+	ansiBrightCyan    = "\x1b[96m"
+	ansiBrightWhite   = "\x1b[97m"
 )
+
+// richColor reports whether TERM or COLORTERM promise 256 colours, which is
+// what lets brand shades be told apart; otherwise only the basic 16 are used.
+func richColor() bool {
+	term, colorterm := os.Getenv("TERM"), os.Getenv("COLORTERM")
+	return strings.Contains(term, "256color") || colorterm == "truecolor" || colorterm == "24bit"
+}
+
+// ansi256 is a foreground from the 256-colour palette.
+func ansi256(n int) string { return fmt.Sprintf("\x1b[38;5;%dm", n) }
 
 // theme applies colour, or does not. Every style is a method rather than a
 // bare constant so the no-colour path is a single branch in one place and

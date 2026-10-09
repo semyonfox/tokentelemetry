@@ -209,3 +209,21 @@ type Turn struct {
 	// ReplayHeuristic marks legacy Codex history processed using timing.
 	ReplayHeuristic bool `json:"replay_heuristic,omitempty"`
 }
+
+// PlanWindow is one subscription rate-limit window as the agent itself last
+// reported it: Codex writes rate_limits into its session logs, Claude Code
+// hands them to a statusline hook. The figure is the agent's own, never
+// derived from token counts here, and a snapshot can be stale, so ObservedAt
+// is part of the record.
+type PlanWindow struct {
+	Agent Agent `json:"agent"`
+	// Window names the rolling window: "5h", "7d", or the reported length when
+	// it is neither.
+	Window      string  `json:"window"`
+	UsedPercent float64 `json:"used_percent"`
+	// ResetsAt is zero, and omitted from JSON, when the agent did not say.
+	ResetsAt   time.Time `json:"resets_at,omitzero"`
+	ObservedAt time.Time `json:"observed_at"`
+	// Plan is the agent's own plan label when it records one.
+	Plan string `json:"plan,omitempty"`
+}

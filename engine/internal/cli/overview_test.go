@@ -84,3 +84,96 @@ func TestOverviewDisclosesApproximateAccounting(t *testing.T) {
 		}
 	}
 }
+
+func TestOverviewStacksDailyCostByAgent(t *testing.T) {
+	t.Setenv("TT_PLANS_FILE", t.TempDir()+"/missing.json")
+	t.Setenv("COLUMNS", "100")
+	t.Setenv("TERM", "xterm-256color")
+	grey, orange := ansi256(245), ansi256(208)
+	rep := &report.Report{
+		MatchedTurns: 3,
+		Totals:       report.Totals{Cost: 10, Turns: 3},
+		Series: []report.Bucket{
+			{Key: "2026-08-01", Cost: 10, CostByAgent: map[string]float64{"codex": 7.5, "claude": 2.5}, Usage: model.Usage{Output: 1000}},
+			{Key: "2026-08-02", Usage: model.Usage{Output: 5}},
+		},
+		ByModel: []report.Bucket{
+			{Key: "gpt", Cost: 7.5, CostByAgent: map[string]float64{"codex": 7.5}},
+			{Key: "opus", Cost: 2.5, CostByAgent: map[string]float64{"claude": 2.5}},
+		},
+		ByAgent: []report.Bucket{{Key: "codex", Cost: 7.5}, {Key: "claude", Cost: 2.5}},
+	}
+	// without colour the stack is one plain bar and there is no legend to read
+	var out bytes.Buffer
+	renderOverview(&out, rep, 0, false, false, true, nil)
+	s := out.String()
+	for _, want := range []string{"Daily list cost by agent", "####################     $10.00", "$7.50"} {
+		if !strings.Contains(s, want) {
+			t.Errorf("missing %q in:\n%s", want, s)
+		}
+	}
+	if strings.Contains(s, "## codex") || strings.Contains(s, "\x1b") {
+		t.Fatalf("legend or escapes without colour:\n%s", s)
+	}
+	for _, line := range strings.Split(s, "\n") {
+		if strings.HasPrefix(line, "  2026-08-02") && strings.Contains(line, "#") {
+			t.Errorf("zero-cost day drew a bar: %q", line)
+		}
+	}
+
+	// with colour: 20 cells, codex's 7.5 of 10 ends at cell 15, claude fills the rest
+	out.Reset()
+	renderOverview(&out, rep, 0, true, false, true, nil)
+	s = out.String()
+	// codex draws in its grey and claude in orange, the brand-nearest colours
+	for _, want := range []string{
+		grey + "###############" + ansiReset + orange + "#####" + ansiReset,
+		grey + "##" + ansiReset + " codex   " + orange + "##" + ansiReset + " claude",
+	} {
+		if !strings.Contains(s, want) {
+			t.Errorf("missing %q in:\n%q", want, s)
+		}
+	}
+	// models scale to the top model: opus is 2.5 of gpt's 7.5, so 7 of 20 cells
+	for _, line := range strings.Split(s, "\n") {
+		if strings.HasPrefix(line, "  opus") && !strings.Contains(line, orange+"#######"+ansiReset) {
+			t.Errorf("model should take its agent's colour: %q", line)
+		}
+	}
+}
+
+func TestAgentPaletteBrandsAndClashes(t *testing.T) {
+	agents := []report.Bucket{{Key: "gemini"}, {Key: "ibm-bob"}, {Key: "copilot"}, {Key: "qwen"}, {Key: "hermes"}, {Key: "claude"}}
+	distinct := func(p agentPalette) {
+		t.Helper()
+		seen := map[string]bool{}
+		for agent, c := range p {
+			if seen[c] {
+				t.Fatalf("%s shares a colour: %v", agent, p)
+			}
+			seen[c] = true
+		}
+	}
+
+	// basic 16: copilot and qwen both map to bright magenta, so the costlier
+	// keeps it and qwen takes the first free colour; hermes has no brand
+	t.Setenv("TERM", "xterm")
+	t.Setenv("COLORTERM", "")
+	p := newAgentPalette(agents)
+	for agent, want := range map[string]string{"gemini": ansiBlue, "ibm-bob": ansiBrightBlue, "copilot": ansiBrightMagenta, "qwen": ansiCyan, "hermes": ansiGreen, "claude": ansiYellow} {
+		if p.color(agent) != want {
+			t.Errorf("basic %s = %q, want %q", agent, p.color(agent), want)
+		}
+	}
+	distinct(p)
+
+	// 256 colours: every brand has its own shade, so nothing moves
+	t.Setenv("COLORTERM", "truecolor")
+	p = newAgentPalette(agents)
+	for agent, want := range map[string]string{"gemini": ansi256(33), "ibm-bob": ansi256(25), "copilot": ansi256(99), "qwen": ansi256(141), "hermes": ansiCyan, "claude": ansi256(208)} {
+		if p.color(agent) != want {
+			t.Errorf("rich %s = %q, want %q", agent, p.color(agent), want)
+		}
+	}
+	distinct(p)
+}

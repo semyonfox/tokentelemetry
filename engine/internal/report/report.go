@@ -12,6 +12,7 @@ package report
 
 import (
 	"cmp"
+	"maps"
 	"math"
 	"slices"
 	"sort"
@@ -127,6 +128,9 @@ type Bucket struct {
 	Unpriced     int         `json:"unpriced,omitempty"`
 	// Models lists the distinct models in this bucket, busiest first.
 	Models []string `json:"models,omitempty"`
+	// CostByAgent splits the priced cost by agent, so a day can be drawn as
+	// one segment per agent without re-running the report grouped that way.
+	CostByAgent map[string]float64 `json:"cost_by_agent,omitempty"`
 	// Breakdown splits the bucket by model, most expensive first. Populated for
 	// every bucket; the CLI shows it under --breakdown, and JSON consumers get
 	// it unconditionally so a caller never has to re-run with a different
@@ -144,6 +148,9 @@ type Report struct {
 	Sessions  []Bucket `json:"sessions,omitempty"`
 	// ExcludedOverlaps preserves source aggregates withheld from every total.
 	ExcludedOverlaps []ExcludedOverlap `json:"excluded_overlaps,omitempty"`
+	// PlanWindows are the agents' own subscription windows, attached by the CLI
+	// for the summary. They come from the agents, not from the turns.
+	PlanWindows []model.PlanWindow `json:"plan_windows,omitempty"`
 
 	// WindowFrom/WindowTo bound the matched turns as local day keys, used to
 	// prorate flat-rate subscriptions over exactly the period on screen.
@@ -182,6 +189,7 @@ type acc struct {
 	heuristic  int
 	sessions   map[string]struct{}
 	models     map[string]int64
+	agentCost  map[string]float64
 	// sub holds this bucket's split by the next grouping dimension, and dims
 	// holds the dimensions still to apply beneath it. An empty dims stops the
 	// recursion, so the nesting depth is exactly what the caller asked for.
@@ -191,7 +199,7 @@ type acc struct {
 }
 
 func newAcc(dims []Dimension, projectBucket bool) *acc {
-	a := &acc{sessions: map[string]struct{}{}, models: map[string]int64{}, dims: dims}
+	a := &acc{sessions: map[string]struct{}{}, models: map[string]int64{}, agentCost: map[string]float64{}, dims: dims}
 	if projectBucket {
 		a.projectPaths = map[string]struct{}{}
 	}
@@ -212,6 +220,7 @@ func (a *acc) add(t model.Turn, c cost.Cost, rawProject string) {
 	}
 	if c.Priced() {
 		a.cost += c.USD
+		a.agentCost[cmp.Or(string(t.Agent), "(unknown)")] += c.USD
 	} else {
 		a.unpriced++
 	}
@@ -262,6 +271,9 @@ func (a *acc) bucket(key string) Bucket {
 		b.ProjectPaths = append(b.ProjectPaths, p)
 	}
 	sort.Strings(b.ProjectPaths)
+	if len(a.agentCost) > 0 {
+		b.CostByAgent = maps.Clone(a.agentCost)
+	}
 	for k, s := range a.sub {
 		b.Breakdown = append(b.Breakdown, s.bucket(k))
 	}

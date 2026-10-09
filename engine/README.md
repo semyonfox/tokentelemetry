@@ -180,6 +180,40 @@ its first and last local days. They are separate from API list value and are not
 an invoice total. Model/project filters do not allocate a subscription's cost to
 that subset of usage. Without a plans file, the CLI does not invent a plan cost.
 
+## Plan windows
+
+The summary shows each agent's own subscription rate-limit windows: the
+five-hour and weekly percentages the agent itself reports, with their reset
+times and how long ago they were seen. They are the agent's figures, not an
+estimate from token counts, and an agent that has reported none shows nothing.
+`--json` carries them as `plan_windows`.
+
+- Codex writes its windows into its session logs, so the newest snapshot is
+  used without any setup.
+- Claude Code only hands them to a status line command. Configure
+  `~/.claude/settings.json`:
+
+  ```json
+  { "statusLine": { "type": "command", "command": "tt statusline" } }
+  ```
+
+  `tt statusline` records the windows under the user cache directory and prints
+  them on one line, so it can be the status line itself. To keep an existing
+  status line script, give it the same input afterwards:
+
+  ```sh
+  input=$(cat)
+  printf '%s' "$input" | tt statusline >/dev/null
+  printf '%s' "$input" | ~/.claude/my-statusline.sh
+  ```
+
+Windows exist only for Claude Pro and Max subscribers and only after the first
+response of a session. A window past its reset time is not shown, in the table
+or in JSON; one whose reset the agent did not give is dropped once its own
+length has passed since it was seen. Several Claude Code sessions may run the
+hook with different figures: within one window the highest stands, and a later
+reset time wins.
+
 ## Pricing
 
 Rates in `internal/pricing/data/pricing.json` are embedded in the executable.

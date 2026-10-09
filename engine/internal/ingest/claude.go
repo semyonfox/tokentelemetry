@@ -26,7 +26,8 @@ import (
 // message id and request id, and the pair survives the copy — which is what
 // makes deduplication possible at all.
 type Claude struct {
-	roots []string
+	roots   []string
+	planDir string
 }
 
 func NewClaude() *Claude {
@@ -51,6 +52,9 @@ func NewClaude() *Claude {
 		}
 	}
 	c := &Claude{}
+	if dir, err := DefaultPlanDir(); err == nil {
+		c.planDir = dir
+	}
 	seen := make(map[string]bool)
 	for _, dir := range candidates {
 		dir = strings.TrimSpace(dir)

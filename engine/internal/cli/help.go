@@ -9,6 +9,8 @@ type commandSpec struct {
 	name, description string
 	aliases           []string
 	report            bool
+	// hook commands are run by another program, not typed by the user
+	hook bool
 }
 
 var commands = []commandSpec{
@@ -21,6 +23,7 @@ var commands = []commandSpec{
 	{name: "project", aliases: []string{"projects"}, description: "usage by project", report: true},
 	{name: "agents", aliases: []string{"providers"}, description: "provider coverage and detected source paths"},
 	{name: "price", description: "effective-dated rates for one or more models"},
+	{name: "statusline", description: "Claude Code status line hook; records plan windows", hook: true},
 	{name: "version", aliases: []string{"--version", "-v"}, description: "build version"},
 }
 
@@ -56,7 +59,13 @@ REPORTS
 		fmt.Print("  Timeline and session rows nest by model; model and project stay flat.\n")
 		fmt.Print("\nLOOKUP\n")
 		for _, command := range commands {
-			if !command.report && command.name != "version" {
+			if !command.report && !command.hook && command.name != "version" {
+				fmt.Printf("  %-10s %s\n", command.name, command.description)
+			}
+		}
+		fmt.Print("\nHOOKS\n")
+		for _, command := range commands {
+			if command.hook {
 				fmt.Printf("  %-10s %s\n", command.name, command.description)
 			}
 		}
@@ -111,6 +120,24 @@ Run tt help COMMAND for all flags, date defaults and examples.
 		return
 	}
 	switch name {
+	case "statusline":
+		fmt.Print(`USAGE
+  tt statusline
+
+Reads the JSON Claude Code passes to a status line command on stdin, records
+the subscription windows in it (rate_limits.five_hour and seven_day) under the
+user cache directory, and prints them on one line, so it can be the status
+line itself. In ~/.claude/settings.json:
+
+  { "statusLine": { "type": "command", "command": "tt statusline" } }
+
+Windows appear only for Claude Pro and Max subscribers and only after the
+first response in a session. The summary shows the latest recorded windows
+next to Codex's, which come from its own session logs without a hook.
+
+FLAGS
+  --help, -h          show this help
+`)
 	case "agents":
 		fmt.Print(`USAGE
   tt agents [NAME ...] [flags]
