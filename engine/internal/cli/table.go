@@ -18,9 +18,8 @@ type column struct {
 	title string
 	align align
 	// max caps the rendered width; longer cells are truncated. Zero means no
-	// cap. Paths truncate from the left, since a path's tail identifies it.
-	max       int
-	truncLeft bool
+	// cap.
+	max int
 }
 
 // cell is one rendered value plus the style to paint it with. Style is applied
@@ -68,19 +67,9 @@ func (c cell) lineAt(n int) string {
 	return ""
 }
 
-func (c cell) render() string {
-	if c.style == nil {
-		return c.text
-	}
-	return c.style(c.text)
-}
-
-// row is a table row. indent renders it as a nested detail line under the
-// preceding row, which is how per-model breakdowns attach to their parent.
+// row is a table row.
 type row struct {
 	cells []cell
-	// indent insets the first column, used for nested detail rows.
-	indent bool
 	// rule draws a separator above the row, used to close a group.
 	rule bool
 	// spacer draws a blank line above the row, separating one top-level group
@@ -109,8 +98,6 @@ func newTable(th theme, cols ...column) *table {
 
 func (t *table) add(cells ...cell) { t.rows = append(t.rows, row{cells: cells}) }
 
-func (t *table) addSub(cells ...cell) { t.rows = append(t.rows, row{cells: cells, indent: true}) }
-
 // addRuled adds a row preceded by a separator, closing off what came before.
 func (t *table) addRuled(cells ...cell) { t.rows = append(t.rows, row{cells: cells, rule: true}) }
 
@@ -137,12 +124,6 @@ func (t *table) widths() []int {
 			if t.cols[i].max > 0 && n > t.cols[i].max {
 				n = t.cols[i].max
 			}
-			// An indented row spends part of the first column on its indent, so
-			// it must claim that space here or the sub-row's figures land two
-			// cells right of the parent's and the grid breaks.
-			if i == 0 && r.indent {
-				n += subIndent
-			}
 			if n > w[i] {
 				w[i] = n
 			}
@@ -150,9 +131,6 @@ func (t *table) widths() []int {
 	}
 	return w
 }
-
-// subIndent is how far a detail row is inset beneath its parent.
-const subIndent = 2
 
 const colGap = "   "
 
@@ -196,50 +174,36 @@ func (t *table) render(out io.Writer) {
 
 // writeLine emits one physical line of a (possibly multi-line) row.
 func (t *table) writeLine(out io.Writer, w []int, r row, ln int) {
-	{
-		var line strings.Builder
-		for i := range t.cols {
-			if i > 0 {
-				line.WriteString(colGap)
-			}
-			var c cell
-			if i < len(r.cells) {
-				c = r.cells[i]
-			}
-			c.text = c.lineAt(ln)
-			// The first column of a detail row is narrowed by the indent it
-			// already consumed, keeping every later column on the parent grid.
-			cw := w[i]
-			if i == 0 && r.indent {
-				cw -= subIndent
-			}
-			text := c.text
-			if lim := t.cols[i].max; lim > 0 {
-				text = truncate(text, lim, t.cols[i].truncLeft)
-			}
-			text = truncate(text, cw, t.cols[i].truncLeft)
+	var line strings.Builder
+	for i, col := range t.cols {
+		if i > 0 {
+			line.WriteString(colGap)
+		}
+		var c cell
+		if i < len(r.cells) {
+			c = r.cells[i]
+		}
+		text := c.lineAt(ln)
+		if col.max > 0 {
+			text = truncate(text, col.max)
+		}
 
-			// Pad the plain text, then style — never the other way round, or the
-			// escape sequences would be counted as visible width.
-			padded := pad(text, cw, t.cols[i].align == alignRight)
-			// Style the visible text only, preserving the padding either side.
-			// An entirely blank cell must be left alone: trimming it would make
-			// `lead` and `trail` each equal the full width, and the cell would
-			// render twice as wide as its column — which knocked every later
-			// column out of line on multi-line rows.
-			if c.style != nil && strings.TrimSpace(padded) != "" {
-				lead := len(padded) - len(strings.TrimLeft(padded, " "))
-				trail := len(padded) - len(strings.TrimRight(padded, " "))
-				padded = padded[:lead] + c.style(strings.TrimSpace(padded)) + repeat(" ", trail)
-			}
-			line.WriteString(padded)
+		// Pad the plain text, then style — never the other way round, or the
+		// escape sequences would be counted as visible width.
+		padded := pad(text, w[i], col.align == alignRight)
+		// Style the visible text only, preserving the padding either side.
+		// An entirely blank cell must be left alone: trimming it would make
+		// `lead` and `trail` each equal the full width, and the cell would
+		// render twice as wide as its column — which knocked every later
+		// column out of line on multi-line rows.
+		if c.style != nil && strings.TrimSpace(padded) != "" {
+			lead := len(padded) - len(strings.TrimLeft(padded, " "))
+			trail := len(padded) - len(strings.TrimRight(padded, " "))
+			padded = padded[:lead] + c.style(strings.TrimSpace(padded)) + repeat(" ", trail)
 		}
-		prefix := t.indent
-		if r.indent {
-			prefix = t.indent + repeat(" ", subIndent)
-		}
-		io.WriteString(out, strings.TrimRight(prefix+line.String(), " ")+"\n")
+		line.WriteString(padded)
 	}
+	io.WriteString(out, strings.TrimRight(t.indent+line.String(), " ")+"\n")
 }
 
 func (t *table) writeRule(out io.Writer, w []int) {

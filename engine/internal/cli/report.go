@@ -106,7 +106,10 @@ func view(cmd string, rep *report.Report) any {
 		Rows    []report.Bucket `json:"rows"`
 		*report.Report
 	}
-	o := out{Command: cmd, Report: rep}
+	// Work on a copy so trimming the aggregates below never mutates the
+	// caller's report.
+	narrowed := *rep
+	o := out{Command: cmd, Report: &narrowed}
 	switch cmd {
 	case "session":
 		o.Rows = rep.Sessions

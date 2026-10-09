@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"cmp"
 	"encoding/json"
 
 	"github.com/semyonfox/tokentelemetry/engine/internal/model"
@@ -25,7 +26,7 @@ func codexStructured(records []codexRecord) ([]codexRecord, []model.Turn) {
 	for i, r := range records {
 		p := r.Payload
 		if r.Type == "session_meta" && ownID == "" {
-			ownID = firstNonEmpty(p.ID, p.SessionID)
+			ownID = cmp.Or(p.ID, p.SessionID)
 			modelID, provider, project = p.Model, p.ModelProvider, p.CWD
 			subagent = p.ThreadSource == "subagent"
 		}

@@ -6,6 +6,7 @@ import (
 	"math"
 	"os"
 	"sort"
+	"strings"
 
 	"github.com/semyonfox/tokentelemetry/engine/internal/pricing"
 )
@@ -65,7 +66,7 @@ func backfill(ds *dataset, path string, asOf pricing.Date) (moved, rejected, amb
 			continue
 		}
 		id := key
-		if i := indexByte(key, 0); i >= 0 {
+		if i := strings.IndexByte(key, 0); i >= 0 {
 			id = key[i+1:]
 		}
 		r := m.Rates[len(m.Rates)-1]
@@ -132,13 +133,4 @@ func deref(p *float64) float64 {
 		return 0
 	}
 	return *p
-}
-
-func indexByte(s string, b byte) int {
-	for i := 0; i < len(s); i++ {
-		if s[i] == b {
-			return i
-		}
-	}
-	return -1
 }

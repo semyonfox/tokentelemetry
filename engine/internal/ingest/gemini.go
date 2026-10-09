@@ -32,16 +32,12 @@ func NewGemini() *Gemini {
 //
 // A session's own kind=="main" field alone does NOT mean Gemini CLI:
 // Antigravity writes main-kind chats into the same tmp/ tree, under hashes
-// projects.json has never heard of. The Python scanner uses exactly this
-// list to decide, and the two runtimes MUST agree — sessions are merged on
-// (agent, id), so one side labelling a session gemini and the other
-// antigravity does not conflict, it produces two rows and counts the usage
-// twice.
+// projects.json has never heard of. Only hashes the file vouches for are read
+// as Gemini CLI; the rest are left alone rather than mislabelled.
 //
-// A missing or unreadable projects.json yields an empty set, which
-// classifies everything as Antigravity. That is the safe direction:
-// Antigravity usage is scanned by Python either way, so the cost of being
-// wrong is a session Go skips, not one it double-counts.
+// A missing or unreadable projects.json yields an empty set, so nothing is
+// read. That is the safe direction: the cost of being wrong is a session
+// skipped, not one attributed to the wrong agent.
 func (g *Gemini) knownSlugs() map[string]struct{} {
 	slugs := map[string]struct{}{}
 	if g.root == "" {

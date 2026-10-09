@@ -37,8 +37,6 @@ const (
 	AgentGrok        Agent = "grok"
 	AgentCline       Agent = "cline"
 	AgentPi          Agent = "pi"
-	AgentSmallCode   Agent = "smallcode"
-	AgentVibe        Agent = "vibe"
 )
 
 // ProjectSession identifies one provider conversation without conflating
@@ -210,20 +208,4 @@ type Turn struct {
 	Credits *float64 `json:"credits,omitempty"`
 	// ReplayHeuristic marks legacy Codex history processed using timing.
 	ReplayHeuristic bool `json:"replay_heuristic,omitempty"`
-}
-
-// Session is the turn-level rollup of one agent conversation. It is derived
-// from turns, never the other way around.
-type Session struct {
-	ID       string    `json:"id"`
-	Agent    Agent     `json:"agent"`
-	Project  string    `json:"project,omitempty"`
-	Title    string    `json:"title,omitempty"`
-	Start    time.Time `json:"start"`
-	End      time.Time `json:"end"`
-	Turns    int       `json:"turns"`
-	Usage    Usage     `json:"usage"`
-	Models   []string  `json:"models,omitempty"`
-	ParentID string    `json:"parent_id,omitempty"`
-	Subagent bool      `json:"subagent,omitempty"`
 }

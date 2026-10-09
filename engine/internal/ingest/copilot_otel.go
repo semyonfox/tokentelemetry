@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"cmp"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -72,7 +73,7 @@ func copilotTurnFromOTelSpan(span copilotOTelSpan) (model.Turn, bool) {
 	traceID := strings.TrimSpace(span.TraceID)
 	spanID := strings.TrimSpace(span.SpanID)
 	sessionID := copilotOTelAttrString(span.Attributes, "gen_ai.conversation.id")
-	modelID := firstNonEmpty(
+	modelID := cmp.Or(
 		copilotOTelAttrString(span.Attributes, "gen_ai.response.model"),
 		copilotOTelAttrString(span.Attributes, "gen_ai.request.model"),
 	)

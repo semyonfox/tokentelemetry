@@ -1,9 +1,6 @@
 package cli
 
-import (
-	"strings"
-	"unicode/utf8"
-)
+import "strings"
 
 // ANSI codes. Kept to the 16-colour basic set so the output looks right on a
 // default terminal, over SSH, and inside tmux without a 256-colour TERM.
@@ -11,7 +8,6 @@ const (
 	ansiReset  = "\x1b[0m"
 	ansiBold   = "\x1b[1m"
 	ansiDim    = "\x1b[2m"
-	ansiRed    = "\x1b[31m"
 	ansiGreen  = "\x1b[32m"
 	ansiYellow = "\x1b[33m"
 	ansiBlue   = "\x1b[34m"
@@ -36,7 +32,6 @@ func (t theme) head(s string) string   { return t.wrap(ansiBold, s) }
 func (t theme) rule(s string) string   { return t.wrap(ansiDim, s) }
 func (t theme) dim(s string) string    { return t.wrap(ansiDim, s) }
 func (t theme) warn(s string) string   { return t.wrap(ansiYellow, s) }
-func (t theme) bad(s string) string    { return t.wrap(ansiRed, s) }
 func (t theme) money(s string) string  { return t.wrap(ansiGreen, s) }
 func (t theme) strong(s string) string { return t.wrap(ansiBold, s) }
 func (t theme) label(s string) string  { return t.wrap(ansiCyan, s) }
@@ -88,28 +83,15 @@ func runeWidth(r rune) int {
 }
 
 // truncate shortens a string to width cells, marking the cut with an ellipsis.
-// Truncation happens on the LEFT for paths, because the distinguishing part of
-// a filesystem path is its tail.
-func truncate(s string, width int, fromLeft bool) string {
+func truncate(s string, width int) string {
 	if displayWidth(s) <= width || width <= 1 {
 		return s
 	}
-	runes := []rune(s)
-	if fromLeft {
-		w := 0
-		for i := len(runes) - 1; i >= 0; i-- {
-			w += runeWidth(runes[i])
-			if w > width-1 {
-				return "…" + string(runes[i+1:])
-			}
-		}
-		return s
-	}
 	w := 0
-	for i, r := range runes {
+	for i, r := range s {
 		w += runeWidth(r)
 		if w > width-1 {
-			return string(runes[:i]) + "…"
+			return s[:i] + "…"
 		}
 	}
 	return s
@@ -134,5 +116,3 @@ func repeat(s string, n int) string {
 	}
 	return strings.Repeat(s, n)
 }
-
-var _ = utf8.RuneCountInString // retained for reference; displayWidth supersedes it

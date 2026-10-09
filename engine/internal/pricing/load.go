@@ -45,15 +45,6 @@ func Load() (*Table, error) {
 	return loaded, loadErr
 }
 
-// MustLoad is Load for callers that cannot proceed without pricing.
-func MustLoad() *Table {
-	t, err := Load()
-	if err != nil {
-		panic(err)
-	}
-	return t
-}
-
 func load() (*Table, error) {
 	var f fileFormat
 	if err := json.Unmarshal(cachedData(dataJSON), &f); err != nil {

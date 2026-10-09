@@ -22,14 +22,7 @@ func mapFiles(ctx context.Context, paths []string, fn func(string) []model.Turn)
 		return nil
 	}
 	results := make([][]model.Turn, len(paths))
-
-	workers := runtime.NumCPU()
-	if workers > len(paths) {
-		workers = len(paths)
-	}
-	if workers < 1 {
-		workers = 1
-	}
+	workers := max(1, min(runtime.NumCPU(), len(paths)))
 
 	idx := make(chan int)
 	var wg sync.WaitGroup

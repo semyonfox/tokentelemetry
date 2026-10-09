@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"cmp"
 	"context"
 	"encoding/json"
 	"errors"
@@ -21,7 +22,7 @@ func (l *LingTai) Roots() []string          { return append([]string(nil), l.roo
 
 func lingTaiRoots() []string {
 	var candidates []string
-	explicit := firstNonEmpty(os.Getenv("LINGTAI_HOME"), os.Getenv("LINGTAI_TUI_HOME"))
+	explicit := cmp.Or(os.Getenv("LINGTAI_HOME"), os.Getenv("LINGTAI_TUI_HOME"))
 	if explicit != "" {
 		candidates = strings.Split(explicit, string(os.PathListSeparator))
 	} else if h := homeDir(); h != "" {
@@ -107,8 +108,8 @@ func (l *LingTai) Scan(ctx context.Context, emit func(model.Turn)) error {
 				continue
 			}
 			manifest := readLingTaiManifest(agentDir)
-			project := firstNonEmpty(manifest.Nickname, manifest.AgentName, manifest.Address, entry.Name())
-			agentID := firstNonEmpty(manifest.AgentID, entry.Name())
+			project := cmp.Or(manifest.Nickname, manifest.AgentName, manifest.Address, entry.Name())
+			agentID := cmp.Or(manifest.AgentID, entry.Name())
 			sources = append(sources, lingTaiSource{ledger, project, agentID})
 		}
 	}
@@ -169,8 +170,8 @@ func scanLingTaiLedger(source lingTaiSource, emit func(model.Turn)) error {
 			modelID = "unknown"
 			unpriced = "LingTai ledger entry does not record the request model"
 		}
-		sourceLabel := firstNonEmpty(r.Source, "main")
-		session := firstNonEmpty(r.RunID, source.agentID+":"+sourceLabel)
+		sourceLabel := cmp.Or(r.Source, "main")
+		session := cmp.Or(r.RunID, source.agentID+":"+sourceLabel)
 		key := ""
 		if r.APICallID != "" {
 			key = identityKey("lingtai-api-call", r.APICallID)

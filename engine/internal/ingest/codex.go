@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"cmp"
 	"context"
 	"encoding/json"
 	"io/fs"
@@ -174,7 +175,7 @@ func scanCodexLegacy(records []codexRecord) []model.Turn {
 			// then write the parent's meta immediately after, which must not
 			// overwrite our identity.
 			if sessionID == "" {
-				sessionID = firstNonEmpty(r.Payload.ID, r.Payload.SessionID)
+				sessionID = cmp.Or(r.Payload.ID, r.Payload.SessionID)
 				project = r.Payload.CWD
 				provider = r.Payload.ModelProvider
 				if r.Payload.Model != "" {
@@ -290,13 +291,4 @@ func codexKey(sessionID string, seq int) string {
 		return ""
 	}
 	return "codex|" + sessionID + "|" + strconv.Itoa(seq)
-}
-
-func firstNonEmpty(vals ...string) string {
-	for _, v := range vals {
-		if v != "" {
-			return v
-		}
-	}
-	return ""
 }

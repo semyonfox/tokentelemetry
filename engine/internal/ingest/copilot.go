@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"cmp"
 	"context"
 	"crypto/sha256"
 	"database/sql"
@@ -734,7 +735,7 @@ func scanCopilotShutdownFile(ctx context.Context, eventPath string) ([]model.Tur
 		if len(data.ModelMetrics) == 0 {
 			continue
 		}
-		sessionID := firstNonEmpty(data.SessionID, pathSessionID)
+		sessionID := cmp.Or(data.SessionID, pathSessionID)
 		timestamp := parseCopilotStoreTime(event.Timestamp)
 		if timestamp.IsZero() {
 			timestamp = lastTimestamp
@@ -752,7 +753,7 @@ func scanCopilotShutdownFile(ctx context.Context, eventPath string) ([]model.Tur
 		sort.Strings(models)
 		for _, mapModel := range models {
 			metric := data.ModelMetrics[mapModel]
-			modelID := firstNonEmpty(strings.TrimSpace(metric.Model), strings.TrimSpace(mapModel))
+			modelID := cmp.Or(strings.TrimSpace(metric.Model), strings.TrimSpace(mapModel))
 			if modelID == "" {
 				modelID = "unknown"
 			}

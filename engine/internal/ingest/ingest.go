@@ -302,8 +302,7 @@ func moreCompleteUsage(a, b model.Usage) bool {
 	return a.ContextTokens > b.ContextTokens
 }
 
-// homeDir returns the user's home directory, honouring the overrides the
-// agents themselves respect so a relocated config is still found.
+// homeDir returns the user's home directory, or "" when it cannot be found.
 func homeDir() string {
 	if h, err := os.UserHomeDir(); err == nil {
 		return h
@@ -334,11 +333,4 @@ func envDir(env, def string) string {
 		return ""
 	}
 	return existingDir(filepath.Join(h, def))
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
 }

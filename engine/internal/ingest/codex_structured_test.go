@@ -3,10 +3,11 @@ package ingest
 import (
 	"context"
 	"encoding/json"
-	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/semyonfox/tokentelemetry/engine/internal/model"
 )
 
 func structuredLine(owner, turn, response, ts string, u codexUsage) string {

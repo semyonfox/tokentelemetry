@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"cmp"
 	"flag"
 	"fmt"
 	"io"
@@ -71,10 +72,10 @@ func parseReportOptions(cmd string, args []string) (reportOptions, error) {
 		cursorSDK = cursorSDK || strings.EqualFold(agent, "cursor-agent")
 	}
 	if cursorIDE && cursorSDK {
-		return opts, fmt.Errorf("Cursor history and SDK results may contain the same usage without shared request IDs; select --agent cursor or --agent cursor-agent separately")
+		return opts, fmt.Errorf("cursor history and SDK results may contain the same usage without shared request IDs; select --agent cursor or --agent cursor-agent separately")
 	}
 	opts.filter = report.Filter{
-		From: firstNonEmpty(*since, *from), To: firstNonEmpty(*until, *to),
+		From: cmp.Or(*since, *from), To: cmp.Or(*until, *to),
 		Agents: agents, Models: models, Projects: projects, Subagents: *subagents,
 	}
 	f := &opts.filter
@@ -101,7 +102,7 @@ func parseReportOptions(cmd string, args []string) (reportOptions, error) {
 	default:
 		return opts, fmt.Errorf("--subagents must be include, only or exclude")
 	}
-	spec := firstNonEmpty(*groupBy, *by)
+	spec := cmp.Or(*groupBy, *by)
 	dims, err := report.ParseDimensions(spec)
 	if err != nil {
 		return opts, err
@@ -159,21 +160,22 @@ func (s *stringList) Set(v string) error {
 	return nil
 }
 
+// defaultDimensions decides the nesting when --group-by gave none. Timeline
+// and session views nest by model; model, summary and project stay flat unless
+// --breakdown asks for the per-model detail. An explicit "none" is honoured.
 func defaultDimensions(cmd, spec string, breakdown bool, dims []report.Dimension) []report.Dimension {
-	if len(dims) == 0 && breakdown {
+	if len(dims) > 0 {
+		return dims
+	}
+	if breakdown {
 		return []report.Dimension{report.DimModel}
 	}
-	if spec == "" && !breakdown && cmd != "model" && cmd != "summary" && cmd != "project" {
-		return []report.Dimension{report.DimModel}
+	if spec != "" {
+		return nil
 	}
-	return dims
-}
-
-func firstNonEmpty(vals ...string) string {
-	for _, v := range vals {
-		if v != "" {
-			return v
-		}
+	switch cmd {
+	case "model", "summary", "project":
+		return nil
 	}
-	return ""
+	return []report.Dimension{report.DimModel}
 }
