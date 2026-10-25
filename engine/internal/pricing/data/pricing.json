@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-10-24",
+  "updated": "2026-10-25",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -9152,6 +9152,14 @@
           "cache_read": 0,
           "cache_write": 0.25,
           "source": "merge-gateway"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.31,
+          "out": 2.5,
+          "cache_read": 0,
+          "cache_write": 0.31,
+          "source": "merge-gateway"
         }
       ]
     },
@@ -9165,6 +9173,14 @@
           "cache_read": 0,
           "cache_write": 0.1,
           "source": "merge-gateway"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.12,
+          "out": 0.5,
+          "cache_read": 0,
+          "cache_write": 0.12,
+          "source": "merge-gateway"
         }
       ]
     },
@@ -9177,6 +9193,14 @@
           "out": 3,
           "cache_read": 0,
           "cache_write": 0.5,
+          "source": "merge-gateway"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.63,
+          "out": 3.79,
+          "cache_read": 0,
+          "cache_write": 0.63,
           "source": "merge-gateway"
         }
       ]
@@ -13147,6 +13171,19 @@
         }
       ]
     },
+    "gemma-4-12b-it-starry-ocean": {
+      "id": "gemma-4-12b-it-starry-ocean",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.05,
+          "out": 0.25,
+          "cache_read": 0.025,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "gemma-4-12b-it-station-keeper": {
       "id": "gemma-4-12b-it-station-keeper",
       "rates": [
@@ -13451,6 +13488,45 @@
         }
       ]
     },
+    "gemma-4-31b-agares-v1": {
+      "id": "gemma-4-31b-agares-v1",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "gemma-4-31b-animus-v14.1": {
+      "id": "gemma-4-31b-animus-v14.1",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "gemma-4-31b-assguard": {
+      "id": "gemma-4-31b-assguard",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "gemma-4-31b-claude-4.6-opus-reasoning-distilled": {
       "id": "gemma-4-31b-claude-4.6-opus-reasoning-distilled",
       "rates": [
@@ -13477,6 +13553,19 @@
         }
       ]
     },
+    "gemma-4-31b-dark-gemistry": {
+      "id": "gemma-4-31b-dark-gemistry",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "gemma-4-31b-darkidol": {
       "id": "gemma-4-31b-darkidol",
       "rates": [
@@ -13490,6 +13579,19 @@
         }
       ]
     },
+    "gemma-4-31b-fabled": {
+      "id": "gemma-4-31b-fabled",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "gemma-4-31b-garnetv2": {
       "id": "gemma-4-31b-garnetv2",
       "rates": [
@@ -13498,6 +13600,45 @@
           "in": 0.306,
           "out": 0.306,
           "cache_read": 0.153,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "gemma-4-31b-gembrain-uncensored-heretic": {
+      "id": "gemma-4-31b-gembrain-uncensored-heretic",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "gemma-4-31b-gembrain-x-core": {
+      "id": "gemma-4-31b-gembrain-x-core",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "gemma-4-31b-isometry-rp": {
+      "id": "gemma-4-31b-isometry-rp",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
           "cache_write": 0.306,
           "source": "nano-gpt"
         }
@@ -13668,6 +13809,32 @@
         }
       ]
     },
+    "gemma-4-31b-k1-v5": {
+      "id": "gemma-4-31b-k1-v5",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "gemma-4-31b-meromero": {
+      "id": "gemma-4-31b-meromero",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "gemma-4-31b-meromero-v2": {
       "id": "gemma-4-31b-meromero-v2",
       "rates": [
@@ -13702,6 +13869,19 @@
         }
       ]
     },
+    "gemma-4-31b-novelist": {
+      "id": "gemma-4-31b-novelist",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "gemma-4-31b-queen": {
       "id": "gemma-4-31b-queen",
       "rates": [
@@ -13710,6 +13890,32 @@
           "in": 0.306,
           "out": 0.306,
           "cache_read": 0.153,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "gemma-4-31b-sdft-heretic-rp": {
+      "id": "gemma-4-31b-sdft-heretic-rp",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "gemma-4-31b-styletune": {
+      "id": "gemma-4-31b-styletune",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
           "cache_write": 0.306,
           "source": "nano-gpt"
         }
@@ -14520,6 +14726,14 @@
           "out": 0.8,
           "cache_read": 0.06,
           "cache_write": 0.12,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.13,
+          "out": 0.85,
+          "cache_read": 0.025,
+          "cache_write": 0.13,
           "source": "nano-gpt"
         }
       ]
@@ -20414,6 +20628,14 @@
           "cache_read": 0.15,
           "cache_write": 0.3,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.3,
+          "out": 0.3,
+          "cache_read": 0,
+          "cache_write": 0.3,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -22191,6 +22413,19 @@
           "cache_read": 0.042,
           "cache_write": 0.834,
           "source": "vercel"
+        }
+      ]
+    },
+    "iceman-contributor-free": {
+      "id": "iceman-contributor-free",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "source": "opencode-go"
         }
       ]
     },
@@ -24678,6 +24913,14 @@
           "cache_read": 0.05,
           "cache_write": 0.1,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.35,
+          "out": 0.5,
+          "cache_read": 0.04,
+          "cache_write": 0.35,
+          "source": "kilo"
         }
       ]
     },
@@ -34063,6 +34306,14 @@
           "cache_read": 0.05,
           "cache_write": 0.2,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.26,
+          "out": 2.08,
+          "cache_read": 0.07,
+          "cache_write": 0.26,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -34345,6 +34596,14 @@
           "cache_read": 0,
           "cache_write": 0.15,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.1587,
+          "out": 1.587,
+          "cache_read": 0,
+          "cache_write": 0.1587,
+          "source": "aimlapi"
         }
       ]
     },
@@ -35247,6 +35506,19 @@
         }
       ],
       "first_party": true
+    },
+    "qwen-sea-lion-v4-32b-it": {
+      "id": "qwen-sea-lion-v4-32b-it",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.3,
+          "out": 0.6,
+          "cache_read": 0,
+          "cache_write": 0.3,
+          "source": "nano-gpt"
+        }
+      ]
     },
     "qwen-turbo": {
       "id": "qwen-turbo",
@@ -37601,6 +37873,19 @@
       ],
       "first_party": true
     },
+    "qwen3.5-27b-blossom-v6.4-derestricted": {
+      "id": "qwen3.5-27b-blossom-v6.4-derestricted",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "qwen3.5-27b-bluestar-v3-derestricted": {
       "id": "qwen3.5-27b-bluestar-v3-derestricted",
       "rates": [
@@ -37609,6 +37894,32 @@
           "in": 0.306,
           "out": 0.306,
           "cache_read": 0.153,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted": {
+      "id": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0.0306,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted-lite": {
+      "id": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted-lite",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0.0306,
           "cache_write": 0.306,
           "source": "nano-gpt"
         }
@@ -41003,6 +41314,32 @@
           "cache_read": 0,
           "cache_write": 0.05,
           "source": "kilo"
+        }
+      ]
+    },
+    "synth-2.5-flash": {
+      "id": "synth-2.5-flash",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.03,
+          "out": 0.1,
+          "cache_read": 0,
+          "cache_write": 0.03,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "synth-2.5-pro": {
+      "id": "synth-2.5-pro",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.1,
+          "out": 0.2,
+          "cache_read": 0,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -53863,6 +54200,19 @@
           "out": 7.935,
           "cache_read": 0.2645,
           "cache_write": 2.645,
+          "source": "aimlapi"
+        }
+      ]
+    },
+    "aimlapi\u0000perceptron-mk1.5": {
+      "id": "perceptron-mk1.5",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.1587,
+          "out": 1.587,
+          "cache_read": 0,
+          "cache_write": 0.1587,
           "source": "aimlapi"
         }
       ]
@@ -70495,6 +70845,14 @@
           "cache_read": 0.111,
           "cache_write": 0.279,
           "source": "cortecs"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.203,
+          "out": 0.609,
+          "cache_read": 0.006,
+          "cache_write": 0.203,
+          "source": "cortecs"
         }
       ]
     },
@@ -71381,6 +71739,19 @@
           "out": 1.2,
           "cache_read": 0.06,
           "cache_write": 0.3,
+          "source": "cortecs"
+        }
+      ]
+    },
+    "cortecs\u0000minimax-m3.1-flash": {
+      "id": "minimax-m3.1-flash",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.304,
+          "out": 1.219,
+          "cache_read": 0.076,
+          "cache_write": 0.304,
           "source": "cortecs"
         }
       ]
@@ -101414,6 +101785,14 @@
           "cache_read": 0.075,
           "cache_write": 0.075,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.0703,
+          "out": 4.3843,
+          "cache_read": 0.0703,
+          "cache_write": 0.0703,
+          "source": "kilo"
         }
       ]
     },
@@ -101581,6 +101960,14 @@
           "in": 0.3,
           "out": 0.9,
           "cache_read": 0.055,
+          "cache_write": 0.3,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.3,
+          "out": 0.9,
+          "cache_read": 0.05,
           "cache_write": 0.3,
           "source": "kilo"
         }
@@ -102026,6 +102413,14 @@
           "out": 0.1425,
           "cache_read": 0.0175,
           "cache_write": 0.0175,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.0513,
+          "out": 0.0701,
+          "cache_read": 0.03,
+          "cache_write": 0.0513,
           "source": "kilo"
         }
       ]
@@ -103758,6 +104153,14 @@
           "cache_read": 0.19,
           "cache_write": 0.19,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.2033,
+          "out": 7.6972,
+          "cache_read": 0.2,
+          "cache_write": 0.2033,
+          "source": "kilo"
         }
       ]
     },
@@ -104149,6 +104552,14 @@
           "out": 0,
           "cache_read": 0,
           "cache_write": 0,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.35,
+          "out": 0.5,
+          "cache_read": 0.04,
+          "cache_write": 0.35,
           "source": "kilo"
         }
       ]
@@ -104906,6 +105317,14 @@
           "out": 0.55,
           "cache_read": 0.01,
           "cache_write": 0.1,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.09,
+          "out": 0.5,
+          "cache_read": 0.01,
+          "cache_write": 0.09,
           "source": "kilo"
         }
       ]
@@ -117593,6 +118012,14 @@
           "cache_read": 0,
           "cache_write": 0.25,
           "source": "merge-gateway"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.31,
+          "out": 2.5,
+          "cache_read": 0,
+          "cache_write": 0.31,
+          "source": "merge-gateway"
         }
       ]
     },
@@ -117606,6 +118033,14 @@
           "cache_read": 0,
           "cache_write": 0.1,
           "source": "merge-gateway"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.12,
+          "out": 0.5,
+          "cache_read": 0,
+          "cache_write": 0.12,
+          "source": "merge-gateway"
         }
       ]
     },
@@ -117618,6 +118053,14 @@
           "out": 3,
           "cache_read": 0,
           "cache_write": 0.5,
+          "source": "merge-gateway"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.63,
+          "out": 3.79,
+          "cache_read": 0,
+          "cache_write": 0.63,
           "source": "merge-gateway"
         }
       ]
@@ -122361,6 +122804,123 @@
         }
       ]
     },
+    "munito\u0000deepseek-v4-flash": {
+      "id": "deepseek-v4-flash",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.099,
+          "out": 0.25,
+          "cache_read": 0.019,
+          "cache_write": 0.099,
+          "source": "munito"
+        }
+      ]
+    },
+    "munito\u0000deepseek-v4.1-flash-1017": {
+      "id": "deepseek-v4.1-flash-1017",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.27,
+          "out": 1,
+          "cache_read": 0.0054,
+          "cache_write": 0.27,
+          "source": "munito"
+        }
+      ]
+    },
+    "munito\u0000glm-5.3-flash": {
+      "id": "glm-5.3-flash",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.13,
+          "out": 0.45,
+          "cache_read": 0.027,
+          "cache_write": 0.13,
+          "source": "munito"
+        }
+      ]
+    },
+    "munito\u0000kolibri-1": {
+      "id": "kolibri-1",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.13,
+          "out": 0.51,
+          "cache_read": 0.078,
+          "cache_write": 0.13,
+          "source": "munito"
+        }
+      ]
+    },
+    "munito\u0000qwen3.8-27b": {
+      "id": "qwen3.8-27b",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.18,
+          "out": 2.4,
+          "cache_read": 0.05,
+          "cache_write": 0.18,
+          "source": "munito"
+        }
+      ]
+    },
+    "munito-eu\u0000deepseek-v4-flash": {
+      "id": "deepseek-v4-flash",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.11,
+          "out": 0.28,
+          "cache_read": 0.022,
+          "cache_write": 0.11,
+          "source": "munito-eu"
+        }
+      ]
+    },
+    "munito-eu\u0000glm-5.3-flash": {
+      "id": "glm-5.3-flash",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.15,
+          "out": 0.5,
+          "cache_read": 0.03,
+          "cache_write": 0.15,
+          "source": "munito-eu"
+        }
+      ]
+    },
+    "munito-eu\u0000kolibri-1": {
+      "id": "kolibri-1",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.16,
+          "out": 0.56,
+          "cache_read": 0.094,
+          "cache_write": 0.16,
+          "source": "munito-eu"
+        }
+      ]
+    },
+    "munito-eu\u0000qwen3.8-27b": {
+      "id": "qwen3.8-27b",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.2,
+          "out": 2.7,
+          "cache_read": 0.11,
+          "cache_write": 0.2,
+          "source": "munito-eu"
+        }
+      ]
+    },
     "nan\u0000deepseek-v4-flash": {
       "id": "deepseek-v4-flash",
       "rates": [
@@ -122896,6 +123456,19 @@
           "out": 1.5,
           "cache_read": 0.05,
           "cache_write": 0.5,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000bielik-11b-v3.0-instruct": {
+      "id": "bielik-11b-v3.0-instruct",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.48,
+          "out": 0.48,
+          "cache_read": 0,
+          "cache_write": 0.48,
           "source": "nano-gpt"
         }
       ]
@@ -126173,6 +126746,19 @@
         }
       ]
     },
+    "nano-gpt\u0000gemma-4-12b-it-starry-ocean": {
+      "id": "gemma-4-12b-it-starry-ocean",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.05,
+          "out": 0.25,
+          "cache_read": 0.025,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000gemma-4-12b-it-station-keeper": {
       "id": "gemma-4-12b-it-station-keeper",
       "rates": [
@@ -126480,6 +127066,45 @@
         }
       ]
     },
+    "nano-gpt\u0000gemma-4-31b-agares-v1": {
+      "id": "gemma-4-31b-agares-v1",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000gemma-4-31b-animus-v14.1": {
+      "id": "gemma-4-31b-animus-v14.1",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000gemma-4-31b-assguard": {
+      "id": "gemma-4-31b-assguard",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000gemma-4-31b-claude-4.6-opus-reasoning-distilled": {
       "id": "gemma-4-31b-claude-4.6-opus-reasoning-distilled",
       "rates": [
@@ -126506,6 +127131,19 @@
         }
       ]
     },
+    "nano-gpt\u0000gemma-4-31b-dark-gemistry": {
+      "id": "gemma-4-31b-dark-gemistry",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000gemma-4-31b-darkidol": {
       "id": "gemma-4-31b-darkidol",
       "rates": [
@@ -126519,6 +127157,19 @@
         }
       ]
     },
+    "nano-gpt\u0000gemma-4-31b-fabled": {
+      "id": "gemma-4-31b-fabled",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000gemma-4-31b-garnetv2": {
       "id": "gemma-4-31b-garnetv2",
       "rates": [
@@ -126527,6 +127178,45 @@
           "in": 0.306,
           "out": 0.306,
           "cache_read": 0.153,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000gemma-4-31b-gembrain-uncensored-heretic": {
+      "id": "gemma-4-31b-gembrain-uncensored-heretic",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000gemma-4-31b-gembrain-x-core": {
+      "id": "gemma-4-31b-gembrain-x-core",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000gemma-4-31b-isometry-rp": {
+      "id": "gemma-4-31b-isometry-rp",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
           "cache_write": 0.306,
           "source": "nano-gpt"
         }
@@ -126686,6 +127376,32 @@
         }
       ]
     },
+    "nano-gpt\u0000gemma-4-31b-k1-v5": {
+      "id": "gemma-4-31b-k1-v5",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000gemma-4-31b-meromero": {
+      "id": "gemma-4-31b-meromero",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000gemma-4-31b-meromero-v2": {
       "id": "gemma-4-31b-meromero-v2",
       "rates": [
@@ -126720,6 +127436,19 @@
         }
       ]
     },
+    "nano-gpt\u0000gemma-4-31b-novelist": {
+      "id": "gemma-4-31b-novelist",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000gemma-4-31b-queen": {
       "id": "gemma-4-31b-queen",
       "rates": [
@@ -126728,6 +127457,32 @@
           "in": 0.306,
           "out": 0.306,
           "cache_read": 0.153,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000gemma-4-31b-sdft-heretic-rp": {
+      "id": "gemma-4-31b-sdft-heretic-rp",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000gemma-4-31b-styletune": {
+      "id": "gemma-4-31b-styletune",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
           "cache_write": 0.306,
           "source": "nano-gpt"
         }
@@ -127103,6 +127858,14 @@
           "cache_read": 0.06,
           "cache_write": 0.12,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.13,
+          "out": 0.85,
+          "cache_read": 0.025,
+          "cache_write": 0.13,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -127115,6 +127878,14 @@
           "out": 0.8,
           "cache_read": 0.06,
           "cache_write": 0.12,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.13,
+          "out": 0.85,
+          "cache_read": 0.025,
+          "cache_write": 0.13,
           "source": "nano-gpt"
         }
       ]
@@ -128750,6 +129521,14 @@
           "cache_read": 0.15,
           "cache_write": 0.3,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.3,
+          "out": 0.3,
+          "cache_read": 0,
+          "cache_write": 0.3,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -129906,6 +130685,19 @@
           "out": 20,
           "cache_read": 0.2,
           "cache_write": 4,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000kolibri-1": {
+      "id": "kolibri-1",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.168,
+          "out": 0.588,
+          "cache_read": 0.0987,
+          "cache_write": 0.168,
           "source": "nano-gpt"
         }
       ]
@@ -131433,6 +132225,19 @@
         }
       ]
     },
+    "nano-gpt\u0000muse-wonder": {
+      "id": "muse-wonder",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 4,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000mythomax-l2-13b": {
       "id": "mythomax-l2-13b",
       "rates": [
@@ -131637,6 +132442,32 @@
           "out": 2.5,
           "cache_read": 0.25,
           "cache_write": 0.5,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000nex-n2.5-mini": {
+      "id": "nex-n2.5-mini",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.025,
+          "out": 0.1,
+          "cache_read": 0.0025,
+          "cache_write": 0.025,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000nex-n2.5-pro": {
+      "id": "nex-n2.5-pro",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.075,
+          "out": 0.25,
+          "cache_read": 0.015,
+          "cache_write": 0.075,
           "source": "nano-gpt"
         }
       ]
@@ -131884,6 +132715,14 @@
           "out": 0.8,
           "cache_read": 0.05,
           "cache_write": 0.2,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.26,
+          "out": 2.08,
+          "cache_read": 0.07,
+          "cache_write": 0.26,
           "source": "nano-gpt"
         }
       ]
@@ -132164,6 +133003,19 @@
         }
       ]
     },
+    "nano-gpt\u0000qwen-sea-lion-v4-32b-it": {
+      "id": "qwen-sea-lion-v4-32b-it",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.3,
+          "out": 0.6,
+          "cache_read": 0,
+          "cache_write": 0.3,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000qwen-turbo": {
       "id": "qwen-turbo",
       "rates": [
@@ -132212,6 +133064,14 @@
           "out": 0.7,
           "cache_read": 0.35,
           "cache_write": 0.7,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.69989,
+          "out": 0.69989,
+          "cache_read": 0,
+          "cache_write": 0.69989,
           "source": "nano-gpt"
         }
       ]
@@ -132629,6 +133489,19 @@
         }
       ]
     },
+    "nano-gpt\u0000qwen3.5-27b-blossom-v6.4-derestricted": {
+      "id": "qwen3.5-27b-blossom-v6.4-derestricted",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000qwen3.5-27b-bluestar-v3-derestricted": {
       "id": "qwen3.5-27b-bluestar-v3-derestricted",
       "rates": [
@@ -132637,6 +133510,32 @@
           "in": 0.306,
           "out": 0.306,
           "cache_read": 0.153,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted": {
+      "id": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0.0306,
+          "cache_write": 0.306,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted-lite": {
+      "id": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted-lite",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0.0306,
           "cache_write": 0.306,
           "source": "nano-gpt"
         }
@@ -134035,6 +134934,32 @@
         }
       ]
     },
+    "nano-gpt\u0000synth-2.5-flash": {
+      "id": "synth-2.5-flash",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.03,
+          "out": 0.1,
+          "cache_read": 0,
+          "cache_write": 0.03,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000synth-2.5-pro": {
+      "id": "synth-2.5-pro",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.1,
+          "out": 0.2,
+          "cache_read": 0,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
+        }
+      ]
+    },
     "nano-gpt\u0000ternary-bonsai-2-27b": {
       "id": "ternary-bonsai-2-27b",
       "rates": [
@@ -135270,6 +136195,19 @@
         }
       ]
     },
+    "nebius\u0000deepseek-v4.1-flash-1017": {
+      "id": "deepseek-v4.1-flash-1017",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.006,
+          "cache_write": 0.3,
+          "source": "nebius"
+        }
+      ]
+    },
     "nebius\u0000gemma-3-27b-it": {
       "id": "gemma-3-27b-it",
       "rates": [
@@ -135609,6 +136547,19 @@
           "out": 1.2,
           "cache_read": 0.06,
           "cache_write": 0.3,
+          "source": "nebius"
+        }
+      ]
+    },
+    "nebius\u0000minimax-m3.1-flash": {
+      "id": "minimax-m3.1-flash",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0.15,
+          "out": 0.6,
+          "cache_read": 0.015,
+          "cache_write": 0.15,
           "source": "nebius"
         }
       ]
@@ -138301,6 +139252,32 @@
           "out": 15,
           "cache_read": 0.3,
           "cache_write": 3,
+          "source": "novita-ai"
+        }
+      ]
+    },
+    "novita-ai\u0000kimi-k3.1-pro": {
+      "id": "kimi-k3.1-pro",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.2,
+          "cache_write": 2,
+          "source": "novita-ai"
+        }
+      ]
+    },
+    "novita-ai\u0000kimi-k3.1-pro-highspeed": {
+      "id": "kimi-k3.1-pro-highspeed",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.2,
+          "cache_write": 4,
           "source": "novita-ai"
         }
       ]
@@ -146387,6 +147364,19 @@
         }
       ]
     },
+    "opencode-go\u0000gemini-4-argon": {
+      "id": "gemini-4-argon",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 2,
+          "out": 10,
+          "cache_read": 0.1,
+          "cache_write": 2,
+          "source": "opencode-go"
+        }
+      ]
+    },
     "opencode-go\u0000gemini-4-argon-contributor": {
       "id": "gemini-4-argon-contributor",
       "rates": [
@@ -146593,6 +147583,19 @@
           "out": 2.501,
           "cache_read": 0.042,
           "cache_write": 0.834,
+          "source": "opencode-go"
+        }
+      ]
+    },
+    "opencode-go\u0000iceman-contributor-free": {
+      "id": "iceman-contributor-free",
+      "rates": [
+        {
+          "from": "2026-10-25",
+          "in": 0,
+          "out": 0,
+          "cache_read": 0,
+          "cache_write": 0,
           "source": "opencode-go"
         }
       ]
@@ -149081,6 +150084,14 @@
           "cache_read": 0.001414,
           "cache_write": 0.04444,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.0422,
+          "out": 0.1694,
+          "cache_read": 0.028,
+          "cache_write": 0.0422,
+          "source": "openrouter"
         }
       ]
     },
@@ -149338,6 +150349,14 @@
           "out": 0.716184,
           "cache_read": 0.029841,
           "cache_write": 0.358092,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.2088,
+          "out": 0.4176,
+          "cache_read": 0.0174,
+          "cache_write": 0.2088,
           "source": "openrouter"
         }
       ]
@@ -150802,6 +151821,14 @@
           "cache_read": 0.075,
           "cache_write": 0.075,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.0703,
+          "out": 4.3843,
+          "cache_read": 0.0703,
+          "cache_write": 0.0703,
+          "source": "openrouter"
         }
       ]
     },
@@ -150969,6 +151996,14 @@
           "in": 0.3,
           "out": 0.9,
           "cache_read": 0.055,
+          "cache_write": 0.3,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.3,
+          "out": 0.9,
+          "cache_read": 0.05,
           "cache_write": 0.3,
           "source": "openrouter"
         }
@@ -151998,6 +153033,14 @@
           "out": 0.1425,
           "cache_read": 0.0175,
           "cache_write": 0.0175,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.0513,
+          "out": 0.0701,
+          "cache_read": 0.03,
+          "cache_write": 0.0513,
           "source": "openrouter"
         }
       ]
@@ -153915,6 +154958,14 @@
           "cache_read": 0.19,
           "cache_write": 0.19,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.2033,
+          "out": 7.6972,
+          "cache_read": 0.2,
+          "cache_write": 0.2033,
+          "source": "openrouter"
         }
       ]
     },
@@ -154507,6 +155558,14 @@
           "cache_read": 0,
           "cache_write": 0,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.35,
+          "out": 0.5,
+          "cache_read": 0.04,
+          "cache_write": 0.35,
+          "source": "openrouter"
         }
       ]
     },
@@ -154758,6 +155817,14 @@
           "out": 0.335,
           "cache_read": 0,
           "cache_write": 0.0509,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-25",
+          "in": 0.05,
+          "out": 0.33,
+          "cache_read": 0,
+          "cache_write": 0.05,
           "source": "openrouter"
         }
       ]
@@ -197432,6 +198499,7 @@
     "gemma-3n-e4b-it-latest": "gemma-3n-e4b-it",
     "gemma-4-12b-it-latest": "gemma-4-12b-it",
     "gemma-4-12b-it-semancer-latest": "gemma-4-12b-it-semancer",
+    "gemma-4-12b-it-starry-ocean-latest": "gemma-4-12b-it-starry-ocean",
     "gemma-4-12b-it-station-keeper-latest": "gemma-4-12b-it-station-keeper",
     "gemma-4-26b-a4b-it-chimerax-latest": "gemma-4-26b-a4b-it-chimerax",
     "gemma-4-26b-a4b-it-chimeraxheretic-latest": "gemma-4-26b-a4b-it-chimeraxheretic",
@@ -197450,12 +198518,22 @@
     "gemma-4-26b-a4b-meromero-latest": "gemma-4-26b-a4b-meromero",
     "gemma-4-26b-a4b-meromero:thinking-latest": "gemma-4-26b-a4b-meromero:thinking",
     "gemma-4-26b-a4b-uncensored-latest": "gemma-4-26b-a4b-uncensored",
+    "gemma-4-31b-agares-v1-latest": "gemma-4-31b-agares-v1",
+    "gemma-4-31b-animus-v14-1": "gemma-4-31b-animus-v14.1",
+    "gemma-4-31b-animus-v14.1-latest": "gemma-4-31b-animus-v14.1",
+    "gemma-4-31b-animus-v14p1": "gemma-4-31b-animus-v14.1",
+    "gemma-4-31b-assguard-latest": "gemma-4-31b-assguard",
     "gemma-4-31b-claude-4-6-opus-reasoning-distilled": "gemma-4-31b-claude-4.6-opus-reasoning-distilled",
     "gemma-4-31b-claude-4.6-opus-reasoning-distilled-latest": "gemma-4-31b-claude-4.6-opus-reasoning-distilled",
     "gemma-4-31b-claude-4p6-opus-reasoning-distilled": "gemma-4-31b-claude-4.6-opus-reasoning-distilled",
     "gemma-4-31b-cognitive-unshackled-latest": "gemma-4-31b-cognitive-unshackled",
+    "gemma-4-31b-dark-gemistry-latest": "gemma-4-31b-dark-gemistry",
     "gemma-4-31b-darkidol-latest": "gemma-4-31b-darkidol",
+    "gemma-4-31b-fabled-latest": "gemma-4-31b-fabled",
     "gemma-4-31b-garnetv2-latest": "gemma-4-31b-garnetv2",
+    "gemma-4-31b-gembrain-uncensored-heretic-latest": "gemma-4-31b-gembrain-uncensored-heretic",
+    "gemma-4-31b-gembrain-x-core-latest": "gemma-4-31b-gembrain-x-core",
+    "gemma-4-31b-isometry-rp-latest": "gemma-4-31b-isometry-rp",
     "gemma-4-31b-it-darkidol-latest": "gemma-4-31b-it-darkidol",
     "gemma-4-31b-it-fabled-latest": "gemma-4-31b-it-fabled",
     "gemma-4-31b-it-fp8-latest": "gemma-4-31b-it-fp8",
@@ -197468,10 +198546,15 @@
     "gemma-4-31b-it-scarlet-latest": "gemma-4-31b-it-scarlet",
     "gemma-4-31b-it:free-latest": "gemma-4-31b-it:free",
     "gemma-4-31b-it:thinking-latest": "gemma-4-31b-it:thinking",
+    "gemma-4-31b-k1-v5-latest": "gemma-4-31b-k1-v5",
     "gemma-4-31b-latest": "gemma-4-31b",
+    "gemma-4-31b-meromero-latest": "gemma-4-31b-meromero",
     "gemma-4-31b-meromero-v2-latest": "gemma-4-31b-meromero-v2",
     "gemma-4-31b-meromero-v2:thinking-latest": "gemma-4-31b-meromero-v2:thinking",
+    "gemma-4-31b-novelist-latest": "gemma-4-31b-novelist",
     "gemma-4-31b-queen-latest": "gemma-4-31b-queen",
+    "gemma-4-31b-sdft-heretic-rp-latest": "gemma-4-31b-sdft-heretic-rp",
+    "gemma-4-31b-styletune-latest": "gemma-4-31b-styletune",
     "gemma-4-31b-turbo-tee-latest": "gemma-4-31b-turbo-tee",
     "gemma-4-dark-thoughts-v2-31b-latest": "gemma-4-dark-thoughts-v2-31b",
     "gemma-4-e2b-it-latest": "gemma-4-e2b-it",
@@ -198428,6 +199511,7 @@
     "hy3-preview-latest": "hy3-preview",
     "hy3:free-latest": "hy3:free",
     "hy4-preview-latest": "hy4-preview",
+    "iceman-contributor-free-latest": "iceman-contributor-free",
     "in-anthropic-claude-haiku-4-5-20251001-v1": "in.anthropic.claude-haiku-4-5-20251001-v1",
     "in-anthropic-claude-opus-5": "in.anthropic.claude-opus-5",
     "in-anthropic-claude-sonnet-5": "in.anthropic.claude-sonnet-5",
@@ -199811,6 +200895,7 @@
     "qwen-qwen3-coder-next": "qwen.qwen3-coder-next",
     "qwen-qwen3-next-80b-a3b": "qwen.qwen3-next-80b-a3b",
     "qwen-qwen3-vl-235b-a22b": "qwen.qwen3-vl-235b-a22b",
+    "qwen-sea-lion-v4-32b-it-latest": "qwen-sea-lion-v4-32b-it",
     "qwen-turbo-latest": "qwen-turbo",
     "qwen-vl-max-2025-01-25-latest": "qwen-vl-max-2025-01-25",
     "qwen-vl-max-latest": "qwen-vl-max",
@@ -199897,7 +200982,10 @@
     "qwen3-5-122b-a10b-fp8": "qwen3.5-122b-a10b-fp8",
     "qwen3-5-122b-a10b-latest": "qwen3-5-122b-a10b",
     "qwen3-5-122b-a10b:thinking": "qwen3.5-122b-a10b:thinking",
+    "qwen3-5-27b-blossom-v6-4-derestricted": "qwen3.5-27b-blossom-v6.4-derestricted",
     "qwen3-5-27b-bluestar-v3-derestricted": "qwen3.5-27b-bluestar-v3-derestricted",
+    "qwen3-5-27b-claude-4-6-opus-reasoning-distilled-derestricted": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted",
+    "qwen3-5-27b-claude-4-6-opus-reasoning-distilled-derestricted-lite": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted-lite",
     "qwen3-5-27b-latest": "qwen3-5-27b",
     "qwen3-5-27b-queen-derestricted": "qwen3.5-27b-queen-derestricted",
     "qwen3-5-27b:thinking": "qwen3.5-27b:thinking",
@@ -200058,7 +201146,10 @@
     "qwen3.5-122b-a10b-latest": "qwen3.5-122b-a10b",
     "qwen3.5-122b-a10b:thinking-latest": "qwen3.5-122b-a10b:thinking",
     "qwen3.5-122b-latest": "qwen3.5-122b",
+    "qwen3.5-27b-blossom-v6.4-derestricted-latest": "qwen3.5-27b-blossom-v6.4-derestricted",
     "qwen3.5-27b-bluestar-v3-derestricted-latest": "qwen3.5-27b-bluestar-v3-derestricted",
+    "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted-latest": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted",
+    "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted-lite-latest": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted-lite",
     "qwen3.5-27b-latest": "qwen3.5-27b",
     "qwen3.5-27b-queen-derestricted-latest": "qwen3.5-27b-queen-derestricted",
     "qwen3.5-27b:thinking-latest": "qwen3.5-27b:thinking",
@@ -200170,7 +201261,10 @@
     "qwen3p5-122b-a10b-fp8": "qwen3.5-122b-a10b-fp8",
     "qwen3p5-122b-a10b:thinking": "qwen3.5-122b-a10b:thinking",
     "qwen3p5-27b": "qwen3.5-27b",
+    "qwen3p5-27b-blossom-v6p4-derestricted": "qwen3.5-27b-blossom-v6.4-derestricted",
     "qwen3p5-27b-bluestar-v3-derestricted": "qwen3.5-27b-bluestar-v3-derestricted",
+    "qwen3p5-27b-claude-4p6-opus-reasoning-distilled-derestricted": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted",
+    "qwen3p5-27b-claude-4p6-opus-reasoning-distilled-derestricted-lite": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled-derestricted-lite",
     "qwen3p5-27b-queen-derestricted": "qwen3.5-27b-queen-derestricted",
     "qwen3p5-27b:thinking": "qwen3.5-27b:thinking",
     "qwen3p5-2b": "qwen3.5-2b",
@@ -200412,6 +201506,12 @@
     "streampetr-latest": "streampetr",
     "studiovoice-latest": "studiovoice",
     "summarize-latest": "summarize",
+    "synth-2-5-flash": "synth-2.5-flash",
+    "synth-2-5-pro": "synth-2.5-pro",
+    "synth-2.5-flash-latest": "synth-2.5-flash",
+    "synth-2.5-pro-latest": "synth-2.5-pro",
+    "synth-2p5-flash": "synth-2.5-flash",
+    "synth-2p5-pro": "synth-2.5-pro",
     "synthetic-video-detector-latest": "synthetic-video-detector",
     "tc-code-latest": "tc-code",
     "ternary-bonsai-2-27b-latest": "ternary-bonsai-2-27b",
