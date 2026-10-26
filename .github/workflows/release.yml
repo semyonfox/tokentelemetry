@@ -1,0 +1,20 @@
+name: Release
+on:
+  push:
+    tags: ["v*.*.*"]
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: engine/go.mod
+          cache-dependency-path: engine/go.sum
+      - run: make test && make check
+      # the same script works locally; it skips a tag that was already published
+      - run: make publish TAG=${{ github.ref_name }}
+        env:
+          GH_TOKEN: ${{ github.token }}
