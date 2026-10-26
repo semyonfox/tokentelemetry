@@ -1,8 +1,83 @@
 # TokenTelemetry
 
-Local token and cost reports for AI coding agents, built around a Go accounting
-engine. Reads existing logs and SQLite databases. Reports need no Python runtime,
-web server or browser. Usage logs stay local.
+See what your AI coding agents use and what it would cost at API list prices,
+across 40 agents, from the logs already on your machine.
+
+![tt running the summary, daily and agents reports](docs/media/demo.gif)
+
+<sub>Real usage from the maintainer's machine, with home paths shortened. The
+dollar figures are API list value, mostly covered by subscriptions, not a bill.</sub>
+
+## Install
+
+Linux or macOS (swap in `darwin` and `arm64` as needed):
+
+```sh
+curl -fsSL https://github.com/semyonfox/tokentelemetry/releases/latest/download/tokentelemetry_linux_amd64.tar.gz | tar -xz
+mv tokentelemetry_linux_amd64/tokentelemetry tokentelemetry_linux_amd64/tt ~/.local/bin/
+```
+
+With Go 1.26 or newer:
+
+```sh
+go install github.com/semyonfox/tokentelemetry/engine/cmd/tt@latest
+```
+
+This installs the short `tt` name only.
+
+Windows zips, the other platforms and `checksums.txt` are on the
+[releases page](https://github.com/semyonfox/tokentelemetry/releases).
+
+## First commands
+
+```sh
+tt                               # last 30 days: totals, daily cost, top models and agents
+tt daily --group-by agent,model  # every day, split by agent and model
+tt agents --installed            # which agents were found, and where
+tt -a --json                     # all history as JSON for your own scripts
+```
+
+`tt` and `tokentelemetry` are the same program.
+
+## Why not ccusage?
+
+[ccusage](https://github.com/ryoppippi/ccusage) is the established tool here and
+is great if most of your usage is Claude Code. TokenTelemetry is for people who
+move between agents. It reads Claude Code, Codex, Copilot CLI, Cursor, Cline,
+Roo, Kilo, Qwen, Goose, Zed and 30 more into one report with one set of pricing
+rules. It keeps unknown models unpriced rather than guessing, and it separates
+subscription usage from metered API spend.
+
+## How it works
+
+```
+ agent logs and SQLite       adapters           Go engine              output
+ ~/.claude, ~/.codex,   ->  one reader   ->  normalise tokens,   ->  terminal charts
+ Cursor, Copilot, Zed...    per agent        dedupe, price,          and tables, or
+                                             aggregate by day        --json
+```
+
+Each adapter reads the files an agent already writes and turns them into the
+same four token buckets: fresh input, output, cache reads and cache writes. The
+engine removes duplicates, applies effective-dated list prices and builds the
+report. Your usage never leaves the machine. The only network request is a
+daily check for updated model prices, which `TT_OFFLINE=1` turns off.
+
+## Screens
+
+`tt`, the 30-day summary:
+
+![summary report](docs/media/summary.png)
+
+`tt daily --group-by agent,model --since 2026-10-25`:
+
+![daily report grouped by agent and model](docs/media/daily.png)
+
+`tt agents --installed`:
+
+![agents found on this machine](docs/media/agents.png)
+
+## Supported agents
 
 The [provider inventory](docs/provider-inventory.md) lists all 42 audited adapters:
 40 local readers/importers, plus explicit source limitations for Crush and
@@ -11,22 +86,7 @@ and CSV exports, Cline, Roo, Kilo,
 Qwen, Goose and Zed. Some sources provide only session totals or credits.
 Run `tokentelemetry agents` to see coverage and detected source paths.
 
-## Run from source
-
-Requires Go 1.26 or newer.
-
-```sh
-make build
-./dist/tokentelemetry
-./dist/tokentelemetry -a  # all-time summary
-./dist/tokentelemetry summary --since 2026-09-01
-./dist/tokentelemetry daily --group-by agent,model
-./dist/tokentelemetry model --json
-```
-
-`tt` is the short command name for TokenTelemetry. `make build` produces both
-`dist/tokentelemetry` and `dist/tt`; either accepts the same commands and flags.
-For example, `./dist/tt -a` shows the all-time summary.
+## Using the reports
 
 Use `tt help` for the command overview and `tt help summary` or
 `tt daily --help` for command-specific flags. `tt agents --installed` lists
@@ -133,18 +193,31 @@ See [the command reference](engine/README.md) for filters, plans and pricing.
 The [documentation index](docs/README.md) links provider setup, accounting
 evidence, the porting plan and contributor guidance.
 
+## Build from source
+
+Requires Go 1.26 or newer.
+
+```sh
+make build
+./dist/tokentelemetry
+./dist/tt -a
+```
+
+`make build` produces both `dist/tokentelemetry` and `dist/tt`.
+
 ## Development
 
 ```sh
 make test
 make check
 make build
+make release TAG=v0.1.0  # archives and checksums for every platform in dist/release
 make packages  # optional: needs Node.js; builds six native npm packages + launcher
 ```
 
 The Go module remains under `engine/`. Generated npm packages live in `engine/dist/npm`;
-this checkout does not establish that they have been published. Use the local
-binary above to run this version.
+this checkout does not establish that they have been published. Releases are
+built and published locally, see [development notes](docs/development.md#releases).
 
 ## Project origins
 

@@ -11,6 +11,27 @@ make build
 The Go module is under `engine/`. `make packages` builds the local native npm
 packages when Node.js is available. It does not publish anything.
 
+## Releases
+
+Releases need Go, `tar`, `zip`, `sha256sum` and an authenticated `gh`, not CI.
+
+```sh
+make release TAG=v0.2.0   # archives and checksums.txt in dist/release
+```
+
+To publish, rename the `## Unreleased` heading in `CHANGELOG.md` to the version,
+merge, then tag `main`. The `engine/` tag lets `go install ...@latest` resolve
+the module, which lives in a subdirectory.
+
+```sh
+git tag v0.2.0 && git tag engine/v0.2.0
+git push origin v0.2.0 engine/v0.2.0
+make publish TAG=v0.2.0
+```
+
+Pushing a `v*` tag also runs the release workflow, which calls the same script.
+Whichever runs first publishes, and the other leaves the existing release alone.
+
 | Area | Code to read first |
 | --- | --- |
 | Command routing | `engine/internal/cli/cli.go` chooses a command and reports errors. |

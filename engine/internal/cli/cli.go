@@ -4,11 +4,24 @@ package cli
 import (
 	"fmt"
 	"os"
+	"runtime/debug"
 	"strings"
 )
 
 // Version is stamped at build time with -ldflags.
 var Version = "dev"
+
+// version falls back to the module version Go records in the binary, which is
+// all a `go install` build carries
+func version() string {
+	if Version != "dev" {
+		return Version
+	}
+	if info, ok := debug.ReadBuildInfo(); ok && strings.HasPrefix(info.Main.Version, "v") {
+		return strings.TrimPrefix(info.Main.Version, "v")
+	}
+	return Version
+}
 
 // Main runs the CLI and returns a process exit code.
 func Main(args []string) int {
@@ -61,7 +74,7 @@ func Main(args []string) int {
 		if len(rest) != 0 {
 			return commandError("version", fmt.Errorf("version accepts no arguments"))
 		}
-		fmt.Printf("tokentelemetry %s\n", Version)
+		fmt.Printf("tokentelemetry %s\n", version())
 		return 0
 	}
 	return commandError("", fmt.Errorf("unknown command %q", name))

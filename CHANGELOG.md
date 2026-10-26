@@ -1,7 +1,15 @@
 # Changelog
 
-## Unreleased
+## 0.1.0 (2026-10-26)
 
+First release. Prebuilt binaries for Linux, macOS and Windows on amd64 and
+arm64, each archive holding both `tokentelemetry` and `tt`. Check downloads
+against `checksums.txt`. Go users can run
+`go install github.com/semyonfox/tokentelemetry/engine/cmd/tt@latest`.
+
+- Publish releases from a local `make publish`, with a tag-triggered workflow
+  running the same script. `tt version` reports the module version for
+  `go install` builds.
 - Colour the summary charts by agent: daily bars show list cost stacked per
   agent with a legend, and model and agent bars take their agent's colour.
   Agents use the nearest terminal colour to their own branding where it is
