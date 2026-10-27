@@ -1,6 +1,6 @@
 # Provider implementation inventory
 
-All 42 adapters registered by [CodeBurn at 4cf1885](https://github.com/getagentseal/codeburn/blob/4cf18855939512605826cf6b0a47b6486b0c8619/src/providers/index.ts) have been assessed. TokenTelemetry now registers 40 readers/importers, including its original six. Crush and Grokbot remain source-limited because their audited local stores cannot supply measured usage history. They appear in `tokentelemetry agents` with that explanation, not as functioning token readers.
+All 42 adapters registered by [CodeBurn at 4cf1885](https://github.com/getagentseal/codeburn/blob/4cf18855939512605826cf6b0a47b6486b0c8619/src/providers/index.ts) have been assessed. TokenTelemetry now registers 41 readers/importers, including its original six and Amp, which CodeBurn did not register. Crush and Grokbot remain source-limited because their audited local stores cannot supply measured usage history. They appear in `tokentelemetry agents` with that explanation, not as functioning token readers.
 
 Coverage is deliberately narrower than a vendor-wide claim. Copilot reads measured CLI and supported VS Code records, Cursor's automatic local counters are incomplete with CSV as an optional replacement, and Kiro supplies credits. These are adapter counts, not independent vendors or guarantees for every product version. Synthetic tests cover the formats described below; no personal logs were used.
 
@@ -54,6 +54,7 @@ Use these numbers or identifiers to prioritize deeper coverage. Entries marked *
 | 40 | ZCode | `zcode` | Local | Observed local model_usage SQLite schema. [Evidence](provider-evidence-sqlite.md). |
 | 41 | Zed | `zed` | Local aggregate | JSON/zstd request/session counters; historical model attribution unavailable. [Evidence](provider-evidence-sqlite.md). |
 | 42 | Zerostack | `zerostack` | Local aggregate | Session totals using final protocol; historical model attribution unavailable. [Evidence](provider-evidence-imports.md). |
+| 43 | Amp | `amp` | Local | Thread message usage plus ledger events with no matching message; credits kept separate. [Evidence](provider-evidence-extra.md#amp). |
 
 ## Running and importing
 

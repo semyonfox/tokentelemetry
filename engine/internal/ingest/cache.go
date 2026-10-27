@@ -55,7 +55,7 @@ func cacheInputsForScanner(scanner Scanner) ([]string, bool) {
 	}
 	inputs := append([]string(nil), scanner.Roots()...)
 	switch s := scanner.(type) {
-	case *Claude, *Codex, *Antigravity, *Cursor, *CursorAgent, *OpenCode:
+	case *Claude, *Codex, *Antigravity, *Cursor, *CursorAgent, *OpenCode, *Amp:
 		return inputs, true
 	case *Hermes:
 		for _, db := range s.Roots() {

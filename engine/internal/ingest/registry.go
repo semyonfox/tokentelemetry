@@ -115,6 +115,7 @@ var providers = []providerEntry{
 	scannerProvider(model.Agent("lingtai-tui"), NewLingTai, "", providerLocal),
 	scannerProvider(model.Agent("warp"), NewWarp, "Measured conversation/model total only; unclassified and unpriced", providerLocal),
 	scannerProvider(model.Agent("dsh"), NewDSH, "", providerLocal),
+	scannerProvider(ampAgent, NewAmp, "Thread message usage and unmatched ledger events; credits kept separate", providerLocal),
 	sourceLimitedProvider(model.Agent("crush"), "Stored counters describe the latest context, not cumulative usage; no measured history reader"),
 	sourceLimitedProvider(model.Agent("grokbot"), "Local transcript mirror has no measured usage; no token estimates imported"),
 }
