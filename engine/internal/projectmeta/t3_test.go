@@ -214,3 +214,24 @@ func TestLoadT3ProjectLineageDoesNotCreateMissingDatabase(t *testing.T) {
 		t.Fatalf("missing database was created: %v", err)
 	}
 }
+
+func TestLoadT3ProjectLineagePrefersStateV2(t *testing.T) {
+	baseDir := t.TempDir()
+	legacy, paths := makeT3StateDB(t, baseDir)
+	if err := os.Rename(legacy, filepath.Join(baseDir, "userdata", "statev2.sqlite")); err != nil {
+		t.Fatal(err)
+	}
+	// the frozen legacy file is left behind; it must not be read
+	if err := os.WriteFile(legacy, []byte("not a database"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("T3CODE_HOME", baseDir)
+
+	lineage, err := LoadT3ProjectLineage(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := lineage.WorktreeRoots[filepath.Clean(paths.alphaWorktree)]; got != filepath.Clean(paths.alphaRoot) {
+		t.Fatalf("statev2 root = %q", got)
+	}
+}
