@@ -37,3 +37,30 @@ func TestClaudeCountsCompactionStepsAndFastMode(t *testing.T) {
 		t.Fatalf("billed input %d output %d", input, output)
 	}
 }
+
+func TestClaudeCountsCompactionOnlyCall(t *testing.T) {
+	root := t.TempDir()
+	writeFile(t, filepath.Join(root, "projects", "-proj", "a.jsonl"),
+		`{"type":"assistant","timestamp":"2026-10-01T10:00:00Z","requestId":"req_1","sessionId":"s","message":{"id":"msg_1","model":"claude-opus-5","usage":{"input_tokens":0,"output_tokens":0,"iterations":[{"type":"compaction","input_tokens":144,"output_tokens":276}]}}}`)
+	res, err := Run(context.Background(), []Scanner{newClaudeAt(root)})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(res.Turns) != 1 || res.Turns[0].Usage.Input != 144 || res.Turns[0].Usage.Output != 276 {
+		t.Fatalf("compaction-only call: %+v", res.Turns)
+	}
+}
+
+func TestClaudeFastModeSurvivesSnapshotOrder(t *testing.T) {
+	root := t.TempDir()
+	early := `{"type":"assistant","timestamp":"2026-10-01T10:00:00Z","requestId":"req_1","sessionId":"s","message":{"id":"msg_1","model":"claude-opus-5","usage":{"input_tokens":5,"output_tokens":1}}}`
+	final := `{"type":"assistant","timestamp":"2026-10-01T10:00:02Z","requestId":"req_1","sessionId":"s","message":{"id":"msg_1","model":"claude-opus-5","usage":{"input_tokens":5,"output_tokens":90,"speed":"fast"}}}`
+	writeFile(t, filepath.Join(root, "projects", "-proj", "a.jsonl"), early, final)
+	res, err := Run(context.Background(), []Scanner{newClaudeAt(root)})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(res.Turns) != 1 || res.Turns[0].Model != "claude-opus-5-fast" || res.Turns[0].Usage.Output != 90 {
+		t.Fatalf("snapshots: %+v", res.Turns)
+	}
+}

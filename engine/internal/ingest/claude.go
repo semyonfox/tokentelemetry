@@ -224,8 +224,8 @@ func (c *Claude) scanFile(path string, subagent bool) []model.Turn {
 			CacheWrite1h: u.CacheCreation.Ephemeral1h,
 		}
 		usage, ok := usage.Sanitize()
-		if !ok || usage.IsZero() {
-			continue // corrupt or empty record
+		if !ok {
+			continue // corrupt record
 		}
 		// "<synthetic>" marks messages Claude Code fabricates locally (error
 		// placeholders, interrupts). They carry no real usage.
@@ -254,7 +254,10 @@ func (c *Claude) scanFile(path string, subagent bool) []model.Turn {
 			ServiceTier: u.ServiceTier,
 			Subagent:    subagent || r.IsSidechain,
 		}
-		turns = append(turns, turn)
+		// a compaction-only call has empty top-level usage but billed steps
+		if !usage.IsZero() {
+			turns = append(turns, turn)
+		}
 		turns = append(turns, claudeCompactions(turn, u.Iterations)...)
 	}
 	return turns
