@@ -46,9 +46,9 @@ func Load() (*Table, error) {
 }
 
 func load() (*Table, error) {
-	var f fileFormat
-	if err := json.Unmarshal(cachedData(dataJSON), &f); err != nil {
-		return nil, fmt.Errorf("embedded pricing data is corrupt: %w", err)
+	f, err := datasetAt(dataJSON, cachePath())
+	if err != nil {
+		return nil, err
 	}
 	if f.Schema != SchemaVersion {
 		return nil, fmt.Errorf("embedded pricing data is schema %d, this build expects %d", f.Schema, SchemaVersion)

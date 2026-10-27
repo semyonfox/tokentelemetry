@@ -123,7 +123,7 @@ func TestCachedDataFallback(t *testing.T) {
 		if err := os.WriteFile(path, []byte(bad), 0600); err != nil {
 			t.Fatal(err)
 		}
-		if string(cachedDataAt(bundled, path)) != string(bundled) {
+		if f, err := datasetAt(bundled, path); err != nil || f.Updated.String() != "2026-09-01" {
 			t.Fatalf("accepted invalid or older cache: %s", bad)
 		}
 	}
@@ -131,7 +131,7 @@ func TestCachedDataFallback(t *testing.T) {
 	if err := os.WriteFile(path, newer, 0600); err != nil {
 		t.Fatal(err)
 	}
-	if string(cachedDataAt(bundled, path)) != string(newer) {
+	if f, err := datasetAt(bundled, path); err != nil || f.Updated.String() != "2026-09-02" || f.Models["x"].Rates[0].In != 2 {
 		t.Fatal("newer cache ignored")
 	}
 	t.Setenv("TT_OFFLINE", "1")

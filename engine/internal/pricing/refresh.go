@@ -2,6 +2,7 @@ package pricing
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -52,10 +53,8 @@ func refresh(path, url string, client *http.Client) {
 	if err != nil || !validDataset(raw) {
 		return
 	}
-	current := cachedDataAt(dataJSON, path)
-	var old, next fileFormat
-	_ = json.Unmarshal(current, &old)
-	_ = json.Unmarshal(raw, &next)
+	old, _ := datasetAt(dataJSON, path)
+	next, _ := parseDataset(raw)
 	if next.Updated.Before(old.Updated) {
 		return
 	}
@@ -72,49 +71,54 @@ func refresh(path, url string, client *http.Client) {
 }
 
 func validDataset(raw []byte) bool {
+	_, ok := parseDataset(raw)
+	return ok
+}
+
+// parseDataset decodes and checks a dataset in one pass. The file is several
+// megabytes, so decoding it more than once per run is most of a short report.
+func parseDataset(raw []byte) (fileFormat, bool) {
 	var f fileFormat
 	if json.Unmarshal(raw, &f) != nil || f.Schema != SchemaVersion || f.Updated.IsZero() || len(f.Models) == 0 {
-		return false
+		return fileFormat{}, false
 	}
 	for _, models := range []map[string]*Model{f.Models, f.ByProvider} {
 		for _, m := range models {
 			if m == nil || len(m.Rates) == 0 {
-				return false
+				return fileFormat{}, false
 			}
 			for _, r := range m.Rates {
 				if r.From.IsZero() {
-					return false
+					return fileFormat{}, false
 				}
 				for _, v := range []float64{r.In, r.Out, r.CacheRead, r.CacheWrite, r.CacheWrite1h, r.TierIn, r.TierOut, r.TierCacheRead, r.TierCacheWrite} {
 					if v < 0 {
-						return false
+						return fileFormat{}, false
 					}
 				}
 			}
 		}
 	}
-	return true
+	return f, true
 }
 
-func cachedData(bundled []byte) []byte {
-	return cachedDataAt(bundled, cachePath())
-}
-
-func cachedDataAt(bundled []byte, path string) []byte {
-	if path == "" {
-		return bundled
+// datasetAt returns the refreshed dataset at path when it is valid and not
+// older than the bundled one, otherwise the bundled dataset. Each candidate is
+// decoded once, and the bundled copy only in full when it is the one used.
+func datasetAt(bundled []byte, path string) (fileFormat, error) {
+	if path != "" {
+		if raw, err := os.ReadFile(path); err == nil {
+			var header struct {
+				Updated Date `json:"updated"`
+			}
+			if f, ok := parseDataset(raw); ok && json.Unmarshal(bundled, &header) == nil && !f.Updated.Before(header.Updated) {
+				return f, nil
+			}
+		}
 	}
-	raw, err := os.ReadFile(path)
-	if err != nil || !validDataset(raw) {
-		return bundled
+	var f fileFormat
+	if err := json.Unmarshal(bundled, &f); err != nil {
+		return f, fmt.Errorf("embedded pricing data is corrupt: %w", err)
 	}
-	var old, next fileFormat
-	if json.Unmarshal(bundled, &old) != nil {
-		return bundled
-	}
-	_ = json.Unmarshal(raw, &next)
-	if next.Updated.Before(old.Updated) {
-		return bundled
-	}
-	return raw
+	return f, nil
 }
