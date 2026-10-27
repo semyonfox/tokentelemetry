@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -174,6 +175,8 @@ func globJSONL(pattern string) []string {
 	return matches
 }
 
+var claudeUsageKey = []byte(`"usage"`)
+
 func (c *Claude) scanFile(path string, subagent bool) []model.Turn {
 	f, err := os.Open(path)
 	if err != nil {
@@ -184,6 +187,11 @@ func (c *Claude) scanFile(path string, subagent bool) []model.Turn {
 	var turns []model.Turn
 
 	for line := range jsonLines(f) {
+		// only assistant records carry usage, and the rest are the huge tool
+		// outputs, so skipping them before decoding is most of the parse
+		if !bytes.Contains(line, claudeUsageKey) {
+			continue
+		}
 		var r claudeRecord
 		if err := json.Unmarshal(line, &r); err != nil {
 			continue // a truncated tail line is normal on a live session

@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"bytes"
 	"context"
 	"database/sql"
 	"encoding/json"
@@ -154,8 +155,9 @@ func scanOpenCodeDB(ctx context.Context, path string, emit func(model.Turn)) err
 
 	for rows.Next() {
 		var (
-			id, sessionID, data, dir string
-			created                  int64
+			id, sessionID, dir string
+			data               []byte
+			created            int64
 		)
 		if err := rows.Scan(&id, &sessionID, &created, &data, &dir); err != nil {
 			continue
@@ -163,8 +165,13 @@ func scanOpenCodeDB(ctx context.Context, path string, emit func(model.Turn)) err
 		if _, exists := modern[id]; exists {
 			continue
 		}
+		// a row without a token block has no usage, and user rows are the
+		// large ones, so they are skipped before decoding
+		if !bytes.Contains(data, openCodeTokensKey) {
+			continue
+		}
 		var m openCodeMessage
-		if err := json.Unmarshal([]byte(data), &m); err != nil {
+		if err := json.Unmarshal(data, &m); err != nil {
 			continue
 		}
 		if m.Role != "assistant" {
@@ -236,6 +243,8 @@ func scanOpenCodeModern(ctx context.Context, db *sql.DB, tables map[string]bool)
 	}
 	return turns, rows.Err()
 }
+
+var openCodeTokensKey = []byte(`"tokens"`)
 
 // unixMillis converts JavaScript-style epoch milliseconds to a time.
 func unixMillis(ms int64) time.Time {
