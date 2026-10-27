@@ -105,10 +105,10 @@ Reports cache parsed usage under the operating system's user cache directory,
 in `tokentelemetry/scans`. On Linux this is normally
 `~/.cache/tokentelemetry/scans`, or `$XDG_CACHE_HOME/tokentelemetry/scans`.
 
-Caching currently covers Claude Code, Codex, Antigravity, Cursor IDE/SDK,
+Caching currently covers Claude Code, Codex, Amp, Antigravity, Cursor IDE/SDK,
 OpenCode, Hermes and Gemini. Other providers continue to read their sources.
-Claude and Codex also reuse individual unchanged files when another session is
-active. Scans with warnings or errors are read again so diagnostics stay visible.
+Claude, Codex and Amp also reuse individual unchanged files when another session
+is active. Scans with warnings or errors are read again so diagnostics stay visible.
 
 The cache stores normalized accounting records rather than transcripts. Prices,
 report filters, project grouping, duplicate detection and runtime overlap checks
@@ -119,8 +119,10 @@ individual file reuse inside a changed provider is not included in those counts.
 Cache reuse checks source file metadata and directory membership, including
 SQLite WAL changes. Sources changed during a scan are not saved as a stable
 result. Missing, corrupt or unwritable cache files fall back to a fresh scan.
-A new executable invalidates previous parsed results. Use `--no-cache` after a
-manual edit that preserves both file size and modification time.
+Parsed results are keyed on the parser code itself, so rebuilding or
+reinstalling the same parsers keeps the cache and any parser change drops it.
+Records are stored with Go's `gob` encoding. Use `--no-cache` after a manual edit
+that preserves both file size and modification time.
 
 ## Cursor usage
 

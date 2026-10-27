@@ -70,18 +70,24 @@ func t3StateDBPath() (string, error) {
 		}
 		baseDir = filepath.Join(home, ".t3")
 	}
-	dbPath := filepath.Join(baseDir, "userdata", "state.sqlite")
-	info, err := os.Stat(dbPath)
-	if os.IsNotExist(err) {
-		return "", nil
+	// T3 moved its live state to statev2.sqlite with the same projection
+	// tables. The old state.sqlite stays behind frozen, so reading it gives
+	// stale lineage, and it is often offloaded somewhere slow.
+	for _, name := range []string{"statev2.sqlite", "state.sqlite"} {
+		dbPath := filepath.Join(baseDir, "userdata", name)
+		info, err := os.Stat(dbPath)
+		if os.IsNotExist(err) {
+			continue
+		}
+		if err != nil {
+			return "", fmt.Errorf("inspect T3 project metadata: %w", err)
+		}
+		if !info.Mode().IsRegular() {
+			return "", fmt.Errorf("inspect T3 project metadata: %s is not a regular file", dbPath)
+		}
+		return dbPath, nil
 	}
-	if err != nil {
-		return "", fmt.Errorf("inspect T3 project metadata: %w", err)
-	}
-	if !info.Mode().IsRegular() {
-		return "", fmt.Errorf("inspect T3 project metadata: %s is not a regular file", dbPath)
-	}
-	return dbPath, nil
+	return "", nil
 }
 
 func loadT3ProjectLineage(ctx context.Context, dbPath string) (model.ProjectLineage, error) {

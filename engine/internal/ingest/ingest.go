@@ -138,6 +138,11 @@ func run(ctx context.Context, scanners []Scanner, cacheDir string) (*Result, err
 						res.Turns[kept].Usage = t.Usage
 						res.Turns[kept].UnpricedReason = t.UnpricedReason
 					}
+					// a snapshot that knows the call ran in fast mode wins,
+					// whichever order the snapshots were written in
+					if t.Model == res.Turns[kept].Model+"-fast" {
+						res.Turns[kept].Model = t.Model
+					}
 					if t.Credits != nil && (res.Turns[kept].Credits == nil || *t.Credits > *res.Turns[kept].Credits) {
 						res.Turns[kept].Credits = t.Credits
 					}

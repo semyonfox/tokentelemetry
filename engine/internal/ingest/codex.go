@@ -1,6 +1,7 @@
 package ingest
 
 import (
+	"bytes"
 	"cmp"
 	"context"
 	"encoding/json"
@@ -124,6 +125,9 @@ func (c *Codex) scanFile(path string) []model.Turn {
 	defer f.Close()
 	var records []codexRecord
 	for line := range jsonLines(f) {
+		if !codexWanted(line) {
+			continue
+		}
 		var r codexRecord
 		if json.Unmarshal(line, &r) != nil {
 			continue
@@ -141,6 +145,23 @@ func (c *Codex) scanFile(path string) []model.Turn {
 	legacy, exact := codexStructured(records)
 	turns := scanCodexLegacy(legacy)
 	return append(turns, exact...)
+}
+
+// codexMarkers are the type names scanFile keeps. A kept record must contain
+// one of them literally, so a line with none is skipped without decoding. That
+// drops the response items, which hold almost all of a rollout's bytes.
+var codexMarkers = [][]byte{
+	[]byte(`"session_meta"`), []byte(`"turn_context"`), []byte(`"token_usage_record"`),
+	[]byte(`"token_count"`), []byte(`"task_started"`), []byte(`"turn_started"`),
+}
+
+func codexWanted(line []byte) bool {
+	for _, marker := range codexMarkers {
+		if bytes.Contains(line, marker) {
+			return true
+		}
+	}
+	return false
 }
 
 func scanCodexLegacy(records []codexRecord) []model.Turn {

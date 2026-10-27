@@ -1,12 +1,14 @@
 package ingest
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
 	"io/fs"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 
@@ -117,11 +119,26 @@ type claudeRecord struct {
 			CacheRead     int64  `json:"cache_read_input_tokens"`
 			CacheCreate   int64  `json:"cache_creation_input_tokens"`
 			ServiceTier   string `json:"service_tier"`
+			Speed         string `json:"speed"`
 			CacheCreation struct {
 				Ephemeral1h int64 `json:"ephemeral_1h_input_tokens"`
 			} `json:"cache_creation"`
+			Iterations []claudeIteration `json:"iterations"`
 		} `json:"usage"`
 	} `json:"message"`
+}
+
+// claudeIteration is one sampling step of a call. The top-level usage covers
+// only the message steps, so a compaction step is extra billed usage.
+type claudeIteration struct {
+	Type          string `json:"type"`
+	Input         int64  `json:"input_tokens"`
+	Output        int64  `json:"output_tokens"`
+	CacheRead     int64  `json:"cache_read_input_tokens"`
+	CacheCreate   int64  `json:"cache_creation_input_tokens"`
+	CacheCreation struct {
+		Ephemeral1h int64 `json:"ephemeral_1h_input_tokens"`
+	} `json:"cache_creation"`
 }
 
 func (c *Claude) Scan(ctx context.Context, emit func(model.Turn)) error {
@@ -174,6 +191,8 @@ func globJSONL(pattern string) []string {
 	return matches
 }
 
+var claudeUsageKey = []byte(`"usage"`)
+
 func (c *Claude) scanFile(path string, subagent bool) []model.Turn {
 	f, err := os.Open(path)
 	if err != nil {
@@ -184,6 +203,11 @@ func (c *Claude) scanFile(path string, subagent bool) []model.Turn {
 	var turns []model.Turn
 
 	for line := range jsonLines(f) {
+		// only assistant records carry usage, and the rest are the huge tool
+		// outputs, so skipping them before decoding is most of the parse
+		if !bytes.Contains(line, claudeUsageKey) {
+			continue
+		}
 		var r claudeRecord
 		if err := json.Unmarshal(line, &r); err != nil {
 			continue // a truncated tail line is normal on a live session
@@ -200,8 +224,8 @@ func (c *Claude) scanFile(path string, subagent bool) []model.Turn {
 			CacheWrite1h: u.CacheCreation.Ephemeral1h,
 		}
 		usage, ok := usage.Sanitize()
-		if !ok || usage.IsZero() {
-			continue // corrupt or empty record
+		if !ok {
+			continue // corrupt record
 		}
 		// "<synthetic>" marks messages Claude Code fabricates locally (error
 		// placeholders, interrupts). They carry no real usage.
@@ -210,12 +234,18 @@ func (c *Claude) scanFile(path string, subagent bool) []model.Turn {
 		}
 
 		ts := parseTime(r.Timestamp)
-		turns = append(turns, model.Turn{
+		modelID := r.Message.Model
+		// fast mode bills at its own rates, which the table holds under the
+		// -fast id. A model without one stays unpriced rather than cheap.
+		if u.Speed == "fast" && !strings.HasSuffix(modelID, "-fast") {
+			modelID += "-fast"
+		}
+		turn := model.Turn{
 			Key:       claudeKey(r.Message.ID, r.RequestID),
 			SessionID: r.SessionID,
 			Agent:     model.AgentClaude,
 			Timestamp: ts,
-			Model:     r.Message.Model,
+			Model:     modelID,
 			// Claude Code talks to Anthropic directly; recording it makes the
 			// provider a groupable dimension and lets provider-keyed pricing hit.
 			Provider:    "anthropic",
@@ -223,7 +253,41 @@ func (c *Claude) scanFile(path string, subagent bool) []model.Turn {
 			Usage:       usage,
 			ServiceTier: u.ServiceTier,
 			Subagent:    subagent || r.IsSidechain,
-		})
+		}
+		// a compaction-only call has empty top-level usage but billed steps
+		if !usage.IsZero() {
+			turns = append(turns, turn)
+		}
+		turns = append(turns, claudeCompactions(turn, u.Iterations)...)
+	}
+	return turns
+}
+
+// claudeCompactions returns the compaction steps of a call as their own turns.
+// Anthropic leaves them out of the top-level usage, which only sums the message
+// steps, so they are billed on top. Each is priced at its own prompt size.
+func claudeCompactions(call model.Turn, iterations []claudeIteration) []model.Turn {
+	var turns []model.Turn
+	for i, it := range iterations {
+		if it.Type != "compaction" {
+			continue
+		}
+		usage, ok := (model.Usage{
+			Input:        it.Input,
+			Output:       it.Output,
+			CacheRead:    it.CacheRead,
+			CacheWrite:   it.CacheCreate,
+			CacheWrite1h: it.CacheCreation.Ephemeral1h,
+		}).Sanitize()
+		if !ok || usage.IsZero() {
+			continue
+		}
+		turn := call
+		turn.Usage = usage
+		if call.Key != "" {
+			turn.Key = call.Key + "|compaction|" + strconv.Itoa(i)
+		}
+		turns = append(turns, turn)
 	}
 	return turns
 }

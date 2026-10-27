@@ -79,8 +79,8 @@ daily check for updated model prices, which `TT_OFFLINE=1` turns off.
 
 ## Supported agents
 
-The [provider inventory](docs/provider-inventory.md) lists all 42 audited adapters:
-40 local readers/importers, plus explicit source limitations for Crush and
+The [provider inventory](docs/provider-inventory.md) lists all 43 audited adapters:
+41 local readers/importers, plus explicit source limitations for Crush and
 Grokbot. Coverage includes Copilot CLI and supported VS Code stores, Cursor local counters
 and CSV exports, Cline, Roo, Kilo,
 Qwen, Goose and Zed. Some sources provide only session totals or credits.

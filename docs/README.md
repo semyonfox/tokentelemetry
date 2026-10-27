@@ -4,7 +4,7 @@ Start with the [project README](../README.md) for installation and a short
 description of the local CLI. The [CLI reference](../engine/README.md) covers
 everyday reports, filters, cache behavior, pricing and provider setup.
 
-The [provider inventory](provider-inventory.md) lists the 42 audited adapters,
+The [provider inventory](provider-inventory.md) lists the 43 audited adapters,
 their identifiers and their source limits. `tt agents` shows the catalog on a
 machine, while `tt agents --installed` limits it to detected source paths.
 

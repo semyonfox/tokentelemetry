@@ -62,7 +62,7 @@ func TestRunCachedWarmHitAvoidsScanner(t *testing.T) {
 	if !reflect.DeepEqual(cold.Turns, warm.Turns) {
 		t.Fatalf("cold turns = %+v, warm turns = %+v", cold.Turns, warm.Turns)
 	}
-	entries, err := filepath.Glob(filepath.Join(cacheDir, "providers", "*.json"))
+	entries, err := filepath.Glob(filepath.Join(cacheDir, "providers", "*.gob"))
 	if err != nil || len(entries) != 1 {
 		t.Fatalf("cache entries = %v, err = %v", entries, err)
 	}
@@ -152,7 +152,7 @@ func TestRunCachedCorruptEntryFallsBackFresh(t *testing.T) {
 	if _, err := RunCached(context.Background(), []Scanner{scanner}, cacheDir); err != nil {
 		t.Fatal(err)
 	}
-	entries, _ := filepath.Glob(filepath.Join(cacheDir, "providers", "*.json"))
+	entries, _ := filepath.Glob(filepath.Join(cacheDir, "providers", "*.gob"))
 	if len(entries) != 1 {
 		t.Fatalf("entries = %v", entries)
 	}
@@ -426,5 +426,26 @@ func BenchmarkRunCachedWarm(b *testing.B) {
 	b.ResetTimer()
 	for range b.N {
 		_, _ = RunCached(context.Background(), []Scanner{scanner}, cacheDir)
+	}
+}
+
+func TestWriteScanCacheReplacesVersionOneJSON(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "providers", "claude-abc.gob")
+	legacy := filepath.Join(dir, "providers", "claude-abc.json")
+	writeFile(t, legacy, `{"version":1}`)
+	turns := []model.Turn{{Key: "k", Agent: model.AgentClaude, Usage: model.Usage{Input: 3, Output: 4}}}
+	if err := writeScanCache(path, "ns", "fp", turns); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := os.Stat(legacy); !os.IsNotExist(err) {
+		t.Fatalf("version 1 cache was left behind: %v", err)
+	}
+	got, ok := loadScanCache(path, "ns", "fp")
+	if !ok || len(got) != 1 || got[0].Usage.Total() != 7 {
+		t.Fatalf("round trip: %v %+v", ok, got)
+	}
+	if _, ok := loadScanCache(path, "ns", "other"); ok {
+		t.Fatal("a different fingerprint must miss")
 	}
 }
