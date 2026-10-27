@@ -12,3 +12,5 @@ The product is a local Go CLI. Source, tests and native packaging live in
 - `make packages`: generate native npm packages locally, without publishing.
 
 See `.claude/CLAUDE.md` for accounting and privacy rules.
+
+attribution: on
