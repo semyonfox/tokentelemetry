@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -5320,6 +5320,32 @@
       ],
       "first_party": true
     },
+    "codestral-2508@eu": {
+      "id": "codestral-2508@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.33,
+          "out": 0.99,
+          "cache_read": 0.033,
+          "cache_write": 0.33,
+          "source": "edenai"
+        }
+      ]
+    },
+    "codestral-latest@eu": {
+      "id": "codestral-latest@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.33,
+          "out": 0.99,
+          "cache_read": 0.033,
+          "cache_write": 0.33,
+          "source": "edenai"
+        }
+      ]
+    },
     "codex-mini": {
       "id": "codex-mini",
       "rates": [
@@ -7244,6 +7270,14 @@
           "cache_read": 0.25,
           "cache_write": 0.2542,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.1035,
+          "out": 8,
+          "cache_read": 0.1,
+          "cache_write": 0.1035,
+          "source": "kilo"
         }
       ]
     },
@@ -7840,8 +7874,17 @@
           "cache_read": 0.3,
           "cache_write": 0.3,
           "source": "empiriolabs"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.007,
+          "cache_write": 0.3,
+          "source": "mistral"
         }
-      ]
+      ],
+      "first_party": true
     },
     "deepseek-v4-1-flash-1017-uncensored": {
       "id": "deepseek-v4-1-flash-1017-uncensored",
@@ -8735,6 +8778,19 @@
         }
       ]
     },
+    "deepseek-v4.1-flash-cyber": {
+      "id": "deepseek-v4.1-flash-cyber",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.3,
+          "out": 1,
+          "cache_read": 0.007,
+          "cache_write": 0.3,
+          "source": "llmgateway"
+        }
+      ]
+    },
     "deepseek-v4.1-flash-fast": {
       "id": "deepseek-v4.1-flash-fast",
       "rates": [
@@ -9145,6 +9201,19 @@
       ],
       "first_party": true
     },
+    "devstral-2512@eu": {
+      "id": "devstral-2512@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.44,
+          "out": 2.2,
+          "cache_read": 0.044,
+          "cache_write": 0.44,
+          "source": "edenai"
+        }
+      ]
+    },
     "devstral-latest@eu": {
       "id": "devstral-latest@eu",
       "rates": [
@@ -9193,6 +9262,19 @@
         }
       ],
       "first_party": true
+    },
+    "devstral-medium-latest@eu": {
+      "id": "devstral-medium-latest@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.44,
+          "out": 2.2,
+          "cache_read": 0,
+          "cache_write": 0.44,
+          "source": "edenai"
+        }
+      ]
     },
     "devstral-small-2": {
       "id": "devstral-small-2",
@@ -9457,6 +9539,14 @@
           "cache_read": 0.06715,
           "cache_write": 0.1343,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.11594203,
+          "out": 0.28985507,
+          "cache_read": 0,
+          "cache_write": 0.11594203,
+          "source": "qiniu-ai"
         }
       ]
     },
@@ -9813,6 +9903,14 @@
           "cache_read": 0.0731,
           "cache_write": 0.1462,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.25,
+          "out": 2,
+          "cache_read": 0.0731,
+          "cache_write": 0.25,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -9856,6 +9954,14 @@
           "out": 0.4845,
           "cache_read": 0.02465,
           "cache_write": 0.0493,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.1,
+          "out": 0.4845,
+          "cache_read": 0.02465,
+          "cache_write": 0.1,
           "source": "nano-gpt"
         }
       ]
@@ -12265,8 +12371,7 @@
           "cache_write": 2,
           "source": "google"
         }
-      ],
-      "first_party": true
+      ]
     },
     "gemini-3-pro-preview": {
       "id": "gemini-3-pro-preview",
@@ -12317,9 +12422,16 @@
           "cache_read": 0,
           "cache_write": 0.5,
           "source": "google"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.5,
+          "out": 3,
+          "cache_read": 0.05,
+          "cache_write": 0.5,
+          "source": "vercel"
         }
-      ],
-      "first_party": true
+      ]
     },
     "gemini-3.1-flash-lite": {
       "id": "gemini-3.1-flash-lite",
@@ -13740,6 +13852,14 @@
           "cache_read": 0.0306,
           "cache_write": 0.306,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0.0306,
+          "cache_write": 0.3825,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -14750,6 +14870,19 @@
         }
       ]
     },
+    "glm-4-7-flashx": {
+      "id": "glm-4-7-flashx",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.07,
+          "out": 0.4,
+          "cache_read": 0.063,
+          "cache_write": 0.07,
+          "source": "empiriolabs"
+        }
+      ]
+    },
     "glm-4-9b-0414": {
       "id": "glm-4-9b-0414",
       "rates": [
@@ -15369,6 +15502,14 @@
           "in": 0.07,
           "out": 0.4,
           "cache_read": 0.01,
+          "cache_write": 0.07,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.07,
+          "out": 0.4,
+          "cache_read": 0.010672,
           "cache_write": 0.07,
           "source": "nano-gpt"
         }
@@ -27013,6 +27154,19 @@
       ],
       "first_party": true
     },
+    "magistral-medium-latest@eu": {
+      "id": "magistral-medium-latest@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 1.65,
+          "out": 8.25,
+          "cache_read": 0.165,
+          "cache_write": 1.65,
+          "source": "edenai"
+        }
+      ]
+    },
     "magistral-small": {
       "id": "magistral-small",
       "rates": [
@@ -28853,6 +29007,19 @@
       ],
       "first_party": true
     },
+    "ministral-14b-2512@eu": {
+      "id": "ministral-14b-2512@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.22,
+          "out": 0.22,
+          "cache_read": 0.022,
+          "cache_write": 0.22,
+          "source": "edenai"
+        }
+      ]
+    },
     "ministral-14b-instruct-2512": {
       "id": "ministral-14b-instruct-2512",
       "rates": [
@@ -29140,6 +29307,14 @@
           "cache_read": 0,
           "cache_write": 0.3345,
           "source": "edenai"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.33399,
+          "out": 0.44532,
+          "cache_read": 0,
+          "cache_write": 0.33399,
+          "source": "edenai"
         }
       ]
     },
@@ -29221,6 +29396,19 @@
       ],
       "first_party": true
     },
+    "ministral-3b-2512@eu": {
+      "id": "ministral-3b-2512@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.11,
+          "out": 0.11,
+          "cache_read": 0.011,
+          "cache_write": 0.11,
+          "source": "edenai"
+        }
+      ]
+    },
     "ministral-8b": {
       "id": "ministral-8b",
       "rates": [
@@ -29272,6 +29460,19 @@
         }
       ],
       "first_party": true
+    },
+    "ministral-8b-2512@eu": {
+      "id": "ministral-8b-2512@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.165,
+          "out": 0.165,
+          "cache_read": 0.0165,
+          "cache_write": 0.165,
+          "source": "edenai"
+        }
+      ]
     },
     "ministral-8b-instruct-2410": {
       "id": "ministral-8b-instruct-2410",
@@ -29438,6 +29639,19 @@
         }
       ]
     },
+    "mistral-large-2407@eu": {
+      "id": "mistral-large-2407@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 2.2,
+          "out": 6.6,
+          "cache_read": 0.22,
+          "cache_write": 2.2,
+          "source": "edenai"
+        }
+      ]
+    },
     "mistral-large-2411": {
       "id": "mistral-large-2411",
       "rates": [
@@ -29472,6 +29686,19 @@
         }
       ],
       "first_party": true
+    },
+    "mistral-large-2512@eu": {
+      "id": "mistral-large-2512@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.55,
+          "out": 1.65,
+          "cache_read": 0.055,
+          "cache_write": 0.55,
+          "source": "edenai"
+        }
+      ]
     },
     "mistral-large-3": {
       "id": "mistral-large-3",
@@ -29574,6 +29801,14 @@
           "cache_read": 0.07,
           "cache_write": 0.68,
           "source": "requesty"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.748,
+          "out": 2.299,
+          "cache_read": 0.077,
+          "cache_write": 0.748,
+          "source": "edenai"
         }
       ]
     },
@@ -29587,6 +29822,19 @@
           "cache_read": 1,
           "cache_write": 4,
           "source": "io-net"
+        }
+      ]
+    },
+    "mistral-large-latest@eu": {
+      "id": "mistral-large-latest@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 2.2,
+          "out": 6.6,
+          "cache_read": 0.22,
+          "cache_write": 2.2,
+          "source": "edenai"
         }
       ]
     },
@@ -29652,6 +29900,19 @@
       ],
       "first_party": true
     },
+    "mistral-medium-2505@eu": {
+      "id": "mistral-medium-2505@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.44,
+          "out": 2.2,
+          "cache_read": 0,
+          "cache_write": 0.44,
+          "source": "edenai"
+        }
+      ]
+    },
     "mistral-medium-2508": {
       "id": "mistral-medium-2508",
       "rates": [
@@ -29687,6 +29948,19 @@
         }
       ],
       "first_party": true
+    },
+    "mistral-medium-2604@eu": {
+      "id": "mistral-medium-2604@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 1.65,
+          "out": 8.25,
+          "cache_read": 0.165,
+          "cache_write": 1.65,
+          "source": "edenai"
+        }
+      ]
     },
     "mistral-medium-3": {
       "id": "mistral-medium-3",
@@ -29778,6 +30052,14 @@
           "cache_read": 1.65,
           "cache_write": 1.65,
           "source": "requesty"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 1.65,
+          "out": 8.25,
+          "cache_read": 0.165,
+          "cache_write": 1.65,
+          "source": "edenai"
         }
       ]
     },
@@ -29879,6 +30161,19 @@
         }
       ]
     },
+    "mistral-medium-3@eu": {
+      "id": "mistral-medium-3@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.44,
+          "out": 2.2,
+          "cache_read": 0.044,
+          "cache_write": 0.44,
+          "source": "edenai"
+        }
+      ]
+    },
     "mistral-medium-latest@eu": {
       "id": "mistral-medium-latest@eu",
       "rates": [
@@ -29897,6 +30192,14 @@
           "cache_read": 0.44,
           "cache_write": 0.44,
           "source": "requesty"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 1.65,
+          "out": 8.25,
+          "cache_read": 0.165,
+          "cache_write": 1.65,
+          "source": "edenai"
         }
       ]
     },
@@ -30106,6 +30409,14 @@
           "cache_read": 0.165,
           "cache_write": 0.165,
           "source": "requesty"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.165,
+          "out": 0.66,
+          "cache_read": 0.0165,
+          "cache_write": 0.165,
+          "source": "edenai"
         }
       ]
     },
@@ -30316,6 +30627,19 @@
           "cache_read": 0.2,
           "cache_write": 0.4,
           "source": "nano-gpt"
+        }
+      ]
+    },
+    "mistral-small-latest@eu": {
+      "id": "mistral-small-latest@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.165,
+          "out": 0.66,
+          "cache_read": 0.0165,
+          "cache_write": 0.165,
+          "source": "edenai"
         }
       ]
     },
@@ -31714,6 +32038,14 @@
           "in": 0.5,
           "out": 2.5,
           "cache_read": 0.25,
+          "cache_write": 0.5,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.5,
+          "out": 2.5,
+          "cache_read": 0.15,
           "cache_write": 0.5,
           "source": "nano-gpt"
         }
@@ -33215,6 +33547,14 @@
           "cache_read": 0.275,
           "cache_write": 1.1,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 1.1,
+          "out": 4.4,
+          "cache_read": 0.55,
+          "cache_write": 1.1,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -35108,6 +35448,19 @@
           "cache_read": 0,
           "cache_write": 0,
           "source": "kilo"
+        }
+      ]
+    },
+    "particle-1": {
+      "id": "particle-1",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.125,
+          "out": 0.5,
+          "cache_read": 0.015,
+          "cache_write": 0.125,
+          "source": "vercel"
         }
       ]
     },
@@ -38447,6 +38800,14 @@
           "cache_read": 0.0306,
           "cache_write": 0.306,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0.0306,
+          "cache_write": 0.3825,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -38459,6 +38820,14 @@
           "out": 0.306,
           "cache_read": 0.0306,
           "cache_write": 0.306,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0.0306,
+          "cache_write": 0.3825,
           "source": "nano-gpt"
         }
       ]
@@ -43384,6 +43753,19 @@
         }
       ],
       "first_party": true
+    },
+    "voxtral-small-latest@eu": {
+      "id": "voxtral-small-latest@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.11,
+          "out": 0.44,
+          "cache_read": 0.011,
+          "cache_write": 0.11,
+          "source": "edenai"
+        }
+      ]
     },
     "wan2-2-t2v-a14b": {
       "id": "wan2-2-t2v-a14b",
@@ -69069,6 +69451,14 @@
           "cache_read": 0.25,
           "cache_write": 3.125,
           "source": "cloudflare-ai-gateway"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.4,
+          "cache_write": 5,
+          "source": "cloudflare-ai-gateway"
         }
       ]
     },
@@ -69153,6 +69543,24 @@
           "tier_out": 15,
           "tier_cache_read": 0.2,
           "tier_cache_write": 5,
+          "source": "cloudflare-ai-gateway"
+        }
+      ]
+    },
+    "cloudflare-ai-gateway\u0000gpt-6.1-terra": {
+      "id": "gpt-6.1-terra",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 1,
+          "out": 5,
+          "cache_read": 0.05,
+          "cache_write": 1.25,
+          "tier_threshold": 272000,
+          "tier_in": 2,
+          "tier_out": 7.5,
+          "tier_cache_read": 0.1,
+          "tier_cache_write": 2.5,
           "source": "cloudflare-ai-gateway"
         }
       ]
@@ -71558,6 +71966,14 @@
           "out": 0.6,
           "cache_read": 0.004,
           "cache_write": 0.201,
+          "source": "cortecs"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.075,
+          "cache_write": 0.3,
           "source": "cortecs"
         }
       ]
@@ -78952,6 +79368,32 @@
         }
       ]
     },
+    "edenai\u0000codestral-2508@eu": {
+      "id": "codestral-2508@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.33,
+          "out": 0.99,
+          "cache_read": 0.033,
+          "cache_write": 0.33,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000codestral-latest@eu": {
+      "id": "codestral-latest@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.33,
+          "out": 0.99,
+          "cache_read": 0.033,
+          "cache_write": 0.33,
+          "source": "edenai"
+        }
+      ]
+    },
     "edenai\u0000command-a-03-2025": {
       "id": "command-a-03-2025",
       "rates": [
@@ -79441,6 +79883,19 @@
         }
       ]
     },
+    "edenai\u0000devstral-2512@eu": {
+      "id": "devstral-2512@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.44,
+          "out": 2.2,
+          "cache_read": 0.044,
+          "cache_write": 0.44,
+          "source": "edenai"
+        }
+      ]
+    },
     "edenai\u0000devstral-medium": {
       "id": "devstral-medium",
       "rates": [
@@ -79450,6 +79905,19 @@
           "out": 2,
           "cache_read": 0,
           "cache_write": 0.4,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000devstral-medium-latest@eu": {
+      "id": "devstral-medium-latest@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.44,
+          "out": 2.2,
+          "cache_read": 0,
+          "cache_write": 0.44,
           "source": "edenai"
         }
       ]
@@ -81813,6 +82281,14 @@
           "cache_read": 0,
           "cache_write": 1.0035,
           "source": "edenai"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 1.001971,
+          "out": 1.001971,
+          "cache_read": 0,
+          "cache_write": 1.001971,
+          "source": "edenai"
         }
       ]
     },
@@ -81898,6 +82374,19 @@
           "out": 7.5,
           "cache_read": 0.15,
           "cache_write": 1.5,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000magistral-medium-latest@eu": {
+      "id": "magistral-medium-latest@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 1.65,
+          "out": 8.25,
+          "cache_read": 0.165,
+          "cache_write": 1.65,
           "source": "edenai"
         }
       ]
@@ -82002,6 +82491,19 @@
           "out": 0.2,
           "cache_read": 0.02,
           "cache_write": 0.2,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000ministral-14b-2512@eu": {
+      "id": "ministral-14b-2512@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.22,
+          "out": 0.22,
+          "cache_read": 0.022,
+          "cache_write": 0.22,
           "source": "edenai"
         }
       ]
@@ -82264,6 +82766,14 @@
           "cache_read": 0,
           "cache_write": 0.3345,
           "source": "edenai"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.33399,
+          "out": 0.44532,
+          "cache_read": 0,
+          "cache_write": 0.33399,
+          "source": "edenai"
         }
       ]
     },
@@ -82280,6 +82790,19 @@
         }
       ]
     },
+    "edenai\u0000ministral-3b-2512@eu": {
+      "id": "ministral-3b-2512@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.11,
+          "out": 0.11,
+          "cache_read": 0.011,
+          "cache_write": 0.11,
+          "source": "edenai"
+        }
+      ]
+    },
     "edenai\u0000ministral-8b-2512": {
       "id": "ministral-8b-2512",
       "rates": [
@@ -82289,6 +82812,19 @@
           "out": 0.15,
           "cache_read": 0.015,
           "cache_write": 0.15,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000ministral-8b-2512@eu": {
+      "id": "ministral-8b-2512@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.165,
+          "out": 0.165,
+          "cache_read": 0.0165,
+          "cache_write": 0.165,
           "source": "edenai"
         }
       ]
@@ -82319,6 +82855,19 @@
         }
       ]
     },
+    "edenai\u0000mistral-large-2407@eu": {
+      "id": "mistral-large-2407@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 2.2,
+          "out": 6.6,
+          "cache_read": 0.22,
+          "cache_write": 2.2,
+          "source": "edenai"
+        }
+      ]
+    },
     "edenai\u0000mistral-large-2512": {
       "id": "mistral-large-2512",
       "rates": [
@@ -82344,6 +82893,45 @@
           "out": 1.5,
           "cache_read": 0.05,
           "cache_write": 0.5,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000mistral-large-2512@eu": {
+      "id": "mistral-large-2512@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.55,
+          "out": 1.65,
+          "cache_read": 0.055,
+          "cache_write": 0.55,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000mistral-large-4@eu": {
+      "id": "mistral-large-4@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.748,
+          "out": 2.299,
+          "cache_read": 0.077,
+          "cache_write": 0.748,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000mistral-large-latest@eu": {
+      "id": "mistral-large-latest@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 2.2,
+          "out": 6.6,
+          "cache_read": 0.22,
+          "cache_write": 2.2,
           "source": "edenai"
         }
       ]
@@ -82382,6 +82970,19 @@
         }
       ]
     },
+    "edenai\u0000mistral-medium-2505@eu": {
+      "id": "mistral-medium-2505@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.44,
+          "out": 2.2,
+          "cache_read": 0,
+          "cache_write": 0.44,
+          "source": "edenai"
+        }
+      ]
+    },
     "edenai\u0000mistral-medium-2604": {
       "id": "mistral-medium-2604",
       "rates": [
@@ -82399,6 +83000,19 @@
           "out": 7.5,
           "cache_read": 0.15,
           "cache_write": 1.5,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000mistral-medium-2604@eu": {
+      "id": "mistral-medium-2604@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 1.65,
+          "out": 8.25,
+          "cache_read": 0.165,
+          "cache_write": 1.65,
           "source": "edenai"
         }
       ]
@@ -82425,6 +83039,45 @@
           "out": 7.5,
           "cache_read": 0.15,
           "cache_write": 1.5,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000mistral-medium-3-5@eu": {
+      "id": "mistral-medium-3-5@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 1.65,
+          "out": 8.25,
+          "cache_read": 0.165,
+          "cache_write": 1.65,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000mistral-medium-3@eu": {
+      "id": "mistral-medium-3@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.44,
+          "out": 2.2,
+          "cache_read": 0.044,
+          "cache_write": 0.44,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000mistral-medium-latest@eu": {
+      "id": "mistral-medium-latest@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 1.65,
+          "out": 8.25,
+          "cache_read": 0.165,
+          "cache_write": 1.65,
           "source": "edenai"
         }
       ]
@@ -82476,6 +83129,19 @@
         }
       ]
     },
+    "edenai\u0000mistral-small-2603@eu": {
+      "id": "mistral-small-2603@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.165,
+          "out": 0.66,
+          "cache_read": 0.0165,
+          "cache_write": 0.165,
+          "source": "edenai"
+        }
+      ]
+    },
     "edenai\u0000mistral-small-3.1-24b-instruct": {
       "id": "mistral-small-3.1-24b-instruct",
       "rates": [
@@ -82485,6 +83151,19 @@
           "out": 0.555,
           "cache_read": 0,
           "cache_write": 0.351,
+          "source": "edenai"
+        }
+      ]
+    },
+    "edenai\u0000mistral-small-latest@eu": {
+      "id": "mistral-small-latest@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.165,
+          "out": 0.66,
+          "cache_read": 0.0165,
+          "cache_write": 0.165,
           "source": "edenai"
         }
       ]
@@ -83061,6 +83740,14 @@
           "cache_read": 0,
           "cache_write": 0.83625,
           "source": "edenai"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.834975,
+          "out": 2.504926,
+          "cache_read": 0,
+          "cache_write": 0.834975,
+          "source": "edenai"
         }
       ]
     },
@@ -83306,6 +83993,14 @@
           "out": 0.892,
           "cache_read": 0,
           "cache_write": 0.16725,
+          "source": "edenai"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.166995,
+          "out": 0.89064,
+          "cache_read": 0,
+          "cache_write": 0.166995,
           "source": "edenai"
         }
       ]
@@ -83736,6 +84431,19 @@
         }
       ]
     },
+    "edenai\u0000voxtral-small-latest@eu": {
+      "id": "voxtral-small-latest@eu",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.11,
+          "out": 0.44,
+          "cache_read": 0.011,
+          "cache_write": 0.11,
+          "source": "edenai"
+        }
+      ]
+    },
     "edenai\u0000wizardlm-2-8x22b": {
       "id": "wizardlm-2-8x22b",
       "rates": [
@@ -83994,6 +84702,19 @@
           "out": 0,
           "cache_read": 0,
           "cache_write": 0,
+          "source": "empiriolabs"
+        }
+      ]
+    },
+    "empiriolabs\u0000glm-4-7-flashx": {
+      "id": "glm-4-7-flashx",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.07,
+          "out": 0.4,
+          "cache_read": 0.063,
+          "cache_write": 0.07,
           "source": "empiriolabs"
         }
       ]
@@ -95683,6 +96404,14 @@
           "cache_read": 0.027,
           "cache_write": 0,
           "source": "inceptron"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.13,
+          "out": 0.3688,
+          "cache_read": 0.027,
+          "cache_write": 0,
+          "source": "inceptron"
         }
       ]
     },
@@ -95736,6 +96465,14 @@
           "cache_read": 0.16,
           "cache_write": 0,
           "source": "inceptron"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 1.2,
+          "out": 4.4,
+          "cache_read": 0.16,
+          "cache_write": 0,
+          "source": "inceptron"
         }
       ]
     },
@@ -95770,6 +96507,14 @@
           "from": "2026-10-27",
           "in": 1.2,
           "out": 3.5,
+          "cache_read": 0.14,
+          "cache_write": 0,
+          "source": "inceptron"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 1.2,
+          "out": 2.2,
           "cache_read": 0.14,
           "cache_write": 0,
           "source": "inceptron"
@@ -95885,6 +96630,14 @@
           "in": 0.624,
           "out": 3.5,
           "cache_read": 0.1248,
+          "cache_write": 0,
+          "source": "inceptron"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.6236,
+          "out": 3.5,
+          "cache_read": 0.1674,
           "cache_write": 0,
           "source": "inceptron"
         }
@@ -100136,6 +100889,15 @@
           "cache_write": 5,
           "cache_write_1h": 8,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 5,
+          "out": 25,
+          "cache_read": 0.5,
+          "cache_write": 6.25,
+          "cache_write_1h": 10,
+          "source": "kilo"
         }
       ]
     },
@@ -100149,6 +100911,15 @@
           "cache_read": 0.4,
           "cache_write": 5,
           "cache_write_1h": 8,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 5,
+          "out": 25,
+          "cache_read": 0.5,
+          "cache_write": 6.25,
+          "cache_write_1h": 10,
           "source": "kilo"
         }
       ]
@@ -100177,6 +100948,15 @@
           "cache_read": 0.4,
           "cache_write": 5,
           "cache_write_1h": 8,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 5,
+          "out": 25,
+          "cache_read": 0.5,
+          "cache_write": 6.25,
+          "cache_write_1h": 10,
           "source": "kilo"
         }
       ]
@@ -100298,6 +101078,15 @@
           "cache_read": 0.24,
           "cache_write": 3,
           "cache_write_1h": 4.8,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 3,
+          "out": 15,
+          "cache_read": 0.3,
+          "cache_write": 3.75,
+          "cache_write_1h": 6,
           "source": "kilo"
         }
       ]
@@ -100855,6 +101644,14 @@
           "cache_read": 0.0114,
           "cache_write": 0.0126,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.0233,
+          "out": 1.8,
+          "cache_read": 0.0231,
+          "cache_write": 0.0233,
+          "source": "kilo"
         }
       ]
     },
@@ -101163,6 +101960,14 @@
           "out": 8,
           "cache_read": 0.25,
           "cache_write": 0.2542,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.1035,
+          "out": 8,
+          "cache_read": 0.1,
+          "cache_write": 0.1035,
           "source": "kilo"
         }
       ]
@@ -101582,6 +102387,14 @@
           "out": 0.1568,
           "cache_read": 0.028,
           "cache_write": 0.0475,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.057,
+          "out": 0.1341,
+          "cache_read": 0.028,
+          "cache_write": 0.057,
           "source": "kilo"
         }
       ]
@@ -102940,6 +103753,14 @@
           "cache_read": 0.11,
           "cache_write": 0.55,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.5,
+          "out": 2,
+          "cache_read": 0.1,
+          "cache_write": 0.5,
+          "source": "kilo"
         }
       ]
     },
@@ -103501,6 +104322,14 @@
           "cache_read": 0.0216,
           "cache_write": 0.0216,
           "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.0457,
+          "out": 0.0742,
+          "cache_read": 0.03,
+          "cache_write": 0.0457,
+          "source": "kilo"
         }
       ]
     },
@@ -103655,6 +104484,14 @@
           "in": 0.1,
           "out": 0.4,
           "cache_read": 0.025,
+          "cache_write": 0.1,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.1,
+          "out": 0.4,
+          "cache_read": 0.03,
           "cache_write": 0.1,
           "source": "kilo"
         }
@@ -105313,6 +106150,14 @@
           "out": 20,
           "cache_read": 0.169,
           "cache_write": 0.179,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.1824,
+          "out": 9.3388,
+          "cache_read": 0.18,
+          "cache_write": 0.1824,
           "source": "kilo"
         }
       ]
@@ -107645,6 +108490,19 @@
         }
       ]
     },
+    "kilo\u0000particle-1": {
+      "id": "particle-1",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.25,
+          "out": 1,
+          "cache_read": 0.03,
+          "cache_write": 0.25,
+          "source": "kilo"
+        }
+      ]
+    },
     "kilo\u0000perceptron-mk1": {
       "id": "perceptron-mk1",
       "rates": [
@@ -108468,6 +109326,14 @@
           "out": 1.5,
           "cache_read": 0.025,
           "cache_write": 0.3125,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.325,
+          "out": 1.95,
+          "cache_read": 0,
+          "cache_write": 0.40625,
           "source": "kilo"
         }
       ]
@@ -110050,6 +110916,14 @@
           "cache_read": 0.003625,
           "cache_write": 0.435,
           "source": "llmgateway"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.00363,
+          "cache_write": 0.435,
+          "source": "llmgateway"
         }
       ]
     },
@@ -110107,6 +110981,19 @@
           "out": 0.6,
           "cache_read": 0.003,
           "cache_write": 0.15,
+          "source": "llmgateway"
+        }
+      ]
+    },
+    "llmgateway\u0000deepseek-v4.1-flash-cyber": {
+      "id": "deepseek-v4.1-flash-cyber",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.3,
+          "out": 1,
+          "cache_read": 0.007,
+          "cache_write": 0.3,
           "source": "llmgateway"
         }
       ]
@@ -113706,6 +114593,14 @@
           "cache_read": 0.1345,
           "cache_write": 0.269,
           "source": "llmgateway-providers"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.26,
+          "out": 0.38,
+          "cache_read": 0.13,
+          "cache_write": 0.26,
+          "source": "llmgateway-providers"
         }
       ]
     },
@@ -113806,6 +114701,19 @@
           "in": 0.3,
           "out": 1.2,
           "cache_read": 0.006,
+          "cache_write": 0.3,
+          "source": "llmgateway-providers"
+        }
+      ]
+    },
+    "llmgateway-providers\u0000deepseek-v4.1-flash-cyber": {
+      "id": "deepseek-v4.1-flash-cyber",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.3,
+          "out": 1,
+          "cache_read": 0.007,
           "cache_write": 0.3,
           "source": "llmgateway-providers"
         }
@@ -115681,6 +116589,14 @@
           "out": 1.2,
           "cache_read": 0.03,
           "cache_write": 0.3,
+          "source": "llmgateway-providers"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.27,
+          "out": 1.1,
+          "cache_read": 0,
+          "cache_write": 0.27,
           "source": "llmgateway-providers"
         }
       ]
@@ -118472,6 +119388,14 @@
           "cache_read": 0.023184,
           "cache_write": 0.11592,
           "source": "melious"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.1115,
+          "out": 0.27875,
+          "cache_read": 0.0223,
+          "cache_write": 0.1115,
+          "source": "melious"
         }
       ]
     },
@@ -118511,6 +119435,14 @@
           "cache_read": 0.011592,
           "cache_write": 0.23184,
           "source": "melious"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.223,
+          "out": 1.115,
+          "cache_read": 0.01115,
+          "cache_write": 0.223,
+          "source": "melious"
         }
       ]
     },
@@ -118523,6 +119455,14 @@
           "out": 1.347,
           "cache_read": 0.033675,
           "cache_write": 0.33675,
+          "source": "melious"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.3345,
+          "out": 1.338,
+          "cache_read": 0.03345,
+          "cache_write": 0.3345,
           "source": "melious"
         }
       ]
@@ -118576,6 +119516,14 @@
           "cache_read": 0.23184,
           "cache_write": 1.1592,
           "source": "melious"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 1.115,
+          "out": 3.345,
+          "cache_read": 0.223,
+          "cache_write": 1.115,
+          "source": "melious"
         }
       ]
     },
@@ -118588,6 +119536,14 @@
           "out": 0.46368,
           "cache_read": 0.023184,
           "cache_write": 0.11592,
+          "source": "melious"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.1115,
+          "out": 0.446,
+          "cache_read": 0.0223,
+          "cache_write": 0.1115,
           "source": "melious"
         }
       ]
@@ -118623,6 +119579,14 @@
           "cache_read": 0.280375,
           "cache_write": 0.78505,
           "source": "melious"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.669,
+          "out": 4.014,
+          "cache_read": 0.16725,
+          "cache_write": 0.669,
+          "source": "melious"
         }
       ]
     },
@@ -118644,6 +119608,14 @@
           "cache_read": 0.190655,
           "cache_write": 0.728975,
           "source": "melious"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.61325,
+          "out": 3.28925,
+          "cache_read": 0.16725,
+          "cache_write": 0.61325,
+          "source": "melious"
         }
       ]
     },
@@ -118664,6 +119636,14 @@
           "out": 15.981375,
           "cache_read": 0.841125,
           "cache_write": 3.196275,
+          "source": "melious"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 3.17775,
+          "out": 15.88875,
+          "cache_read": 0.79165,
+          "cache_write": 3.17775,
           "source": "melious"
         }
       ]
@@ -122664,6 +123644,19 @@
           "in": 0.3,
           "out": 0.9,
           "cache_read": 0.03,
+          "cache_write": 0.3,
+          "source": "mistral"
+        }
+      ]
+    },
+    "mistral\u0000deepseek-v4-1-flash-1017": {
+      "id": "deepseek-v4-1-flash-1017",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.3,
+          "out": 1.2,
+          "cache_read": 0.007,
           "cache_write": 0.3,
           "source": "mistral"
         }
@@ -127546,6 +128539,14 @@
           "cache_read": 0.0731,
           "cache_write": 0.1462,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.25,
+          "out": 2,
+          "cache_read": 0.0731,
+          "cache_write": 0.25,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -127558,6 +128559,14 @@
           "out": 0.4845,
           "cache_read": 0.02465,
           "cache_write": 0.0493,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.1,
+          "out": 0.4845,
+          "cache_read": 0.02465,
+          "cache_write": 0.1,
           "source": "nano-gpt"
         }
       ]
@@ -128857,6 +129866,14 @@
           "cache_read": 0.0306,
           "cache_write": 0.306,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0.0306,
+          "cache_write": 0.3825,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -129851,6 +130868,14 @@
           "cache_read": 0.01,
           "cache_write": 0.07,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.07,
+          "out": 0.4,
+          "cache_read": 0.010672,
+          "cache_write": 0.07,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -129883,6 +130908,14 @@
           "in": 0.07,
           "out": 0.4,
           "cache_read": 0.01,
+          "cache_write": 0.07,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.07,
+          "out": 0.4,
+          "cache_read": 0.010672,
           "cache_write": 0.07,
           "source": "nano-gpt"
         }
@@ -134243,6 +135276,14 @@
           "cache_read": 0.25,
           "cache_write": 0.5,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.5,
+          "out": 2.5,
+          "cache_read": 0.15,
+          "cache_write": 0.5,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -134254,6 +135295,14 @@
           "in": 0.5,
           "out": 2.5,
           "cache_read": 0.25,
+          "cache_write": 0.5,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.5,
+          "out": 2.5,
+          "cache_read": 0.15,
           "cache_write": 0.5,
           "source": "nano-gpt"
         }
@@ -134739,6 +135788,19 @@
           "out": 7.5,
           "cache_read": 0.25,
           "cache_write": 2.5,
+          "source": "nano-gpt"
+        }
+      ]
+    },
+    "nano-gpt\u0000particle-1": {
+      "id": "particle-1",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.25,
+          "out": 1,
+          "cache_read": 0.03,
+          "cache_write": 0.25,
           "source": "nano-gpt"
         }
       ]
@@ -135445,6 +136507,14 @@
           "cache_read": 0.0306,
           "cache_write": 0.306,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0.0306,
+          "cache_write": 0.3825,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -135457,6 +136527,14 @@
           "out": 0.306,
           "cache_read": 0.0306,
           "cache_write": 0.306,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.306,
+          "out": 0.306,
+          "cache_read": 0.0306,
+          "cache_write": 0.3825,
           "source": "nano-gpt"
         }
       ]
@@ -135626,6 +136704,14 @@
           "in": 0.05,
           "out": 0.15,
           "cache_read": 0.025,
+          "cache_write": 0.05,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.05,
+          "out": 0.15,
+          "cache_read": 0.008,
           "cache_write": 0.05,
           "source": "nano-gpt"
         }
@@ -145580,6 +146666,24 @@
         }
       ]
     },
+    "ofox\u0000gpt-6.1-terra": {
+      "id": "gpt-6.1-terra",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 1,
+          "out": 5,
+          "cache_read": 0.05,
+          "cache_write": 1.25,
+          "tier_threshold": 272000,
+          "tier_in": 2,
+          "tier_out": 7.5,
+          "tier_cache_read": 0.1,
+          "tier_cache_write": 2.5,
+          "source": "ofox"
+        }
+      ]
+    },
     "ofox\u0000grok-4.1-fast": {
       "id": "grok-4.1-fast",
       "rates": [
@@ -145719,6 +146823,19 @@
           "out": 15,
           "cache_read": 0.3,
           "cache_write": 3,
+          "source": "ofox"
+        }
+      ]
+    },
+    "ofox\u0000kimi-k3.1-pro": {
+      "id": "kimi-k3.1-pro",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 2,
+          "out": 11,
+          "cache_read": 0.2,
+          "cache_write": 2,
           "source": "ofox"
         }
       ]
@@ -151147,6 +152264,14 @@
           "cache_read": 0.0114,
           "cache_write": 0.0126,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.0193,
+          "out": 1.8,
+          "cache_read": 0.0191,
+          "cache_write": 0.0193,
+          "source": "openrouter"
         }
       ]
     },
@@ -151455,6 +152580,14 @@
           "out": 8,
           "cache_read": 0.25,
           "cache_write": 0.2542,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.1035,
+          "out": 8,
+          "cache_read": 0.1,
+          "cache_write": 0.1035,
           "source": "openrouter"
         }
       ]
@@ -151874,6 +153007,14 @@
           "out": 0.1568,
           "cache_read": 0.028,
           "cache_write": 0.0475,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.057,
+          "out": 0.1341,
+          "cache_read": 0.028,
+          "cache_write": 0.057,
           "source": "openrouter"
         }
       ]
@@ -152788,6 +153929,14 @@
           "cache_read": 0.0042,
           "cache_write": 0.14,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.045,
+          "out": 0.5,
+          "cache_read": 0.006,
+          "cache_write": 0.045,
+          "source": "openrouter"
         }
       ]
     },
@@ -153287,6 +154436,14 @@
           "in": 0.825,
           "out": 4.125,
           "cache_read": 0.0825,
+          "cache_write": 0.041667,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.75,
+          "out": 3.75,
+          "cache_read": 0.075,
           "cache_write": 0.041667,
           "source": "openrouter"
         }
@@ -154005,6 +155162,14 @@
           "cache_read": 0.11,
           "cache_write": 0.55,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.5,
+          "out": 2,
+          "cache_read": 0.1,
+          "cache_write": 0.5,
+          "source": "openrouter"
         }
       ]
     },
@@ -154488,6 +155653,14 @@
           "cache_read": 0.013,
           "cache_write": 0.014,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.006,
+          "out": 7,
+          "cache_read": 0.005,
+          "cache_write": 0.006,
+          "source": "openrouter"
         }
       ]
     },
@@ -154866,6 +156039,14 @@
           "cache_read": 0.03,
           "cache_write": 0.15,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.0457,
+          "out": 0.0742,
+          "cache_read": 0.03,
+          "cache_write": 0.0457,
+          "source": "openrouter"
         }
       ]
     },
@@ -155181,6 +156362,14 @@
           "out": 0.1324,
           "cache_read": 0.0216,
           "cache_write": 0.0216,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.0457,
+          "out": 0.0742,
+          "cache_read": 0.03,
+          "cache_write": 0.0457,
           "source": "openrouter"
         }
       ]
@@ -156381,6 +157570,14 @@
           "cache_read": 0.015,
           "cache_write": 0.06,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.06,
+          "out": 0.15,
+          "cache_read": 0.015,
+          "cache_write": 0.06,
+          "source": "openrouter"
         }
       ]
     },
@@ -157195,6 +158392,14 @@
           "cache_read": 0.169,
           "cache_write": 0.179,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.1824,
+          "out": 9.3388,
+          "cache_read": 0.18,
+          "cache_write": 0.1824,
+          "source": "openrouter"
         }
       ]
     },
@@ -157686,6 +158891,14 @@
           "cache_read": 0.169,
           "cache_write": 0.179,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.239,
+          "out": 10.8,
+          "cache_read": 0.21,
+          "cache_write": 0.239,
+          "source": "openrouter"
         }
       ]
     },
@@ -158052,6 +159265,14 @@
           "out": 0.04,
           "cache_read": 0,
           "cache_write": 0.02,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 0.05,
+          "out": 0.08,
+          "cache_read": 0.025,
+          "cache_write": 0.05,
           "source": "openrouter"
         }
       ]
@@ -159910,6 +161131,19 @@
           "out": 7.5,
           "cache_read": 0.25,
           "cache_write": 2.5,
+          "source": "openrouter"
+        }
+      ]
+    },
+    "openrouter\u0000particle-1": {
+      "id": "particle-1",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.25,
+          "out": 1,
+          "cache_read": 0.03,
+          "cache_write": 0.25,
           "source": "openrouter"
         }
       ]
@@ -189135,6 +190369,14 @@
           "cache_read": 0.2,
           "cache_write": 1.2,
           "source": "vercel"
+        },
+        {
+          "from": "2026-10-29",
+          "in": 1.4,
+          "out": 4.4,
+          "cache_read": 0.14,
+          "cache_write": 1.4,
+          "source": "vercel"
         }
       ]
     },
@@ -192318,6 +193560,19 @@
           "out": 8,
           "cache_read": 0.5,
           "cache_write": 2,
+          "source": "vercel"
+        }
+      ]
+    },
+    "vercel\u0000particle-1": {
+      "id": "particle-1",
+      "rates": [
+        {
+          "from": "2026-10-29",
+          "in": 0.125,
+          "out": 0.5,
+          "cache_read": 0.015,
+          "cache_write": 0.125,
           "source": "vercel"
         }
       ]
@@ -200241,7 +201496,9 @@
     "codestral-22b-v0p1": "codestral-22b-v0.1",
     "codestral-2501-latest": "codestral-2501",
     "codestral-2508-latest": "codestral-2508",
+    "codestral-2508@eu-latest": "codestral-2508@eu",
     "codestral-latest": "codestral",
+    "codestral-latest@eu-latest": "codestral-latest@eu",
     "codex-mini-latest": "codex-mini",
     "coding-glm-5-1": "coding-glm-5.1",
     "coding-glm-5-1-free": "coding-glm-5.1-free",
@@ -200454,6 +201711,7 @@
     "deepseek-v4-1-flash-1017@eu": "deepseek-v4.1-flash-1017@eu",
     "deepseek-v4-1-flash-552b": "deepseek-v4.1-flash-552b",
     "deepseek-v4-1-flash-beta": "deepseek-v4.1-flash-beta",
+    "deepseek-v4-1-flash-cyber": "deepseek-v4.1-flash-cyber",
     "deepseek-v4-1-flash-fast": "deepseek-v4.1-flash-fast",
     "deepseek-v4-1-flash-fast-fp4": "deepseek-v4.1-flash-fast-fp4",
     "deepseek-v4-1-flash-flex": "deepseek-v4.1-flash-flex",
@@ -200507,6 +201765,7 @@
     "deepseek-v4.1-flash-1017@eu-latest": "deepseek-v4.1-flash-1017@eu",
     "deepseek-v4.1-flash-552b-latest": "deepseek-v4.1-flash-552b",
     "deepseek-v4.1-flash-beta-latest": "deepseek-v4.1-flash-beta",
+    "deepseek-v4.1-flash-cyber-latest": "deepseek-v4.1-flash-cyber",
     "deepseek-v4.1-flash-fast-fp4-latest": "deepseek-v4.1-flash-fast-fp4",
     "deepseek-v4.1-flash-fast-latest": "deepseek-v4.1-flash-fast",
     "deepseek-v4.1-flash-flex-latest": "deepseek-v4.1-flash-flex",
@@ -200533,6 +201792,7 @@
     "deepseek-v4p1-flash-1017@eu": "deepseek-v4.1-flash-1017@eu",
     "deepseek-v4p1-flash-552b": "deepseek-v4.1-flash-552b",
     "deepseek-v4p1-flash-beta": "deepseek-v4.1-flash-beta",
+    "deepseek-v4p1-flash-cyber": "deepseek-v4.1-flash-cyber",
     "deepseek-v4p1-flash-fast": "deepseek-v4.1-flash-fast",
     "deepseek-v4p1-flash-fast-fp4": "deepseek-v4.1-flash-fast-fp4",
     "deepseek-v4p1-flash-flex": "deepseek-v4.1-flash-flex",
@@ -200557,10 +201817,12 @@
     "devstral-2-123b-instruct-2512-latest": "devstral-2-123b-instruct-2512",
     "devstral-2-latest": "devstral-2",
     "devstral-2512-latest": "devstral-2512",
+    "devstral-2512@eu-latest": "devstral-2512@eu",
     "devstral-latest": "devstral",
     "devstral-latest@eu-latest": "devstral-latest@eu",
     "devstral-medium-2507-latest": "devstral-medium-2507",
     "devstral-medium-latest": "devstral-medium",
+    "devstral-medium-latest@eu-latest": "devstral-medium-latest@eu",
     "devstral-small-2-latest": "devstral-small-2",
     "devstral-small-2505-latest": "devstral-small-2505",
     "devstral-small-2507-latest": "devstral-small-2507",
@@ -201209,6 +202471,7 @@
     "glm-4-7-flash:free-latest": "glm-4-7-flash:free",
     "glm-4-7-flash:thinking": "glm-4.7-flash:thinking",
     "glm-4-7-flashx": "glm-4.7-flashx",
+    "glm-4-7-flashx-latest": "glm-4-7-flashx",
     "glm-4-7-free": "glm-4.7-free",
     "glm-4-7-maas": "glm-4.7-maas",
     "glm-4-7-original": "glm-4.7-original",
@@ -202626,6 +203889,7 @@
     "magidonia-24b-v4.3-latest": "magidonia-24b-v4.3",
     "magidonia-24b-v4p3": "magidonia-24b-v4.3",
     "magistral-medium-latest": "magistral-medium",
+    "magistral-medium-latest@eu-latest": "magistral-medium-latest@eu",
     "magistral-small-2506-latest": "magistral-small-2506",
     "magistral-small-latest": "magistral-small",
     "magnum-v2-72b-latest": "magnum-v2-72b",
@@ -202861,14 +204125,17 @@
     "minimaxpminimax-m2p1": "minimax.minimax-m2.1",
     "minimaxpminimax-m2p5": "minimax.minimax-m2.5",
     "ministral-14b-2512-latest": "ministral-14b-2512",
+    "ministral-14b-2512@eu-latest": "ministral-14b-2512@eu",
     "ministral-14b-instruct-2512-latest": "ministral-14b-instruct-2512",
     "ministral-14b-latest": "ministral-14b",
     "ministral-3-14b-instruct-2512-latest": "ministral-3-14b-instruct-2512",
     "ministral-3-14b-reasoning-2512-latest": "ministral-3-14b-reasoning-2512",
     "ministral-3-3b-reasoning-2512-latest": "ministral-3-3b-reasoning-2512",
     "ministral-3b-2512-latest": "ministral-3b-2512",
+    "ministral-3b-2512@eu-latest": "ministral-3b-2512@eu",
     "ministral-3b-latest": "ministral-3b",
     "ministral-8b-2512-latest": "ministral-8b-2512",
+    "ministral-8b-2512@eu-latest": "ministral-8b-2512@eu",
     "ministral-8b-instruct-2410-latest": "ministral-8b-instruct-2410",
     "ministral-8b-latest": "ministral-8b",
     "mistral-3-14b-latest": "mistral-3-14b",
@@ -202884,8 +204151,10 @@
     "mistral-embed-latest": "mistral-embed",
     "mistral-large-2402-latest": "mistral-large-2402",
     "mistral-large-2407-latest": "mistral-large-2407",
+    "mistral-large-2407@eu-latest": "mistral-large-2407@eu",
     "mistral-large-2411-latest": "mistral-large-2411",
     "mistral-large-2512-latest": "mistral-large-2512",
+    "mistral-large-2512@eu-latest": "mistral-large-2512@eu",
     "mistral-large-3-675b-instruct-2512-latest": "mistral-large-3-675b-instruct-2512",
     "mistral-large-3-latest": "mistral-large-3",
     "mistral-large-3:675b-latest": "mistral-large-3:675b",
@@ -202894,12 +204163,15 @@
     "mistral-large-4@eu-latest": "mistral-large-4@eu",
     "mistral-large-instruct-2411-latest": "mistral-large-instruct-2411",
     "mistral-large-latest": "mistral-large",
+    "mistral-large-latest@eu-latest": "mistral-large-latest@eu",
     "mistral-large2-latest": "mistral-large2",
     "mistral-large:free-latest": "mistral-large:free",
     "mistral-magistral-small-2509": "mistral.magistral-small-2509",
     "mistral-medium-2505-latest": "mistral-medium-2505",
+    "mistral-medium-2505@eu-latest": "mistral-medium-2505@eu",
     "mistral-medium-2508-latest": "mistral-medium-2508",
     "mistral-medium-2604-latest": "mistral-medium-2604",
+    "mistral-medium-2604@eu-latest": "mistral-medium-2604@eu",
     "mistral-medium-3-1": "mistral-medium-3.1",
     "mistral-medium-3-5-128b": "mistral-medium-3.5-128b",
     "mistral-medium-3-5-latest": "mistral-medium-3-5",
@@ -202912,6 +204184,7 @@
     "mistral-medium-3.5-128b-latest": "mistral-medium-3.5-128b",
     "mistral-medium-3.5-latest": "mistral-medium-3.5",
     "mistral-medium-3.5:thinking-latest": "mistral-medium-3.5:thinking",
+    "mistral-medium-3@eu-latest": "mistral-medium-3@eu",
     "mistral-medium-3p1": "mistral-medium-3.1",
     "mistral-medium-3p5": "mistral-medium-3.5",
     "mistral-medium-3p5-128b": "mistral-medium-3.5-128b",
@@ -202951,6 +204224,7 @@
     "mistral-small-4-119b-latest": "mistral-small-4-119b",
     "mistral-small-4-latest": "mistral-small-4",
     "mistral-small-latest": "mistral-small",
+    "mistral-small-latest@eu-latest": "mistral-small-latest@eu",
     "mistral-voxtral-mini-3b-2507": "mistral.voxtral-mini-3b-2507",
     "mistral-voxtral-mini-3b-2507@us": "mistral.voxtral-mini-3b-2507@us",
     "mistral-voxtral-small-24b-2507": "mistral.voxtral-small-24b-2507",
@@ -203418,6 +204692,7 @@
     "pareto-26p9": "pareto-26.9",
     "pareto-code-latest": "pareto-code",
     "pareto-latest": "pareto",
+    "particle-1-latest": "particle-1",
     "perceptron-mk1-5": "perceptron-mk1.5",
     "perceptron-mk1-latest": "perceptron-mk1",
     "perceptron-mk1.5-latest": "perceptron-mk1.5",
@@ -204339,6 +205614,7 @@
     "voxtral-small-24b-2507-latest": "voxtral-small-24b-2507",
     "voxtral-small-2507-latest": "voxtral-small-2507",
     "voxtral-small-latest": "voxtral-small",
+    "voxtral-small-latest@eu-latest": "voxtral-small-latest@eu",
     "wan2-2-t2v-a14b-latest": "wan2-2-t2v-a14b",
     "wan2-7-image": "wan2.7-image",
     "wan2-7-image-pro": "wan2.7-image-pro",
