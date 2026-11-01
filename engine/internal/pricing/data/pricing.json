@@ -21,7 +21,7 @@
     }
   },
   "schema": 2,
-  "updated": "2026-10-31",
+  "updated": "2026-11-01",
   "sources": [
     "https://models.dev/api.json"
   ],
@@ -6787,6 +6787,14 @@
           "cache_read": 0.020958,
           "cache_write": 0.65868,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.2838,
+          "out": 0.8514,
+          "cache_read": 0.00903,
+          "cache_write": 0.2838,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -8118,6 +8126,14 @@
           "cache_read": 0.013,
           "cache_write": 0.05,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.04444,
+          "out": 0.13332,
+          "cache_read": 0.001414,
+          "cache_write": 0.04444,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -8471,6 +8487,14 @@
           "cache_read": 0.020958,
           "cache_write": 0.65868,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.2838,
+          "out": 0.8514,
+          "cache_read": 0.00903,
+          "cache_write": 0.2838,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -8715,6 +8739,14 @@
           "cache_read": 0.012,
           "cache_write": 0.18,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.1854,
+          "out": 0.7416,
+          "cache_read": 0.01236,
+          "cache_write": 0.1854,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -8727,6 +8759,14 @@
           "out": 0.72,
           "cache_read": 0.012,
           "cache_write": 0.18,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.1854,
+          "out": 0.7416,
+          "cache_read": 0.01236,
+          "cache_write": 0.1854,
           "source": "nano-gpt"
         }
       ]
@@ -8827,6 +8867,14 @@
           "out": 0.72,
           "cache_read": 0.006,
           "cache_write": 0.12,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.005,
+          "cache_write": 0.1,
           "source": "nano-gpt"
         }
       ]
@@ -9113,6 +9161,14 @@
           "out": 0.192,
           "cache_read": 0.004,
           "cache_write": 0.022,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.0447,
+          "out": 0.1788,
+          "cache_read": 0.000894,
+          "cache_write": 0.0447,
           "source": "nano-gpt"
         }
       ]
@@ -13864,6 +13920,14 @@
           "cache_read": 0.005,
           "cache_write": 0.01,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.046,
+          "out": 0.138,
+          "cache_read": 0.023,
+          "cache_write": 0.046,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -15642,6 +15706,14 @@
           "in": 0.07,
           "out": 0.4,
           "cache_read": 0.010672,
+          "cache_write": 0.07,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.07,
+          "out": 0.4,
+          "cache_read": 0.01,
           "cache_write": 0.07,
           "source": "nano-gpt"
         }
@@ -102199,6 +102271,14 @@
           "cache_read": 0.013,
           "cache_write": 0.0141,
           "source": "kilo"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.035,
+          "out": 0.5,
+          "cache_read": 0.005,
+          "cache_write": 0.035,
+          "source": "kilo"
         }
       ]
     },
@@ -102982,6 +103062,14 @@
           "out": 0.17292,
           "cache_read": 0.001834,
           "cache_write": 0.05764,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.0434,
+          "out": 0.3,
+          "cache_read": 0.035,
+          "cache_write": 0.0434,
           "source": "kilo"
         }
       ]
@@ -103873,6 +103961,14 @@
           "cache_read": 0.006,
           "cache_write": 0.011,
           "source": "kilo"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.024,
+          "out": 0.1,
+          "cache_read": 0.01,
+          "cache_write": 0.024,
+          "source": "kilo"
         }
       ]
     },
@@ -104486,6 +104582,14 @@
           "cache_read": 0.099,
           "cache_write": 0.54,
           "source": "kilo"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.6,
+          "out": 2.2,
+          "cache_read": 0.11,
+          "cache_write": 0.6,
+          "source": "kilo"
         }
       ]
     },
@@ -104956,6 +105060,14 @@
           "out": 0.1479,
           "cache_read": 0.0163,
           "cache_write": 0.0163,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.0285,
+          "out": 0.0923,
+          "cache_read": 0.0285,
+          "cache_write": 0.0285,
           "source": "kilo"
         }
       ]
@@ -105829,6 +105941,14 @@
           "cache_read": 0.015,
           "cache_write": 0.03,
           "source": "kilo"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.017,
+          "out": 0.064,
+          "cache_read": 0,
+          "cache_write": 0.017,
+          "source": "kilo"
         }
       ]
     },
@@ -105857,6 +105977,14 @@
           "out": 0.09,
           "cache_read": 0.009,
           "cache_write": 0.018,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.004,
+          "out": 0.018,
+          "cache_read": 0,
+          "cache_write": 0.004,
           "source": "kilo"
         }
       ]
@@ -107849,6 +107977,14 @@
           "out": 0.87,
           "cache_read": 0.004,
           "cache_write": 0.435,
+          "source": "kilo"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.43,
+          "out": 0.87,
+          "cache_read": 0.0036,
+          "cache_write": 0.43,
           "source": "kilo"
         }
       ]
@@ -111688,6 +111824,14 @@
           "out": 0.33,
           "cache_read": 0.0035,
           "cache_write": 0.11,
+          "source": "llmgateway"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.1275,
+          "out": 0.51,
+          "cache_read": 0.0095,
+          "cache_write": 0.1275,
           "source": "llmgateway"
         }
       ]
@@ -128221,6 +128365,14 @@
           "cache_read": 0.020958,
           "cache_write": 0.65868,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.2838,
+          "out": 0.8514,
+          "cache_read": 0.00903,
+          "cache_write": 0.2838,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -128561,6 +128713,14 @@
           "cache_read": 0.006,
           "cache_write": 0.12,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.005,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -128640,6 +128800,14 @@
           "cache_read": 0.013,
           "cache_write": 0.05,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.04444,
+          "out": 0.13332,
+          "cache_read": 0.001414,
+          "cache_write": 0.04444,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -128668,6 +128836,14 @@
           "out": 0.16,
           "cache_read": 0.013,
           "cache_write": 0.05,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.04444,
+          "out": 0.13332,
+          "cache_read": 0.001414,
+          "cache_write": 0.04444,
           "source": "nano-gpt"
         }
       ]
@@ -128851,6 +129027,14 @@
           "cache_read": 0.020958,
           "cache_write": 0.65868,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.2838,
+          "out": 0.8514,
+          "cache_read": 0.00903,
+          "cache_write": 0.2838,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -128935,6 +129119,14 @@
           "out": 1.97604,
           "cache_read": 0.020958,
           "cache_write": 0.65868,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.2838,
+          "out": 0.8514,
+          "cache_read": 0.00903,
+          "cache_write": 0.2838,
           "source": "nano-gpt"
         }
       ]
@@ -129050,6 +129242,14 @@
           "cache_read": 0.004,
           "cache_write": 0.022,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.0447,
+          "out": 0.1788,
+          "cache_read": 0.000894,
+          "cache_write": 0.0447,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -129137,6 +129337,14 @@
           "cache_read": 0.006,
           "cache_write": 0.12,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.005,
+          "cache_write": 0.1,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -129150,6 +129358,14 @@
           "cache_read": 0.012,
           "cache_write": 0.18,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.1854,
+          "out": 0.7416,
+          "cache_read": 0.01236,
+          "cache_write": 0.1854,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -129162,6 +129378,14 @@
           "out": 0.72,
           "cache_read": 0.012,
           "cache_write": 0.18,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.1854,
+          "out": 0.7416,
+          "cache_read": 0.01236,
+          "cache_write": 0.1854,
           "source": "nano-gpt"
         }
       ]
@@ -129249,6 +129473,14 @@
           "out": 0.72,
           "cache_read": 0.006,
           "cache_write": 0.12,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.1,
+          "out": 0.6,
+          "cache_read": 0.005,
+          "cache_write": 0.1,
           "source": "nano-gpt"
         }
       ]
@@ -129344,6 +129576,14 @@
           "out": 0.192,
           "cache_read": 0.004,
           "cache_write": 0.022,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.0447,
+          "out": 0.1788,
+          "cache_read": 0.000894,
+          "cache_write": 0.0447,
           "source": "nano-gpt"
         }
       ]
@@ -130543,6 +130783,14 @@
           "cache_read": 0.005,
           "cache_write": 0.01,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.046,
+          "out": 0.138,
+          "cache_read": 0.023,
+          "cache_write": 0.046,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -130744,6 +130992,14 @@
           "out": 0.03,
           "cache_read": 0.005,
           "cache_write": 0.01,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.046,
+          "out": 0.138,
+          "cache_read": 0.023,
+          "cache_write": 0.046,
           "source": "nano-gpt"
         }
       ]
@@ -131870,6 +132126,14 @@
           "cache_read": 0.010672,
           "cache_write": 0.07,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.07,
+          "out": 0.4,
+          "cache_read": 0.01,
+          "cache_write": 0.07,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -131910,6 +132174,14 @@
           "in": 0.07,
           "out": 0.4,
           "cache_read": 0.010672,
+          "cache_write": 0.07,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.07,
+          "out": 0.4,
+          "cache_read": 0.01,
           "cache_write": 0.07,
           "source": "nano-gpt"
         }
@@ -132167,6 +132439,14 @@
           "cache_read": 0.069,
           "cache_write": 0.086,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.07,
+          "out": 1.4,
+          "cache_read": 0.069,
+          "cache_write": 0.07,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -132227,6 +132507,14 @@
           "out": 1.4,
           "cache_read": 0.069,
           "cache_write": 0.086,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.07,
+          "out": 1.4,
+          "cache_read": 0.069,
+          "cache_write": 0.07,
           "source": "nano-gpt"
         }
       ]
@@ -133004,6 +133292,14 @@
           "cache_read": 0.2,
           "cache_write": 2.5,
           "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.4,
+          "cache_write": 5,
+          "source": "nano-gpt"
         }
       ]
     },
@@ -133016,6 +133312,14 @@
           "out": 10,
           "cache_read": 0.2,
           "cache_write": 2.5,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 4,
+          "out": 20,
+          "cache_read": 0.4,
+          "cache_write": 5,
           "source": "nano-gpt"
         }
       ]
@@ -133301,6 +133605,14 @@
           "out": 0.1,
           "cache_read": 0,
           "cache_write": 0.02,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.005,
+          "out": 0.019,
+          "cache_read": 0,
+          "cache_write": 0.005,
           "source": "nano-gpt"
         }
       ]
@@ -137302,6 +137614,14 @@
           "out": 0.80293,
           "cache_read": 0.079764,
           "cache_write": 0.250251,
+          "source": "nano-gpt"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.12,
+          "out": 0.8,
+          "cache_read": 0.07,
+          "cache_write": 0.12,
           "source": "nano-gpt"
         }
       ]
@@ -148622,6 +148942,32 @@
         }
       ]
     },
+    "ollama-cloud\u0000mimo-v2.6-flash": {
+      "id": "mimo-v2.6-flash",
+      "rates": [
+        {
+          "from": "2026-11-01",
+          "in": 0.14,
+          "out": 0.28,
+          "cache_read": 0.0028,
+          "cache_write": 0.14,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
+    "ollama-cloud\u0000mimo-v2.6-pro": {
+      "id": "mimo-v2.6-pro",
+      "rates": [
+        {
+          "from": "2026-11-01",
+          "in": 0.435,
+          "out": 0.87,
+          "cache_read": 0.0036,
+          "cache_write": 0.435,
+          "source": "ollama-cloud"
+        }
+      ]
+    },
     "ollama-cloud\u0000minimax-m2.7": {
       "id": "minimax-m2.7",
       "rates": [
@@ -153377,6 +153723,14 @@
           "cache_read": 0.013,
           "cache_write": 0.0141,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.035,
+          "out": 0.5,
+          "cache_read": 0.005,
+          "cache_write": 0.035,
+          "source": "openrouter"
         }
       ]
     },
@@ -154161,6 +154515,14 @@
           "cache_read": 0.001834,
           "cache_write": 0.05764,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.0434,
+          "out": 0.3,
+          "cache_read": 0.035,
+          "cache_write": 0.0434,
+          "source": "openrouter"
         }
       ]
     },
@@ -154860,6 +155222,14 @@
           "out": 1.98,
           "cache_read": 0.022,
           "cache_write": 0.66,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.115,
+          "out": 4,
+          "cache_read": 0.11,
+          "cache_write": 0.115,
           "source": "openrouter"
         }
       ]
@@ -156461,6 +156831,14 @@
           "cache_read": 0.099,
           "cache_write": 0.54,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.6,
+          "out": 2.2,
+          "cache_read": 0.11,
+          "cache_write": 0.6,
+          "source": "openrouter"
         }
       ]
     },
@@ -157051,6 +157429,14 @@
           "cache_read": 0.0689,
           "cache_write": 0.0699,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.08,
+          "out": 3.6,
+          "cache_read": 0.076,
+          "cache_write": 0.08,
+          "source": "openrouter"
         }
       ]
     },
@@ -157263,6 +157649,14 @@
           "out": 0.1479,
           "cache_read": 0.0163,
           "cache_write": 0.0163,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.0285,
+          "out": 0.0923,
+          "cache_read": 0.0285,
+          "cache_write": 0.0285,
           "source": "openrouter"
         }
       ]
@@ -157603,6 +157997,14 @@
           "out": 0.1479,
           "cache_read": 0.0163,
           "cache_write": 0.0163,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.0285,
+          "out": 0.0923,
+          "cache_read": 0.0285,
+          "cache_write": 0.0285,
           "source": "openrouter"
         }
       ]
@@ -158636,6 +159038,14 @@
           "cache_read": 0.075,
           "cache_write": 0.15,
           "source": "openrouter"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.017,
+          "out": 0.064,
+          "cache_read": 0,
+          "cache_write": 0.017,
+          "source": "openrouter"
         }
       ]
     },
@@ -158664,6 +159074,14 @@
           "out": 0.09,
           "cache_read": 0.009,
           "cache_write": 0.018,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.03,
+          "out": 0.13,
+          "cache_read": 0.03,
+          "cache_write": 0.03,
           "source": "openrouter"
         }
       ]
@@ -163863,6 +164281,14 @@
           "out": 2.3,
           "cache_read": 0.02,
           "cache_write": 0.04,
+          "source": "openrouter"
+        },
+        {
+          "from": "2026-11-01",
+          "in": 0.15,
+          "out": 1.875,
+          "cache_read": 0.0375,
+          "cache_write": 0.15,
           "source": "openrouter"
         }
       ]
@@ -181461,6 +181887,19 @@
         }
       ]
     },
+    "siliconflow-cn\u0000glm-4.5v": {
+      "id": "glm-4.5v",
+      "rates": [
+        {
+          "from": "2026-11-01",
+          "in": 0.14993479,
+          "out": 0.89960876,
+          "cache_read": 0,
+          "cache_write": 0.14993479,
+          "source": "siliconflow-cn"
+        }
+      ]
+    },
     "siliconflow-cn\u0000glm-5": {
       "id": "glm-5",
       "rates": [
@@ -181516,6 +181955,32 @@
           "out": 4.18452938,
           "cache_read": 0.29889496,
           "cache_write": 0,
+          "source": "siliconflow-cn"
+        }
+      ]
+    },
+    "siliconflow-cn\u0000glm-5.3": {
+      "id": "glm-5.3",
+      "rates": [
+        {
+          "from": "2026-11-01",
+          "in": 1.19947835,
+          "out": 4.19817421,
+          "cache_read": 0.29986959,
+          "cache_write": 1.19947835,
+          "source": "siliconflow-cn"
+        }
+      ]
+    },
+    "siliconflow-cn\u0000glm-5.3-flash": {
+      "id": "glm-5.3-flash",
+      "rates": [
+        {
+          "from": "2026-11-01",
+          "in": 0.11994783,
+          "out": 0.41981742,
+          "cache_read": 0.034485,
+          "cache_write": 0.11994783,
           "source": "siliconflow-cn"
         }
       ]
@@ -182036,6 +182501,19 @@
         }
       ]
     },
+    "siliconflow-cn\u0000qwen3.6-27b": {
+      "id": "qwen3.6-27b",
+      "rates": [
+        {
+          "from": "2026-11-01",
+          "in": 0.44980438,
+          "out": 2.69882628,
+          "cache_read": 0,
+          "cache_write": 0.44980438,
+          "source": "siliconflow-cn"
+        }
+      ]
+    },
     "siliconflow-cn\u0000qwen3.6-35b-a3b": {
       "id": "qwen3.6-35b-a3b",
       "rates": [
@@ -182053,6 +182531,19 @@
           "out": 1.61403276,
           "cache_read": 0,
           "cache_write": 0.26900546,
+          "source": "siliconflow-cn"
+        }
+      ]
+    },
+    "siliconflow-cn\u0000qwen3.8-27b": {
+      "id": "qwen3.8-27b",
+      "rates": [
+        {
+          "from": "2026-11-01",
+          "in": 0.44980438,
+          "out": 1.79921752,
+          "cache_read": 0,
+          "cache_write": 0.44980438,
           "source": "siliconflow-cn"
         }
       ]
