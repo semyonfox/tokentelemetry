@@ -360,8 +360,8 @@ func BuildWithProjectLineage(turns []model.Turn, tbl *pricing.Table, f Filter, g
 			})
 			continue
 		}
-		rawProject := t.Project
-		// Keep the original CWD for JSON audit trails while every aggregation
+		rawProject := project.raw
+		// Keep the recorded path for JSON audit trails while every aggregation
 		// path uses the same canonical project-family key.
 		t.Project = project.key
 		rep.MatchedTurns++

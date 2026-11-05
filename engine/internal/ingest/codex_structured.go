@@ -69,7 +69,8 @@ func codexStructured(records []codexRecord) ([]codexRecord, []model.Turn) {
 		exact = append(exact, model.Turn{
 			Key:       identityKey("codex-response", p.ThreadID, p.ResponseID),
 			SessionID: ownID, Agent: model.AgentCodex, Timestamp: ts,
-			Model: modelID, Provider: provider, Project: project, Usage: u, Subagent: subagent,
+			Model: modelID, Provider: provider, Project: project, CommandDir: r.commandDir,
+			Usage: u, Subagent: subagent,
 		})
 	}
 	var legacy []codexRecord

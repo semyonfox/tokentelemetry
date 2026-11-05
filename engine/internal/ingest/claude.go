@@ -2,6 +2,7 @@ package ingest
 
 import (
 	"bytes"
+	"cmp"
 	"context"
 	"encoding/json"
 	"errors"
@@ -113,7 +114,10 @@ type claudeRecord struct {
 	Message     struct {
 		ID    string `json:"id"`
 		Model string `json:"model"`
-		Usage struct {
+		// Content stays raw: only assistant tool calls are decoded, and a user
+		// record's content may be a plain string.
+		Content json.RawMessage `json:"content"`
+		Usage   struct {
 			Input         int64  `json:"input_tokens"`
 			Output        int64  `json:"output_tokens"`
 			CacheRead     int64  `json:"cache_read_input_tokens"`
@@ -193,6 +197,46 @@ func globJSONL(pattern string) []string {
 
 var claudeUsageKey = []byte(`"usage"`)
 
+// claudeToolUse is the part of a tool call that says where it worked.
+type claudeToolUse struct {
+	Type  string `json:"type"`
+	Name  string `json:"name"`
+	Input struct {
+		FilePath     string `json:"file_path"`
+		NotebookPath string `json:"notebook_path"`
+		Command      string `json:"command"`
+	} `json:"input"`
+}
+
+// claudeCommandDir is the last place this record's tool calls explicitly
+// worked: a file an edit tool wrote, or a directory a shell command named.
+func claudeCommandDir(content json.RawMessage, home string) string {
+	if len(content) == 0 || content[0] != '[' || !bytes.Contains(content, []byte(`"tool_use"`)) {
+		return ""
+	}
+	var blocks []claudeToolUse
+	if json.Unmarshal(content, &blocks) != nil {
+		return ""
+	}
+	dir := ""
+	for _, b := range blocks {
+		if b.Type != "tool_use" {
+			continue
+		}
+		switch b.Name {
+		case "Edit", "Write", "MultiEdit", "NotebookEdit":
+			if d := fileDir(cmp.Or(b.Input.FilePath, b.Input.NotebookPath), home); d != "" {
+				dir = d
+			}
+		case "Bash":
+			if d := commandDir(b.Input.Command, home); d != "" {
+				dir = d
+			}
+		}
+	}
+	return dir
+}
+
 func (c *Claude) scanFile(path string, subagent bool) []model.Turn {
 	f, err := os.Open(path)
 	if err != nil {
@@ -201,6 +245,10 @@ func (c *Claude) scanFile(path string, subagent bool) []model.Turn {
 	defer f.Close()
 
 	var turns []model.Turn
+	home, _ := os.UserHomeDir()
+	// Claude Code writes one API call as several records, one per content
+	// block, so a call's tool use and its counted copy can be different lines
+	dirByCall := make(map[string]string)
 
 	for line := range jsonLines(f) {
 		// only assistant records carry usage, and the rest are the huge tool
@@ -250,6 +298,7 @@ func (c *Claude) scanFile(path string, subagent bool) []model.Turn {
 			// provider a groupable dimension and lets provider-keyed pricing hit.
 			Provider:    "anthropic",
 			Project:     r.CWD,
+			CommandDir:  claudeCommandDir(r.Message.Content, home),
 			Usage:       usage,
 			ServiceTier: u.ServiceTier,
 			Subagent:    subagent || r.IsSidechain,
@@ -258,7 +307,16 @@ func (c *Claude) scanFile(path string, subagent bool) []model.Turn {
 		if !usage.IsZero() {
 			turns = append(turns, turn)
 		}
+		if turn.CommandDir != "" && turn.Key != "" {
+			dirByCall[turn.Key] = turn.CommandDir
+		}
 		turns = append(turns, claudeCompactions(turn, u.Iterations)...)
+	}
+	for i := range turns {
+		call, _, _ := strings.Cut(turns[i].Key, "|compaction|")
+		if turns[i].CommandDir == "" && call != "" {
+			turns[i].CommandDir = dirByCall[call]
+		}
 	}
 	return turns
 }

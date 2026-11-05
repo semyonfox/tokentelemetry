@@ -71,6 +71,10 @@ type codexRecord struct {
 		Model          string `json:"model"`
 		ModelProvider  string `json:"model_provider"`
 
+		// response_item function_call and custom_tool_call
+		Arguments string `json:"arguments"`
+		Input     string `json:"input"`
+
 		// event_msg/token_count
 		Info *struct {
 			Total   *codexUsage `json:"total_token_usage"`
@@ -82,6 +86,10 @@ type codexRecord struct {
 	// covered marks a token_count whose call a structured record already
 	// counts. It still sets the baseline for spotting repeats.
 	covered bool
+
+	// commandDir is where the tool calls of the response this usage record
+	// closes explicitly worked, if anywhere.
+	commandDir string
 }
 
 func (c *Codex) Scan(ctx context.Context, emit func(model.Turn)) error {
@@ -123,6 +131,10 @@ func (c *Codex) scanFile(path string) []model.Turn {
 		return nil
 	}
 	defer f.Close()
+	home, _ := os.UserHomeDir()
+	// a response's tool calls come before its token_usage_record and its
+	// token_count, so each kind takes the location once and then clears it
+	var forRecord, forCount string
 	var records []codexRecord
 	for line := range jsonLines(f) {
 		if !codexWanted(line) {
@@ -133,11 +145,23 @@ func (c *Codex) scanFile(path string) []model.Turn {
 			continue
 		}
 		switch r.Type {
-		case "session_meta", "turn_context", "token_usage_record":
+		case "response_item":
+			if r.Payload.Type == "function_call" || r.Payload.Type == "custom_tool_call" {
+				if dir := commandDir(cmp.Or(r.Payload.Arguments, r.Payload.Input), home); dir != "" {
+					forRecord, forCount = dir, dir
+				}
+			}
+		case "token_usage_record":
+			r.commandDir, forRecord = forRecord, ""
+			records = append(records, r)
+		case "session_meta", "turn_context":
 			records = append(records, r)
 		case "event_msg":
 			switch r.Payload.Type {
-			case "token_count", "task_started", "turn_started":
+			case "token_count":
+				r.commandDir, forCount = forCount, ""
+				records = append(records, r)
+			case "task_started", "turn_started":
 				records = append(records, r)
 			}
 		}
@@ -149,10 +173,13 @@ func (c *Codex) scanFile(path string) []model.Turn {
 
 // codexMarkers are the type names scanFile keeps. A kept record must contain
 // one of them literally, so a line with none is skipped without decoding. That
-// drops the response items, which hold almost all of a rollout's bytes.
+// drops messages and tool outputs, which hold almost all of a rollout's bytes.
+// Tool calls are kept for where they ran. The closing quote keeps their much
+// larger _output records out.
 var codexMarkers = [][]byte{
 	[]byte(`"session_meta"`), []byte(`"turn_context"`), []byte(`"token_usage_record"`),
 	[]byte(`"token_count"`), []byte(`"task_started"`), []byte(`"turn_started"`),
+	[]byte(`"function_call"`), []byte(`"custom_tool_call"`),
 }
 
 func codexWanted(line []byte) bool {
@@ -267,6 +294,7 @@ func scanCodexLegacy(records []codexRecord) []model.Turn {
 			Model:           modelID,
 			Provider:        provider,
 			Project:         project,
+			CommandDir:      r.commandDir,
 			Usage:           usage,
 			Subagent:        subagent,
 			ReplayHeuristic: forked,
