@@ -52,6 +52,9 @@ type ProjectSession struct {
 type ProjectLineage struct {
 	SessionRoots  map[ProjectSession]string
 	WorktreeRoots map[string]string
+	// MovedRoots maps a project's earlier workspace root to its current one,
+	// for repos the host recorded as moved or renamed.
+	MovedRoots map[string]string
 }
 
 // Usage is the token accounting for a call or a labelled source aggregate.
@@ -177,7 +180,11 @@ type Turn struct {
 	Endpoint string `json:"endpoint,omitempty"`
 
 	Project string `json:"project,omitempty"`
-	Usage   Usage  `json:"usage"`
+	// CommandDir is where a tool call in this turn explicitly ran or edited a
+	// file, when the log says so. Reports use it only for a turn whose own
+	// Project resolves to no repo, and only when it resolves to one itself.
+	CommandDir string `json:"command_dir,omitempty"`
+	Usage      Usage  `json:"usage"`
 
 	// Runtime links a wrapper's usage to a native executor session only
 	// when the producer persisted that identity. Shared model names are not links.

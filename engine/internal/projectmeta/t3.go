@@ -24,6 +24,33 @@ WHERE threads.worktree_path IS NOT NULL
   AND projects.deleted_at IS NULL
 `
 
+// t3V2WorktreeRootsQuery reads the v2 thread projection, which keeps deleted
+// threads. The v1 table only holds live ones, so most historical worktrees are
+// only here. A malformed payload yields NULL instead of failing the query.
+const t3V2WorktreeRootsQuery = `
+SELECT threads.worktree_path, projects.workspace_root
+FROM (
+  SELECT project_id,
+    CASE WHEN json_valid(payload_json) THEN json_extract(payload_json, '$.worktreePath') END AS worktree_path
+  FROM orchestration_v2_projection_threads
+) AS threads
+INNER JOIN projection_projects AS projects
+  ON projects.project_id = threads.project_id
+WHERE threads.worktree_path IS NOT NULL
+  AND projects.deleted_at IS NULL
+`
+
+// t3ProjectRootEventsQuery lists every workspace root a project has had, in
+// order, so an earlier root can be mapped to where the project lives now.
+const t3ProjectRootEventsQuery = `
+SELECT stream_id,
+  CASE WHEN json_valid(payload_json) THEN json_extract(payload_json, '$.workspaceRoot') END
+FROM orchestration_events
+WHERE aggregate_kind = 'project'
+  AND event_type IN ('project.created', 'project.meta-updated')
+ORDER BY sequence
+`
+
 const t3CodexSessionRootsQuery = `
 SELECT runtime.resume_cursor_json, threads.worktree_path, projects.workspace_root
 FROM provider_session_runtime AS runtime
@@ -58,6 +85,7 @@ func emptyLineage() model.ProjectLineage {
 	return model.ProjectLineage{
 		SessionRoots:  make(map[model.ProjectSession]string),
 		WorktreeRoots: make(map[string]string),
+		MovedRoots:    make(map[string]string),
 	}
 }
 
@@ -118,34 +146,26 @@ func loadT3ProjectLineage(ctx context.Context, dbPath string) (model.ProjectLine
 		return lineage, err
 	}
 	lineage.SessionRoots = sessionRoots
+
+	movedRoots, err := readT3MovedRoots(ctx, db)
+	if err != nil {
+		return lineage, err
+	}
+	lineage.MovedRoots = movedRoots
 	return lineage, nil
 }
 
 func readT3WorktreeRoots(ctx context.Context, db *sql.DB) (map[string]string, error) {
-	rows, err := db.QueryContext(ctx, t3WorktreeRootsQuery)
-	if err != nil {
-		return nil, fmt.Errorf("read T3 worktree metadata: %w", err)
-	}
-	defer rows.Close()
-
 	candidates := make(map[string]map[string]struct{})
-	for rows.Next() {
-		var worktreePath, workspaceRoot string
-		if err := rows.Scan(&worktreePath, &workspaceRoot); err != nil {
-			return nil, fmt.Errorf("read T3 worktree metadata row: %w", err)
-		}
-		worktreePath, worktreeOK := cleanAbsolutePath(worktreePath)
-		workspaceRoot, rootOK := cleanAbsolutePath(workspaceRoot)
-		if !worktreeOK || !rootOK {
-			continue
-		}
-		if candidates[worktreePath] == nil {
-			candidates[worktreePath] = make(map[string]struct{})
-		}
-		candidates[worktreePath][workspaceRoot] = struct{}{}
+	if err := collectT3WorktreeRoots(ctx, db, t3WorktreeRootsQuery, candidates); err != nil {
+		return nil, err
 	}
-	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("read T3 worktree metadata: %w", err)
+	if ok, err := t3TableExists(ctx, db, "orchestration_v2_projection_threads"); err != nil {
+		return nil, err
+	} else if ok {
+		if err := collectT3WorktreeRoots(ctx, db, t3V2WorktreeRootsQuery, candidates); err != nil {
+			return nil, err
+		}
 	}
 
 	roots := make(map[string]string, len(candidates))
@@ -160,6 +180,34 @@ func readT3WorktreeRoots(ctx context.Context, db *sql.DB) (map[string]string, er
 		}
 	}
 	return roots, nil
+}
+
+func collectT3WorktreeRoots(ctx context.Context, db *sql.DB, query string, candidates map[string]map[string]struct{}) error {
+	rows, err := db.QueryContext(ctx, query)
+	if err != nil {
+		return fmt.Errorf("read T3 worktree metadata: %w", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var worktreePath, workspaceRoot string
+		if err := rows.Scan(&worktreePath, &workspaceRoot); err != nil {
+			return fmt.Errorf("read T3 worktree metadata row: %w", err)
+		}
+		worktreePath, worktreeOK := cleanAbsolutePath(worktreePath)
+		workspaceRoot, rootOK := cleanAbsolutePath(workspaceRoot)
+		if !worktreeOK || !rootOK {
+			continue
+		}
+		if candidates[worktreePath] == nil {
+			candidates[worktreePath] = make(map[string]struct{})
+		}
+		candidates[worktreePath][workspaceRoot] = struct{}{}
+	}
+	if err := rows.Err(); err != nil {
+		return fmt.Errorf("read T3 worktree metadata: %w", err)
+	}
+	return nil
 }
 
 func readT3CodexSessionRoots(ctx context.Context, db *sql.DB) (map[model.ProjectSession]string, error) {
@@ -213,4 +261,101 @@ func cleanAbsolutePath(value string) (string, bool) {
 		return "", false
 	}
 	return filepath.Clean(value), true
+}
+
+func t3TableExists(ctx context.Context, db *sql.DB, name string) (bool, error) {
+	var found int
+	err := db.QueryRowContext(ctx, `SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?`, name).Scan(&found)
+	if err == sql.ErrNoRows {
+		return false, nil
+	}
+	if err != nil {
+		return false, fmt.Errorf("inspect T3 metadata tables: %w", err)
+	}
+	return true, nil
+}
+
+// readT3MovedRoots maps each earlier workspace root of a project to the root
+// it has now. Roots stay as T3 recorded them, so a project moved from Windows
+// to Linux keeps its Windows spelling for the report to normalise.
+func readT3MovedRoots(ctx context.Context, db *sql.DB) (map[string]string, error) {
+	moved := make(map[string]string)
+	if ok, err := t3TableExists(ctx, db, "orchestration_events"); err != nil || !ok {
+		return moved, err
+	}
+	rows, err := db.QueryContext(ctx, t3ProjectRootEventsQuery)
+	if err != nil {
+		return nil, fmt.Errorf("read T3 project history: %w", err)
+	}
+	defer rows.Close()
+
+	var order []string
+	history := make(map[string][]string)
+	for rows.Next() {
+		var project string
+		var root sql.NullString
+		if err := rows.Scan(&project, &root); err != nil {
+			return nil, fmt.Errorf("read T3 project history row: %w", err)
+		}
+		workspaceRoot, ok := hostAbsolutePath(root.String)
+		if !root.Valid || !ok {
+			continue
+		}
+		roots := history[project]
+		if len(roots) == 0 {
+			order = append(order, project)
+		}
+		if len(roots) == 0 || roots[len(roots)-1] != workspaceRoot {
+			history[project] = append(roots, workspaceRoot)
+		}
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("read T3 project history: %w", err)
+	}
+
+	current := make(map[string]bool, len(history))
+	for _, roots := range history {
+		current[roots[len(roots)-1]] = true
+	}
+	candidates := make(map[string]map[string]struct{})
+	for _, project := range order {
+		roots := history[project]
+		latest := roots[len(roots)-1]
+		for _, earlier := range roots[:len(roots)-1] {
+			// a root some project still lives at was reused, not vacated
+			if current[earlier] {
+				continue
+			}
+			if candidates[earlier] == nil {
+				candidates[earlier] = make(map[string]struct{})
+			}
+			candidates[earlier][latest] = struct{}{}
+		}
+	}
+	for earlier, latest := range candidates {
+		if len(latest) != 1 {
+			continue
+		}
+		for root := range latest {
+			moved[earlier] = root
+		}
+	}
+	return moved, nil
+}
+
+// hostAbsolutePath accepts an absolute path from any host T3 ran on. Project
+// history can predate a move between operating systems, so a Windows root is
+// valid evidence on Linux and the other way round.
+func hostAbsolutePath(value string) (string, bool) {
+	value = strings.TrimSpace(value)
+	switch {
+	case strings.HasPrefix(value, "/"):
+		return value, true
+	case len(value) >= 3 && value[1] == ':' && (value[2] == '\\' || value[2] == '/') &&
+		((value[0] >= 'a' && value[0] <= 'z') || (value[0] >= 'A' && value[0] <= 'Z')):
+		return value, true
+	case strings.HasPrefix(value, `\\`):
+		return value, true
+	}
+	return "", false
 }

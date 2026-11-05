@@ -17,9 +17,11 @@ const maxGitMetadataBytes = 4096
 // projectRef is the key used to aggregate one recorded CWD. It changes only
 // when exact host lineage or local Git metadata identifies the owning checkout.
 // Missing or ambiguous metadata falls back to the recorded path instead of
-// joining unrelated projects by guesswork.
+// joining unrelated projects by guesswork. raw is the recorded path the key
+// came from, which is the turn's command location when that decided it.
 type projectRef struct {
 	key string
+	raw string
 }
 
 // projectCatalog resolves each distinct recorded CWD/session pair once per
@@ -30,13 +32,18 @@ type projectCatalog struct {
 	labels         map[string]string
 	sessionRoots   map[model.ProjectSession]string
 	persistedRoots []projectRootMapping
+	movedRoots     []projectRootMapping
 	home           string
 }
 
 type projectLookup struct {
 	raw         string
+	commandDir  string
 	sessionRoot string
 }
+
+// maxMoveHops bounds chained moves such as Windows to Linux to a new folder.
+const maxMoveHops = 8
 
 type projectRootMapping struct {
 	path string
@@ -49,6 +56,7 @@ func newProjectCatalog(turns []model.Turn, lineage model.ProjectLineage) *projec
 		labels:         make(map[string]string),
 		sessionRoots:   normalizeSessionRoots(lineage.SessionRoots),
 		persistedRoots: normalizeProjectRoots(lineage.WorktreeRoots),
+		movedRoots:     normalizeMovedRoots(lineage.MovedRoots),
 	}
 	if home, err := os.UserHomeDir(); err == nil {
 		c.home = normalizeProjectPath(home)
@@ -63,26 +71,128 @@ func newProjectCatalog(turns []model.Turn, lineage model.ProjectLineage) *projec
 func (c *projectCatalog) ref(turn model.Turn) projectRef {
 	session := model.ProjectSession{Agent: turn.Agent, SessionID: turn.SessionID}
 	sessionRoot := c.sessionRoots[session]
-	lookup := projectLookup{raw: turn.Project, sessionRoot: sessionRoot}
+	lookup := projectLookup{raw: turn.Project, commandDir: turn.CommandDir, sessionRoot: sessionRoot}
 	if ref, ok := c.byTurn[lookup]; ok {
 		return ref
 	}
 
-	ref := projectRef{}
+	ref := projectRef{raw: turn.Project}
 	normalized := normalizeProjectPath(turn.Project)
+	root, inRepo := c.resolve(normalized)
 	if sessionRoot != "" {
 		ref.key = sessionRoot
+	} else if inRepo {
+		ref.key = root
+	} else if commandRoot, ok := c.resolve(normalizeProjectPath(turn.CommandDir)); ok {
+		// a session started outside any repo still did this turn's work in one
+		ref.key, ref.raw = commandRoot, turn.CommandDir
+	} else if root != "" {
+		ref.key = root
 	} else if normalized == "" {
 		ref.key = "(unknown)"
-	} else if root, ok := discoverGitFamily(normalized); ok {
-		ref.key = root
-	} else if root, ok := c.persistedRoot(normalized); ok {
-		ref.key = root
 	} else {
 		ref.key = normalized
 	}
 	c.byTurn[lookup] = ref
 	return ref
+}
+
+// resolve finds the checkout a recorded path belongs to. Live Git metadata
+// wins, then the host's worktree records. A path that no longer exists follows
+// the host's record of its project moving, and a deleted directory inside a
+// surviving checkout belongs to that checkout. inRepo is false for a moved
+// folder that is not a checkout: its new place is returned, but it is not
+// evidence of where any work happened. "" means no evidence applies, leaving
+// the recorded path as its own group.
+func (c *projectCatalog) resolve(projectPath string) (root string, inRepo bool) {
+	if projectPath == "" {
+		return "", false
+	}
+	current := projectPath
+	for range maxMoveHops {
+		if root, ok := discoverGitFamily(current); ok {
+			return root, true
+		}
+		if root, ok := c.persistedRoot(current); ok {
+			return root, true
+		}
+		if localDirExists(current) {
+			break
+		}
+		next, ok := c.movedPath(current)
+		if !ok {
+			break
+		}
+		current = next
+	}
+	if ancestor, ok := nearestExistingDir(current); ok {
+		if root, ok := discoverGitFamily(ancestor); ok {
+			return root, true
+		}
+	}
+	// a moved project that is not a checkout still groups at its new home
+	if current != projectPath && localDirExists(current) {
+		return current, false
+	}
+	return "", false
+}
+
+func (c *projectCatalog) movedPath(projectPath string) (string, bool) {
+	for _, mapping := range c.movedRoots {
+		if projectPathWithin(projectPath, mapping.path) {
+			return normalizeProjectPath(mapping.root + "/" + projectPath[len(mapping.path):]), true
+		}
+	}
+	return "", false
+}
+
+// normalizeMovedRoots orders recorded moves longest path first, so a project
+// with its own move record wins over a move of its parent folder. Moves of a
+// filesystem root are too broad to be evidence for anything under them.
+func normalizeMovedRoots(roots map[string]string) []projectRootMapping {
+	out := make([]projectRootMapping, 0, len(roots))
+	for rawPath, rawRoot := range roots {
+		projectPath, projectRoot := normalizeProjectPath(rawPath), normalizeProjectPath(rawRoot)
+		if projectPath == "" || projectRoot == "" || projectPath == projectRoot || len(projectPathParts(projectPath)) < 2 {
+			continue
+		}
+		out = append(out, projectRootMapping{path: projectPath, root: projectRoot})
+	}
+	sort.Slice(out, func(i, j int) bool {
+		if len(out[i].path) != len(out[j].path) {
+			return len(out[i].path) > len(out[j].path)
+		}
+		return out[i].path < out[j].path
+	})
+	return out
+}
+
+func localDirExists(normalized string) bool {
+	local, ok := localProjectPath(normalized)
+	if !ok {
+		return false
+	}
+	info, err := os.Stat(local)
+	return err == nil && info.IsDir()
+}
+
+// nearestExistingDir returns the closest ancestor of a path that is still on
+// disk. It never probes a path recorded on a different kind of host.
+func nearestExistingDir(normalized string) (string, bool) {
+	local, ok := localProjectPath(normalized)
+	if !ok {
+		return "", false
+	}
+	for dir := local; ; {
+		if info, err := os.Stat(dir); err == nil {
+			return normalizeProjectPath(filepath.ToSlash(dir)), info.IsDir()
+		}
+		parent := filepath.Dir(dir)
+		if parent == dir {
+			return "", false
+		}
+		dir = parent
+	}
 }
 
 func normalizeSessionRoots(roots map[model.ProjectSession]string) map[model.ProjectSession]string {
